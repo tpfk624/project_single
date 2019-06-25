@@ -14,16 +14,24 @@
   <meta name="author" content="">
 
 
-  	<title>트레이스</title>
+  	<title>우리 혼자 산다</title>
 
 	<!-- Bootstrap core CSS -->
 	<!-- Modern Business - Start Bootstrap Template -->
-  	<link rel="stylesheet" href="${root}/resources/template/modern/vendor/bootstrap/css/bootstrap.min.css" >
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<%-- <link rel="stylesheet" href="${root}/resources/template/modern/vendor/bootstrap/css/bootstrap.min.css" > --%>
 	<link rel="stylesheet" href="${root}/resources/template/modern/css/modern-business.css" >
 	
+<!-- style 지정 -->	
+<style type="text/css">
+
+.background-blue {
+    background-color: #004085!important;
+}
+</style>
 </head>
 <body>
-<!-- Navigation -->
+  <!-- Navigation -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.html">Start Bootstrap</a>
