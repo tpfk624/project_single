@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'BMDOHYEON';
+	src: url("BMDOHYEON_ttf.ttf") format('truetype'); 
+}
+
+@font-face {
+	font-family: 'BMHANNA';
+	src: url("BMHANNA_11yrs_ttf.ttf") format('truetype'); 
+}
+
+@font-face {
+	font-family: 'SDMiSaeng';
+	src: url("SDMiSaeng.ttf") format('truetype'); 
+}

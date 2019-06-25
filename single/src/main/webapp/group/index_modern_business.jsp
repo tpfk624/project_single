@@ -1,20 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include
-	file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
+<%@ include file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
 <style>
 .carousel-item {
 	height: 40vh;
 }
-
-.contents {
-	background-color: #ebebeb;
-}
-
-.container {
+section{
 	margin-top: 1.5rem;
 	padding-left: 0;
 	padding-right: 0;
+}
+
+.contents {
+	background-color: #ebebeb;
 }
 
 .card-title {
@@ -66,6 +64,13 @@
 	height: 100%;
 }
 
+.dropdown>button{
+	width: 100%;
+}
+
+.span-btn>button{
+	width: 100%;
+}
 
 
 </style>
@@ -118,11 +123,12 @@
 
 <section class="search">
 	<!-- Search Widget -->
-	<div class="card mb-4 container">
+	<div class="container">
+	<div class="card mb-4">
 		<h5 class="card-header">Search</h5>
 		<div class="card-body">
 			<div class="input-group">
-				<div class="dropdown" style="margin-right: 10px;">
+				<div class="dropdown col-lg-2">
 					<button type="button" class="btn btn-primary dropdown-toggle"
 						data-toggle="dropdown">추천</button>
 					<div class="dropdown-menu">
@@ -132,11 +138,12 @@
 					</div>
 				</div>
 				<input type="text" class="form-control" placeholder="Search for...">
-				<span class="input-group-btn">
-					<button class="btn btn-secondary" type="button">Go!</button>
+				<span class="input-group-btn col-lg-2 span-btn">
+					<button class="btn btn-primary" type="button">Go!</button>
 				</span>
 			</div>
 		</div>
+	</div>
 	</div>
 </section>
 
