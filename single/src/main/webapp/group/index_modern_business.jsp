@@ -61,8 +61,9 @@
 	text-align: center;
 }
 
-.leftside{
-	right: 0px;
+.category>button{
+	width: 100%;
+	height: 100%;
 }
 
 
@@ -125,10 +126,9 @@
 					<button type="button" class="btn btn-primary dropdown-toggle"
 						data-toggle="dropdown">추천</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">스터디</a> 
-						<a class="dropdown-item" href="#">취미</a> 
-						<a class="dropdown-item" href="#">친목도모</a>
-						<a class="dropdown-item" href="#">맛집탐방</a>
+						<a class="dropdown-item" href="#">그룹이름</a> 
+						<a class="dropdown-item" href="#">키워드</a> 
+						<a class="dropdown-item" href="#">위치</a>
 					</div>
 				</div>
 				<input type="text" class="form-control" placeholder="Search for...">
@@ -145,14 +145,15 @@
 	<div class="container">
 		
 		<div class="row">
-			<h1 class="col-lg-4 my-4">2014개의 스터디</h1>
-			<div class="dropdown my-4 leftside">
+			<h1 class="col-lg-10 my-4">2014개의 스터디</h1>
+			<div class="dropdown col-lg-2 my-4 category">
 				<button type="button" class="btn btn-primary dropdown-toggle"
 					data-toggle="dropdown">카테고리</button>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">그룹이름</a> <a
-						class="dropdown-item" href="#">키워드</a> <a
-						class="dropdown-item" href="#">위치</a>
+					<a class="dropdown-item" href="#">스터디</a> 
+					<a class="dropdown-item" href="#">취미</a> 
+					<a class="dropdown-item" href="#">친목도모</a>
+					<a class="dropdown-item" href="#">맛집탐방</a>
 				</div>
 			</div>
 		</div>
