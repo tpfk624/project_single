@@ -1,79 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
-<style>
-.carousel-item {
-	height: 40vh;
-}
-section{
-	margin-top: 1.5rem;
-	padding-left: 0;
-	padding-right: 0;
-}
-
-.contents {
-	background-color: #ebebeb;
-}
-
-.card-title {
-	margin: 0px 24px;
-	border-bottom: 1px solid rgb(235, 235, 235);
-	color: #007bff;
-	padding: .75rem 1.25rem;
-	text-align: center;
-}
-
-.group-img {
-	width: 100%;
-	height: 70%;
-}
-
-.overlay {
-	position: absolute;
-	bottom: 0;
-	background: rgb(0, 0, 0);
-	background: rgba(239, 108, 0, 0.8); /* Black see-through */
-	color: #f1f1f1;
-	width: 100%;
-	transition: .5s ease;
-	opacity: 0;
-	color: white;
-	font-size: 20px;
-	padding: 20px;
-	text-align: center;
-}
-
-.groupcard:hover .overlay {
-	opacity: 1;
-}
-
-.text {
-	color: white;
-	font-size: 20px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-	text-align: center;
-}
-
-.category>button{
-	width: 100%;
-	height: 100%;
-}
-
-.dropdown>button{
-	width: 100%;
-}
-
-.span-btn>button{
-	width: 100%;
-}
-
-
-</style>
+<link rel="stylesheet" href="${root}/resources/css/group/group.css" >
+<%@ include file="/WEB-INF/views/commons/movetop.jsp"%>
 <header>
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-ride="carousel">
@@ -125,21 +54,23 @@ section{
 	<!-- Search Widget -->
 	<div class="container">
 	<div class="card mb-4">
-		<h5 class="card-header">Search</h5>
+		<h5 class="card-header">검색</h5>
 		<div class="card-body">
 			<div class="input-group">
-				<div class="dropdown col-lg-2">
+				<div class="dropdown col-lg-2 col-sm-4">
+					<input type="hidden" name="key" value="" >
 					<button type="button" class="btn btn-primary dropdown-toggle"
 						data-toggle="dropdown">추천</button>
 					<div class="dropdown-menu">
+						<a class="dropdown-item active" href="#">추천</a> 
 						<a class="dropdown-item" href="#">그룹이름</a> 
 						<a class="dropdown-item" href="#">키워드</a> 
 						<a class="dropdown-item" href="#">위치</a>
 					</div>
 				</div>
 				<input type="text" class="form-control" placeholder="Search for...">
-				<span class="input-group-btn col-lg-2 span-btn">
-					<button class="btn btn-primary" type="button">Go!</button>
+				<span class="input-group-btn col-lg-2 col-sm-4 span-btn">
+					<button class="btn btn-primary" type="button">검색</button>
 				</span>
 			</div>
 		</div>
@@ -152,8 +83,8 @@ section{
 	<div class="container">
 		
 		<div class="row">
-			<h1 class="col-lg-10 my-4">2014개의 스터디</h1>
-			<div class="dropdown col-lg-2 my-4 category">
+			<h1 class="col-lg-10 col-sm-8 my-4">2014개의 스터디</h1>
+			<div class="dropdown col-lg-2 col-sm-4 my-4 category">
 				<button type="button" class="btn btn-primary dropdown-toggle"
 					data-toggle="dropdown">카테고리</button>
 				<div class="dropdown-menu">
@@ -402,7 +333,7 @@ section{
 
 	</div>
 </section>
+
 <!-- /.container -->
 
-<%@ include
-	file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>
+<%@ include file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>
