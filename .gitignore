@@ -1,3 +1,6 @@
-/**/*.class
-/pom.properties
-/MANIFEST.MF
+﻿/**/*.class
+/**/pom.properties
+/**/MANIFEST.MF
+*.class
+pom.properties
+MANIFEST.MF
