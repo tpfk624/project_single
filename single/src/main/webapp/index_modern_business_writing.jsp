@@ -6,14 +6,31 @@
 
 
 
+<!-- summernote setting-->
+<link href="${root}/resources/summernote/summernote.css" rel="stylesheet">
+<script src="${root}/resources/summernote/summernote.js"></script>
+<!-- summernote korean language pack -->
+<script src="${root}/resources/summernote/lang/summernote-ko-KR.js"></script>
+<!-- summernote setting-->
+<script type="text/javascript">
+  $(function() {
+    $('.summernote').summernote({
+      height: 300,          // 기본 높이값
+      minHeight: null,      // 최소 높이값(null은 제한 없음)
+      maxHeight: null,      // 최대 높이값(null은 제한 없음)
+      focus: true,          // 페이지가 열릴때 포커스를 지정함
+      lang: 'ko-KR'         // 한국어 지정(기본값은 en-US)
+    });
+  });
+</script>
 
 
 
 <div class="container">
 
     <!-- Page Heading/Breadcrumbs -->
-    <h2 class="mt-4 mb-3">혼자놀아요
-      <small>- 자취생활 팁</small>
+    <h2 class="mt-4 mb-3">자취생활 팁
+      <small>- 글쓰기</small>
     </h2>
 
     <ol class="breadcrumb" style="background-color: #004085!important;"></ol>
@@ -25,92 +42,26 @@
     <!-- 메인 중앙 -->
     <div class="col-lg-10 mb-4">
       
-      
-		<div class="row">
-			<div class="col-lg-3"><h5>자취생활 팁 공유</h5></div>
-			<div class="col-lg-9"></div>
-		</div>
-	    <div class="container" style=" border: 1px solid #444444;"><br><br>  
-      
-      
-      
-      	
-      	<!-- 본글 -->
-	   	<div class="row">
-			<div class="col-lg-2"></div>
-			<!-- 제목 -->
-			<div class="col-lg-3"><h6>라면 맛있게 끓이기</h6></div>
-			<div class="col-lg-7"><!-- 좋아요 그림 넣기 + 좋아요 수 나타내기 --></div>
-		</div>
-		<div class="row">
-			<div class="col-lg-2"></div>
-			<div class="col-lg-8"><hr style="background-color: #6c757d"></div>
-			<div class="col-lg-2"></div>
-		</div>
-	   	<div class="row">
-	   		<div class="col-lg-2"></div>
-			<div class="col-lg-8" style="border: 1px solid #444444;">
-			<br><br><br><br><br><br><br><br><!-- 글 내용 -->
+    <div class="container">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="content" class="col-sm-2 control-label"><p3>내용입력</p3></label>
+				<div class="col-sm-10">
+					<textarea name="content" id="content" class="summernote"></textarea>
+				</div>
+				</div>
+					<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-default" style="color: #007bff; border-color: #007bff;">Save</button>
+				</div>
 			</div>
-			<div class="col-lg-2"></div>
-	   	</div><br>
-	   	<div class="row">
-	   		<div class="col-lg-9"></div>
-	   		<div class="col-lg-2">
-	   			<button class="btn btn-outline-secondary">글작성</button>
-	   		</div>
-	   		<div class="col-lg-1"></div>
-	   	</div>
-	   	
-	   	
-	   	<!-- 답변글 -->
-		<div class="row">
-			<div class="col-lg-2"></div>
-			<div class="col-lg-8"><hr style="background-color: #adb5bd"></div>
-			<div class="col-lg-2"></div>
-		</div>
-      	<div class="row">
-	   		<div class="col-lg-2"></div>
-			<div class="col-lg-8" style="border: 1px solid #444444;">
-			<br><br>
-				
-				
-				
-				<div class="row">
-					<div class="col-lg-1"></div>
-					<div class="col-lg-3">______님 답변</div>
-					<div class="col-lg-8"></div>
-				</div>
-				<div class="row">
-					<div class="col-lg-1"></div>
-					<div class="col-lg-10"><hr style="background-color: #6c757d"></div>
-					<div class="col-lg-1">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-1"></div>
-					<div class="col-lg-10">
-						<br>
-						<!-- 내용넣기 -->
-						잘 보고 갑니다요~~~
-						<br>
-					</div>
-					<div class="col-lg-1"></div>
-				</div>
-				
-				
-				
-				
-				
-			<br><br><br><br><br><br><!-- 글 내용 -->
-			</div>
-			<div class="col-lg-2"></div>
-	   	</div><br>
+		</form>
+    </div> 	
+     
+     
       	
       	
       	
-      	
-      	</div>
 	</div>
 	  
 	  

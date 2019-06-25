@@ -36,7 +36,7 @@
       
 	<!-- 이달의 자취왕 -->
 	<div class="container" style="background-color: #007bff21;">
-	
+		<br>
 	    <h2 class="my-4" align="center">이달의 최고 자취왕</h2>
 		
 		<div class="container">

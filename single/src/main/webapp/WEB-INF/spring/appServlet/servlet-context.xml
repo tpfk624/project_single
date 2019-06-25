@@ -21,6 +21,7 @@
 	<resources mapping="/resources/css/**" location="/resources/css/" />
 	<resources mapping="/resources/js/**" location="/resources/js/" />
 	<resources mapping="/resources/img/**" location="/resources/img/" />
+	<resources mapping="/resources/summernote/**" location="/resources/summernote/" />
 	
 	<!-- 테스트 template -->
 	<resources mapping="/template/**" location="/template/" />

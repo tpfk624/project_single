@@ -102,7 +102,7 @@
 				
 				
 				
-			<br><br><br><br><br><br><!-- 글 내용 -->
+			<br><br><br><!-- 글 내용 -->
 			</div>
 			<div class="col-lg-2"></div>
 	   	</div><br>
