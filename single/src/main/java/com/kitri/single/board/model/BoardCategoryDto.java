@@ -1,4 +1,4 @@
-package com.kitri.single.dto;
+package com.kitri.single.board.model;
 
 public class BoardCategoryDto {
 
