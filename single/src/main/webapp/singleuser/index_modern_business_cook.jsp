@@ -23,7 +23,7 @@
 
 
     <div class="row">
-    <!-- 메인 중앙 -->
+    <!-- 메인 중앙 --> 
     <div class="col-lg-10 mb-4">
       
       
