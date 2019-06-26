@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/roadtrip_top.jsp" %>
-
 		<!-- Header -->
 			<header id="header">
 				<div class="logo"><a href="${root}/user/home">Road Trip <span>by TEMPLATED</span></a></div>
@@ -12,7 +11,7 @@
 			<nav id="menu">
 				<ul class="links">
 					<li><a href="index.html">Home</a></li>
-					<li><a href="generic.html">Generic</a></li>
+					<li><a href="${root}/singleuser/singlemain">혼자놀아요</a></li>
 					<li><a href="elements.html">Elements</a></li>
 				</ul>
 			</nav>
