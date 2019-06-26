@@ -11,7 +11,7 @@
 			<nav id="menu">
 				<ul class="links">
 					<li><a href="index.html">Home</a></li>
-					<li><a href="generic.html">Generic</a></li>
+					<li><a href="${root}/singleuser/singlemain">혼자놀아요</a></li>
 					<li><a href="elements.html">Elements</a></li>
 				</ul>
 			</nav>
