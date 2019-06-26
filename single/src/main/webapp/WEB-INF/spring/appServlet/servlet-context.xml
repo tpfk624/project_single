@@ -35,5 +35,22 @@
 	<context:component-scan base-package="com.kitri" />
 	
 	
+	<!-- 한글설정 어노테이션 방법도 있음.-->
+	<!-- @responsebody할때 한글 깨짐 현상 / ajax에서 받아오고 띄워줄때. -->
+	<!-- beans가 붙는 이유는 맨 위에 beans설정함.(xmlns:beans="http://www.springframework.org/schema/beans") -->
+	<annotation-driven>
+		<message-converters>
+			<beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<beans:property name="supportedMediaTypes">
+					<beans:list>
+						<beans:value>text/html;charset=utf-8</beans:value>
+						<beans:value>application/json;charset=utf-8</beans:value>
+						<beans:value>application/xml;charset=utf-8</beans:value>
+					</beans:list>
+				</beans:property>
+			</beans:bean> 
+		</message-converters>
+	</annotation-driven>
+	
 	
 </beans:beans>
