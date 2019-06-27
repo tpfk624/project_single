@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
 
 
@@ -13,17 +14,6 @@
 }
 
 </style>
-
-
-
-
-<script>
-
-
-
-</script>
-
-
 
 
 
@@ -153,18 +143,42 @@
 		<table class="table">
 			<thead>
 				<tr>
-					 <th width="17%">카테고리</th>
-					 <th width="33%">제목</th>
-					 <th width="33%">작성자</th>
-					 <th width="17%">작성일</th>
+					 <th>카테고리</th>
+					 <th>제목</th>
+					 <th>작성자</th>
+					 <th>작성일</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>카테고리 이름</td>
-					<td><label class="contentDetail">맛나는 라면</label></td>
+					<td>맛나는 라면</td>
 					<td>john@example.com</td>
 					<td>2019-06-25</td>
+				</tr>
+				<tr>
+					<td>카테고리 이름</td>
+					<td>맛나는 라면</td>
+					<td>john@example.com</td>
+					<td>2019-06-25</td>
+				</tr>
+				<tr>
+					<td>카테고리 이름</td>
+					<td>맛나는 라면</td>
+					<td>john@example.com</td>
+					<td>2019-06-25</td>
+				</tr>
+				<tr>
+					<td>카테고리 이름</td>
+					<td>배불러엉</td>
+					<td>mary@example.com</td>
+					<td>2019-06-25</td>				
+				</tr>
+				<tr>
+					<td>카테고리 이름</td>
+					<td>야식은 컴라면</td>
+					<td>july@example.com</td>
+					<td>2019-06-25</td>				
 				</tr>
 			</tbody>
 		</table><hr>
