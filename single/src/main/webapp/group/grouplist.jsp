@@ -97,7 +97,87 @@
 		</div>
 		<!-- Marketing Icons Section -->
 		<div class="row">
+			
+			<!-- 카드 사진 아래버전 -->
+			<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
+				<div class="card h-100">
+					<img class="card-img-top"
+						src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
+						alt="">
+					<h4 class="card-title">영어단어 스터디</h4>
+					<div class="card-body">
+						<p class="card-text">그룹 설명 블라블라블라 욜그룹 설명 블라블라블라 욜그룹 설명 블라블라블라
+							욜그룹 설명 블라블라블라 욜</p>
+						<p class="card-text">인원 : 15/30</p>
+						<p class="card-text">장소 : 구로디지털 단지</p>
+					</div>
 
+					<div class="overlay">
+						<div class="text">상세보기</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 카드 사진 아래버전 -->
+			<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
+				<div class="card h-100">
+					<img class="card-img-top"
+						src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
+						alt="">
+					<h4 class="card-title">영어단어 스터디</h4>
+					<div class="card-body">
+						<p class="card-text">그룹 설명 블라블라블라 욜그룹 설명 블라블라블라 욜그룹 설명 블라블라블라
+							욜그룹 설명 블라블라블라 욜</p>
+						<p class="card-text">인원 : 15/30</p>
+						<p class="card-text">장소 : 구로디지털 단지</p>
+					</div>
+
+					<div class="overlay">
+						<div class="text">상세보기</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 카드 사진 아래버전 -->
+			<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
+				<div class="card h-100">
+					<img class="card-img-top"
+						src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
+						alt="">
+					<h4 class="card-title">영어단어 스터디</h4>
+					<div class="card-body">
+						<p class="card-text">그룹 설명 블라블라블라 욜그룹 설명 블라블라블라 욜그룹 설명 블라블라블라
+							욜그룹 설명 블라블라블라 욜</p>
+						<p class="card-text">인원 : 15/30</p>
+						<p class="card-text">장소 : 구로디지털 단지</p>
+					</div>
+
+					<div class="overlay">
+						<div class="text">상세보기</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 카드 사진 아래버전 -->
+			<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
+				<div class="card h-100">
+					<img class="card-img-top"
+						src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
+						alt="">
+					<h4 class="card-title">영어단어 스터디</h4>
+					<div class="card-body">
+						<p class="card-text">그룹 설명 블라블라블라 욜그룹 설명 블라블라블라 욜그룹 설명 블라블라블라
+							욜그룹 설명 블라블라블라 욜</p>
+						<p class="card-text">인원 : 15/30</p>
+						<p class="card-text">장소 : 구로디지털 단지</p>
+					</div>
+
+					<div class="overlay">
+						<div class="text">상세보기</div>
+					</div>
+				</div>
+			</div>
+			
 			<!-- 카드 사진 위버전 -->
 			<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
 				<div class="card h-100">
