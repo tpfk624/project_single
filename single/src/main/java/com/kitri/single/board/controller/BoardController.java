@@ -8,7 +8,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BoardController {
 	
 	@RequestMapping("singlemain")
-	public void newContent(){
+	public void singleMain(){
+		System.out.println("main으로 가는중");
+		//select를 3번해와야뎀.
+		
+		//이달의 자취왕
+		
+		
+		//이달의 추천순
+		
+		//오늘의 새글
+		
+	}
+	
+	
+	@RequestMapping("")
+	public void detailContent(){
 		System.out.println("main으로 가는중");
 		//select를 3번해와야뎀.
 		
