@@ -8,7 +8,6 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -35,10 +34,21 @@
 <!-- style 지정 -->	
 <style type="text/css">
 
+/* 폰트 변경 */
+body {
+	font-family: BMDOHYEON !important;
+	box-sizing: border-box;
+}
+
 .background-blue {
     background-color: #004085!important;
 }
+/* 버튼 hover 시 음영주기 */
+.btn:hover, .btn:active{
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)
+}
 
+/* btn-primary 변경 */
 .btn-primary{
 	background-color: #004085;
 	border-color: #004085;
@@ -62,10 +72,6 @@
 	border-color: #004085;
 }
 
-body {
-	font-family: BMDOHYEON !important;
-	box-sizing: border-box;
-}
 
 </style>
 </head>

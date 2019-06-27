@@ -32,9 +32,6 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.kitri" />
-	
-	
 	<!-- 한글설정 어노테이션 방법도 있음.-->
 	<!-- @responsebody할때 한글 깨짐 현상 / ajax에서 받아오고 띄워줄때. -->
 	<!-- beans가 붙는 이유는 맨 위에 beans설정함.(xmlns:beans="http://www.springframework.org/schema/beans") -->
@@ -52,5 +49,9 @@
 		</message-converters>
 	</annotation-driven>
 	
+	<context:component-scan base-package="com." />
 	
+
+   
+ 
 </beans:beans>
