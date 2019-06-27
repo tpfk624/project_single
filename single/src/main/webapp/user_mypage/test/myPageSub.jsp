@@ -307,7 +307,7 @@ body {
 							<a class="tab selected" href="${root}/user_mypage/myPage.jsp">내 프로필</a>
 							<a class="tab" href="${root}/user_mypage/myPageGroup.jsp">나의 모임관리</a>
 							<a class="tab" href="${root}/user_mypage/myPageGroupZzim.jsp">찜한 모임</a>
-							<a class="tab" href="${root}/user_mypage/myPage.jsp">게시물관리</a>
+							<a class="tab" href="${root}/user_mypage/myPageWrite.jsp">게시물관리</a>
 						</div>
 					</div>
 				</div>
