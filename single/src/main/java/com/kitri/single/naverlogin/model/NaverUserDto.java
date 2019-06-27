@@ -1,4 +1,4 @@
-package com.naver.naverlogin.model;
+package com.kitri.single.naverlogin.model;
 
 public class NaverUserDto {
 	private String id;
