@@ -65,7 +65,7 @@ public class ApiConnection {
 		return result;
 	}
 	
-	/*
+	
 	public static void main(String[] args) {
 		ApiConnection apiConnection = new ApiConnection();
 		String urlPath = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/kind";
@@ -82,5 +82,5 @@ public class ApiConnection {
 		}
 		
 	}
-	*/
+	
 }

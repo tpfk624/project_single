@@ -18,6 +18,8 @@
 			<list>
 				<value>/WEB-INF/mybatis/mapper_user.xml</value>
 				<value>/WEB-INF/mybatis/mapper_board.xml</value>
+				<value>/WEB-INF/mybatis/mapper_group.xml</value>
+				<value>/WEB-INF/mybatis/mapper_home.xml</value>
 			</list>
 		</property>
 	</bean>
