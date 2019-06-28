@@ -1,8 +1,10 @@
 package com.kitri.single.board.dao;
 
-import org.springframework.stereotype.Controller;
+import com.kitri.single.board.model.BoardDto;;
 
 
 public interface BoardDao {
 
+	int writeArticle(BoardDto boardDto);
+	
 }
