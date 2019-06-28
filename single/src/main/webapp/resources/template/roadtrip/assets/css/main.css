@@ -3473,9 +3473,10 @@
       -ms-transition: -ms-transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
       transition: transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
       -webkit-overflow-scrolling: touch;
-      background: #f64242;
+      background: rgba(0, 0, 0, 0.5);
       box-shadow: none;
-      color: #ffffff;
+      color: 	#ffffff;
+      font-size : large;
       height: 100%;
       max-width: 80%;
       overflow-y: auto;
@@ -3503,7 +3504,7 @@
 
                #menu > ul.links > li > a:not(.button) {
                   border: 0;
-                  border-top: solid 1px rgba(255, 255, 255, 0.25);
+                  /* border-top: solid 1px rgba(255, 255, 255, 0.25); */
                   color: inherit;
                   display: block;
                   line-height: 3.5em;
@@ -3589,7 +3590,7 @@
 /* Banner */
 
    #banner {
-      background-image: url("Orange_bridge.png");
+      background-image: url("g.png");
       display: -ms-flexbox;
       -ms-flex-pack: center;
       -ms-flex-align: center;

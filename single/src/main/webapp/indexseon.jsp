@@ -13,11 +13,50 @@
     text-transform: none !important;
 }
 
+    #custom-search-form {
+        margin:0;
+        margin-top: 5px;
+        padding: 0;
+    }
+ 
+    #custom-search-form .search-query {
+        padding-right: 3px;
+        padding-right: 4px \9;
+        padding-left: 3px;
+        padding-left: 4px \9;
+        /* IE7-8 doesn't have border-radius, so don't indent the padding */
+ 
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+ 
+    #custom-search-form button {
+        border: 0;
+        background: none;
+        /** belows styles are working good */
+        padding: 2px 5px;
+        margin-top: 2px;
+        position: relative;
+        left: -28px;
+        /* IE7-8 doesn't have border-radius, so don't indent the padding */
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+ 
+    .search-query:focus + button {
+        z-index: 3;   
+    }
+
 </style>
       <!-- Header -->
          <header id="header">
             <div class="logo"><a href="index.html">Road Trip <span>by TEMPLATED</span></a></div>
-            <!-- <a href="#menu"><span>Menu</span></a> -->
+            
+            <a href="#menu"><span>Menu</span></a>
          </header>
 
       <!-- Nav -->
@@ -39,10 +78,16 @@
       
          <section id="banner"> <!-- class="bg-img" -->
             <div class="inner">
-            
-               <header>
+              <!--  <header>
                   <h1>SingleTrace</h1>
-               </header>
+               </header> -->
+               <h4>장마가 시작됐어요 우산 챙겨다니세요</h4>
+               <div class="input-group mb-3">
+				  <input type="text" class="form-control" placeholder="Search">
+				  <div class="input-group-append">
+				    <button class="btn btn-success" type="submit">Go</button> 
+				  </div>
+				</div>
             </div>
             <a href="#menu" class="more">menu</a>
          </section>
