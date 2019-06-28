@@ -33,9 +33,12 @@ public class BoardController {
 	
 	@RequestMapping(value="/write",method = RequestMethod.GET)
 	public void write(@RequestParam Map<String, String> parameter, Model model){
-		System.out.println("writepage로 가는중");
-		//select를 3번해와야뎀.
+		//write?bcode=${board.bcode}&pg=1&key=&word=  가지고 다녀야 하는 이유는 계속 그 게시판을 유지해야뎀 안하면 실행 안뎀.
+		//System.out.println("writepage로 가는중");
+
+		model.addAttribute("parameter", parameter);
 		
+		//select를 3번해와야뎀. ---------------
 		//이달의 자취왕
 		
 		//이달의 추천순
