@@ -10,7 +10,7 @@
 
 /* Reset */
 
-   html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+   html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, weather, nav, output, ruby, section, summary, time, mark, audio, video {
       margin: 0;
       padding: 0;
       border: 0;
@@ -19,7 +19,7 @@
       vertical-align: baseline;
    }
 
-   article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+   article, aside, details, figcaption, figure, footer, header, hgroup, menu, weather, nav, section {
       display: block;
    }
 
@@ -3369,7 +3369,7 @@
             color: #FFF;
          }
 
-      #header > a {
+/*       #header > a {
          -moz-transition: color 0.2s ease-in-out;
          -webkit-transition: color 0.2s ease-in-out;
          -ms-transition: color 0.2s ease-in-out;
@@ -3421,8 +3421,61 @@
                padding: 0 0.5em;
             }
 
+         } */
+/* -------------------------------weather */
+/*       #header > a {
+         -moz-transition: color 0.2s ease-in-out;
+         -webkit-transition: color 0.2s ease-in-out;
+         -ms-transition: color 0.2s ease-in-out;
+         transition: color 0.2s ease-in-out;
+         display: inline-block;
+         color: inherit;
+         text-decoration: none;
+      }
+
+         #header > a[href="#weather"] {
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 100%;
+            height: 2.5em;
+            width: 2.5em;
+            line-height: 2.5em;
+            color: #FFF;
+            text-align: center;
          }
 
+            #header > a[href="#weather"]:before {
+               -moz-osx-font-smoothing: grayscale;
+               -webkit-font-smoothing: antialiased;
+               font-family: FontAwesome;
+               font-style: normal;
+               font-weight: normal;
+               text-transform: none !important;
+            }
+
+            #header > a[href="#weather"]:hover {
+               color: rgba(255, 255, 255, 0.25);
+               background: none;
+               box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+            }
+
+            #header > a[href="#weather"]:before {
+               margin: 0;
+            }
+
+            #header > a[href="#weather"] span {
+               display: none;
+            }
+
+         @media screen and (max-width: 736px) {
+
+            #header > a {
+               padding: 0 0.5em;
+            }
+
+         }
+ *//* ------------------------------- weather */
    @media screen and (max-width: 980px) {
 
       body.subpage {
@@ -3586,11 +3639,143 @@
          }
 
       }
+/* Weather */
+
+   #weather {
+      /* -moz-transform: translateX(20em);
+      -webkit-transform: translateX(20em);
+      -ms-transform: translateX(20em);
+      transform: translateX(20em); */
+
+      -moz-transform: translateX(-20em);
+      -webkit-transform: translateX(-20em);
+      -ms-transform: translateX(-20em);
+      transform: translateX(-20em);
+      
+      -moz-transition: -moz-transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
+      -webkit-transition: -webkit-transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
+      -ms-transition: -ms-transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
+      transition: transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
+      -webkit-overflow-scrolling: touch;
+      background: rgba(0, 0, 0, 0.5);
+      box-shadow: none;
+      color: 	#ffffff;
+      font-size : large;
+      height: 100%;
+      max-width: 80%;
+      overflow-y: auto;
+      padding: 3em 2em;
+      position: fixed;
+      /* right: 0; */
+      top: 0;
+      visibility: hidden;
+      width: 20em;
+      z-index: 10002;
+   }
+
+      #weather > ul {
+         margin: 0 0 1em 0;
+      }
+
+         #weather > ul.links {
+            list-style: none;
+            padding: 0;
+         }
+
+            #weather > ul.links > li {
+               padding: 0;
+            }
+
+               #weather > ul.links > li > a:not(.button) {
+                  border: 0;
+                  /* border-top: solid 1px rgba(255, 255, 255, 0.25); */
+                  color: inherit;
+                  display: block;
+                  line-height: 3.5em;
+                  text-decoration: none;
+               }
+
+               #weather > ul.links > li > .button {
+                  display: block;
+                  margin: 0.5em 0 0 0;
+               }
+
+               #weather > ul.links > li:first-child > a:not(.button) {
+                  border-top: 0 !important;
+               }
+
+      #weather .close {
+         text-decoration: none;
+         -moz-transition: color 0.2s ease-in-out;
+         -webkit-transition: color 0.2s ease-in-out;
+         -ms-transition: color 0.2s ease-in-out;
+         transition: color 0.2s ease-in-out;
+         -webkit-tap-highlight-color: transparent;
+         border: 0;
+         color: #fbb5b5;
+         cursor: pointer;
+         display: block;
+         height: 3.25em;
+         line-height: 3.25em;
+         padding-right: 1.25em;
+         position: absolute;
+         right: 0;
+         text-align: right;
+         top: 0;
+         vertical-align: middle;
+         width: 7em;
+      }
+
+         #weather .close:before {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            text-transform: none !important;
+         }
+
+         #weather .close:before {
+            font-size: 1.25em;
+         }
+
+         #weather .close:hover {
+            color: #ffffff;
+         }
+
+         @media screen and (max-width: 736px) {
+
+            #weather .close {
+               height: 4em;
+               line-height: 4em;
+            }
+
+         }
+
+      #weather.visible {
+         -moz-transform: translateX(-200px);
+         -webkit-transform: translateX(0);
+         -ms-transform: translateX(0);
+         transform: translateX(0);
+         box-shadow: 0 0 1.5em 0 rgba(0, 0, 0, 0.2)   ;
+         visibility: visible;
+      }
+
+      @media screen and (max-width: 736px) {
+
+         #weather {
+            padding: 2.5em 1.75em;
+         }
+
+      }
+      
+
+
 
 /* Banner */
 
    #banner {
-      background-image: url("g.png");
+      background-image: url("img/g.png");
       display: -ms-flexbox;
       -ms-flex-pack: center;
       -ms-flex-align: center;
