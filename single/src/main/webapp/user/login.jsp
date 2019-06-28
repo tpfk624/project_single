@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
-
+<c:set var= "callbackURL" value= "http://localhost/single/naverlogin/mvcallback"></c:set>
 <!-- 이미지 참고 사이트 :  https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_login_form_modal -->
 <!-- 네아로 사용 -->
 
@@ -181,10 +181,10 @@ window.onclick = function(event) {
 
 <!-- 로그인 자바스크립트   -->
   <script type="text/javascript">
-  	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/user/callback.jsp");
+  	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "${callbackURL}");
   	var state = naver_id_login.getUniqState();
   	naver_id_login.setButton("white", 2,40);
-  	naver_id_login.setDomain("http://localhost/single/user/login.jsp");
+  	naver_id_login.setDomain("http://localhost/single");
   	naver_id_login.setState(state);
 //   	naver_id_login.setPopup();
   	naver_id_login.init_naver_id_login();
