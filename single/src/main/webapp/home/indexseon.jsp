@@ -2,15 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/roadtrip_top.jsp" %>
 
+		 <script src="${root}/resources/template/roadtrip/assets/js/jquery.min.js"></script>
+         <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrolly.min.js"></script>
+         <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrollex.min.js"></script>
+         <script src="${root}/resources/template/roadtrip/assets/js/skel.min.js"></script>
+         <script src="${root}/resources/template/roadtrip/assets/js/util.js"></script>
+         <script src="${root}/resources/template/roadtrip/assets/js/main.js"></script>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
 
 $(document).ready(function(){
-	$('[data-toggle="popover"]').popover();   
+	$('[data-toggle="popover"]').popover({
+		container:'body'
+	});   
 });
 
 </script>
@@ -37,6 +45,10 @@ $(document).ready(function(){
 	margin-top: 10px;
 
 }
+
+#popover{
+	width: 500px
+}
 </style>
 
       <!-- Header -->
@@ -44,7 +56,7 @@ $(document).ready(function(){
             <div class="logo"><a href="index.html">우리 혼자 살아요 </a></div> <!-- <span>by TEMPLATED</span> -->
             
             <!-- <a href="#menu"><span>Menu</span></a> -->
-            <a href="#"  data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">
+            <a href="#" id="popover" data-toggle="popover" data-placement="bottom" title="날씨"> <!-- data-content="날씨정보" -->
             	<img src="${root}/resources/img/seonimg/rain.png" id="weatherimg" height="100">
             </a>
          </header>
@@ -96,12 +108,7 @@ $(document).ready(function(){
             <a href="#menu"><span>Menu</span></a>
          </footer> -->
          
-         <script src="${root}/resources/template/roadtrip/assets/js/jquery.min.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrolly.min.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrollex.min.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/skel.min.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/util.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/main.js"></script>
+         
 
    </body>
 </html>
