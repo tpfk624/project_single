@@ -1,21 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
+	pageEncoding="UTF-8"%>
+<%@ include
+	file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
+<link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <style>
-div {
-	display: block;
-}
 
-body, html {
-	height: 100%;
-	font-size: 11pt;
-	font-family: Apple SD Gothic Neo, notokr, dotum, serif !important;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-moz-font-feature-settings: "liga";
-}
-
+/* 마이페이지 헤더부분 */
 #my-page-wrap #my-page-header {
 	background-color: #5a5e64;
 }
@@ -268,344 +258,136 @@ body {
 }
 
 .modal-body {
-    padding: 20px;
+	padding: 20px;
 }
 
 .pw_input {
-    width: 100%;
-    height: 29px;
-    line-height: 29px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 13px;
-    color: #808080;
-    border: 1px solid #c8c8ca;
-    margin-bottom: 10px;
+	width: 100%;
+	height: 29px;
+	line-height: 29px;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 13px;
+	color: #808080;
+	border: 1px solid #c8c8ca;
+	margin-bottom: 10px;
 }
 
-#btn-danger{
+#btn-danger {
 	width: 100%;
 }
 </style>
 
-
-<!-- 크기 맞춰주는 DIV -->
-<!-- <section class="destinations py-5" id="destinations"> -->
-	<div class="container py-xl-5 py-lg-3">
-
-
-
-		<div id="my-page-wrap">
-			<div id="my-page-header">
-				<div id="header-content" class="my-page-content">
-					<div class="user-photo"
-						style="display: inline-block; background-image: url(&quot;https://cdn.studysearch.co.kr/images/users/199883/profile/1561443247&quot;); background-size: cover; background-position: 50% 50%;"></div>
-					<div id="tabs">
-						<div id="user-name">고세라</div>
-						<div id="tab-box">
-							<a class="tab selected" href="/member/product/list/">내 프로필</a><a
-								class="tab" href="/member/bookmark/list/">나의 모임관리</a><a
-								class="tab" href="/member/transaction/list/">찜한 모임</a><a
-								class="tab" href="/member/credit-and-coupon/">게시물관리</a>
-						</div>
-					</div>
+<div id="my-page-wrap">
+	<div id="my-page-header">
+		<div id="header-content" class="my-page-content">
+			<div class="user-photo"
+				style="display: inline-block; background-image: url(&quot;https://cdn.studysearch.co.kr/images/users/199883/profile/1561443247&quot;); background-size: cover; background-position: 50% 50%;"></div>
+			<div id="tabs">
+				<div id="user-name">고세라</div>
+				<div id="tab-box">
+					<a class="tab selected" href="${root}/user_mypage/myPage.jsp">내
+						프로필</a> <a class="tab" href="${root}/user_mypage/myPageGroup.jsp">나의
+						모임관리</a> <a class="tab" href="${root}/user_mypage/myPageGroupZzim.jsp">찜한
+						모임</a> <a class="tab" href="${root}/user_mypage/myPageWrite.jsp">게시물관리</a>
 				</div>
 			</div>
-
-			<br> <br>
-
-			<div class="wrap">
-				<div class="config_area">
-					<div class="config_title">
-						<!--계정설정-->
-						계정설정
-					</div>
-					<table class="config_table" width="100%">
-						<colgroup>
-							<col width="250">
-							<col width="*">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th>
-									<!--이메일 주소-->이메일 주소
-								</th>
-								<td><input type="text" name="email_address" class="t_input"
-									value="tpfk624@gmail.com" disabled=""></td>
-							</tr>
-							<tr>
-								<td class="space">&nbsp;</td>
-							</tr>
-							<tr>
-								<th>
-									<!--이름-->이름
-								</th>
-								<td><input type="text" name="name" class="t_input"
-									value="고세라"></td>
-							</tr>
-							<tr>
-								<td class="space">&nbsp;</td>
-							</tr>
-
-							<tr>
-								<th>
-									<!--비밀번호-->비밀번호
-								</th>
-								<td>
-									<!-- Button to Open the Modal -->
-									<button type="button" class="btn btn-primary"
-										data-toggle="modal" data-target="#myModal">비밀번호 재설정</button> <!-- The Modal -->
-									<div class="modal" id="myModal">
-										<div class="modal-dialog modal-sm">
-											<div class="modal-content">
-
-												<!-- Modal Header -->
-												<div class="modal-header">
-													<h4 class="modal-title">비밀번호 재설정</h4>
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-												</div>
-
-												<!-- Modal body -->
-												<form action="/ko/member/change_pw" method="post" id="pw_form">
-												<div class="modal-body">
-													<input type="password" placeholder="현재 비밀번호"
-														class="pw_input old_pw" name="old_pw"> <input
-														type="password" placeholder="신규 비밀번호"
-														class="pw_input new_pw" name="new_pw"> <input
-														type="password" placeholder="신규 비밀번호 확인"
-														class="pw_input pw_vali" name="pw_vali">
-												</div>
-
-												<!-- Modal footer -->
-												<div class="modal-footer">
-													<button type="button" class="btn btn-danger"
-														id = "btn-danger" data-dismiss="modal">Close</button>
-												</div>
-
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="space">&nbsp;</td>
-							</tr>
-
-
-						</tbody>
-					</table>
-
-					<div class="config_foot">
-						<a
-							href="javascript:et_modal('465', '383', '', '0', '/ko/member/leave', '0', '1', '0','0');"
-							class="leavelink"> <!--회원탈퇴-->회원탈퇴
-						</a> <a href="#" class="btn_submit"> <!--변경사항 저장-->변경사항 저장
-						</a>
-						<div class="clear"></div>
-					</div>
-				</div>
-			</div>
-
-
 		</div>
-</section>
+	</div>
+
+	<br> <br>
+
+	<div class="wrap">
+		<div class="config_area">
+			<div class="config_title">
+				<!--계정설정-->
+				계정설정
+			</div>
+			<table class="config_table" width="100%">
+				<colgroup>
+					<col width="250">
+					<col width="*">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>
+							<!--이메일 주소-->이메일 주소
+						</th>
+						<td><input type="text" name="email_address" class="t_input"
+							value="tpfk624@gmail.com" disabled=""></td>
+					</tr>
+					<tr>
+						<td class="space">&nbsp;</td>
+					</tr>
+					<tr>
+						<th>
+							<!--이름-->이름
+						</th>
+						<td><input type="text" name="name" class="t_input"
+							value="고세라"></td>
+					</tr>
+					<tr>
+						<td class="space">&nbsp;</td>
+					</tr>
+
+					<tr>
+						<th>
+							<!--비밀번호-->비밀번호
+						</th>
+						<td>
+							<!-- Button to Open the Modal -->
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#myModal">비밀번호 재설정</button> <!-- The Modal -->
+							<div class="modal" id="myModal">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+
+										<!-- Modal Header -->
+										<div class="modal-header">
+											<h4 class="modal-title">비밀번호 재설정</h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+										<!-- Modal body -->
+										<form action="/ko/member/change_pw" method="post" id="pw_form">
+											<div class="modal-body">
+												<input type="password" placeholder="현재 비밀번호"
+													class="pw_input old_pw" name="old_pw"> <input
+													type="password" placeholder="신규 비밀번호"
+													class="pw_input new_pw" name="new_pw"> <input
+													type="password" placeholder="신규 비밀번호 확인"
+													class="pw_input pw_vali" name="pw_vali">
+											</div>
+
+											<!-- Modal footer -->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger" id="btn-danger"
+													data-dismiss="modal">Close</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="space">&nbsp;</td>
+					</tr>
 
 
+				</tbody>
+			</table>
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
-<br><br>
-  <header>
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner" role="listbox">
-        <!-- Slide One - Set the background image for this slide in the line below -->
-        <div class="carousel-item active" style="background-image: url('http://placehold.it/1900x1080')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>First Slide</h3>
-            <p>This is a description for the first slide.</p>
-          </div>
-        </div>
-        <!-- Slide Two - Set the background image for this slide in the line below -->
-        <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>Second Slide</h3>
-            <p>This is a description for the second slide.</p>
-          </div>
-        </div>
-        <!-- Slide Three - Set the background image for this slide in the line below -->
-        <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>Third Slide</h3>
-            <p>This is a description for the third slide.</p>
-          </div>
-        </div>
-      </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-  </header>
-
-  <!-- Page Content -->
-  <div class="container">
-
-    <h1 class="my-4">Welcome to Modern Business</h1>
-
-    <!-- Marketing Icons Section -->
-    <div class="row">
-      <div class="col-lg-4 mb-4">
-        <div class="card h-100">
-          <h4 class="card-header">Card Title</h4>
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Learn More</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 mb-4">
-        <div class="card h-100">
-          <h4 class="card-header">Card Title</h4>
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Learn More</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 mb-4">
-        <div class="card h-100">
-          <h4 class="card-header">Card Title</h4>
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Learn More</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /.row -->
-
-    <!-- Portfolio Section -->
-    <h2>Portfolio Heading</h2>
-
-    <div class="row">
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">Project One</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">Project Two</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">Project Three</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis mollitia recusandae vero vel quam!</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">Project Four</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">Project Five</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">Project Six</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /.row -->
-
-    <!-- Features Section -->
-    <div class="row">
-      <div class="col-lg-6">
-        <h2>Modern Business Features</h2>
-        <p>The Modern Business template by Start Bootstrap includes:</p>
-        <ul>
-          <li>
-            <strong>Bootstrap v4</strong>
-          </li>
-          <li>jQuery</li>
-          <li>Font Awesome</li>
-          <li>Working contact form with validation</li>
-          <li>Unstyled page elements for easy customization</li>
-        </ul>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
-      </div>
-      <div class="col-lg-6">
-        <img class="img-fluid rounded" src="http://placehold.it/700x450" alt="">
-      </div>
-    </div>
-    <!-- /.row -->
-
-    <hr>
-
-    <!-- Call to Action Section -->
-    <div class="row mb-4">
-      <div class="col-md-8">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
-      </div>
-      <div class="col-md-4">
-        <a class="btn btn-lg btn-secondary btn-block" href="#">Call to Action</a>
-      </div>
-    </div>
-
-  </div>
-  <!-- /.container -->
-  
-<%@ include file = "/WEB-INF/views/commons/template/modern_business_bottom.jsp" %>
+			<div class="config_foot">
+				<a
+					href="javascript:et_modal('465', '383', '', '0', '/ko/member/leave', '0', '1', '0','0');"
+					class="leavelink"> <!--회원탈퇴-->회원탈퇴
+				</a> <a href="#" class="btn_submit"> <!--변경사항 저장-->변경사항 저장
+				</a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<%@ include
+	file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>
