@@ -8,6 +8,7 @@
 <style>
 
 /* 마이페이지 헤더부분 */
+
 #my-page-wrap #my-page-header {
 	background-color: #5a5e64;
 }
@@ -35,7 +36,6 @@ element.style {
 	border-radius: 50%;
 }
 
-
 /* taps 유저네임 */
 #my-page-wrap #header-content #tabs {
 	margin-left: 81pt;
@@ -49,7 +49,6 @@ element.style {
 	font-size: 16pt;
 	color: #fff;
 }
-
 
 /* tab box */
 #my-page-wrap #header-content #tabs #tab-box {
@@ -74,6 +73,9 @@ element.style {
 	text-align: center;
 }
 
+element.style {
+	
+}
 
 #my-page-wrap #header-content #tabs .tab.selected {
 	color: #fff;
@@ -106,13 +108,14 @@ a:-webkit-any-link {
 :focus {
 	outline: -webkit-focus-ring-color auto 1px;
 }
+/* 마이페이지 헤더부분 */
 
+/* ////////////////////////////////////////////////////////// */
 
 /* 밑부분 몸체 */
 .jumbotron {
 	/* padding: 50rem 1rem; */
 	background-color: #ebebeb;
-	/* height: 1000px; */
 }
 
 .contents {
@@ -124,13 +127,14 @@ a:-webkit-any-link {
 	margin-bottom: 30px;
 }
 
-.jumbotronBottom{
-	 overflow: hidden;
-}
 .moimTitle {
 	display: inline-block;
 	margin-bottom: .5rem;
 	font-size: 23px;
+}
+
+.jumbotronBottom{
+	 overflow: hidden;
 }
 
 .moimOption{
@@ -153,13 +157,6 @@ a:-webkit-any-link {
 	margin-left: 20px;
 }
 /* 모임 박스  */
-
-section {
-    margin-top: 0rem;
-    padding-left: 0;
-    padding-right: 0;
-}
-
 </style>
 
 <!-- <div class="container py-xl-5 py-lg-3"> -->
@@ -173,8 +170,8 @@ section {
 					<div id="user-name">고세라</div>
 					<div id="tab-box">
 						<a class="tab" href="${root}/user_mypage/myPage.jsp">내 프로필</a>
-						<a class="tab" href="${root}/user_mypage/myPageGroup.jsp">나의 모임관리</a>
-						<a class="tab selected" href="${root}/user_mypage/myPageGroupZzim.jsp">찜한 모임</a>
+						<a class="tab selected" href="${root}/user_mypage/myPageGroup.jsp">나의 모임관리</a>
+						<a class="tab" href="${root}/user_mypage/myPageGroupZzim.jsp">찜한 모임</a>
 						<a class="tab" href="${root}/user_mypage/myPageWrite.jsp">게시물관리</a>
 					</div>
 				</div>
@@ -186,14 +183,12 @@ section {
 		<div class="container">
 			<div class="jumbotron">
 				<div class="jumbotronTop">
-					<label class="moimTitle">찜한 모임 목록 </label>
+					<label class="moimTitle">내 모임 목록 </label>
 					
 					<select class="moimOption">
 						<option value="제목" selected="selected">전체보기</option>
-						<option value="작성자">스터디</option>
-						<option value="작성자">취미</option>
-						<option value="작성자">친목도모</option>
-						<option value="작성자">맛집탐방</option>
+						<option value="작성자">개설모임</option>
+						<option value="작성자">가입모임</option>
 					</select>
 					<hr>
 				</div>
@@ -324,13 +319,17 @@ section {
 							</div>
 						</div>
 					</div>
-					
 					<!-- 카드 사진 아래버전 -->
 
 				</div>
+
+
+
 			</div>
 		</div>
 	</div>
 </section>
 
-<%@ include file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>
+</div>
+
+<%@ includefile="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>
