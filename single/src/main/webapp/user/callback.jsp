@@ -29,7 +29,7 @@
     var age= naver_id_login.getProfileData('age');
 	$('#email').val(email);
 	$('#accessToken').val(accessToken);
-	$("#naverProfileForm").attr("method", "POST").attr("action", "${root}/user/callback").submit();
+	$("#naverProfileForm").attr("method", "POST").attr("action", "${root}/naverlogin/callback").submit();
   }
 </script>
 </body>
