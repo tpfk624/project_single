@@ -154,11 +154,14 @@ a:-webkit-any-link {
 }
 /* 모임 박스  */
 
-section {
+/* 헤더에 딱 붙이기 */
+.contents  {
     margin-top: 0rem;
     padding-left: 0;
     padding-right: 0;
+    padding-top: 0;
 }
+
 
 </style>
 
