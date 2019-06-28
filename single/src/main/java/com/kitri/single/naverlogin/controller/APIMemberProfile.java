@@ -1,4 +1,4 @@
-package com.naver.naverlogin.controller;
+package com.kitri.single.naverlogin.controller;
 //네이버 API 예제 - 회원프로필 조회
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
