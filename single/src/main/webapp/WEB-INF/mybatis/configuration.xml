@@ -6,7 +6,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="userDto" type="com.kitri.single.user.model.UserDto"/>
-		
+
 		<typeAlias alias="searchLogDto" type="com.kitri.single.home.model.SearchLogDto"/>
 		
 		<typeAlias alias="hashtagDto" type="com.kitri.single.hashtag.model.HashtagDto"/>
