@@ -191,10 +191,12 @@ img{
  margin-left: 10px;
 }
 
-section {
+/* 헤더에 딱 붙이기 */
+.contents  {
     margin-top: 0rem;
     padding-left: 0;
     padding-right: 0;
+    padding-top: 0;
 }
 
 </style>

@@ -4,6 +4,10 @@
 	height: 40vh;
 }
 
+.search{
+	margin-top: 1.5rem;
+}
+
 .contents {
 	background-color: #ebebeb;
 	padding-top: 1rem;
