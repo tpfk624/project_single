@@ -12,7 +12,7 @@
 		<div class="carousel-inner" role="listbox">
 			<!-- Slide One - Set the background image for this slide in the line below -->
 			<div class="carousel-item active"
-				style="background-image: url('https://cdn.studysearch.co.kr/images/leader/1939/8742-1547710638.png?v=1547710638')">
+				style="background-image: url('https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145')">
 				<div class="carousel-caption d-none d-md-block">
 					<h3>First Slide</h3>
 					<p>This is a description for the first slide.</p>

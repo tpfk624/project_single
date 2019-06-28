@@ -16,9 +16,6 @@ function groupcardClick(){
 }
 </script>
 
-
-
-
 <%@ include file="groupdetailmodal.jsp"%>
 <%@ include file="groupheader.jsp"%>
 <%@ include file="groupsearch.jsp" %>

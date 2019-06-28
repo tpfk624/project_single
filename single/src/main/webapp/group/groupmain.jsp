@@ -51,6 +51,7 @@
 
 <section class="contents">
 	<div class="container col-lg-9 col-md-9 col-sm-9 whitespace">		
+		<!-- 모임 이름 뿌져지는 곳 -->
 		<section class="groupsection groupheader">
 			<div class="row center">
 					<span class="center">카테고리뿌리는곳</span>
@@ -60,6 +61,7 @@
 			</div>
 		</section>
 		
+		<!-- 모임 정보 -->
 		<section class="groupsection group-info">
 			<label class="group-info-label col-sm-2">모임정보</label>
 			<div class="group-info-content col-sm-10">
@@ -69,6 +71,7 @@
 			</div>
 		</section>
 		
+		<!-- 모임 설명 -->
 		<section class="groupsection group-info">
 			<label class="group-info-label col-sm-2">모임설명</label>
 			<div class="group-info-content col-sm-10">
@@ -89,7 +92,8 @@
 			[황선혜] [오후 9:34] ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
 			</div>
 		</section>
-
+		
+		<!-- 달력 -->
 		<section class="groupsection group-calendar">
 			<label class="group-info-label col-sm-2">모임일정</label>
 			<div class="group-info-content col-sm-10">
@@ -101,6 +105,5 @@
 <!-- /.container -->
 <!-- 채팅부분 -->
 <%@ include file="chat.jsp"%>
-
 
 <%@ include file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>

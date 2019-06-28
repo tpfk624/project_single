@@ -89,43 +89,42 @@ body {
             <a class="nav-link" href="about.html">나의 정보</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="services.html">서비스</a>
+            <a class="nav-link" href="services.html">혼자 놀아요</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">콘택트</a>
+            <a class="nav-link" href="contact.html">같이 놀아요</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              	포트폴리오
+              	마이페이지
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-              <a class="dropdown-item" href="portfolio-1-col.html">1 Column Portfolio</a>
-              <a class="dropdown-item" href="portfolio-2-col.html">2 Column Portfolio</a>
-              <a class="dropdown-item" href="portfolio-3-col.html">3 Column Portfolio</a>
-              <a class="dropdown-item" href="portfolio-4-col.html">4 Column Portfolio</a>
-              <a class="dropdown-item" href="portfolio-item.html">Single Portfolio Item</a>
+              <a class="dropdown-item" href="${root}/user_mypage/myPage.jsp">내 프로필</a>
+              <a class="dropdown-item" href="${root}/user_mypage/myPageGroup.jsp">나의 모임관리</a>
+              <a class="dropdown-item" href="${root}/user_mypage/myPageGroupZzim.jsp">찜한 모임</a>
+              <a class="dropdown-item" href="${root}/user_mypage/myPageWrite.jsp">게시물 관리</a>
             </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              	블로그
+              	같이놀아요
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-              <a class="dropdown-item" href="blog-home-1.html">Blog Home 1</a>
-              <a class="dropdown-item" href="blog-home-2.html">Blog Home 2</a>
-              <a class="dropdown-item" href="blog-post.html">Blog Post</a>
+              <a class="dropdown-item" href="${root}/group/grouplist.jsp">그룹 목록보기</a>
+              <a class="dropdown-item" href="${root}/group/groupcreate.jsp">그룹 만들기</a>
+              <a class="dropdown-item" href="${root}/group/groupmain.jsp">그룹 안으로 들어가기</a>
             </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             	다른 페이지
+             	혼자놀아요
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-              <a class="dropdown-item" href="full-width.html">Full Width Page</a>
-              <a class="dropdown-item" href="sidebar.html">Sidebar Page</a>
-              <a class="dropdown-item" href="faq.html">FAQ</a>
-              <a class="dropdown-item" href="404.html">404</a>
-              <a class="dropdown-item" href="pricing.html">Pricing Table</a>
+              <a class="dropdown-item" href="${root}/board/singlemain.jsp">혼자 놀아요 메인</a>
+              <a class="dropdown-item" href="${root}/board/index_modern_business_alone.jsp">혼자 놀아요 메인</a>
+              <a class="dropdown-item" href="${root}/board/index_modern_business_cook.jsp">요리게시판</a>
+              <a class="dropdown-item" href="${root}/board/index_modern_business_writing.jsp">글쓰기 페이지</a>
+              <a class="dropdown-item" href="${root}/board/index_modern_business_writeboard.jsp">유저 클릭시 페이지</a>
             </div>
           </li>
         </ul>

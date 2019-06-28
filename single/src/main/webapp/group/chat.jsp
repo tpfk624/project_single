@@ -20,7 +20,7 @@
 	position: fixed;
 	height: 100%;
 	top : 56px;
-	right : -15rem;
+	right : -16rem;
 	z-index: 1000;
 	background-color: #ebebeb;
 	padding-left: 1rem;
