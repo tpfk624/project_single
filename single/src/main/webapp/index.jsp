@@ -10,8 +10,8 @@
 		<!-- Nav -->
 			<nav id="menu">
 				<ul class="links">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="${root}/board/write">혼자놀아요</a></li>
+					<li><a href="login.jsp">로그인</a></li>
+					<li><a href="${root }/board/write">혼자놀아요</a></li>
 					<li><a href="elements.html">Elements</a></li>
 				</ul>
 			</nav>

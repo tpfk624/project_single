@@ -52,6 +52,14 @@ public class NaverLoginController {
 		//foward방식
 //		return new ModelAndView("redirect:/index.jsp","naverUserInfo",userProfile);
 	}
+	
+	@RequestMapping(value ="/mvcallback", method = RequestMethod.GET) 
+	public String mvcallback(@RequestParam Map<String,String> parameter ,Model model){
+		Logger logger = LoggerFactory.getLogger(NaverLoginController.class);
+		logger.debug("mvcallback");
+		System.out.println("mvcallback");
+		return "index";
+	}
 }
 
 

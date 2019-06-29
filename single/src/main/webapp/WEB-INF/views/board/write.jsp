@@ -34,7 +34,7 @@ $(document).ready(function() {
 			alert("내용 입력!!!");
 			return;
 		} else {
-			$("#form-horizontal boardwriting").attr("action","${root}/board/write").submit();
+			$("#writeForm").attr("action","${root}/reboard/write").submit();
 		}
 	});
 });
@@ -60,7 +60,20 @@ $(document).ready(function() {
     <div class="col-lg-10 mb-4">
       
     <div class="container">
-		<form class="form-horizontal boardwriting">
+		<form class="form-horizontal boardwriting"
+			id="writeForm" name="writeForm" method="post" action="" >
+			
+			
+			
+			<!-- 페이지 가지고 다니는 것. -->
+			<input type="hidden" name="bcode" value="1">
+			<!-- 새 글을 쓰면 무조건 1페이지 -->
+			<input type="hidden" name="pg" value="1">
+			<input type="hidden" name="key" value="">
+			<input type="hidden" name="word" value="">
+			
+			
+			
 			<div class="form-group">
 				<label for="content" class="col-sm-2 control-label"><p3>내용입력</p3></label>
 				
@@ -80,7 +93,7 @@ $(document).ready(function() {
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" id="writeBtn" name="writeBtn" class="btn btn-default" style="color: #007bff; border-color: #007bff;">Save</button>
+					<button id="writeBtn" name="writeBtn" class="btn btn-default" style="color: #007bff; border-color: #007bff;">Save</button>
 				</div>
 			</div>
 		</form>

@@ -23,7 +23,7 @@
 
 
     <div class="row">
-    <!-- 메인 중앙 -->
+    <!-- 메인 중앙 --> 
     <div class="col-lg-10 mb-4">
       
       
@@ -165,7 +165,7 @@
 		</table><hr>
 	</div>
 	<div class="row">
-		<div class="col-lg-2"></div>
+		<div class="col-lg-2"><small>총 글수 : </small></div>
 		<div class="col-lg-8">
 			<ul class="pagination justify-content-center">
 				<li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>

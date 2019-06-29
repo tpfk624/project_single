@@ -9,6 +9,7 @@
 
 
 
+
 <div class="container">
 
     <!-- Page Heading/Breadcrumbs -->
@@ -50,10 +51,10 @@
     </div>
     <div class="row">
     	<div class="col-lg-8" width="70%">
-    		<p>첫번째 게시글 제목 (최신순 첫번째)</p>
+    		<p>첫번째 게시글 제목 (최신순 첫번째)</p><small>작성일 : 2019-06-28</small>
     	</div>
     	<div class="col-lg-4" width="30%" align="right">
-    		<p>카테고리 이름</p>
+	    	<p>카테고리 이름</p>
     	</div>
     </div>
      
@@ -70,6 +71,7 @@
 
 
 
+	<!-- 글 제목과 좋아요 수 -->
 	<div class="row">
     	<div class="col-lg-1">
     		<!-- 좋아요 이미지 -->
@@ -81,10 +83,10 @@
     </div>
     <div class="row">
     	<div class="col-lg-8" width="70%">
-    		<p>첫번째 게시글 제목 (최신순 첫번째)</p>
+    		<p>첫번째 게시글 제목 (최신순 첫번째)</p><small>작성일 : 2019-06-28</small>
     	</div>
     	<div class="col-lg-4" width="30%" align="right">
-    		<p>카테고리 이름</p>
+	    	<p>카테고리 이름</p>
     	</div>
     </div>
      
