@@ -8,18 +8,6 @@
 <style>
 
 /* 마이페이지 헤더부분 */
-div {
-	display: block;
-}
-
-body, html {
-	height: 100%;
-	font-size: 11pt;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-moz-font-feature-settings: "liga";
-}
 
 #my-page-wrap #my-page-header {
 	background-color: #5a5e64;
@@ -85,10 +73,6 @@ element.style {
 	text-align: center;
 }
 
-element.style {
-	
-}
-
 #my-page-wrap #header-content #tabs .tab.selected {
 	color: #fff;
 	border-bottom: 3px solid #ef6c00;
@@ -111,34 +95,34 @@ a {
 	text-decoration: none;
 }
 
-/* a:-webkit-any-link {
-	color: -webkit-link;
-	cursor: pointer;
-	/* text-decoration: underline; */
-}
- */
+
 :focus {
 	outline: -webkit-focus-ring-color auto 1px;
 }
 /* 마이페이지 헤더부분 */
 
-/* ////////////////////////////////////////////////////////// */
+
+
 
 /* 밑부분 몸체 */
 .jumbotron {
 	/* padding: 50rem 1rem; */
 	background-color: #ebebeb;
-	height: 1000px;
 }
 
 .contents {
 	background-color: white;
-	height: 1000px;
 }
-/* 밑부분 몸체 */
+
+
+
 .jumbotronTop {
 	height: 70px;
 	margin-bottom: 30px;
+}
+
+.jumbotronBottom{
+	 overflow: hidden;
 }
 
 .moimTitle {
@@ -183,13 +167,14 @@ a {
     border-bottom: 1px solid rgb(235, 235, 235);
     color: black;
     padding: 1rem 1.25rem;
+    
     text-align: left;
 }
 
 .card-content {
     margin: 0px 24px;
     color: darkgray;
-    padding: 1rem 1.25rem;
+    padding: 0.6rem 1.25rem;
     text-align: left;
 }
 
@@ -201,13 +186,19 @@ a {
     text-align: left;
 }
 
-.heartCount{
-/* 	float: right; */
-}
 
 img{
  margin-left: 10px;
 }
+
+/* 헤더에 딱 붙이기 */
+.contents  {
+    margin-top: 0rem;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+
 </style>
 
 <!-- <div class="container py-xl-5 py-lg-3"> -->
@@ -333,18 +324,5 @@ img{
 		
 	</div>
 </section>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
-
-
-<%@ include
-	file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>
+<%@ include file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>

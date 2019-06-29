@@ -1,0 +1,15 @@
+-- 게시판 카테고리
+create sequence category_num_seq increment by 1 start with 1;
+-- 게시판 형식
+create sequence board_type_num_seq increment by 1 start with 1;
+-- 게시판 리스트
+create sequence board_list_num_seq increment by 1 start with 1;
+-- 게시판
+create sequence board_num_seq increment by 1 start with 1;
+-- 댓글
+create sequence reply_num_seq increment by 1 start with 1;
+
+
+-- 게시판 카테고리
+insert into single_board_category(category_num,category_name) VALUES(category_num_seq.nextval,'혼자놀아요');
+insert into single_board_category(category_num,category_name) VALUES(category_num_seq.nextval,'같이놀아요');

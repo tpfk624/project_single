@@ -1,0 +1,53 @@
+@charset "UTF-8";
+.cal_top {
+	text-align: center;
+}
+#boss{
+	font-size: 25px;
+	margin-bottom: 10px;
+}
+.cal {
+	text-align: center;
+}
+
+table.calendar .cal-schedule {
+	/*
+	1. 이 부분이 일정등록 클릭할 부분
+*/
+	min-height: 55px;
+}
+
+table.calendar {
+	display: inline-table;
+	text-align: left;
+}
+table.calendar th{
+	text-align: center;
+}
+table.calendar td {
+	vertical-align: top;
+	height: 50px;
+	width: 150px;
+	border: 1px solid;
+	text-align: right;
+	padding-right: 1%;
+}
+
+div.schedule {
+	background-color: yellow;
+}
+
+.schedule:hover {
+	background-color: lime;
+	cursor: pointer;
+}
+
+#calendar td:hover {
+	background-color: #DCDCDC;
+	cursor: pointer;
+}
+
+#calendarsection .cal_tit{
+	cursor: pointer;
+	color: #4680ff;
+}

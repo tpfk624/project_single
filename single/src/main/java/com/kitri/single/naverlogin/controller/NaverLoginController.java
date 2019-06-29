@@ -1,4 +1,4 @@
-package com.naver.naverlogin.controller;
+package com.kitri.single.naverlogin.controller;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.naver.naverlogin.model.NaverUserDto;
+import com.kitri.single.naverlogin.model.NaverUserDto;
 
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/naverlogin")
 public class NaverLoginController {
 	
 	
@@ -51,6 +51,14 @@ public class NaverLoginController {
 		return "user/result";
 		//foward방식
 //		return new ModelAndView("redirect:/index.jsp","naverUserInfo",userProfile);
+	}
+	
+	@RequestMapping(value ="/mvcallback", method = RequestMethod.GET) 
+	public String mvcallback(@RequestParam Map<String,String> parameter ,Model model){
+		Logger logger = LoggerFactory.getLogger(NaverLoginController.class);
+		logger.debug("mvcallback");
+		System.out.println("mvcallback");
+		return "index";
 	}
 }
 

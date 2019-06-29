@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.kitri.single">
-		<level value="info" />
+		<level value="all" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

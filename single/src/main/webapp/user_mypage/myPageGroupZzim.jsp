@@ -8,19 +8,6 @@
 <style>
 
 /* 마이페이지 헤더부분 */
-div {
-	display: block;
-}
-
-body, html {
-	height: 100%;
-	font-size: 11pt;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-moz-font-feature-settings: "liga";
-}
-
 #my-page-wrap #my-page-header {
 	background-color: #5a5e64;
 }
@@ -48,6 +35,7 @@ element.style {
 	border-radius: 50%;
 }
 
+
 /* taps 유저네임 */
 #my-page-wrap #header-content #tabs {
 	margin-left: 81pt;
@@ -61,6 +49,7 @@ element.style {
 	font-size: 16pt;
 	color: #fff;
 }
+
 
 /* tab box */
 #my-page-wrap #header-content #tabs #tab-box {
@@ -85,9 +74,6 @@ element.style {
 	text-align: center;
 }
 
-element.style {
-	
-}
 
 #my-page-wrap #header-content #tabs .tab.selected {
 	color: #fff;
@@ -120,20 +106,17 @@ a:-webkit-any-link {
 :focus {
 	outline: -webkit-focus-ring-color auto 1px;
 }
-/* 마이페이지 헤더부분 */
 
-/* ////////////////////////////////////////////////////////// */
 
 /* 밑부분 몸체 */
 .jumbotron {
 	/* padding: 50rem 1rem; */
 	background-color: #ebebeb;
-	height: 1000px;
+	/* height: 1000px; */
 }
 
 .contents {
 	background-color: white;
-	height: 1000px;
 }
 /* 밑부분 몸체 */
 .jumbotronTop {
@@ -141,6 +124,9 @@ a:-webkit-any-link {
 	margin-bottom: 30px;
 }
 
+.jumbotronBottom{
+	 overflow: hidden;
+}
 .moimTitle {
 	display: inline-block;
 	margin-bottom: .5rem;
@@ -167,6 +153,15 @@ a:-webkit-any-link {
 	margin-left: 20px;
 }
 /* 모임 박스  */
+
+/* 헤더에 딱 붙이기 */
+.contents  {
+    margin-top: 0rem;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+
 </style>
 
 <!-- <div class="container py-xl-5 py-lg-3"> -->
@@ -339,8 +334,5 @@ a:-webkit-any-link {
 		</div>
 	</div>
 </section>
-<br><br><br><br><br><br><br><br><br><br>
-
-
 
 <%@ include file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>

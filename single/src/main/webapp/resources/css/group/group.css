@@ -3,14 +3,18 @@
 .carousel-item {
 	height: 40vh;
 }
-section{
+
+.search{
 	margin-top: 1.5rem;
-	padding-left: 0;
-	padding-right: 0;
 }
 
 .contents {
 	background-color: #ebebeb;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	margin-top: 1.5rem;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 .card-title {
@@ -30,7 +34,8 @@ section{
 	position: absolute;
 	bottom: 0;
 	background: rgb(0, 0, 0);
-	background: rgba(239, 108, 0, 0.8); /* Black see-through */
+	background: rgba(0, 64, 133, 0.8);
+	/*background: rgba(239, 108, 0, 0.8);  Black see-through */
 	color: #f1f1f1;
 	width: 100%;
 	transition: .5s ease;
@@ -68,4 +73,16 @@ section{
 
 .span-btn>button{
 	width: 100%;
+}
+
+/* 그룹 디테일 모달*/
+#groupDetailModal .card-img-top{
+	max-width: 70%;
+	max-height: 70%;
+}
+
+/* 공통부분  */
+.center{
+	margin-left: auto;
+	margin-right: auto;	
 }

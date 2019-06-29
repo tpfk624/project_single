@@ -8,6 +8,7 @@
 <style>
 
 /* 마이페이지 헤더부분 */
+
 #my-page-wrap #my-page-header {
 	background-color: #5a5e64;
 }
@@ -35,7 +36,6 @@ element.style {
 	border-radius: 50%;
 }
 
-
 /* taps 유저네임 */
 #my-page-wrap #header-content #tabs {
 	margin-left: 81pt;
@@ -49,7 +49,6 @@ element.style {
 	font-size: 16pt;
 	color: #fff;
 }
-
 
 /* tab box */
 #my-page-wrap #header-content #tabs #tab-box {
@@ -74,6 +73,9 @@ element.style {
 	text-align: center;
 }
 
+element.style {
+	
+}
 
 #my-page-wrap #header-content #tabs .tab.selected {
 	color: #fff;
@@ -106,13 +108,14 @@ a:-webkit-any-link {
 :focus {
 	outline: -webkit-focus-ring-color auto 1px;
 }
+/* 마이페이지 헤더부분 */
 
+/* ////////////////////////////////////////////////////////// */
 
 /* 밑부분 몸체 */
 .jumbotron {
 	/* padding: 50rem 1rem; */
 	background-color: #ebebeb;
-	/* height: 1000px; */
 }
 
 .contents {
@@ -124,13 +127,14 @@ a:-webkit-any-link {
 	margin-bottom: 30px;
 }
 
-.jumbotronBottom{
-	 overflow: hidden;
-}
 .moimTitle {
 	display: inline-block;
 	margin-bottom: .5rem;
 	font-size: 23px;
+}
+
+.jumbotronBottom{
+	 overflow: hidden;
 }
 
 .moimOption{
@@ -153,16 +157,6 @@ a:-webkit-any-link {
 	margin-left: 20px;
 }
 /* 모임 박스  */
-
-/* 헤더에 딱 붙이기 */
-.contents  {
-    margin-top: 0rem;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 0;
-}
-
-
 </style>
 
 <!-- <div class="container py-xl-5 py-lg-3"> -->
@@ -200,7 +194,28 @@ a:-webkit-any-link {
 				</div>
 
 				<div class="jumbotronBottom">
+
 					<!-- 카드 사진 아래버전 -->
+					<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
+						<div class="card h-100">
+							<img class="card-img-top"
+								src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
+								alt="">
+							<h4 class="card-title">영어단어 스터디</h4>
+							<div class="card-body">
+								<p class="card-text">그룹 설명 블라블라블라 욜그룹 설명 블라블라블라 욜그룹 설명
+									블라블라블라 욜그룹 설명 블라블라블라 욜</p>
+								<p class="card-text">인원 : 15/30</p>
+								<p class="card-text">장소 : 구로디지털 단지</p>
+							</div>
+
+							<div class="overlay">
+								<div class="text">상세보기</div>
+							</div>
+						</div>
+					</div>
+					<!-- 카드 사진 아래버전 -->
+
 					<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
 						<div class="card h-100">
 							<img class="card-img-top"
@@ -240,48 +255,6 @@ a:-webkit-any-link {
 						</div>
 					</div>
 					<!-- 카드 사진 아래버전 -->
-
-					<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
-						<div class="card h-100">
-							<img class="card-img-top"
-								src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
-								alt="">
-							<h4 class="card-title">영어단어 스터디</h4>
-							<div class="card-body">
-								<p class="card-text">그룹 설명 블라블라블라 욜그룹 설명 블라블라블라 욜그룹 설명
-									블라블라블라 욜그룹 설명 블라블라블라 욜</p>
-								<p class="card-text">인원 : 15/30</p>
-								<p class="card-text">장소 : 구로디지털 단지</p>
-							</div>
-
-							<div class="overlay">
-								<div class="text">상세보기</div>
-							</div>
-						</div>
-					</div>
-					<!-- 카드 사진 아래버전 -->
-
-					<!-- 카드 사진 아래버전 -->
-					<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
-						<div class="card h-100">
-							<img class="card-img-top"
-								src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
-								alt="">
-							<h4 class="card-title">영어단어 스터디</h4>
-							<div class="card-body">
-								<p class="card-text">그룹 설명 블라블라블라 욜그룹 설명 블라블라블라 욜그룹 설명
-									블라블라블라 욜그룹 설명 블라블라블라 욜</p>
-								<p class="card-text">인원 : 15/30</p>
-								<p class="card-text">장소 : 구로디지털 단지</p>
-							</div>
-
-							<div class="overlay">
-								<div class="text">상세보기</div>
-							</div>
-						</div>
-					</div>
-					<!-- 카드 사진 아래버전 -->
-
 
 					<!-- 카드 사진 아래버전 -->
 					<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
@@ -324,11 +297,39 @@ a:-webkit-any-link {
 							</div>
 						</div>
 					</div>
+					<!-- 카드 사진 아래버전 -->
+
+
+					<!-- 카드 사진 아래버전 -->
+					<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
+						<div class="card h-100">
+							<img class="card-img-top"
+								src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
+								alt="">
+							<h4 class="card-title">영어단어 스터디</h4>
+							<div class="card-body">
+								<p class="card-text">그룹 설명 블라블라블라 욜그룹 설명 블라블라블라 욜그룹 설명
+									블라블라블라 욜그룹 설명 블라블라블라 욜</p>
+								<p class="card-text">인원 : 15/30</p>
+								<p class="card-text">장소 : 구로디지털 단지</p>
+							</div>
+
+							<div class="overlay">
+								<div class="text">상세보기</div>
+							</div>
+						</div>
+					</div>
+					<!-- 카드 사진 아래버전 -->
+
 				</div>
+
+
+
 			</div>
 		</div>
 	</div>
 </section>
 
+</div>
 
 <%@ includefile="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>
