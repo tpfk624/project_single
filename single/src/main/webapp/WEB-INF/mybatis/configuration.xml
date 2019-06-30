@@ -4,6 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+        <setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
 	<typeAliases>
 		<typeAlias alias="userDto" type="com.kitri.single.user.model.UserDto"/>
 
@@ -21,5 +25,9 @@
 		<typeAlias alias="likeDto" type="com.kitri.single.board.model.LikeDto"/>
 		<typeAlias alias="replyDto" type="com.kitri.single.board.model.ReplyDto"/>
 		
+		
+		<typeAlias alias="naverUserDto" type="com.kitri.single.naverlogin.model.NaverUserDto"/>
+		
 	</typeAliases>
+	
 </configuration>
