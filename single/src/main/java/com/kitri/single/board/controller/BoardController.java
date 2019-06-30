@@ -4,17 +4,27 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kitri.single.board.model.BoardDto;
+import com.kitri.single.board.model.ReplyDto;
+import com.kitri.single.board.service.BoardService;
+import com.kitri.single.common.service.CommonService;
+import com.kitri.single.user.model.UserDto;
 
 @Controller
-@RequestMapping("board")
+@RequestMapping("/board")
 public class BoardController {
+	
+	@Autowired
+	private BoardService boardService;
+	
+	@Autowired
+	private CommonService commonService;
 	
 	@RequestMapping("singlemain")
 	public void singleMain(){
@@ -38,27 +48,35 @@ public class BoardController {
 
 		model.addAttribute("parameter", parameter);
 		
-		//select를 3번해와야뎀. ---------------
-		//이달의 자취왕
 		
-		//이달의 추천순
-		
-		//오늘의 새글
 		
 	}
 	
 	
 	@RequestMapping(value="/write",method = RequestMethod.POST)
-	public void write(BoardDto boardDto,@RequestParam Map<String, String> parameter,
+	public String write(ReplyDto replyDto,@RequestParam Map<String, String> parameter,
 			Model model, HttpSession session){
-		System.out.println("write insert 하는중");
-		//select를 3번해와야뎀.
+		//System.out.println("write insert 하는중");
 		
-		//이달의 자취왕
+		String path = "";
+		// 오라클이랑 인덱스에 인클루드한것중 유저인포 넣어둔것 있음.
+		UserDto userdto = new UserDto();
+		if (userdto != null) {
+			// 2번 적용됨?? - 오라클에 있는 유저랑 인클루드해서 넣어둔 유저랑 겹처서 그런가?
+			int seq = commonService.getNextSeq();
+			System.out.println(seq);
+			
+			replyDto.setBoardNum(seq);
+			replyDto.setUserId(userdto.getUserId());
+			replyDto.setUserNickname(userdto.getUserNickname());
+			
+			// 여기서부터임.
+			seq = boardService.writeArticle(replyDto);
+		}
 		
-		//이달의 추천순
+		//model.addAttribute("",);
 		
-		//오늘의 새글
+		return path;
 		
 	}
 	
