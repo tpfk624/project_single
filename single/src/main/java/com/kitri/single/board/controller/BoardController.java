@@ -59,8 +59,11 @@ public class BoardController {
 		//System.out.println("write insert 하는중");
 		
 		String path = "";
-		// 오라클이랑 인덱스에 인클루드한것중 유저인포 넣어둔것 있음.
-		UserDto userdto = new UserDto();
+		
+		// 오라클이랑 인덱스에 인클루드한것중 유저인포 넣어둔것 있음. 당연히 null아님? 근데도 들어가짐.
+		// 혹시 new도 생성이기는 하니깐?
+		//UserDto userdto = new UserDto();
+		UserDto userdto = (UserDto)session.getAttribute("userInfo");
 		if (userdto != null) {
 			// 2번 적용됨?? - 오라클에 있는 유저랑 인클루드해서 넣어둔 유저랑 겹처서 그런가?
 			int seq = commonService.getNextSeq();
