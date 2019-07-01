@@ -64,12 +64,8 @@ public class BoardController {
 	@RequestMapping(value="/write",method = RequestMethod.POST)
 	public String write( @RequestParam Map<String, String> parameter,
 			Model model, HttpSession session){
-		//System.out.println("write insert 하는중");
 		
 		String path = "";
-		
-		
-		System.out.println("write, post 자알들어옴~");
 		
 		// 오라클이랑 인덱스에 인클루드한것중 유저인포 넣어둔것 있음. 당연히 null아님? 근데도 들어가짐.
 		// 혹시 new도 생성이기는 하니깐?
@@ -79,10 +75,11 @@ public class BoardController {
 		UserDto userdto = (UserDto)session.getAttribute("userInfo");
 		if (userdto != null) {
 			// 2번 적용됨?? - 오라클에 있는 유저랑 인클루드해서 넣어둔 유저랑 겹처서 그런가?
-			int seq = commonService.getNextSeq();
-			System.out.println(seq);
+
+			//System.out.println(" seq : 1 = "+seq);
+			int boardNum = commonService.getNextSeq();
 			
-			boardDto.setBoardNum(seq);
+			boardDto.setBoardNum(boardNum);
 			boardDto.setBoardListNum(Integer.parseInt(parameter.get("boardListNum")));
 			boardDto.setUserId(userdto.getUserId());
 			boardDto.setUserNickname(userdto.getUserNickname());
@@ -90,27 +87,68 @@ public class BoardController {
 			boardDto.setBoardContent(parameter.get("boardContent"));
 			boardDto.setBoardViews(0);
 			
+			//System.out.println("boardDto = " + boardDto);
+			//System.out.println(" seq : 2 = "+seq);
+
 			// 결과값 반환
-			seq = boardService.writeArticle(boardDto);
+			boardNum = boardService.writeArticle(boardDto);
 			
-			System.out.println(boardDto);
-			System.out.println(seq);
 			
-//			if (seq != 0) {
-//				model.addAttribute("seq",seq);
-//				path = "reboard/writeok";
-//			} else {
-//				path = "reboard/writefail";
-//			}
+			if (boardNum != 0) {
+				model.addAttribute("boardNum",boardNum);
+				path = "board/write/writeok";
+			} else {
+				path = "board/write/writefail";
+			}
 			
 		}
 		
-		//model.addAttribute("",);
+		model.addAttribute("parameter",parameter);
 		
-		return "";
+		return path;
 		
 	}
 	
 	
+	
+	@RequestMapping(value="/view",method = RequestMethod.GET)
+	public String view(@RequestParam("boardNum") int boardNum, @RequestParam Map<String, String> parameter, 
+			Model model, HttpSession session) { 
+		
+		
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		String path = "";
+		
+		// if문으로 로그인 했는지 안했는지 체크하기
+		if (userDto != null) {
+			BoardDto boardDto = boardService.viewArticle(boardNum);
+		
+			model.addAttribute("article", boardDto);
+			model.addAttribute("parameter", parameter);
+			
+			path = "board/view";
+		
+		} else {
+			path = "redirect:/index.jsp";
+		}
+		
+		return path;
+
+	}
+	
+	
+	
+	
+	
+	
 
 }
+
+
+
+
+
+
+
+
+

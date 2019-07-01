@@ -4,8 +4,8 @@
 
 <% UserDto userDto = new UserDto();
 userDto.setUserId("qjawns0617@naver.com");
-userDto.setUserName("권범준");
 userDto.setUserNickname("뿡뿡뿡뿡");
+userDto.setUserName("권범준");
 session.setAttribute("userInfo", userDto); %>
 
 <c:set var="root" value="${pageContext.request.contextPath}"/>

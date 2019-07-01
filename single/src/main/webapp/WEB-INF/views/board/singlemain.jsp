@@ -99,7 +99,7 @@
 		<table class="table" align="center">
 			<thead class="thead-light" align="center">
 				<tr style="background-color: #86c2ff">
-					<th colspan="3">이달의 추천순</th>
+					<th colspan="3">이주의 추천순</th>
 				</tr>
 			</thead>
 			<tbody align="center">
@@ -140,7 +140,7 @@
 	
 	
 	
-	<!-- 오늘의 새글 테이블 -->
+	<!-- 오늘의 새글 테이블 전체글로 보이게 하기.(최신순)-->
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12" align="left">

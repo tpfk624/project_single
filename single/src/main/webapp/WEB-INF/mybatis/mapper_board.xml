@@ -9,8 +9,19 @@
 		insert into single_board(board_num, board_list_num, user_id, user_nickname, board_subject,
 		board_content, board_views, board_createdate, board_updatedate, board_deletedate, board_statecode)
 		values(board_num_seq.nextval, #{boardListNum}, #{userId}, #{userNickname},
-		 #{boardSubject} , #{boardContent}, '0', sysdate, null, null, #{boardViews})
+		 #{boardSubject} , #{boardContent}, '0', sysdate, null, null, '1')
 	</insert>
+	
+	<!-- 원래 set,get이나 생성자를 이용해야 하지만 디티오랑 알리아스명이랑 같으면 자동으로 들어감 -->
+	<select id="viewArticle" parameterType="int" resultType="boardDto">
+	select board_num boardNum, board_list_num boardListNum, user_id userId, 
+		user_nickname userNickname, board_subject boardSubject, 
+		board_content boardContent, board_views boardViews, board_createDate boardCreatedate, 
+		board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
+		board_statecode boardStatecode
+	from single_board
+	where board_num = #{boardNum}	
+	</select>
 	
 </mapper>
    
