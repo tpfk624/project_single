@@ -7,8 +7,13 @@
 <br>
 <br>
 <br>
-아이디: ${userProfile.id} <br>
-이름: ${userProfile.name } <br>
+아이디: ${userInfo.id} <br>
+이름: ${userInfo.userName }<br>
+닉네임: ${userInfo.nickname }<br>
+나이: ${userInfo.age }<br>
+성별: ${userInfo.gender }<br>
+생일: ${userInfo.birthday }<br>
+이미지: ${userInfo.profile_image }<br>
 
 <br>
 <br>

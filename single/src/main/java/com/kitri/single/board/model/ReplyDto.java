@@ -1,6 +1,6 @@
 package com.kitri.single.board.model;
 
-public class ReplyDto {
+public class ReplyDto extends BoardDto {
 	
 	private int replyNum;
 	private int boardNum;

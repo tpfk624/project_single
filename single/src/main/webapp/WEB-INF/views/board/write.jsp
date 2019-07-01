@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
-
+<%@ include file = "/WEB-INF/views/commons/logincheck.jsp" %>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
 
 
@@ -34,7 +34,7 @@ $(document).ready(function() {
 			alert("내용 입력!!!");
 			return;
 		} else {
-			$("#writeForm").attr("action","${root}/reboard/write").submit();
+			$("#writeForm").attr("action","${root}/board/write").submit();
 		}
 	});
 });
@@ -66,7 +66,7 @@ $(document).ready(function() {
 			
 			
 			<!-- 페이지 가지고 다니는 것. -->
-			<input type="hidden" name="bcode" value="1">
+			<input type="hidden" name="boardListNum" value="1">
 			<!-- 새 글을 쓰면 무조건 1페이지 -->
 			<input type="hidden" name="pg" value="1">
 			<input type="hidden" name="key" value="">
@@ -82,12 +82,12 @@ $(document).ready(function() {
 					<div class="input-group-prepend">
 						<span class="input-group-text">제목</span>
 					</div>
-					<input type="text" class="form-control" id=subject name="subject">
+					<input type="text" class="form-control" id=boardSubject name="boardSubject">
 				</div>
 				
 				<!-- 내용 -->
 				<div class="col-sm-10">
-					<textarea name="content" id="content" class="summernote"></textarea>
+					<textarea name="boardContent" id="boardContent" class="summernote"></textarea>
 				</div>
 				
 			</div>
