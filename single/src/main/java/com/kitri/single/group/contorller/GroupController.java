@@ -1,5 +1,6 @@
 package com.kitri.single.group.contorller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,10 +35,20 @@ public class GroupController {
 	//로그
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
-	@RequestMapping(value = "/group", method = RequestMethod.GET)
-	public void grouplist(Model model, HttpSession session, @RequestParam Map<String, String> parameter) {
+	//첫페이지용
+	@RequestMapping(method = RequestMethod.GET)
+	public String grouplist(Model model, HttpSession session) {
 		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
-		List<GroupDto> list = groupService.getGroup(parameter, userInfo);
+		Map<String, String> parameter = new HashMap<String, String>();
+		parameter.put("page", "1");
+		if(userInfo != null) {
+			parameter.put("userId", userInfo.getUserId());
+		}
+		parameter.put("groupNum", null);
+		parameter.put("key", null);
+		parameter.put("word", null);
+		
+		List<GroupDto> list = groupService.getGroupList(parameter);
 		int size = list.size();
 		
 		System.out.println(parameter);
@@ -44,28 +56,15 @@ public class GroupController {
 		model.addAttribute("size", size);
 		model.addAttribute("groupList", list);
 		
-		logger.info(list.toString());
-		logger.info("size : " + size);
-	}
-	
-	@RequestMapping(value = "/grouplist", method = RequestMethod.GET)
-	public @ResponseBody String getGroupList(Model model, HttpSession session, @RequestParam Map<String, String> parameter) {
-		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
-		List<GroupDto> list = groupService.getGroup(parameter, userInfo);
-		int size = list.size();
-		
-		System.out.println(parameter);
-		
-		logger.info(list.toString());
-		logger.info("size : " + size);
-		
-		return "";
+		return "group/grouplist";
 	}
 	
 	@RequestMapping(value = "/groupdetail", method = RequestMethod.GET)
-	public @ResponseBody String groupDetail(@RequestParam Map<String, String> parameter){
+	public @ResponseBody String groupDetail(@RequestParam(name = "groupNum") int groupNum){
 		//String json = groupService.getGrou(parameter);
-		
-		return "";
+		//System.out.println(groupNum);
+		String json = groupService.getGroupDetail(groupNum);
+		//System.out.println(json);
+		return json;
 	}
 }

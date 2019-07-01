@@ -8,8 +8,9 @@ import com.kitri.single.user.model.UserDto;
 
 public interface GroupService {
 
-	public List<GroupDto> getGroup(Map<String, String> parameter, UserDto userInfo);
-
-	public String getGroup(int num);
+	//초기 그룹 리스트 셀렉트
+	public List<GroupDto> getGroupList(Map<String, String> parameter);
+	//특정 그룹 자세한 정보 가져오기
+	public String getGroupDetail(int groupNum);
 
 }
