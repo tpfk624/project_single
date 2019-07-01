@@ -804,27 +804,7 @@ insert into single_board_list(board_list_num,board_name,board_type_num,board_cat
 VALUES(board_list_num_seq.nextval,'명예의전당',1,1);
 
 
--- 시퀀스 검색
-SELECT category_num_seq.CURRVAL FROM DUAL;
-SELECT board_type_num_seq.CURRVAL FROM DUAL;
-SELECT board_list_num_seq.CURRVAL FROM DUAL;
-SELECT board_num_seq.CURRVAL FROM DUAL;
-SELECT reply_num_seq.CURRVAL FROM DUAL;
 
 
-select board_num_seq.nextval
-		from dual;
 
--- single_board_category select
-select * from single_board_category;
--- single_board_list select
-select * from single_boardd_list;
-
-insert into single_user values('qjawns0618@naver.com','밤준','권범준','1994-06-18','M','010-5419-0583','77777','경기도 화성시','반송동 떙땡아파트',sysdate,null,'1');
-insert into single_board values(board_num_seq.nextval, 1,'qjawns0618@naver.com' ,'밤준','들리십니까' ,'들리십니까 내용입니다','0' ,sysdate,null,null,'1');
-
--- single_user select
-select * from single_user;
--- single_board select
-select * from single_board;
 

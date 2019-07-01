@@ -5,6 +5,22 @@
      
 <mapper namespace="com.kitri.single.board.dao.BoardDao">
 	
+	<insert id="">
+		insert into single_board 
+		values
+			(board_num_seq.nextval,
+			 1,
+			 'qjawns0618@naver.com',
+			 '밤준',
+			 '들리십니까' ,
+			 '들리십니까 내용입니다',
+			 '0',
+			 sysdate,
+			 null,
+			 null,
+			 '1')
+	</insert>
+	
 </mapper>
    
    
