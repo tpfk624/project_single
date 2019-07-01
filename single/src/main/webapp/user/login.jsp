@@ -167,7 +167,7 @@ window.onclick = function(event) {
 </script>
 
 <!-- 네이버 로그인 실행-->
-<script type="text/javascript">
+<script type="text/javascript">http://localhost/single/naverlogintest.jsp
   	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/callback.jsp");
 //   	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/naverlogin/mvcallback");
   	var state = naver_id_login.getUniqState();
