@@ -889,7 +889,7 @@ values(
 insert into single_user
 (user_id, user_password, user_nickname, user_name, user_birthday, user_gender, user_phone, user_joindate, user_statecode)
 values (
-    'calubang'
+    'calubang@naver.com'
     , '123'
     , '카루뱅'
     , '안병욱'
@@ -903,7 +903,7 @@ values (
 insert into single_user
 (user_id, user_password, user_nickname, user_name, user_birthday, user_gender, user_phone, user_joindate, user_statecode)
 values (
-    'calubang1'
+    'calubang1@naver.com'
     , '123'
     , '카루뱅1'
     , '안병욱1'
@@ -917,7 +917,7 @@ values (
 insert into single_user
 (user_id, user_password, user_nickname, user_name, user_birthday, user_gender, user_phone, user_joindate, user_statecode)
 values (
-    'calubang2'
+    'calubang2@naver.com'
     , '123'
     , '카루뱅2'
     , '안병욱2'
@@ -931,7 +931,7 @@ values (
 insert into single_user
 (user_id, user_password, user_nickname, user_name, user_birthday, user_gender, user_phone, user_joindate, user_statecode)
 values (
-    'calubang3'
+    'calubang3@naver.com'
     , '123'
     , '카루뱅3'
     , '안병욱3'
