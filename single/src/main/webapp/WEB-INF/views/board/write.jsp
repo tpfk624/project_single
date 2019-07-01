@@ -82,12 +82,12 @@ $(document).ready(function() {
 					<div class="input-group-prepend">
 						<span class="input-group-text">제목</span>
 					</div>
-					<input type="text" class="form-control" id=subject name="subject">
+					<input type="text" class="form-control" id=boardSubject name="boardSubject">
 				</div>
 				
 				<!-- 내용 -->
 				<div class="col-sm-10">
-					<textarea name="content" id="content" class="summernote"></textarea>
+					<textarea name="boardContent" id="boardContent" class="summernote"></textarea>
 				</div>
 				
 			</div>
