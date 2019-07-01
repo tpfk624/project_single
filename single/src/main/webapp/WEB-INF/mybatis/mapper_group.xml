@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
      
 <mapper namespace="com.kitri.single.group.dao.GroupDao">
-	<select id="getGroupList" parameterType="userDto" resultType="groupDto">
+	<select id="getGroupList" parameterType="map" resultType="groupDto">
 	select 
 	    g.group_num groupNum
 	    , g.group_category_num groupCategoryNum
@@ -23,12 +23,15 @@
 	    left outer join single_group_member gm
 	        on g.group_num = gm.group_num
 	where g.group_statecode = '1'
-	<if test="userDto != null">
+	<if test="userId != null and userId != '' ">
 	and g.group_num not in (
 	                        select group_num
 	                        from single_group_member gm
 	                        where gm.user_id = #{userId}
 	                        )
+	</if>
+	<if test = "groupNum != null and groupNum != '' ">
+	and g.group_num = #{groupNum}
 	</if>
 	group by g.group_num
 	    , g.group_category_num
@@ -40,5 +43,27 @@
 	    , g.group_main_place
 	    , g.group_createdate
 	order by g.group_createdate desc
+	</select>
+	
+	<select id="getGroup" parameterType="int" resultType="groupDto">
+	select 
+	    g.group_num groupNum
+	    , g.group_category_num groupCategoryNum
+	    , gc.group_category_name groupCategoryName
+	    , g.group_name as groupName
+	    , g.group_description as groupDescription
+	    , g.group_img_src as groupImgSrc
+	    , g.group_member_limit as groupMemberLimit
+	    , count(gm.user_id) as groupMemberCount
+	    , g.group_main_place as groupMainPlace
+	    , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+	from 
+	    single_group g
+	    left outer join single_group_category gc
+	        on g.group_category_num = gc.group_category_num
+	    left outer join single_group_member gm
+	        on g.group_num = gm.group_num
+	where g.group_statecode = '1'
+	and g.group_num = #{groupNum}
 	</select>
 </mapper>

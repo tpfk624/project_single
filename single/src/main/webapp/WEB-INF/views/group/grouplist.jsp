@@ -9,9 +9,42 @@ $(function() {
 	$(".groupcard").click(groupcardClick);
 });
 
+function makeParameterJson(userId, groupNum, key, word){
+	var param = JSON.stringify({});
+	if(userId != null && userId != ''){
+		param.userId = userId;
+	}
+	if(groupNum != null && groupNum != ''){
+		param.groupNum = groupNum;
+	}
+	if(key != null && key != ''){
+		param.key = key;
+	}
+	if(word != null && word != ''){
+		param.word = word;
+	}
+	console.log(param);
+	return param;
+}
+
 function groupcardClick(){
+	var groupNum = $(this).attr("data-num");
+	console.log(groupNum);
+	var param = makeParameterJson('', groupNum, '', '');
+	$.ajax({
+		url : "${root}/group/grouplist"
+		, method : "get"
+		, contentType : "application/json; charset=utf-8"
+		, dataType : "json"
+		, data : param
+		, success : function(result) {
+			console.log(result);
+		}
+	});
 	$("#groupDetailModal").modal("show");
 }
+
+
 </script>
 
 <%@ include file="groupdetailmodal.jsp"%>
@@ -39,7 +72,7 @@ function groupcardClick(){
 		
 			<c:forEach items="${requestScope.groupList}" var="group">
 			<!-- 카드 사진 위버전 -->
-			<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
+			<div class="col-lg-4 col-sm-6 portfolio-item groupcard" data-num="${group.groupNum}">
 				<div class="card h-100">
 					<img class="card-img-top"
 						src="${group.groupImgSrc}"
@@ -51,7 +84,6 @@ function groupcardClick(){
 							<c:otherwise>${group.groupDescription}</c:otherwise>
 						</c:choose>
 						</p>
-						<p class="card-text">#쿵쿵짝 #쿵쿵짝 #쿵쿵짝</p>
 						<p class="card-text">인원 : ${group.groupMemberCount}/${group.groupMemberLimit}</p>
 						<p class="card-text">장소 : ${group.groupMainPlace}</p>
 					</div>

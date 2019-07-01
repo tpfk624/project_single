@@ -9,7 +9,11 @@ import com.kitri.single.user.model.UserDto;
 
 
 public interface GroupDao {
-
-	List<GroupDto> getGroupList(UserDto userInfo);
+	
+	//전체 조회
+	public List<GroupDto> getGroupList(UserDto userInfo);
+	
+	//하나만 조회
+	public GroupDto getGroup(int num);
 
 }

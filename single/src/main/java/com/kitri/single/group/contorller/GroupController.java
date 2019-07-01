@@ -1,6 +1,7 @@
 package com.kitri.single.group.contorller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,8 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kitri.single.group.model.GroupDto;
@@ -18,7 +22,7 @@ import com.kitri.single.group.service.GroupService;
 import com.kitri.single.user.model.UserDto;
 
 @Controller
-@RequestMapping("group")
+@RequestMapping("/group")
 @SessionAttributes("userInfo")
 public class GroupController {
 	
@@ -29,17 +33,39 @@ public class GroupController {
 	//로그
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
-	@RequestMapping(value = "grouplist", method = RequestMethod.GET)
-	public void grouplist(Model model, HttpSession session) {
+	@RequestMapping(value = "/group", method = RequestMethod.GET)
+	public void grouplist(Model model, HttpSession session, @RequestParam Map<String, String> parameter) {
 		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
-		
-		List<GroupDto> list = groupService.getGroupList(userInfo);
+		List<GroupDto> list = groupService.getGroup(parameter, userInfo);
 		int size = list.size();
 		
+		System.out.println(parameter);
+		model.addAttribute("parameter", parameter);
 		model.addAttribute("size", size);
 		model.addAttribute("groupList", list);
+		
 		logger.info(list.toString());
 		logger.info("size : " + size);
 	}
 	
+	@RequestMapping(value = "/grouplist", method = RequestMethod.GET)
+	public @ResponseBody String getGroupList(Model model, HttpSession session, @RequestParam Map<String, String> parameter) {
+		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
+		List<GroupDto> list = groupService.getGroup(parameter, userInfo);
+		int size = list.size();
+		
+		System.out.println(parameter);
+		
+		logger.info(list.toString());
+		logger.info("size : " + size);
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "/groupdetail", method = RequestMethod.GET)
+	public @ResponseBody String groupDetail(@RequestParam Map<String, String> parameter){
+		//String json = groupService.getGrou(parameter);
+		
+		return "";
+	}
 }

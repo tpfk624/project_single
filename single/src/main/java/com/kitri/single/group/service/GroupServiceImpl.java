@@ -1,8 +1,10 @@
 package com.kitri.single.group.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,16 @@ public class GroupServiceImpl implements GroupService{
 	private static final Logger logger = LoggerFactory.getLogger(GroupServiceImpl.class);
 	
 	@Override
-	public List<GroupDto> getGroupList(UserDto userInfo) {
+	public List<GroupDto> getGroup(Map<String, String> parameter, UserDto userInfo) {
 		
 		return sqlSession.getMapper(GroupDao.class).getGroupList(userInfo);
+	}
+
+	@Override
+	public String getGroup(int num) {
+		GroupDto groupDto = sqlSession.getMapper(GroupDao.class).getGroup(num);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("group", groupDto);
+		return jsonObject.toString();
 	}
 }
