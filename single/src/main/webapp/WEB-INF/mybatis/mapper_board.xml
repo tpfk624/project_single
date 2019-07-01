@@ -5,20 +5,11 @@
      
 <mapper namespace="com.kitri.single.board.dao.BoardDao">
 	
-	<insert id="">
-		insert into single_board 
-		values
-			(board_num_seq.nextval,
-			 1,
-			 'qjawns0618@naver.com',
-			 '밤준',
-			 '들리십니까' ,
-			 '들리십니까 내용입니다',
-			 '0',
-			 sysdate,
-			 null,
-			 null,
-			 '1')
+	<insert id = "writeArticle" parameterType="boardDto">
+		insert into single_board(board_num, board_list_num, user_id, user_nickname, board_subject,
+		board_content, board_views, board_createdate, board_updatedate, board_deletedate, board_statecode)
+		values(board_num_seq.nextval, #{boardListNum}, #{userId}, #{userNickname},
+		 #{boardSubject} , #{boardContent}, '0', sysdate, null, null, #{boardViews})
 	</insert>
 	
 </mapper>
