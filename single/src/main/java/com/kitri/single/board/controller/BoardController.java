@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.omg.CORBA.REBIND;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.board.model.ReplyDto;
 import com.kitri.single.board.service.BoardService;
+import com.kitri.single.board.service.ReplyService;
 import com.kitri.single.common.service.CommonService;
 import com.kitri.single.user.model.UserDto;
+import com.kitri.single.util.NumberCheck;
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 @Controller
 @RequestMapping("/board")
@@ -22,6 +27,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	@Autowired
 	private CommonService commonService;
@@ -54,32 +62,52 @@ public class BoardController {
 	
 	
 	@RequestMapping(value="/write",method = RequestMethod.POST)
-	public String write(ReplyDto replyDto,@RequestParam Map<String, String> parameter,
+	public String write( @RequestParam Map<String, String> parameter,
 			Model model, HttpSession session){
 		//System.out.println("write insert 하는중");
 		
 		String path = "";
 		
+		
+		System.out.println("write, post 자알들어옴~");
+		
 		// 오라클이랑 인덱스에 인클루드한것중 유저인포 넣어둔것 있음. 당연히 null아님? 근데도 들어가짐.
 		// 혹시 new도 생성이기는 하니깐?
 		//UserDto userdto = new UserDto();
+		
+		BoardDto boardDto = new BoardDto();
 		UserDto userdto = (UserDto)session.getAttribute("userInfo");
 		if (userdto != null) {
 			// 2번 적용됨?? - 오라클에 있는 유저랑 인클루드해서 넣어둔 유저랑 겹처서 그런가?
 			int seq = commonService.getNextSeq();
 			System.out.println(seq);
 			
-			replyDto.setBoardNum(seq);
-			replyDto.setUserId(userdto.getUserId());
-			replyDto.setUserNickname(userdto.getUserNickname());
+			boardDto.setBoardNum(seq);
+			boardDto.setBoardListNum(Integer.parseInt(parameter.get("boardListNum")));
+			boardDto.setUserId(userdto.getUserId());
+			boardDto.setUserNickname(userdto.getUserNickname());
+			boardDto.setBoardSubject(parameter.get("boardSubject"));
+			boardDto.setBoardContent(parameter.get("boardContent"));
+			boardDto.setBoardViews(0);
 			
-			// 여기서부터임.
-			seq = boardService.writeArticle(replyDto);
+			// 결과값 반환
+			seq = boardService.writeArticle(boardDto);
+			
+			System.out.println(boardDto);
+			System.out.println(seq);
+			
+//			if (seq != 0) {
+//				model.addAttribute("seq",seq);
+//				path = "reboard/writeok";
+//			} else {
+//				path = "reboard/writefail";
+//			}
+			
 		}
 		
 		//model.addAttribute("",);
 		
-		return path;
+		return "";
 		
 	}
 	

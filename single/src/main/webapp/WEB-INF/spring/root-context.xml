@@ -22,6 +22,7 @@
 				<value>/WEB-INF/mybatis/mapper_home.xml</value>
 				<value>/WEB-INF/mybatis/mapper_common.xml</value>
 				<value>/WEB-INF/mybatis/mapper_naverlogin.xml</value>
+				<value>/WEB-INF/mybatis/mapper_reply.xml</value>
 			</list>
 		</property>
 	</bean>
