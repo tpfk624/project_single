@@ -133,7 +133,7 @@
     	</c:if >
     </div>
     
-    <div class="form-group" align="center">
+    <div class="form-group" align="left">
     <label for="">성별</label><br>
     	<c:if  test="${userInfo.id != null}">
     		<input type="checkbox">	

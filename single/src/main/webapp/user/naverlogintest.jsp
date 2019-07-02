@@ -2,10 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
-<!-- 네이버 로그인 속성자 id로 loginmodal를 사용  -->
+
+<c:set var= "callbackUrl" value="http://localhost/single/user/callback.jsp"/>
 <%@ include file = "login.jsp"%> 
 
-<button  class = "naverlogin-button" > 로그인버튼 </button>
+<button class= "naverlogin-button" > 로그인버튼 </button>
 <script>
 //버튼이벤트
 

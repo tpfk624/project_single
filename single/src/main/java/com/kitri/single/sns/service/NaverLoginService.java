@@ -1,14 +1,14 @@
-package com.kitri.single.naverlogin.service;
+package com.kitri.single.sns.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kitri.single.naverlogin.dao.NaverUserDao;
-import com.kitri.single.naverlogin.model.NaverUserDto;
+import com.kitri.single.sns.dao.NaverUserDao;
+import com.kitri.single.sns.model.SnsDto;
 
 
 public interface NaverLoginService {
 	
-	int registerUser(NaverUserDto naverUserDto);
+	int registerUser(SnsDto naverUserDto);
 }

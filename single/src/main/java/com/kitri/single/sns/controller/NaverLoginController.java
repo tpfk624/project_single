@@ -1,4 +1,4 @@
-package com.kitri.single.naverlogin.controller;
+package com.kitri.single.sns.controller;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.kitri.single.naverlogin.model.NaverUserDto;
-import com.kitri.single.naverlogin.service.NaverLoginService;
-import com.kitri.single.naverlogin.service.NaverLoginServiceImpl;
+
+import com.kitri.single.sns.model.SnsDto;
+import com.kitri.single.sns.service.NaverLoginService;
+import com.kitri.single.sns.service.NaverLoginServiceImpl;
+import com.kitri.single.user.model.UserDto;
 import com.kitri.single.util.Utill;
 
 @Controller
@@ -33,9 +35,7 @@ public class NaverLoginController {
 	Logger logger = LoggerFactory.getLogger(NaverLoginController.class);
 	
 	@Autowired
-	NaverLoginService loginService; 
-	
-	
+	NaverLoginService loginService; 	
 
 	APIMemberProfile apiMemberProfile = new APIMemberProfile();
 
@@ -51,14 +51,12 @@ public class NaverLoginController {
 		System.out.println("accessToken:" +accessToken);
 		String userProfile = apiMemberProfile.getMemberProfile(accessToken);
 		
-		
-		
 		logger.debug(userProfile);
 		System.out.println("userProfile:" +userProfile);
 		
 		JSONObject resultJson = new JSONObject(userProfile);
 		JSONObject profileObj = (JSONObject) resultJson.get("response");
-
+		
 		String id = Utill.getStringJson(profileObj, "id");
 		String nickname = Utill.getStringJson(profileObj, "nickname");		
 		String age = Utill.getStringJson(profileObj, "age");
@@ -75,19 +73,23 @@ public class NaverLoginController {
 		logger.info("gender: " + gender);
 		logger.info("birthday: " + birthday);
 		logger.info("profile_image: " + profile_image);
-		NaverUserDto naverUserDto = new NaverUserDto();
-		naverUserDto.setId(id);
-		naverUserDto.setUserName(userName);
-		naverUserDto.setNickname(nickname);
-		naverUserDto.setAge(age);
-		naverUserDto.setGender(gender);
-		naverUserDto.setBirthday(birthday);
-		naverUserDto.setProfile_image(profile_image);
-	
+		
+		SnsDto snsDto = new SnsDto();
+		
+		
+		snsDto.setUserId(id);
+		snsDto.setSnsName(userName);
+		snsDto.setSnsNickname(nickname);
+		snsDto.setSnsGender(gender);
+		snsDto.setSnsBirthday(birthday);
+		snsDto.setSnsProfile(profile_image);
+		
+		
+		
 		//DB에 입력
 //		int result = loginService.registerUser(naverUserDto);
 //		logger.info("regitser result cnt : " + result);
-		model.addAttribute("userInfo", naverUserDto);
+		model.addAttribute("snsInfo", snsDto);
 
 		//views/user/result.jsp
 		return "user/result";

@@ -37,7 +37,7 @@
 	$('#accessToken').val(accessToken);
 	console.log('email'+ email);
 	console.log('accessToken'+ accessToken);
-	$("#naverProfileForm").attr("method", "POST").attr("action", "${root}/naverlogin/callback").submit();
+	$("#naverProfileForm").attr("method", "POST").attr("action", "${root}/user/result.jsp").submit();
 
 //     var id = naver_id_login.getProfileData('id');
 //     var nickname = naver_id_login.getProfileData('nickname');

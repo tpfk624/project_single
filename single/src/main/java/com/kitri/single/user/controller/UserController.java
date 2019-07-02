@@ -11,4 +11,10 @@ public class UserController {
 	public void home() {
 		System.out.println("home 들어옴");
 	}
+	
+	@RequestMapping("/regiser")
+	public String register() {
+		
+		return "";
+	}
 }
