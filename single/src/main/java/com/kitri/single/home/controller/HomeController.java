@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,8 @@ import com.kitri.single.home.service.HomeService;
 @RequestMapping("/home")
 public class HomeController {
 	
-	HomeService homeService;
+	@Autowired
+	private HomeService homeService;
 	
 	@RequestMapping(value = "/dusttest", method = RequestMethod.GET)
 	public String toDust() throws UnsupportedEncodingException {
@@ -30,15 +32,15 @@ public class HomeController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/dusttest.do", method = RequestMethod.GET)
-	public Object dusttest(@RequestBody DustDto request) throws UnsupportedEncodingException { //@RequestBody
+	@RequestMapping(value = "/dusttest.do", method = RequestMethod.POST)
+	public String dusttest(@RequestBody Map<String, String> map) throws UnsupportedEncodingException { //@RequestBody
 		System.out.println("컨트롤러!!!");
 		
-		String stationName = request.getStationName();
-		String dataTerm = request.getDataTerm();
-		Object response = homeService.dustFromOpenApi(stationName, dataTerm);
+		System.out.println("map >>>>> " + map);
 		
-		return response;
+		String json = homeService.dustFromOpenApi(map);
+		
+		return json;
 	}
 	
 }

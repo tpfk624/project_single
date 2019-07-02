@@ -49,7 +49,7 @@ public class ApiConnection {
 			uri.append(value + "&");
 		}
 		uri.append(keyName + "=" + keyValue);
-		System.out.println("uri : " + uri);
+		System.out.println(uri);
 		BufferedReader in = null;
 		try {
 			URL url = new URL(uri.toString());
@@ -98,6 +98,7 @@ public class ApiConnection {
 					+ "&ver=1.3&_returnType=json";
 			// + "&_returnType=json";
 			URL url = new URL(urlstr);
+			System.out.println(urlstr);
 			HttpURLConnection urlconnection = (HttpURLConnection) url.openConnection();
 			urlconnection.setRequestMethod("GET");
 			br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream(), "UTF-8"));

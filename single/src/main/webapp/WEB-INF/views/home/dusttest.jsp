@@ -12,18 +12,23 @@
 $(document).ready(function() {
 	$('#btn').on("click", function(){
 		var form = {
-				stationName : $('#stationName').val(),
-				dataTerm : $('#dataTerm').val()
+				'stationName' : $('#stationName').val(),
+				'dataTerm' : $('#dataTerm').val()
 		};
-		alert("읭!!!!!!");
+		//alert("읭!!!!!!");
 		$.ajax({
 			url : "${root}/home/dusttest.do",
-			type : "GET",
-			data : encodeURI(JSON.stringify(form))	,
+			type : "POST",
+			data : JSON.stringify(form)	,
 			contentType:"application/json; charset=UTF-8;",
 			dataType : "json",
 			success : function(data){
-				console.log(data.response.body.items);
+				var list = data.list;
+				console.log(list[0].pm25Grade);
+				$("#here").html(list[0].pm25Grade);
+				for(var i=0 ; i<list.length ; i++){
+					list[i].pm10Grade;
+				}
 			},
 			error: function(){
 				console.log(form);
@@ -38,8 +43,9 @@ $(document).ready(function() {
 	<form>
 		<input id="stationName" name="stationName" value="구로구">
 		<input id="dataTerm" name="dataTerm" value="DAILY">
-		<button id="btn">어디한번해볼까나</button>
+		<button type="button" id="btn">어디한번해볼까나</button>
 	</form>
+	<div id="here"></div>
 	
 
 </body>
