@@ -7,4 +7,7 @@ public class SiteConstance {
 	public static final int ARTICLE_SIZE = 20;
 	//페이지처리시 한번에 보여주는 페이지의 갯수
 	public static final int PAGE_SIZE = 10;
+	
+	//모임리스트에서 한번에 불러오는 모임의 개수
+	public static final int GROUP_SIZE = 15;
 }

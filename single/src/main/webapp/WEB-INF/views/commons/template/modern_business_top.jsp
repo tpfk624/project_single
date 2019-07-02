@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
+
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
@@ -112,7 +113,7 @@ body {
               	같이놀아요
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-              <a class="dropdown-item" href="${root}/group/grouplist">그룹 목록보기</a>
+              <a class="dropdown-item" href="${root}/group">그룹 목록보기</a>
               <a class="dropdown-item" href="${root}/group/groupcreate.jsp">그룹 만들기</a>
               <a class="dropdown-item" href="${root}/group/groupmain.jsp">그룹 안으로 들어가기</a>
             </div>
