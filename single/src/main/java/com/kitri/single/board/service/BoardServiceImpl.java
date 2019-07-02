@@ -1,15 +1,22 @@
 package com.kitri.single.board.service;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kitri.single.board.dao.BoardDao;
 import com.kitri.single.board.model.BoardDto;
+import com.kitri.single.group.service.GroupServiceImpl;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-
+	
+	//로그
+	//private static final Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
+		
+	
 	@Autowired
 	private SqlSession sqlSession;
 	

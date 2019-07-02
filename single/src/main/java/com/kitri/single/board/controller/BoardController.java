@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.omg.CORBA.REBIND;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import com.kitri.single.board.model.ReplyDto;
 import com.kitri.single.board.service.BoardService;
 import com.kitri.single.board.service.ReplyService;
 import com.kitri.single.common.service.CommonService;
+import com.kitri.single.group.contorller.GroupController;
 import com.kitri.single.user.model.UserDto;
 import com.kitri.single.util.NumberCheck;
 import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
@@ -24,6 +27,9 @@ import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+	
+	//로그
+	//private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@Autowired
 	private BoardService boardService;

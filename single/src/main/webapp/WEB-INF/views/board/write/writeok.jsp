@@ -56,7 +56,7 @@ $(document).ready(function() {
 		</div>
 		<div class="col-lg-4"></div>
 	
-	</div><br><br><br><br><br><br><br><br>
+	</div><br><br><br><br>
 </div>
 <br>
 

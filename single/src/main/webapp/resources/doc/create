@@ -158,6 +158,10 @@ ALTER TABLE single_stamp
 ALTER TABLE users
 	DROP CONSTRAINT PK_users; -- 네아로유저 기본키
 
+-- 네아로유저2
+ALTER TABLE naver_user
+	DROP CONSTRAINT PK_naver_user; -- 네아로유저2 기본키
+
 -- 모임
 DROP TABLE single_group;
 
@@ -215,6 +219,9 @@ DROP TABLE single_stamp;
 -- 네아로유저
 DROP TABLE users;
 
+-- 네아로유저2
+DROP TABLE naver_user;
+
 -- 모임
 CREATE TABLE single_group (
 	group_num          number         NOT NULL, -- 모임번호
@@ -222,6 +229,7 @@ CREATE TABLE single_group (
 	group_name         varchar2(128)  NULL,     -- 모임이름
 	group_description  varchar2(1024) NULL,     -- 모임설명
 	group_img_src      varchar2(256)  NULL,     -- 모임대표이미지주소
+	group_member_count number         NULL,     -- 현재모임내인원
 	group_member_limit number         NULL,     -- 모임인원제한
 	group_main_place   varchar2(128)  NULL,     -- 주요모임장소
 	group_createdate   DATE           NULL,     -- 모임생성일
@@ -306,7 +314,7 @@ ALTER TABLE single_chat
 
 -- 모임과제진행
 CREATE TABLE single_hprogress (
-	group_hprogess_num   number        NOT NULL, -- 모임과제번호
+	group_hprogress_num  number        NOT NULL, -- 모임과제번호
 	group_num            number        NOT NULL, -- 모임번호
 	user_id              varchar2(64)  NOT NULL, -- 유저아이디
 	hprogress_subject    varchar2(256) NULL,     -- 과제진행제목
@@ -322,16 +330,18 @@ ALTER TABLE single_hprogress
 	ADD
 		CONSTRAINT PK_single_hprogress -- 모임과제진행 기본키
 		PRIMARY KEY (
-			group_hprogess_num, -- 모임과제번호
-			group_num,          -- 모임번호
-			user_id             -- 유저아이디
+			group_hprogress_num, -- 모임과제번호
+			group_num,           -- 모임번호
+			user_id              -- 유저아이디
 		);
 
 -- 유저
 CREATE TABLE single_user (
 	user_id            varchar2(64)  NOT NULL, -- 유저아이디
+	user_password      varchar2(32)  NULL,     -- 패스워드
 	user_nickname      varchar2(32)  NULL,     -- 닉네임
 	user_name          varchar2(32)  NULL,     -- 이름
+	user_profile       varchar2(256) NULL,     -- 유저 프로필
 	user_birthday      DATE          NULL,     -- 생일
 	user_gender        varchar2(1)   NULL,     -- 성별
 	user_phone         varchar2(16)  NULL,     -- 핸드폰번호
@@ -340,7 +350,8 @@ CREATE TABLE single_user (
 	user_addressdetail varchar2(128) NULL,     -- 주소상세
 	user_joindate      DATE          NULL,     -- 가입일
 	user_outdate       DATE          NULL,     -- 탈퇴일
-	user_statecode     varchar2(1)   NULL      -- 유저상태코드
+	user_statecode     varchar2(1)   NULL,     -- 유저상태코드
+	sns_token          VARCHAR(45)   NULL      -- 갱신토큰
 );
 
 -- 유저
@@ -360,6 +371,7 @@ CREATE TABLE single_board (
 	board_subject    varchar2(256) NULL,     -- 게시판제목
 	board_content    CLOB          NULL,     -- 게시판내용
 	board_views      number        NULL,     -- 조회수
+	board_like       number        NULL,     -- 좋아요수
 	board_createdate DATE          NULL,     -- 작성일
 	board_updatedate DATE          NULL,     -- 최근변경일
 	board_deletedate DATE          NULL,     -- 삭제일
@@ -554,6 +566,32 @@ ALTER TABLE users
 			id -- 유저아이디
 		);
 
+-- 네아로유저2
+CREATE TABLE naver_user (
+	id               number       NOT NULL, -- 유저아이디
+	sns_id           VARCHAR(45)  NULL,     -- 소셜아이디
+	username         VARCHAR(45)  NULL,     -- 이름
+	password         VARCHAR(45)  NULL,     -- 비밀번호
+	email            VARCHAR(45)  NULL,     -- 이메일
+	nickname         VARCHAR(45)  NULL,     -- 닉네임
+	create_date      DATE         NULL,     -- 생성일
+	modify_date      DATE         NULL,     -- 변경일
+	sns_type         VARCHAR(45)  NULL,     -- 소셜타입
+	sns_connect_date VARCHAR(45)  NULL,     -- 소셜연결날짜
+	profile_image    VARCHAR(45)  NULL,     -- 프로필이미지
+	age              VARCHAR(45)  NULL,     -- 나이
+	birthday         VARCHAR(45)  NULL,     -- 생일
+	gender           CHARACTER(1) NULL      -- 성별
+);
+
+-- 네아로유저2
+ALTER TABLE naver_user
+	ADD
+		CONSTRAINT PK_naver_user -- 네아로유저2 기본키
+		PRIMARY KEY (
+			id -- 유저아이디
+		);
+
 -- 모임
 ALTER TABLE single_group
 	ADD
@@ -616,7 +654,7 @@ ALTER TABLE single_hprogress
 	ADD
 		CONSTRAINT FK_homework_TO_hprogress -- 모임과제 -> 모임과제진행
 		FOREIGN KEY (
-			group_hprogess_num -- 모임과제번호
+			group_hprogress_num -- 모임과제번호
 		)
 		REFERENCES single_homework ( -- 모임과제
 			homework_num -- 모임과제번호

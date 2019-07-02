@@ -5,9 +5,14 @@
      
 <mapper namespace="com.kitri.single.hashtag.dao.HashtagDao">
 	<select id="getHashtagList" parameterType="map" resultType="string">
-	select hashtag_content
-	from single_hashtag
-	where hashtag_type_num = #{tagType}
-	and group_num = #{num}
+		select hashtag_content
+		from single_hashtag
+		where hashtag_type_num = #{tagType}
+		<if test="tagtype == 1">
+		and board_num = #{boardNum}
+		</if>
+		<if test="tagtype == 2">
+		and group_num = #{groupNum}
+		</if>
 	</select>
 </mapper>
