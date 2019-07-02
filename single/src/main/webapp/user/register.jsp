@@ -19,15 +19,16 @@
 		<div class="form-group" align="left">
 		<label for="name">이름</label>
 			<c:if test="${userInfo.id == null}">
-			 <input type="text" class="form-control" id="name" name="name" placeholder="이름입력">
+				<input type="text" class="form-control" id="name" name="name" placeholder="이름입력">
 			</c:if>
 			<c:if test="${userInfo.id != null}">
-			 <input type="text" class="form-control" id="name" name="name" placeholder="이름입력" value= "${userInfo.name}">
+				<input type="text" class="form-control" id="name" name="name" placeholder="이름입력" value= "${userInfo.name}">
 			</c:if>	
 		</div>
+		
 		<div class="form-group" align="left">
 		<label for="">아이디</label>
-			<c:if test="${userInfo.id == null}">
+			<c:if test="${empty userInfo.id }">
 					<input type="text" class="form-control" id="id" name="id" placeholder="4자이상 16자 이하" >
 					<div id="idresult"></div>
 			</c:if>
@@ -109,6 +110,7 @@
 			class="form-control" id="address_detail" name="addressDetail"
 			placeholder="" readonly="readonly">
 	</div>
+	
 	<div class="form-group" align="center">
 		<c:choose>
 			<c:when test="${userInfo.id != null}">
@@ -120,26 +122,37 @@
 			</c:when>
 		</c:choose>			
 	</div>
-    생일
-    <div class="form-group" align="center">
-    	<c:when test="${userInfo.id != null}">
-    	
-    	</c:when>
-    	<c:when test="${userInfo.id == null}">
-    	
-    	</c:when>
+    
+    <div class="form-group" align="left">
+    	<label for="">생일</label><br>
+    	<c:if test="${userInfo.id != null}">
+		    <input id="datepicker" width="276" />
+    	</c:if >
+    	<c:if  test="${userInfo.id == null}">
+		    <input id="datepicker" width="276" />
+    	</c:if >
     </div>
-    성별
+    
     <div class="form-group" align="center">
-    	<c:when test="${userInfo.id != null}">
+    <label for="">성별</label><br>
+    	<c:if  test="${userInfo.id != null}">
+    		<input type="checkbox">	
+    	</c:if >
+    	<c:if  test="${userInfo.id == null}">
     	
-    	</c:when>
-    	<c:when test="${userInfo.id == null}">
-    	
-    	</c:when>
+    	</c:if >
     </div>
     
     
 </form>
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+ <script>
+ $('#datepicker').datepicker({
+     uiLibrary: 'bootstrap4'
+ });
+</script>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_bottom.jsp" %>
