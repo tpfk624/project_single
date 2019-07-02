@@ -42,25 +42,24 @@ function groupcardClick(){
 		<div class="row">
 			
 			<c:forEach items="${requestScope.groupList}" var="group">
-			<!-- 카드 사진 위버전 -->
-			<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
-				<div class="card h-100">
-					<img class="card-img-top"
-						src="${group.groupImgSrc}"
-						alt="">
-					<h4 class="card-title">${group.groupName}</h4>
-					<div class="card-body">
-						<p class="card-text">${group.groupDescription}</p>
-						<p class="card-text">#쿵쿵짝 #쿵쿵짝 #쿵쿵짝</p>
-						<p class="card-text">인원 : 15/30</p>
-						<p class="card-text">장소 : 구로디지털 단지</p>
-					</div>
-
-					<div class="overlay">
-						<div class="text">상세보기</div>
+				<!-- 카드 사진 위버전 -->
+				<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
+					<div class="card h-100">
+						<img class="card-img-top"
+							src="${group.groupImgSrc}"
+							alt="">
+						<h4 class="card-title">${group.groupName}</h4>
+						<div class="card-body">
+							<p class="card-text">${group.groupDescription}</p>
+							<p class="card-text">인원 : ${group.groupMemberCount}/${group.groupMemberLimit}</p>
+							<p class="card-text">장소 : ${group.groupMainPlace}</p>
+						</div>
+	
+						<div class="overlay">
+							<div class="text">상세보기</div>
+						</div>
 					</div>
 				</div>
-			</div>
 			</c:forEach>
 		
 			<!-- 카드 사진 위버전 -->

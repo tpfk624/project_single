@@ -22,15 +22,14 @@ $(function() {
     focus: true,          // 페이지가 열릴때 포커스를 지정함
     lang: 'ko-KR'         // 한국어 지정(기본값은 en-US)
   });
-});
-
-
-$(document).ready(function() {
-	$("#writeBtn").click(function () {
-		if($("#subject").val() == ""){ // 정규표현식 사용하기.
+  
+  //글쓰기 이벤트
+  $("#writeBtn").click(function () {
+	  console.log("클릭");
+		if($("#boardSubject").val() == ""){ // 정규표현식 사용하기.
 			alert("제목 입력!!!");
 			return;
-		} else if ($("#content").val == "") {
+		} else if ($("#boardContent").val == "") {
 			alert("내용 입력!!!");
 			return;
 		} else {
@@ -38,6 +37,7 @@ $(document).ready(function() {
 		}
 	});
 });
+
 
 </script>
 
@@ -91,9 +91,14 @@ $(document).ready(function() {
 				</div>
 				
 			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<p>태그 : <input type="text" id="teg" name="teg" style="width: 70%;"><p>
+				</div>
+			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button id="writeBtn" name="writeBtn" class="btn btn-default" style="color: #007bff; border-color: #007bff;">Save</button>
+					<button type="button" id="writeBtn" name="writeBtn" class="btn btn-default" style="color: #007bff; border-color: #007bff;">Save</button>
 				</div>
 			</div>
 		</form>

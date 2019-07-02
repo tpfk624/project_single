@@ -7,4 +7,6 @@ public interface BoardDao {
 
 	int writeArticle(BoardDto boardDto);
 	
+	BoardDto viewArticle(int boardNum);
+	
 }
