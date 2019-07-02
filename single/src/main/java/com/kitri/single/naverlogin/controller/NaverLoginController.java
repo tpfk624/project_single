@@ -30,21 +30,32 @@ import com.kitri.single.util.Utill;
 @Controller
 @RequestMapping(value = "/naverlogin")
 public class NaverLoginController {
+	Logger logger = LoggerFactory.getLogger(NaverLoginController.class);
 	
 	@Autowired
 	NaverLoginService loginService; 
 	
-	Logger logger = LoggerFactory.getLogger(NaverLoginController.class);
+	
 
 	APIMemberProfile apiMemberProfile = new APIMemberProfile();
 
 	@RequestMapping(value = "/callback", method = RequestMethod.POST)
 	public String callback(@RequestParam Map<String, String> parameter, Model model) {
+		
 		String email = parameter.get("email");
 		String accessToken = parameter.get("accessToken");
-
+		
+		logger.debug(email);
+		System.out.println("email:" +email);
+		logger.debug(accessToken);
+		System.out.println("accessToken:" +accessToken);
 		String userProfile = apiMemberProfile.getMemberProfile(accessToken);
-		System.out.println(userProfile);
+		
+		
+		
+		logger.debug(userProfile);
+		System.out.println("userProfile:" +userProfile);
+		
 		JSONObject resultJson = new JSONObject(userProfile);
 		JSONObject profileObj = (JSONObject) resultJson.get("response");
 
@@ -55,8 +66,7 @@ public class NaverLoginController {
 		String userName = Utill.getStringJson(profileObj, "name");
 		String birthday = Utill.getStringJson(profileObj, "birthday");
 		String profile_image = Utill.getStringJson(profileObj, "profile_image");
-		
-		
+
 		
 		logger.info("id: " + id);
 		logger.info("userName: " + userName);
@@ -73,14 +83,14 @@ public class NaverLoginController {
 		naverUserDto.setGender(gender);
 		naverUserDto.setBirthday(birthday);
 		naverUserDto.setProfile_image(profile_image);
-		
-		int result = loginService.registerUser(naverUserDto);
-		logger.info("regitser result cnt : " + result);
+	
+		//DB에 입력
+//		int result = loginService.registerUser(naverUserDto);
+//		logger.info("regitser result cnt : " + result);
 		model.addAttribute("userInfo", naverUserDto);
 
-
+		//views/user/result.jsp
 		return "user/result";
-
 //		return new ModelAndView("redirect:/index.jsp","naverUserInfo",userProfile);
 	}
 

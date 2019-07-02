@@ -23,14 +23,18 @@
   // 네이버 사용자 프로필 조회
   naver_id_login.get_naver_userprofile("naverSignInCallback()");
   
+  //accessToken ,갱신토큰  
+  
   // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
   function naverSignInCallback() {
+	console.log(naver_id_login);
     var email = naver_id_login.getProfileData('email');
     var nickname = naver_id_login.getProfileData('nickname');
     var age= naver_id_login.getProfileData('age');
 	$('#email').val(email);
 	$('#accessToken').val(accessToken);
-	$("#naverProfileForm").attr("method", "POST").attr("action", "${root}/naverlogin/callback").submit();
+	
+// 	$("#naverProfileForm").attr("method", "POST").attr("action", "${root}/naverlogin/callback").submit();
   }
 </script>
 </body>
