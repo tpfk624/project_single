@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kitri.single.group.model.GroupDto;
@@ -66,5 +67,10 @@ public class GroupController {
 		String json = groupService.getGroupDetail(groupNum);
 		//System.out.println(json);
 		return json;
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public void groupCreate(GroupDto groupDto, @SessionAttribute("userInfo") UserDto userInfo) {
+		
 	}
 }

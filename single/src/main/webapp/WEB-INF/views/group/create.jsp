@@ -17,7 +17,7 @@
 					<div class="controls">
 						<label>모임명(*) : </label> 
 						<input type="text" class="form-control"
-							id="name" placeholder="모임 이름을 입력해주세요">
+							id="name" placeholder="모임 이름을 입력해주세요" name="groupName">
 						<p class="help-block"></p>
 					</div>
 				</div>

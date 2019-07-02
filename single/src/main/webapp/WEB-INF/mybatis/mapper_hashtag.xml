@@ -8,10 +8,10 @@
 		select hashtag_content
 		from single_hashtag
 		where hashtag_type_num = #{tagType}
-		<if test="tagtype == 1">
+		<if test="tagType == 1">
 		and board_num = #{boardNum}
 		</if>
-		<if test="tagtype == 2">
+		<if test="tagType == 2">
 		and group_num = #{groupNum}
 		</if>
 	</select>
