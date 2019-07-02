@@ -3,9 +3,11 @@
 <%@ include file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
 <link rel="stylesheet" href="${root}/resources/css/group/group.css" >
 <%@ include file="/WEB-INF/views/commons/movetop.jsp"%>
-<style>
+<%
+//테스트용 코드
+response.sendRedirect(request.getContextPath() + "/group/grouplist");
+%>
 
-</style>
 <script>
 $(function() {
 	$(".groupcard").click(groupcardClick);
@@ -24,7 +26,7 @@ function groupcardClick(){
 <section class="contents">
 	<div class="container">
 		<div class="row">
-			<h1 class="col-lg-10 col-sm-8 my-4">2014개의 스터디</h1>
+			<h1 class="col-lg-10 col-sm-8 my-4">${size}개의 모임</h1>
 			<div class="dropdown col-lg-2 col-sm-4 my-4 category">
 				<button type="button" class="btn btn-primary dropdown-toggle"
 					data-toggle="dropdown">카테고리</button>
@@ -38,6 +40,29 @@ function groupcardClick(){
 		</div>
 		<!-- Marketing Icons Section -->
 		<div class="row">
+			
+			<c:forEach items="${requestScope.groupList}" var="group">
+			<!-- 카드 사진 위버전 -->
+			<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
+				<div class="card h-100">
+					<img class="card-img-top"
+						src="${group.groupImgSrc}"
+						alt="">
+					<h4 class="card-title">${group.groupName}</h4>
+					<div class="card-body">
+						<p class="card-text">${group.groupDescription}</p>
+						<p class="card-text">#쿵쿵짝 #쿵쿵짝 #쿵쿵짝</p>
+						<p class="card-text">인원 : 15/30</p>
+						<p class="card-text">장소 : 구로디지털 단지</p>
+					</div>
+
+					<div class="overlay">
+						<div class="text">상세보기</div>
+					</div>
+				</div>
+			</div>
+			</c:forEach>
+		
 			<!-- 카드 사진 위버전 -->
 			<div class="col-lg-4 col-sm-6 portfolio-item groupcard">
 				<div class="card h-100">
