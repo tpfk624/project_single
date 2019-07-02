@@ -122,11 +122,14 @@ public class BoardController {
 		// if문으로 로그인 했는지 안했는지 체크하기
 		if (userDto != null) {
 			BoardDto boardDto = boardService.viewArticle(boardNum);
-		
+			
+			System.out.println("boardDto ==== " + boardDto);
+			System.out.println("parameter ==== " + parameter);
+			
 			model.addAttribute("article", boardDto);
 			model.addAttribute("parameter", parameter);
 			
-			path = "board/view";
+			path = "board/singleview";
 		
 		} else {
 			path = "redirect:/index.jsp";
