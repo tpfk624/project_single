@@ -65,7 +65,7 @@ $(document).ready(function(){
       <!-- menu -->
          <nav id="menu">
             <ul class="links">
-               <li><a href="index.html">로그인</a></li>
+               <li><a href="${root}/home/dusttest">로그인</a></li>
                <li><a href="generic.html">같이놀래요</a></li>
                <li><a href="elements.html">혼자놀래요</a></li>
             </ul>
