@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -10,21 +10,22 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<mvc:annotation-driven />
 
 	<!-- dispatcher 를 들리지 말고 바로 접근 -->
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!-- template -->
-	<resources mapping="/resources/template/**" location="/resources/template/" />
+	<mvc:resources mapping="/resources/template/**" location="/resources/template/" />
 	
 	<!-- 프로젝트용 -->
-	<resources mapping="/resources/css/**" location="/resources/css/" />
-	<resources mapping="/resources/js/**" location="/resources/js/" />
-	<resources mapping="/resources/img/**" location="/resources/img/" />
-	<resources mapping="/resources/summernote/**" location="/resources/summernote/" />
+	<mvc:resources mapping="/resources/css/**" location="/resources/css/" />
+	<mvc:resources mapping="/resources/js/**" location="/resources/js/" />
+	<mvc:resources mapping="/resources/img/**" location="/resources/img/" />
+	<mvc:resources mapping="/resources/summernote/**" location="/resources/summernote/" />
+	<mvc:resources mapping="/upload/**" location="/upload/" />
 	
 	<!-- 테스트 template -->
-	<resources mapping="/template/**" location="/template/" />
+	<mvc:resources mapping="/template/**" location="/template/" />
 	
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
@@ -36,8 +37,8 @@
 	<!-- 한글설정 어노테이션 방법도 있음.-->
 	<!-- @responsebody할때 한글 깨짐 현상 / ajax에서 받아오고 띄워줄때. -->
 	<!-- beans가 붙는 이유는 맨 위에 beans설정함.(xmlns:beans="http://www.springframework.org/schema/beans") -->
-	<annotation-driven>
-		<message-converters>
+	<mvc:annotation-driven>
+		<mvc:message-converters>
 			<beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<beans:property name="supportedMediaTypes">
 					<beans:list>
@@ -47,12 +48,25 @@
 					</beans:list>
 				</beans:property>
 			</beans:bean> 
-		</message-converters>
-	</annotation-driven>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	
-	<context:component-scan base-package="com.kitri.single." />
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="maxInMemorySize" value="1048576"/>
+		<beans:property name="maxUploadSize" value="5242880"/>
+	</beans:bean>
 	
-
-   
- 
+	<!-- 세션 에러 처리 -->
+	<beans:bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<beans:property name="exceptionMappings">
+			<beans:props>
+				<beans:prop key="org.springframework.web.HttpSessionRequiredException">redirect:/index.jsp</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
+	
+	<context:component-scan base-package="com.kitri.single" />
+	
 </beans:beans>
