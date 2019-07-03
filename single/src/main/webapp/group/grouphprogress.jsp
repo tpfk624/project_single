@@ -10,52 +10,6 @@
 .carousel-item{
 	height : 30vh;
 }
-.homework-status{
-	float: right;
-	font-weight: bold;
-	background-image: url("${root}/resources/img/group/checked.png");
-	height: 5rem;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    text-align: center;
-    font-size: 2rem;
-}
-
-.homework-body{
-	float: left;
-	margin-left: 10px;
-	width: 80%;
-	height: 5rem;
-}
-/* Pagination links */
-.page{
-	padding-bottom: 1rem;
-	padding-top: 1rem;
-}
-.pagination{
-	margin-left: auto;
-	margin-right: auto;
-	display: block; 
-}
-
-.pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color .3s;
-}
-
-/* Style the active/current link */
-.pagination a.active {
-  background-color: dodgerblue;
-  color: white;
-}
-
-/* Add a grey background color on mouse-over */
-.pagination a:hover:not(.active) {background-color: #ddd;}
-
 /*진행률바*/
 .progress{
 	margin-top : 1rem;
@@ -65,8 +19,23 @@
 
 .progress-bar{
 	width: 1%;
-  	height: 30px;
   	background-color: green;
+}
+
+#myInput {
+  background-image: url('${root}/resources/img/group/search.png');
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+.right{
+	float: right;
 }
 
 </style>
@@ -98,9 +67,6 @@ $(function() {
 		});
 	}
 });
-
-
-
 </script>
 
 
@@ -114,26 +80,71 @@ $(function() {
 				<div class="groupname center">기타를 칩시다</div>
 			</div>
 		</section>
-		
-		<!-- 과제 시작 -->
-		<section class="groupsection">
-			<div class="homework-item">
-				<div class="homework-body col-sm-8">
-					<h4 class="homework-title">기타를 칩시다</h4>
-					<div class="homework-content">
-					기타를 띵가띵가
-					기타를 띵가띵가
-					기타를 띵가띵가
-					</div>
-					<div class="homework-footer progress ing" data-prog="30">
-						  <div class="progress-bar" data-prog="1"></div>
-					</div>
-				</div>
-				<div class="col-sm-2 homework-status" style="background-image: none;">진행중</div>
+		<section class="groupsection group-info">
+			<label class="group-info-label col-sm-2">과제 설명</label>
+			<div class="group-info-content col-sm-10">
+			과제 집어치워
 			</div>
-		</section>	
+		</section>
 		
+		<section class="groupsection group-info">
+			<label class="group-info-label col-sm-2">과제달성률</label>
+			<div class="group-info-content col-sm-10">
+				<div class="progress ing" style="height: 2rem;" data-prog="30">
+					<div class="progress-bar" data-prog="1">10/20</div>
+				</div>
+			</div>
+		</section>
 		
+		<section class="groupsection group-info">
+			<div>
+				<input class="col-sm-9" type="text" id="myInput" onkeyup="" placeholder="이름을 검색해주세요" title="Type in a name">
+				<button type="button" class="btn btn-primary col-sm-2 right">글작성</button>
+			</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<td>이름</td>
+						<td>올린날짜</td>
+						<td>수정날짜</td>
+						<td>달성여부</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>안병욱</td>
+						<td>2019/04/05</td>
+						<td>2019/04/07</td>
+						<td>달성</td>
+					</tr>
+					<tr>
+						<td>김태희</td>
+						<td>2019/04/05</td>
+						<td>2019/04/07</td>
+						<td>달성</td>
+					</tr>
+					<tr>
+						<td>권범준</td>
+						<td>2019/04/05</td>
+						<td>2019/04/07</td>
+						<td>달성</td>
+					</tr>
+					<tr>
+						<td>황선혜</td>
+						<td>2019/04/05</td>
+						<td>2019/04/07</td>
+						<td>진행중</td>
+					</tr>
+					<tr>
+						<td>고세라</td>
+						<td>2019/04/05</td>
+						<td>2019/04/07</td>
+						<td>미참여</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	
 		<section class="row page">
 			<div class="pagination">
 				  <a href="#">&laquo;</a>
