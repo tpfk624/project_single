@@ -42,8 +42,7 @@ function groupcardClick(){
 		}
 	});
 	
-}
-
+} 
 
 </script>
 
