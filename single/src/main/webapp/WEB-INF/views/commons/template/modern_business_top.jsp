@@ -114,9 +114,11 @@ body {
               	같이놀아요
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-              <a class="dropdown-item" href="${root}/group">그룹 목록보기</a>
-              <a class="dropdown-item" href="${root}/group/create">그룹 만들기</a>
-              <a class="dropdown-item" href="${root}/group/groupmain.jsp">그룹 안으로 들어가기</a>
+              <a class="dropdown-item" href="${root}/group">모임 목록보기</a>
+              <a class="dropdown-item" href="${root}/group/create">모임 만들기</a>
+              <a class="dropdown-item" href="${root}/group/groupmain.jsp">모임 안으로 들어가기</a>
+              <a class="dropdown-item" href="${root}/group/grouphomework.jsp">모임 과제 목록보기</a>
+              <a class="dropdown-item" href="${root}/group/grouphprogress.jsp">모임 과제 진행률 보기</a>
             </div>
           </li>
           <li class="nav-item dropdown">

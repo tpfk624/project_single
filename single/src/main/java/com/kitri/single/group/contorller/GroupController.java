@@ -106,6 +106,10 @@ public class GroupController {
 			}
 			
 			groupDto.setGroupImgSrc(src);
+			
+			//서비스 시작...
+			
+			
 			System.out.println(src);
 		}
 		
