@@ -5,10 +5,11 @@
 
 <mapper namespace="com.kitri.single.user.dao.UserDao">
 
-	<insert id="register" parameterType="userDto">
-<!-- 		insert into single_user (user_id, user_password, user_nickname, user_name, user_profile, user_birthda -->
-<!-- 								user_,) -->
-			
+	<insert id="regist" parameterType="userDto">
+		insert into single_user (user_id, user_password, user_nickname, user_name, user_profile, user_birthday,
+								user_gender, user_phone, user_zipcode,user_address, user_addressdetail,user_joindate,user_outdate,user_statecode)
+		values(#{userId}, #{userPassword},#{userNickname},#{userName},#{userProfile},to_date(#{userBirthday},'MMDDYYYY'),
+								#{userGender},#{userPhone},#{userZipcode},#{userAddress},#{userAddressDetail},#{userJoindate},#{userOutdate},#{userStatecode})		
 	</insert>
 </mapper>
    

@@ -4,6 +4,6 @@ import com.kitri.single.user.model.UserDto;
 
 public interface UserDao {
 	void create(UserDto userDto);
-	int register(UserDto userDto);
+	int regist(UserDto userDto);
 }
 

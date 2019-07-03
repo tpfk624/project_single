@@ -10,10 +10,25 @@
 
 <script>
 $(document).ready(function(){
+	
+	//달력
 	$('#datepicker').datepicker({
-	    uiLibrary: 'bootstrap4'
-	});
-	$('#registerBtn').click(function(){
+	    uiLibrary: 'bootstrap4',
+   	 	onSelect: function(dateText) {
+//    	      display("Selected date: " + dateText + "; input's current value: " + this.value);
+   	      console.log(dateText +" "+this.value);
+   	    }
+	}).on("change", function() {
+// 	    display("Got change event from field");
+		var value =$('#datepicker').val();
+		value = $('#datepicker').val().replace('/','');
+		value = value.replace('/','');
+		console.log(value);
+		$('#datepicker').val(value);
+	 });;
+	
+	//회원가입
+	$('#registBtn').click(function(){
 		$('#memberform').attr('action','${root}/user/register').submit();
 	});
 
@@ -73,41 +88,41 @@ $(document).ready(function(){
 				<input type="text" class="form-control" id="nickname" name="userNickname" placeholder="이름입력" value ="${userInfo.userNickname}">
 			</c:if>
 		</div>
-<!-- 		<div class="form-group" align="left"> -->
-<!-- 			<label for="">비밀번호입력</label>  -->
-<%-- 			<c:if test="${userInfo.userId == null}"> --%>
-<!-- 				<input type="password" class="form-control" id="pass" name="passcheck" placeholder=""> -->
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${userInfo.userId != null}"> --%>
-<%-- 				<input type="password" class="form-control" id="pass" name="passcheck" placeholder="" value ="${userInfo.userPassword }"> --%>
-<%-- 			</c:if> --%>
-<!-- 		</div> -->
+		<div class="form-group" align="left">
+			<label for="">비밀번호입력</label>* 
+			<c:if test="${userInfo.userId == null}">
+				<input type="password" class="form-control" id="pass" name="passcheck" placeholder="">
+			</c:if>
+			<c:if test="${userInfo.userId != null}">
+				<input type="password" class="form-control" id="pass" name="passcheck" placeholder="" value ="${userInfo.userPassword }">
+			</c:if>
+		</div>
 		
-<!-- 		<div class="form-group" align="left"> -->
-<!-- 			<label for="">비밀번호재입력</label>  -->
-<%-- 			<c:if test="${userInfo.userId == null}"> --%>
-<!-- 				<input type="password" class="form-control" id="passcheck" name="passcheck" placeholder=""> -->
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${userInfo.userId != null}"> --%>
-<%-- 				<input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="" value ="${userInfo.userPassword }"> --%>
-<%-- 			</c:if> --%>
-<!-- 		</div> -->
+		<div class="form-group" align="left">
+			<label for="">비밀번호재입력</label>* 
+			<c:if test="${userInfo.userId == null}">
+				<input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="">
+			</c:if>
+			<c:if test="${userInfo.userId != null}">
+				<input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="" value ="${userInfo.userPassword }">
+			</c:if>
+		</div>
 		
-<!-- 	<div class="form-group" align="left"> -->
-<!-- 		<label for="email">이메일</label><br> -->
-<!-- 		<div id="email" class="custom-control-inline"> -->
-<!-- 			<input type="text" class="form-control" id="emailid" -->
-<!-- 				name="emailid" placeholder="" size="25"> -->
-<!-- 				 @ <select -->
-<!-- 				class="form-control" id="emaildomain" name="emaildomain"> -->
-<!-- 				<option value="naver.com">naver.com</option> -->
-<!-- 				<option value="google.com">google.com</option> -->
-<!-- 				<option value="daum.net">daum.net</option> -->
-<!-- 				<option value="nate.com">nate.com</option> -->
-<!-- 				<option value="hanmail.net">hanmail.net</option> -->
-<!-- 			</select> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
+	<div class="form-group" align="left">
+		<label for="email">이메일</label><br>
+		<div id="email" class="custom-control-inline">
+			<input type="text" class="form-control" id="emailid"
+				name="emailid" placeholder="" size="25">
+				 @ <select
+				class="form-control" id="emaildomain" name="emaildomain">
+				<option value="naver.com">naver.com</option>
+				<option value="google.com">google.com</option>
+				<option value="daum.net">daum.net</option>
+				<option value="nate.com">nate.com</option>
+				<option value="hanmail.net">hanmail.net</option>
+			</select>
+		</div>
+	</div>
 	<div class="form-group" align="left">
 		<label for="tel">전화번호</label>
 		<div id="tel" class="custom-control-inline">
@@ -172,7 +187,7 @@ $(document).ready(function(){
 				<button type="button" class="btn btn-primary" id="modifyBtn">정보변경</button>
 			</c:when>
 			<c:when test="${userInfo.userId == null}">
-				<button type="button" class="btn btn-primary" id="registerBtn">회원가입</button>
+				<button type="button" class="btn btn-primary" id="registBtn">회원가입</button>
 				<button type="reset" class="btn btn-warning">초기화</button>
 			</c:when>
 		</c:choose>			
