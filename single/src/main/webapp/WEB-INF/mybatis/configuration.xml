@@ -26,7 +26,7 @@
 		<typeAlias alias="replyDto" type="com.kitri.single.board.model.ReplyDto"/>
 		
 		
-		<typeAlias alias="naverUserDto" type="com.kitri.single.naverlogin.model.NaverUserDto"/>
+		<typeAlias alias="SnsDto" type="com.kitri.single.sns.model.SnsDto"/>
 		
 	</typeAliases>
 	

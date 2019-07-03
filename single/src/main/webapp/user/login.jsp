@@ -6,8 +6,26 @@
 <!-- 네아로 사용 -->
 <!-- naver login script -->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
+<script>
+$(document).ready(function(){
+	//버튼이벤트
+	$('.naverlogin-button').click(function() {
+		//로그인 버튼 띄우기
+		$('#loginmodal').css("display","block").attr("width","auto");
+	});
+
+	//회원가입 이동 
+	$('.register').click(function() {
+		$(location).attr("href", "${root}/user/register");
+		return false;
+	});
+	
+});
+
+</script>
  <style>
- 
+
  
 /* Full-width input fields */
 #loginmodal input[type=text],#loginmodal input[type=password] {
@@ -150,7 +168,7 @@
 
     <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('loginmodal').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="other"> <a href="#">회원가입</a>  <a href="#">비밀번호변경</a> <a href="#">비밀번호 찾기</a></span>
+      <span class="other"> <a href="#" class = "register">회원가입</a>  <a href="#" >비밀번호변경</a> <a href="#">비밀번호 찾기</a></span>
     </div>
   </form>
 </div>

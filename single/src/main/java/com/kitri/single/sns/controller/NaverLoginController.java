@@ -1,14 +1,11 @@
 package com.kitri.single.sns.controller;
 
-import java.io.IOException;
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.util.Map;
 
-import javax.servlet.ServletRequest;
+import java.util.Calendar;
+import java.util.Map;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-
 import com.kitri.single.sns.model.SnsDto;
 import com.kitri.single.sns.service.NaverLoginService;
 import com.kitri.single.sns.service.NaverLoginServiceImpl;
@@ -38,62 +34,76 @@ public class NaverLoginController {
 	NaverLoginService loginService; 	
 
 	APIMemberProfile apiMemberProfile = new APIMemberProfile();
+	
 
 	@RequestMapping(value = "/callback", method = RequestMethod.POST)
 	public String callback(@RequestParam Map<String, String> parameter, Model model) {
 		
-		String email = parameter.get("email");
+		String email = parameter.get("email");//인증시 필수입력값
 		String accessToken = parameter.get("accessToken");
-		
 		logger.debug(email);
-		System.out.println("email:" +email);
 		logger.debug(accessToken);
-		System.out.println("accessToken:" +accessToken);
-		String userProfile = apiMemberProfile.getMemberProfile(accessToken);
-		
-		logger.debug(userProfile);
-		System.out.println("userProfile:" +userProfile);
-		
-		JSONObject resultJson = new JSONObject(userProfile);
-		JSONObject profileObj = (JSONObject) resultJson.get("response");
-		
-		String id = Utill.getStringJson(profileObj, "id");
-		String nickname = Utill.getStringJson(profileObj, "nickname");		
-		String age = Utill.getStringJson(profileObj, "age");
-		String gender = Utill.getStringJson(profileObj, "gender");
-		String userName = Utill.getStringJson(profileObj, "name");
-		String birthday = Utill.getStringJson(profileObj, "birthday");
-		String profile_image = Utill.getStringJson(profileObj, "profile_image");
 
-		
-		logger.info("id: " + id);
-		logger.info("userName: " + userName);
-		logger.info("nickname: " + nickname);
-		logger.info("age: " + age);
-		logger.info("gender: " + gender);
-		logger.info("birthday: " + birthday);
-		logger.info("profile_image: " + profile_image);
-		
-		SnsDto snsDto = new SnsDto();
-		
-		
-		snsDto.setUserId(id);
-		snsDto.setSnsName(userName);
-		snsDto.setSnsNickname(nickname);
-		snsDto.setSnsGender(gender);
-		snsDto.setSnsBirthday(birthday);
-		snsDto.setSnsProfile(profile_image);
-		
-		
-		
-		//DB에 입력
-//		int result = loginService.registerUser(naverUserDto);
-//		logger.info("regitser result cnt : " + result);
-		model.addAttribute("snsInfo", snsDto);
+		UserDto userDto = loginService.getUser(email);
+//		이소셜로는 처음 로그인 합니다.
+		if(userDto == null) {
+			String userProfile = apiMemberProfile.getMemberProfile(accessToken);
+			JSONObject resultJson = new JSONObject(userProfile);
+			JSONObject profileObj = (JSONObject) resultJson.get("response");
+			
+			String snsId = Utill.getStringJson(profileObj, "id");
+			
+			String userNickname = Utill.getStringJson(profileObj, "nickname");
+			if( userNickname == null) {
+				userNickname= UUID.randomUUID().toString();
+			}
+			String userAge= Utill.getStringJson(profileObj, "age");
+			String userGender = Utill.getStringJson(profileObj, "gender");
+			String userName = Utill.getStringJson(profileObj, "name");
+			String userBirthday = Utill.getStringJson(profileObj, "birthday");
+			String userProfile_image = Utill.getStringJson(profileObj, "profile_image");
+			logger.info("id: " + snsId);
+			logger.info("userName: " + userName);
+			logger.info("nickname: " + userNickname);
+			logger.info("age: " + userAge);
+			logger.info("gender: " + userGender);
+			logger.info("birthday: " + userBirthday);
+			logger.info("profile_image: " + userProfile_image);
+			SnsDto snsDto = new SnsDto();
+			//TODO 갱신토큰 DB 저장 필요
+			snsDto.setSnsType("naver");
+			snsDto.setSnsId(snsId);
+			snsDto.setSnsConnectDate(Calendar.getInstance().getTime().toString());
+			//TODO 닉네임이 없다면 랜덤uuid값으로 지정
+			userDto = new UserDto();
+			userDto.setUserId(email);
+			userDto.setUserName(userName);
+			userDto.setUserNickname(userNickname);
+			userDto.setUserGender(userGender);
+			userDto.setUserBirthday(userBirthday);
+			userDto.setUserProfile(userProfile_image);
+			userDto.setSnsDto(snsDto);
+//			snsDto.setUserId(id);
+//			snsDto.setSnsName(userName);
+//			snsDto.setSnsNickname(nickname);
+//			snsDto.setSnsGender(gender);
+//			snsDto.setSnsBirthday(birthday);
+//			snsDto.setSnsProfile(profile_image);
+			
+			
+			
+			//DB에 입력
+//			int result = loginService.registerUser(naverUserDto);
+//			logger.info("regitser result cnt : " + result);
+			model.addAttribute("userInfo", userDto);
+			
+			// 회원가입, 소셜 연동 창으로 이동 
+			return "user/register";
+		}else {
+			
+		}
+		return "user/index";
 
-		//views/user/result.jsp
-		return "user/result";
-//		return new ModelAndView("redirect:/index.jsp","naverUserInfo",userProfile);
 	}
 
 	@RequestMapping(value = "/mvcallback", method = RequestMethod.GET)

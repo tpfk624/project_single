@@ -18,6 +18,7 @@ public class UserDto {
 	private String userJoindate;
 	private String userOutdate;
 	private String userStatecode;
+	
 	private SnsDto snsDto;
 	
 	

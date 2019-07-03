@@ -6,11 +6,11 @@
 <br>
 <br>
 <br>
-아이디: ${userInfo.userId} <br>
-이름: ${userInfo.userName }<br>
-닉네임: ${userInfo.userNickname }<br>
-생일: ${userInfo.userBirthday }<br>
-성별: ${userInfo.userGender }<br>
+아이디: ${userInfo.snsDto.userId} <br>
+이름: ${userInfo.snsDto.snsName }<br>
+닉네임: ${userInfo.snsDto.snsNickname}<br>
+생일: ${userInfo.snsDto.snsBirthday }<br>
+성별: ${userInfo.snsDto.snsGender }<br>
 
 <br>
 <br>

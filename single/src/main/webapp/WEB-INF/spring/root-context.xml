@@ -21,7 +21,7 @@
 				<value>/WEB-INF/mybatis/mapper_group.xml</value>
 				<value>/WEB-INF/mybatis/mapper_home.xml</value>
 				<value>/WEB-INF/mybatis/mapper_common.xml</value>
-				<value>/WEB-INF/mybatis/mapper_naverlogin.xml</value>
+				<value>/WEB-INF/mybatis/mapper_sns.xml</value>
 				<value>/WEB-INF/mybatis/mapper_reply.xml</value>
 				<value>/WEB-INF/mybatis/mapper_hashtag.xml</value>
 			</list>
@@ -34,7 +34,21 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	
+	<!-- Mail 인증 관련 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="hth0893@gmail.com" />
+		<property name="password" value="0893" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
 
 	
 		
