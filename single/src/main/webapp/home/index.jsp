@@ -21,6 +21,35 @@ $(document).ready(function(){
 	});   
 });
 
+$(document).ready(function() {
+	$('#weatherimg').on("click", function(){
+		var form = {
+				'stationName' : $('#stationName').val(),
+				'dataTerm' : $('#dataTerm').val()
+		};
+		//alert("읭!!!!!!");
+		$.ajax({
+			url : "${root}/home/dusttest.do",
+			type : "POST",
+			data : JSON.stringify(form)	,
+			contentType:"application/json; charset=UTF-8;",
+			dataType : "json",
+			success : function(data){
+				var list = data.list;
+				console.log(list[0].pm25Grade);
+				$("#here").html("미세먼지야 >>>>> "+list[0].pm25Grade);
+				for(var i=0 ; i<list.length ; i++){
+					list[i].pm10Grade;
+				}
+			},
+			error: function(){
+				console.log(form);
+				alert("에러났어요!!!!!!");
+			}
+		});
+	});
+});
+
 </script>
 
 <style>
@@ -37,6 +66,7 @@ $(document).ready(function(){
 .txt{
 	font-size: 30px;
 }
+
 .logo{
 	text-shadow: 2px 2px 2px gray;
 }
@@ -49,6 +79,7 @@ $(document).ready(function(){
 #popover{
 	width: 500px
 }
+
 </style>
 
       <!-- Header -->
@@ -60,6 +91,11 @@ $(document).ready(function(){
             	<img src="${root}/resources/img/seonimg/rain.png" id="weatherimg" height="100">
             </a>
          </header>
+         
+		<input id="stationName" name="stationName" value="구로구" hidden="">
+		<input id="dataTerm" name="dataTerm" value="DAILY" hidden="">
+		
+		
 
 
       <!-- menu -->
@@ -87,12 +123,12 @@ $(document).ready(function(){
          the background image.
       -->
       
-      
          <section id="banner"> <!-- class="bg-img" -->
             <div class="inner">
               <!--  <header>
                   <h1>SingleTrace</h1>
                </header> -->
+               <div id="here"></div>
                <label class="txt">장마가 시작됐어요 우산 챙겨다니세요</label>
                <div class="input-group mb-3">
 				  <input type="text" class="form-control" placeholder="Search" width="100">

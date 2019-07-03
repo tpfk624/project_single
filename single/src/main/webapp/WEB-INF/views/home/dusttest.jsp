@@ -24,14 +24,22 @@ $(document).ready(function() {
 			dataType : "json",
 			success : function(data){
 				var list = data.list;
-				console.log(list[0].pm25Grade);
-				$("#here").html(list[0].pm25Grade);
+				var dt = list[0].pm25Grade;
+				//console.log(list[0].dataTime);
+				$("#here").html(list[0].dataTime);
+				if(dt == 2){
+					$("#here1").html(list[0].pm25Grade + "날씨가 좋아요!");
+				}else{
+					$("#here1").html(list[0].pm25Grade + "그렇지 않아요!");
+					
+				}
 				for(var i=0 ; i<list.length ; i++){
-					list[i].pm10Grade;
+					list[i].pm25Grade;
+					//console.log("옹?? >> " + list[i].pm25Grade);
 				}
 			},
 			error: function(){
-				console.log(form);
+				//console.log(form);
 				alert("에러났어요!!!!!!");
 			}
 		});
@@ -45,8 +53,9 @@ $(document).ready(function() {
 		<input id="dataTerm" name="dataTerm" value="DAILY">
 		<button type="button" id="btn">어디한번해볼까나</button>
 	</form>
+
 	<div id="here"></div>
-	
+	<div id="here1"></div>
 
 </body>
 </html>
