@@ -2,7 +2,18 @@
 	pageEncoding="UTF-8"%>
 <%@ include
 	file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
+	
+<%
+UserDto userDto = new UserDto();
+userDto.setUserId("tpfk624@naver.com");
+userDto.setUserName("고세라");
+
+session.setAttribute("userInfo", userDto);
+
+%>
+
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
+
 <style>
 
 /* 마이페이지 헤더부분 */
@@ -323,7 +334,7 @@ body {
 							<!--이메일 주소-->이메일 주소
 						</th>
 						<td><input type="text" name="email_address" class="t_input"
-							value="tpfk624@gmail.com" disabled=""></td>
+							value="${dto.userName}" disabled=""></td>
 					</tr>
 					<tr>
 						<td class="space">&nbsp;</td>

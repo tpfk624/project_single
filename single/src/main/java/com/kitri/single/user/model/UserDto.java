@@ -3,6 +3,7 @@ package com.kitri.single.user.model;
 public class UserDto {
 
 	private String userId;
+	private String userPassword;
 	private String userNickname;
 	private String userName;
 	private String userBirthday;
@@ -87,15 +88,22 @@ public class UserDto {
 	public void setUserStatecode(String userStatecode) {
 		this.userStatecode = userStatecode;
 	}
-	
+	public String getUserPassword() {
+		return userPassword;
+	}
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
 	
 	@Override
 	public String toString() {
-		return "UserDto [userId=" + userId + ", userNickname=" + userNickname + ", userName=" + userName
-				+ ", userBirthday=" + userBirthday + ", userGender=" + userGender + ", userPhone=" + userPhone
-				+ ", userZipcode=" + userZipcode + ", userAddress=" + userAddress + ", userAddressDetail="
-				+ userAddressDetail + ", userJoindate=" + userJoindate + ", userOutdate=" + userOutdate
-				+ ", userStatecode=" + userStatecode + "]";
+		return "UserDto [userId=" + userId + ", userPassword=" + userPassword + ", userNickname=" + userNickname
+				+ ", userName=" + userName + ", userBirthday=" + userBirthday + ", userGender=" + userGender
+				+ ", userPhone=" + userPhone + ", userZipcode=" + userZipcode + ", userAddress=" + userAddress
+				+ ", userAddressDetail=" + userAddressDetail + ", userJoindate=" + userJoindate + ", userOutdate="
+				+ userOutdate + ", userStatecode=" + userStatecode + "]";
 	}
+	
+	
 
 }
