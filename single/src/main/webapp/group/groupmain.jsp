@@ -10,41 +10,6 @@
 .carousel-item{
 	height : 30vh;
 }
-
-/*옮겨도 되는 부분*/
-.groupname{
-	font-size: 2rem;
-}
-.groupdesc{
-	margin-right: 10px;
-	margin-bottom: 10px;
-}
-.whitespace{
-	background-color: white;
-}
-.groupheader{
-	
-}
-.groupsection{
-	border-top: 1px solid #e6e6e6;
-	padding-top: 3%;
-	overflow: hidden;
-	padding-bottom: 3%;
-}
-
-.group-info{
-		
-}
-.group-info-label{
-	float: left;
-	margin-left: 10px;
-	font-weight: bold;
-}
-
-.group-info-content{
-	float: right;
-	width: 80%;
-}
 </style>
 
 <%@ include file="groupheader.jsp"%>
