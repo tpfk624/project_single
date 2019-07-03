@@ -5,15 +5,15 @@
      
 <mapper namespace="com.kitri.single.user.dao.UserDao">
 
-	<update id="" parameterType="" >
+<!-- 	<update id="" parameterType="" > -->
 	
-	update single_user
-	set 
-	    user_nickname = #{user_nickname},
-	    user_phone = #{user_phone}
-	where user_id = #{user_id};
+<!-- 	update single_user -->
+<!-- 	set  -->
+<!-- 	    user_nickname = #{user_nickname}, -->
+<!-- 	    user_phone = #{user_phone} -->
+<!-- 	where user_id = #{user_id}; -->
 	
-	</update>
+<!-- 	</update> -->
 
 
 </mapper>
