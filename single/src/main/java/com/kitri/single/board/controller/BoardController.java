@@ -1,5 +1,7 @@
 package com.kitri.single.board.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -68,7 +70,8 @@ public class BoardController {
 	
 	
 	@RequestMapping(value="/write",method = RequestMethod.POST)
-	public String write( @RequestParam Map<String, String> parameter,
+	public String write(@RequestParam("tags") String tags,
+			@RequestParam Map<String, String> parameter,
 			Model model, HttpSession session){
 		
 		String path = "";
@@ -77,8 +80,9 @@ public class BoardController {
 		// 혹시 new도 생성이기는 하니깐?
 		//UserDto userdto = new UserDto();
 		
-		BoardDto boardDto = new BoardDto();
 		UserDto userdto = (UserDto)session.getAttribute("userInfo");
+		BoardDto boardDto = new BoardDto();
+		
 		if (userdto != null) {
 			// 2번 적용됨?? - 오라클에 있는 유저랑 인클루드해서 넣어둔 유저랑 겹처서 그런가?
 
@@ -96,9 +100,23 @@ public class BoardController {
 			//System.out.println("boardDto = " + boardDto);
 			//System.out.println(" seq : 2 = "+seq);
 
+			
+			// 해시태그 dto에 넣어주기.
+			String[] hashtags = tags.split("#");
+			List<String> hashtagList = new ArrayList<>();
+			
+			for(int i=0 ; i<hashtags.length ; i++) {
+				
+				hashtagList.add(hashtags[i]);
+				
+			}//#해시태그 조아조아   #fsfkjdkfjshfd
+
+			boardDto.setHashtagList(hashtagList);
+			
+
+			
 			// 결과값 반환
 			boardNum = boardService.writeArticle(boardDto);
-			
 			
 			if (boardNum != 0) {
 				model.addAttribute("boardNum",boardNum);

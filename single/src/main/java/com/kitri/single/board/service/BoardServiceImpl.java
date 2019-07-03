@@ -23,6 +23,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int writeArticle(BoardDto boardDto) {
 		int cnt = sqlSession.getMapper(BoardDao.class).writeArticle(boardDto);
+		int cnthashtag = sqlSession.getMapper(BoardDao.class).writeArticlehashtag(boardDto);
 		return cnt != 0? boardDto.getBoardNum() : 0;
 	}
 	

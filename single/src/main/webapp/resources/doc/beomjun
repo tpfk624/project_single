@@ -33,4 +33,18 @@ select board_num , board_list_num, user_id, user_nickname, board_subject, board_
 from single_board
 where board_num = 8;
 
+
+
+
+insert all into single_board values(board_num_seq.nextval, 1,'qjawns0617@naver.com' ,'뿡뿡뿡뿡','들리십니까' ,'들리십니까 내용입니다', '0', 0,sysdate,null,null,'1') 
+into single_hashtag values(hashtag_num_seq.nextval + 0,'1','1',board_num_seq.currval,null) 
+into single_hashtag values(hashtag_num_seq.nextval + 1,'2','1',board_num_seq.currval,null) 
+into single_hashtag values(hashtag_num_seq.nextval + 2,'3','1',board_num_seq.currval,null) 
+into single_hashtag values(hashtag_num_seq.nextval + 3,'4','1',board_num_seq.currval,null)
+select * from dual;
+
+
+
+
+
 commit;

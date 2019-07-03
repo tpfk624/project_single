@@ -93,7 +93,7 @@ $(function() {
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					<p>태그 : <input type="text" id="teg" name="teg" style="width: 100%;"><p>
+					<p>태그 : <input type="text" id="tags" name="tags" style="width: 80%;"><p>
 				</div>
 			</div>
 			<div class="form-group">
