@@ -3,7 +3,12 @@
 <%@ include file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
 <link rel="stylesheet" href="${root}/resources/css/group/group.css" >
 <%@ include file="/WEB-INF/views/commons/movetop.jsp"%>
-
+<% 
+HttpSession httpSession = request.getSession();
+UserDto userInfo = new UserDto();
+userInfo.setUserId("calubang");
+httpSession.setAttribute("userInfo", userInfo);
+%>
 <script>
 $(function() {
 	$(".groupcard").click(groupcardClick);

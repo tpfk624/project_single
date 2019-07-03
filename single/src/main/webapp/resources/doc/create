@@ -402,8 +402,9 @@ ALTER TABLE single_board_category
 
 -- 좋아요
 CREATE TABLE single_like (
-	board_num number       NOT NULL, -- 글번호
-	user_id   varchar2(64) NOT NULL  -- 유저아이디
+	like_num  number       NOT NULL, -- 좋아요번호
+	board_num number       NULL,     -- 글번호
+	user_id   varchar2(64) NULL      -- 유저아이디
 );
 
 -- 좋아요
@@ -411,8 +412,7 @@ ALTER TABLE single_like
 	ADD
 		CONSTRAINT PK_single_like -- 좋아요 기본키
 		PRIMARY KEY (
-			board_num, -- 글번호
-			user_id    -- 유저아이디
+			like_num -- 좋아요번호
 		);
 
 -- 댓글
