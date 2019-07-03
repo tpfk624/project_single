@@ -1,19 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
-<c:set var="user" value="$"/>
 
 
 <br>
 <br>
 <br>
-아이디: ${userInfo.id} <br>
-이름: ${userInfo.userName }<br>
-닉네임: ${userInfo.nickname }<br>
-나이: ${userInfo.age }<br>
-성별: ${userInfo.gender }<br>
-생일: ${userInfo.birthday }<br>
-이미지: ${userInfo.profile_image }<br>
+아이디: ${userInfo.snsDto.userId} <br>
+이름: ${userInfo.snsDto.snsName }<br>
+닉네임: ${userInfo.snsDto.snsNickname}<br>
+생일: ${userInfo.snsDto.snsBirthday }<br>
+성별: ${userInfo.snsDto.snsGender }<br>
 
 <br>
 <br>
