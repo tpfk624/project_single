@@ -21,7 +21,6 @@ $(document).ready(function() { // 아예 시작할 때
 	$(".day").click(function() {
 		$("#makeCalendarModal").modal("show");
 	});
-
 });
 </script>
 <%@ include file="calendarmodal.jsp"%>

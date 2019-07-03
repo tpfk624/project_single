@@ -5,16 +5,77 @@
      
 <mapper namespace="com.kitri.single.user.dao.UserDao">
 
-	<update id="" parameterType="" >
-	
-	update single_user
-	set 
-	    user_nickname = #{user_nickname},
-	    user_phone = #{user_phone}
-	where user_id = #{user_id};
-	
-	</update>
 
+<!-- 	<select id=""> -->
+<!-- 	select -->
+<!-- 	    user_id as userId, -->
+<!-- 	    user_nickname as userNickname, -->
+<!-- 	    user_phone as userPhone -->
+<!-- 	from single_user -->
+<!-- 	where user_id = #{userId}; -->
+<!-- 	</select> -->
+	
+	
+	<select id="getGroupList" parameterType="map" resultType="groupDto">
+	select *
+	from (
+	    select 
+	        rownum rn
+	        , ordergroup.*
+	    from (
+	        select 
+	            g.group_num groupNum
+	            , g.group_category_num groupCategoryNum
+	            , gc.group_category_name groupCategoryName
+	            , g.group_name as groupName
+	            , g.group_description as groupDescription
+	            , g.group_img_src as groupImgSrc
+	            , g.group_member_count as groupMemberCount
+	            , g.group_member_limit as groupMemberLimit	    
+	            , g.group_main_place as groupMainPlace
+	            , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+	        from 
+	            single_group g
+	            left outer join single_group_category gc
+	                on g.group_category_num = gc.group_category_num
+	        where g.group_statecode = '1'
+	        and g.group_member_count &lt; g.group_member_limit
+	        <if test = "groupNum != null and groupNum != '' ">
+			and g.group_num = #{groupNum}
+			</if>
+	        <if test="userId != null and userId != '' ">
+			and g.group_num not in (
+			                        select group_num
+			                        from single_group_member gm
+			                        where gm.user_id = #{userId}
+			                        )
+			</if>
+	        order by g.group_num
+	        ) ordergroup
+	    where rownum &lt; #{endRow}
+	    ) rowgroup
+	where rowgroup.rn > #{startRow}
+	</select>
+	
+		<select id="getGroup" parameterType="int" resultType="groupDto">
+	select 
+	    g.group_num groupNum
+	    , g.group_category_num groupCategoryNum
+	    , gc.group_category_name groupCategoryName
+	    , g.group_name as groupName
+	    , g.group_description as groupDescription
+	    , g.group_img_src as groupImgSrc
+	    , g.group_member_count as groupMemberCount
+	    , g.group_member_limit as groupMemberLimit	    
+	    , g.group_main_place as groupMainPlace
+	    , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+	from 
+	    single_group g
+	    left outer join single_group_category gc
+	        on g.group_category_num = gc.group_category_num
+	where g.group_statecode = '1'
+	and g.group_num = #{groupNum}
+	</select>
 
 </mapper>
    
