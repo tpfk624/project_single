@@ -11,7 +11,7 @@
 	right : 0px;
 	width : 18rem;
 	z-index: 1000;
-	background-color: #ebebeb;
+	/* background-color: #ebebeb; */
 	padding-left: 1rem;
 	padding-right: 1rem;
 }

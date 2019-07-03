@@ -52,7 +52,7 @@ public class GroupServiceImpl implements GroupService{
 		//해시태그 정보
 		Map<String, Integer> parameter = new HashMap<String, Integer>();
 		parameter.put("tagType", 2);
-		parameter.put("num", groupNum);
+		parameter.put("groupNum", groupNum);
 		List<String> tagList = sqlSession.getMapper(HashtagDao.class).getHashtagList(parameter);
 		
 		JSONObject jsonObject = new JSONObject();
