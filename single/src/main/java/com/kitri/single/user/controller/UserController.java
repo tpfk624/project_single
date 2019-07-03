@@ -4,16 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kitri.single.user.model.UserDto;
 import com.kitri.single.user.service.UserService;
+import com.kitri.single.util.Utill;
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Single;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
- 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,124 +33,67 @@ import org.springframework.web.bind.annotation.RequestParam;
  
 
 @Controller
+@SessionAttributes("userInfo")
 @RequestMapping("/mypage")
 public class UserController {
 	
-//	   private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-//	    
-//	    // MemberService 객체를 스프링에서 생성하여 주입시킴
-//	    @Autowired
-//	    UserService userService;
-//	    
-//	    
-//	    // 01 회원 목록
-//	    // url pattern mapping
-//	    @RequestMapping("member/list.do")
-//	    public String memberList(Model model){
-//	    // controller => service => dao 요청
-//	        List<UserDto> list = userService.memberList();
-//	        model.addAttribute("list", list);
-//	        return "member/member_list";
-//	    }
-//	    
-//	    
-//	    // 02_01 회원 등록 페이지로 이동
-//	    @RequestMapping("member/write.do")
-//	    public String memberWrite(){
-//	        
-//	        return "member/member_write";
-//	    }
-//	    
-//	    
-//	    // 02_02 회원 등록 처리 후 ==> 회원목록으로 리다이렉트
-//	    // @ModelAttribute에 폼에서 입력한 데이터가 저장된다.
-//	    @RequestMapping("member/insert.do")
-//	    // * 폼에서 입력한 데이터를 받아오는 법 3가지 
-//	    //public String memberInsert(HttpServlet request){
-//	    //public String memberInsert(String userId, String userPw, String userName, String userEmail){
-//	    public String userInsert(@ModelAttribute UserDto dto){
-//	        // 테이블에 레코드 입력
-//	    	userService.insertUser(dto);
-//	        // * (/)의 유무에 차이
-//	        // /member/list.do : 루트 디렉토리를 기준
-//	        // member/list.do : 현재 디렉토리를 기준
-//	        // member_list.jsp로 리다이렉트
-//	        return "redirect:/member/list.do";
-//	    }
-//	    
-//	    // 03 회원 상세정보 조회
-//	    @RequestMapping("member/view.do")
-//	    public String memberView(@RequestParam String userId, Model model){
-//	        // 회원 정보를 model에 저장
-//	        model.addAttribute("dto", userService.viewMember(userId));
-//	        //System.out.println("클릭한 아이디 확인 : "+userId);f
-//	        logger.info("클릭한 아이디 : "+userId);
-//	        // member_view.jsp로 포워드
-//	        return "member/member_view";
-//	    }
-//	    
-//	    
-//	    // 04. 회원 정보 수정 처리
-//	    @RequestMapping("member/update.do")
-//	    public String memberUpdate(@ModelAttribute UserDto dto, Model model){
-//	        // 비밀번호 체크
-//	        boolean result = userService.checkPw(dto.getUserId(), dto.getUserPassword());
-//	        if(result){ // 비밀번호가 일치하면 수정 처리후, 전체 회원 목록으로 리다이렉트
-//	        	userService.updateUser(dto);
-//	            return "redirect:/member/list.do";
-//	        } else { // 비밀번호가 일치하지 않는다면, div에 불일치 문구 출력, viwe.jsp로 포워드
-//	            // 가입일자, 수정일자 저장
-//	            UserDto vo2 = memberService.viewMember(vo.getUserId());
-//	            vo.setUserRegdate(vo2.getUserRegdate());
-//	            vo.setUserUpdatedate(vo2.getUserUpdatedate());
-//	            model.addAttribute("dto", vo);
-//	            model.addAttribute("message", "비밀번호 불일치");
-//	            return "member/member_view";
-//	        }
-//	        
-//	    }
-//	    // 05. 회원정보 삭제 처리
-//	    // @RequestMapping : url mapping
-//	    // @RequestParam : get or post방식으로 전달된 변수값
-//	    @RequestMapping("member/delete.do")
-//	    public String memberDelete(@RequestParam String userId, @RequestParam String userPw, Model model){
-//	        // 비밀번호 체크
-//	        boolean result = memberService.checkPw(userId, userPw);
-//	        if(result){ // 비밀번호가 맞다면 삭제 처리후, 전체 회원 목록으로 리다이렉트
-//	            memberService.deleteMember(userId);
-//	            return "redirect:/member/list.do";
-//	        } else { // 비밀번호가 일치하지 않는다면, div에 불일치 문구 출력, viwe.jsp로 포워드
-//	            model.addAttribute("message", "비밀번호 불일치");
-//	            model.addAttribute("dto", memberService.viewMember(userId));
-//	            return "member/member_view";
-//	        }
-//	    }
-//	}
-
-//
-//	@Autowired
-//	private UserService userService;
-
 	
-	/*
-	 * //고객정보 변경 화면 요청
-	 * 
-	 * @RequestMapping("/detail.cs") public String update(@RequestParam String id,
-	 * Model model){
-	 * 
-	 * UserDto userDto = Single.detail(id);
-	 * 
-	 * model.addAttribute("dto", userDto);
-	 * 
-	 * return "customer/detail";
-	 * 
-	 * }
-	 */
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private ServletContext servletContext;
 	
 	
 	@RequestMapping("/mypage")
-	public void home() {
+	public void home(Model model, HttpSession session) {
 		System.out.println("home 들어옴");
+		//여기에다가 서비스통해서 userdto를 db에담고 그걸 모델에 담아서 select 홈안에 모델메개변수 잡아주기
+		//모델안에 애드어트리뷰트 하고 화면단에뿌려주기
+		String path = "";
+		
+		UserDto userDto = (UserDto) session.getAttribute("userinfo");
+		
+		model.addAttribute("userDto", userService.viewUser(session));
+		model.addAttribute("article", userDto);
+
+		
+		
+		
+		
 		
 	}
+	
+	//수정
+	@RequestMapping(value = "/modify" , method = RequestMethod.POST)
+	public String modify(UserDto userDto
+			, @SessionAttribute("userInfo") UserDto userInfo
+			, @RequestParam("imgdata") MultipartFile multipartFile) { //사진정보 파일을 받음
+		System.out.println(userDto);
+		System.out.println(multipartFile);
+		System.out.println("여기까지 들어오니");
+		
+		if (multipartFile != null && !multipartFile.isEmpty()) {
+			
+			String realPath = servletContext.getRealPath("");
+			System.out.println(realPath);
+			
+			String src = "";
+			try {
+				src = Utill.profileUpload(multipartFile, "user", realPath);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			userDto.setUserProfile(src);//경로값
+			System.out.println(userDto);
+		}
+		return null;
+	}
+	
+	
 }

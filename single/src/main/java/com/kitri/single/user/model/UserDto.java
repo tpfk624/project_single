@@ -5,6 +5,7 @@ public class UserDto {
 	private String userId;
 	private String userPassword;
 	private String userNickname;
+	private String userProfile;	
 	private String userName;
 	private String userBirthday;
 	private String userGender;
@@ -95,14 +96,23 @@ public class UserDto {
 		this.userPassword = userPassword;
 	}
 	
+	
+	public String getUserProfile() {
+		return userProfile;
+	}
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserDto [userId=" + userId + ", userPassword=" + userPassword + ", userNickname=" + userNickname
-				+ ", userName=" + userName + ", userBirthday=" + userBirthday + ", userGender=" + userGender
-				+ ", userPhone=" + userPhone + ", userZipcode=" + userZipcode + ", userAddress=" + userAddress
-				+ ", userAddressDetail=" + userAddressDetail + ", userJoindate=" + userJoindate + ", userOutdate="
-				+ userOutdate + ", userStatecode=" + userStatecode + "]";
+				+ ", userProfile=" + userProfile + ", userName=" + userName + ", userBirthday=" + userBirthday
+				+ ", userGender=" + userGender + ", userPhone=" + userPhone + ", userZipcode=" + userZipcode
+				+ ", userAddress=" + userAddress + ", userAddressDetail=" + userAddressDetail + ", userJoindate="
+				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + "]";
 	}
+	
 	
 	
 
