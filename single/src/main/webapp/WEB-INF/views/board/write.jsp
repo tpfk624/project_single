@@ -91,6 +91,11 @@ $(function() {
 				</div>
 				
 			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<p>태그 : <input type="text" id="teg" name="teg" style="width: 70%;"><p>
+				</div>
+			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="button" id="writeBtn" name="writeBtn" class="btn btn-default" style="color: #007bff; border-color: #007bff;">Save</button>
