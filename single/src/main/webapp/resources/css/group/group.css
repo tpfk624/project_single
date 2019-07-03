@@ -122,6 +122,21 @@
 }
 
 /* 그룹 과제  */
+.homework{
+	cursor: pointer;
+}
+
+.homework:hover{
+	cursor: pointer;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.homework-end{
+	background-clip: padding-box;
+	background-color: #8080802b;
+	margin-bottom: 0.5rem;
+}
+
 .homework-status{
 	float: right;
 	font-weight: bold;

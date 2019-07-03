@@ -7,6 +7,7 @@
 <script type="text/javascript">
 $(function() {
 	$(".okbtn").click(function() {
+		defaultSetting("${root}/resources/img/group/group_default.png");
 		var groupName = $("#groupCreateForm input[name=groupName]").val();
 		var groupCategoryNum = $("#groupCreateForm input[name=groupCategoryNum]").val();
 		

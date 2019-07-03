@@ -58,7 +58,7 @@ $(function() {
 		</section>
 		
 		<!-- 과제 시작 -->
-		<section class="groupsection">
+		<section class="groupsection homework">
 			<div class="homework-item">
 				<div class="homework-body col-sm-8">
 					<h4 class="homework-title">기타를 칩시다</h4>
@@ -76,7 +76,7 @@ $(function() {
 		</section>	
 		
 		<!-- 과제 시작 -->
-		<section class="groupsection">
+		<section class="groupsection homework homework-end">
 			<div class="homework-item">
 				<div class="homework-body col-sm-8">
 					<h4 class="homework-title">기타를 칩시다</h4>
@@ -93,7 +93,7 @@ $(function() {
 		</section>	
 		
 		<!-- 과제 시작 -->
-		<section class="groupsection">
+		<section class="groupsection homework homework-end">
 			<div class="homework-item">
 				<div class="homework-body col-sm-8">
 					<h4 class="homework-title">기타를 칩시다</h4>
@@ -109,7 +109,7 @@ $(function() {
 			</div>
 		</section>	
 		<!-- 과제 시작 -->
-		<section class="groupsection">
+		<section class="groupsection homework homework-end">
 			<div class="homework-item">
 				<div class="homework-body col-sm-8">
 					<h4 class="homework-title">기타를 칩시다</h4>
@@ -140,7 +140,5 @@ $(function() {
 	</div>
 </section>
 <!-- /.container -->
-<!-- 채팅부분 -->
-<%-- <%@ include file="chat.jsp"%> --%>
 
 <%@ include file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>
