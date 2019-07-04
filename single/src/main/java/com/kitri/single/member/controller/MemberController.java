@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kitri.single.member.service.MemberService;
 import com.kitri.single.user.model.UserDto;
 import com.kitri.single.user.service.UserService;
 import com.kitri.single.user.service.UserServiceImpl;
@@ -28,8 +29,15 @@ public class MemberController {
 	private Logger logger =LoggerFactory.getLogger(MemberController.class);
     
 	@Autowired
-	UserService userService;
-
+	MemberService memberService;
+	
+	@RequestMapping(value="joinPost", method=RequestMethod.POST)
+	public String joinPost(UserDto userDto) throws Exception {
+		logger.info("currnent join member: " + userDto.toString());
+		memberService.create(userDto);
+		
+		return "/user/joinPost";
+	}
 	
     //회원가입페이지이동
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -41,7 +49,7 @@ public class MemberController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST) 
 	public String register(UserDto userDto,Model model) {
 		logger.info(userDto.toString());
-		userService.regist(userDto);
+		memberService.regist(userDto);
 		model.addAttribute("userInfo", userDto);
 		return "member/register";
 	}
@@ -49,7 +57,7 @@ public class MemberController {
 	@RequestMapping(value = "/logout", method = RequestMethod.POST) 
 	public String logout(UserDto userDto,Model model) {
 		logger.info(userDto.toString());
-		userService.regist(userDto);
+		memberService.regist(userDto);
 		model.addAttribute("userInfo", userDto);
 		return "member/register";
 	}

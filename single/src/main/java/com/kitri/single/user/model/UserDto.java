@@ -18,7 +18,16 @@ public class UserDto {
 	private String userJoindate;
 	private String userOutdate;
 	private String userStatecode;
+	private String uuid;
 	
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
 	private SnsDto snsDto;
 
 	public String getUserId() {
@@ -150,6 +159,11 @@ public class UserDto {
 				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + ", snsDto="
 				+ snsDto + "]";
 	}
+
+	public void setAuthkey(String authkey) {
+		
+	}
+
 	
 	
 	

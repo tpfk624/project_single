@@ -1,8 +1,14 @@
 package com.kitri.single.member.service;
 
+import java.io.UnsupportedEncodingException;
+
+import javax.mail.MessagingException;
+
 import com.kitri.single.user.model.UserDto;
 
 public interface MemberService {
 	void regist(UserDto userDto);
+
+	void create(UserDto userDto) throws MessagingException, UnsupportedEncodingException;
 
 }
