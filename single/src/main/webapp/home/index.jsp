@@ -109,6 +109,16 @@ $(document).ready(function(){
 	width: 500px
 }
 
+#profile{
+	text-align: center;
+}
+#userpic{
+	width: 100px; height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
 </style>
 
       <!-- Header -->
@@ -129,18 +139,30 @@ $(document).ready(function(){
       <!-- menu -->
          <nav id="menu">
             <ul class="links">
-               <li><a href="${root}/home/dusttest">로그인</a></li>
+            	<li id="profile">
+	            	<div class="profile-userpic">
+						<img id = "userpic" src='${root}/resources/img/seonimg/song.png'  height="100">
+					</div>
+					<!-- END SIDEBAR USERPIC -->
+					<!-- SIDEBAR USER TITLE -->
+					<div class="profile-usertitle">
+						<div class="profile-usertitle-name">
+						<br>
+							Marcus Doe
+						</div>
+						<div class="profile-usertitle-job">
+							Developer
+						</div>
+					</div>
+				</li>
+				<li>
+					<hr>
+            	</li>
+               <%-- <li><a href="${root}/home/dusttest">로그인</a></li> --%>
                <li><a href="generic.html">같이놀래요</a></li>
                <li><a href="${root }/board/write">혼자놀래요</a></li>
             </ul>
          </nav>
-
-      <!-- Banner -->
-      <!--
-         Note: To show a background image, set the "data-bg" attribute below
-         to the full filename of your image. This is used in each section to set
-         the background image.
-      -->
       
          <section id="banner"> <!-- class="bg-img" -->
             <div class="inner">
@@ -158,20 +180,16 @@ $(document).ready(function(){
             <a href="#menu" class="more">menu</a>
          </section>
 
-         <!-- <footer id="footer">
-            <a href="#menu"><span>Menu</span></a>
-         </footer> -->
+
+         <!-- 날씨 popover -->
          
-         <div class="popover fade bs-popover-bottom" role="tooltip" id="popover" style="position: absolute; transform: translate3d(1248px, 79px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom">
+         <div class="popover fade bs-popover-bottom" role="tooltip" id="popover" style="float : right; top: 60px; left: 1560px;  will-change: transform;" x-placement="bottom">  <!-- transform: translate3d(1248px, 79px, 0px); -->
 	         <div class="arrow" style="left: 25px;">
 	         </div>
 	         <h3 class="popover-header">날씨</h3>
 	         <div class="popover-body">
 	         	<div id="here"></div>
-	        	<div></div>
 	         </div>
          </div>
-         
-
    </body>
 </html>
