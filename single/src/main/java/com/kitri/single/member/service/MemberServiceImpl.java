@@ -36,8 +36,9 @@ public class MemberServiceImpl implements MemberService {
 		// 임의의 authkey 생성
 		String authkey = new TempKey().getKey(50, false);
 
-		userDto.setAuthkey(authkey);
-		sqlSession.getMapper(MemberDao.class).updateAuthkey(userDto);
+		//TODO 이메일 인증키 샛팅
+//		userDto.setAuthkey(authkey);
+//		sqlSession.getMapper(MemberDao.class).updateAuthkey(userDto);
 		
 
 		// mail 작성 관련 
@@ -46,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
 		sendMail.setSubject("[Hoon's Board v2.0] 회원가입 이메일 인증");
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
 				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-				.append("<a href='http://localhost:8080/user/joinConfirm?uid=")
+				.append("<a href='http://localhost:8080/user/joinconfirm?uid=")
 				.append(userDto.getUuid())
 				.append("&email=")
 				.append(userDto.getUserId())
@@ -57,6 +58,12 @@ public class MemberServiceImpl implements MemberService {
 		sendMail.setFrom("관리자 ", "관리자명");
 		sendMail.setTo(userDto.getUserId());
 		sendMail.send();
+	}
+
+	@Override
+	public void updateAuthstatus(UserDto userDto) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
