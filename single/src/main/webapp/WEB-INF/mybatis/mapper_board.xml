@@ -10,13 +10,6 @@
 	, #{boardContent}, 0, 0, sysdate, null, null, '1')
 	</insert>
 	
-	<insert id = "writeArticlehashtag" parameterType="string">
-	insert into single_hashtag 
-	(hashtag_num, hashtag_content, hashtag_type_num, board_num, group_num)
-	values
-	(hashtag_num_seq.nextval ,#{hashtag},1,board_num_seq.currval,null)
-	</insert>
-	
 	
 	<!-- 원래 set,get이나 생성자를 이용해야 하지만 디티오랑 알리아스명이랑 같으면 자동으로 들어감 -->
 	<select id="viewArticle" parameterType="int" resultType="boardDto">
@@ -27,9 +20,13 @@
 		board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
 		board_statecode boardStatecode
 	from single_board
-	where board_num = #{boardNum}	
+	where board_statecode = '1'
+	and board_num = #{boardNum}
 	</select>
 	
+	
+	
+		
 	
 	
 </mapper>

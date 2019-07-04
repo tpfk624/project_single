@@ -72,7 +72,16 @@
 			
 			${article.boardContent }
 			
-			<br><br><br><br>
+			<br><br>
+			
+			<c:forEach var="hash" items="${article.hashtagList}">
+				<c:if test="${hash != null }">
+					<tag>
+					#${hash}
+					</tag>&nbsp;
+				</c:if>
+			</c:forEach>	
+			<br><br>
 			</div>
 			<div class="col-lg-2"></div>
 	   	</div><br>

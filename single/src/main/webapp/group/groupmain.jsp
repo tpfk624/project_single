@@ -22,7 +22,7 @@ $(function() {
 		}else{
 			navbar.removeClass("sticky");
 		}
-	});W
+	});
 	
 	$(".group-navbar a").click(function() {
 		$(this).addClass("active");

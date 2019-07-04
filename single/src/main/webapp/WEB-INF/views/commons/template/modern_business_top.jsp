@@ -130,6 +130,8 @@ tag:active, tag:hover{
               <a class="dropdown-item" href="${root}/group/groupmain.jsp">모임 안으로 들어가기</a>
               <a class="dropdown-item" href="${root}/group/grouphomework.jsp">모임 과제 목록보기</a>
               <a class="dropdown-item" href="${root}/group/grouphprogress.jsp">모임 과제 진행률 보기</a>
+              <a class="dropdown-item" href="${root}/group/groupmodify.jsp">모임 변경</a>
+              <a class="dropdown-item" href="${root}/group/groupmember.jsp">모임원 관리</a>
             </div>
           </li>
           <li class="nav-item dropdown">

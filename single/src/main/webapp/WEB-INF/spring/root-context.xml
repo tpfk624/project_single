@@ -21,7 +21,7 @@
 		<property name="configLocation" value="/WEB-INF/mybatis/configuration.xml"></property>
 		<property name="mapperLocations">
 			<list>
-				<value>/WEB-INF/mybatis/mapper_user.xml</value>
+				<value>/WEB-INF/mybatis/mapper_member.xml</value>
 				<value>/WEB-INF/mybatis/mapper_board.xml</value>
 				<value>/WEB-INF/mybatis/mapper_group.xml</value>
 				<value>/WEB-INF/mybatis/mapper_home.xml</value>

@@ -21,7 +21,10 @@ $(document).ready(function(){
 
  
 /* Full-width input fields */
-#loginmodal input[type=text],#loginmodal input[type=password] {
+#loginmodal input[type=text],
+#loginmodal input[type=password],
+#loginmodal input[type=email]
+ {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -146,11 +149,14 @@ $(document).ready(function(){
     </div>
 
     <div class="container">
+<!--       <label for="uemail"><b>이메일입력</b></label> -->
+<!--       <input type="email" placeholder="이메일 입력해주세요" name="uemail" required> -->
+      
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="아이디를 입력해주세요" name="uname" required>
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <label for="psw" ><b>Password</b></label>
+      <input  type="password" placeholder="비밀번호를 입력해주세요" name="psw" required style="font-family:돋움">
         
       <button type="submit">Login</button>
       <div id="naver_id_login"></div>
@@ -183,7 +189,7 @@ window.onclick = function(event) {
 //   	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/naverlogin/mvcallback");
   	var state = naver_id_login.getUniqState();
   	naver_id_login.setButton("white", 2,40);
-  	naver_id_login.setDomain("http://localhost/single/member/login.jsp");
+  	naver_id_login.setDomain("${serviceUrl}");
   	naver_id_login.setState(state);
 //   	naver_id_login.setPopup();
   	naver_id_login.init_naver_id_login();

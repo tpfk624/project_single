@@ -11,4 +11,7 @@ public interface MemberService {
 
 	void create(UserDto userDto) throws MessagingException, UnsupportedEncodingException;
 
+	void updateAuthstatus(UserDto userDto);
+
+	
 }

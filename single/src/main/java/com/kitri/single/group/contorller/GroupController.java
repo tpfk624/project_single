@@ -87,7 +87,8 @@ public class GroupController {
 	public @ResponseBody String groupCreate(
 			GroupDto groupDto
 			, @SessionAttribute("userInfo") UserDto userInfo
-			, @RequestParam("imgdata") MultipartFile multipartFile) {
+			, @RequestParam("imgdata") MultipartFile multipartFile
+			, @RequestParam("groupHashtag") String groupHashtag) {
 		
 		System.out.println(groupDto);
 		System.out.println(multipartFile);
@@ -106,11 +107,12 @@ public class GroupController {
 			}
 			
 			groupDto.setGroupImgSrc(src);
+			groupDto.setGroupMemberCount(1);
 			
 			//서비스 시작...
+			int groupNum = groupService.createGroup(groupDto, userInfo, groupHashtag);
 			
-			
-			System.out.println(src);
+			System.out.println(groupNum);
 		}
 		
 		return "";

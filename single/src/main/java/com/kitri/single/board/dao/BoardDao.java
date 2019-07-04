@@ -8,8 +8,10 @@ import com.kitri.single.board.model.BoardDto;;
 public interface BoardDao {
 
 	int writeArticle(BoardDto boardDto);
-	int writeArticlehashtag(String hashtag);
 	
+	// view
 	BoardDto viewArticle(int boardNum);
+	
+	// viewMain 오늘의 새글
 	
 }

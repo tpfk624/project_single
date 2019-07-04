@@ -18,8 +18,19 @@ public class UserDto {
 	private String userJoindate;
 	private String userOutdate;
 	private String userStatecode;
-	private String uuid;
 	
+	private String uuid;
+	private String authState;
+
+	
+	public String getAuthState() {
+		return authState;
+	}
+
+	public void setAuthState(String authState) {
+		this.authState = authState;
+	}
+
 	public String getUuid() {
 		return uuid;
 	}
