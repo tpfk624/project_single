@@ -1,5 +1,9 @@
 package com.kitri.single.user.controller;
 
+import java.io.IOException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,29 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kitri.single.user.model.UserDto;
 import com.kitri.single.user.service.UserService;
 import com.kitri.single.util.Utill;
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Single;
-
-import java.io.IOException;
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
- 
 
 @Controller
+
 @SessionAttributes("userInfo")
 @RequestMapping("/mypage")
 public class UserController {
+
 	
 	
 	@Autowired
@@ -47,6 +35,7 @@ public class UserController {
 	
 	@RequestMapping("/mypage")
 	public void home(Model model, HttpSession session) {
+
 		System.out.println("home 들어옴");
 		//여기에다가 서비스통해서 userdto를 db에담고 그걸 모델에 담아서 select 홈안에 모델메개변수 잡아주기
 		//모델안에 애드어트리뷰트 하고 화면단에뿌려주기
@@ -58,12 +47,9 @@ public class UserController {
 		model.addAttribute("article", userDto);
 
 		
-		
-		
-		
-		
 	}
 	
+
 	//수정
 	@RequestMapping(value = "/modify" , method = RequestMethod.POST)
 	public String modify(UserDto userDto
@@ -96,4 +82,6 @@ public class UserController {
 	}
 	
 	
+
+ 
 }

@@ -10,64 +10,6 @@
 .carousel-item{
 	height : 30vh;
 }
-.homework-status{
-	float: right;
-	font-weight: bold;
-	background-image: url("${root}/resources/img/group/checked.png");
-	height: 5rem;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    text-align: center;
-    font-size: 2rem;
-}
-
-.homework-body{
-	float: left;
-	margin-left: 10px;
-	width: 80%;
-	height: 5rem;
-}
-/* Pagination links */
-.page{
-	padding-bottom: 1rem;
-	padding-top: 1rem;
-}
-.pagination{
-	margin-left: auto;
-	margin-right: auto;
-	display: block; 
-}
-
-.pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color .3s;
-}
-
-/* Style the active/current link */
-.pagination a.active {
-  background-color: dodgerblue;
-  color: white;
-}
-
-/* Add a grey background color on mouse-over */
-.pagination a:hover:not(.active) {background-color: #ddd;}
-
-/*진행률바*/
-.progress{
-	margin-top : 1rem;
-	width: 100%;
-  	background-color: grey;
-}
-
-.progress-bar{
-	width: 1%;
-  	height: 30px;
-  	background-color: green;
-}
 
 </style>
 <script>
@@ -116,7 +58,7 @@ $(function() {
 		</section>
 		
 		<!-- 과제 시작 -->
-		<section class="groupsection">
+		<section class="groupsection homework">
 			<div class="homework-item">
 				<div class="homework-body col-sm-8">
 					<h4 class="homework-title">기타를 칩시다</h4>
@@ -134,7 +76,7 @@ $(function() {
 		</section>	
 		
 		<!-- 과제 시작 -->
-		<section class="groupsection">
+		<section class="groupsection homework homework-end">
 			<div class="homework-item">
 				<div class="homework-body col-sm-8">
 					<h4 class="homework-title">기타를 칩시다</h4>
@@ -151,7 +93,7 @@ $(function() {
 		</section>	
 		
 		<!-- 과제 시작 -->
-		<section class="groupsection">
+		<section class="groupsection homework homework-end">
 			<div class="homework-item">
 				<div class="homework-body col-sm-8">
 					<h4 class="homework-title">기타를 칩시다</h4>
@@ -167,7 +109,7 @@ $(function() {
 			</div>
 		</section>	
 		<!-- 과제 시작 -->
-		<section class="groupsection">
+		<section class="groupsection homework homework-end">
 			<div class="homework-item">
 				<div class="homework-body col-sm-8">
 					<h4 class="homework-title">기타를 칩시다</h4>
@@ -198,7 +140,5 @@ $(function() {
 	</div>
 </section>
 <!-- /.container -->
-<!-- 채팅부분 -->
-<%-- <%@ include file="chat.jsp"%> --%>
 
 <%@ include file="/WEB-INF/views/commons/template/modern_business_bottom.jsp"%>

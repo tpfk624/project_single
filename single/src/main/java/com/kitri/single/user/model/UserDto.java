@@ -1,5 +1,7 @@
 package com.kitri.single.user.model;
 
+import com.kitri.single.sns.model.SnsDto;
+
 public class UserDto {
 
 	private String userId;
@@ -7,6 +9,7 @@ public class UserDto {
 	private String userNickname;
 	private String userProfile;	
 	private String userName;
+	private String userProfile;
 	private String userBirthday;
 	private String userGender;
 	private String userPhone;
@@ -17,6 +20,29 @@ public class UserDto {
 	private String userOutdate;
 	private String userStatecode;
 	
+	private SnsDto snsDto;
+	
+	
+	public SnsDto getSnsDto() {
+		return snsDto;
+	}
+	public void setSnsDto(SnsDto snsDto) {
+		this.snsDto = snsDto;
+	}
+	
+	public String getUserPassword() {
+		return userPassword;
+	}
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+	public String getUserProfile() {
+		return userProfile;
+	}
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
+	}
+
 	public String getUserId() {
 		return userId;
 	}

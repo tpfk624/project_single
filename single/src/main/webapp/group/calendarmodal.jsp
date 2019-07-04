@@ -11,7 +11,6 @@
 				</button>
 			</div>
 			<div class="modal-body text-center">
-				<
 			</div>
 			
 			<!-- Modal footer -->

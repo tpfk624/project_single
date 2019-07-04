@@ -1,5 +1,7 @@
 package com.kitri.single.board.model;
 
+import java.util.List;
+
 public class BoardDto {
 
 	private int boardNum;
@@ -13,7 +15,15 @@ public class BoardDto {
 	private String boardUpdatedate;
 	private String boardDeletedate;
 	private String boardStatecode;
+	private List<String> hashtagList;
 	
+	
+	public List<String> getHashtagList() {
+		return hashtagList;
+	}
+	public void setHashtagList(List<String> hashtagList) {
+		this.hashtagList = hashtagList;
+	}
 	public int getBoardNum() {
 		return boardNum;
 	}
@@ -81,13 +91,17 @@ public class BoardDto {
 		this.boardStatecode = boardStatecode;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "BoardDto [boardNum=" + boardNum + ", boardListNum=" + boardListNum + ", userId=" + userId
 				+ ", userNickname=" + userNickname + ", boardSubject=" + boardSubject + ", boardContent=" + boardContent
 				+ ", boardViews=" + boardViews + ", boardCreatedate=" + boardCreatedate + ", boardUpdatedate="
-				+ boardUpdatedate + ", boardDeletedate=" + boardDeletedate + ", boardStatecode=" + boardStatecode + "]";
+				+ boardUpdatedate + ", boardDeletedate=" + boardDeletedate + ", boardStatecode=" + boardStatecode
+				+ ", hashtagList=" + hashtagList + "]";
 	}
+	
+	
 	
 	
 
