@@ -13,6 +13,8 @@ public interface UserService {
 
 	Object viewUser(HttpSession session);
 
+	void create(UserDto userDto);
+
 
 
 }

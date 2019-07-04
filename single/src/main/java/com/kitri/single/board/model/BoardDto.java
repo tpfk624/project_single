@@ -11,6 +11,7 @@ public class BoardDto {
 	private String boardSubject;
 	private String boardContent;
 	private int boardViews;
+	private int boardLike;
 	private String boardCreatedate;
 	private String boardUpdatedate;
 	private String boardDeletedate;
@@ -18,6 +19,13 @@ public class BoardDto {
 	private List<String> hashtagList;
 	
 	
+	
+	public int getBoardLike() {
+		return boardLike;
+	}
+	public void setBoardLike(int boardLike) {
+		this.boardLike = boardLike;
+	}
 	public List<String> getHashtagList() {
 		return hashtagList;
 	}
@@ -96,10 +104,12 @@ public class BoardDto {
 	public String toString() {
 		return "BoardDto [boardNum=" + boardNum + ", boardListNum=" + boardListNum + ", userId=" + userId
 				+ ", userNickname=" + userNickname + ", boardSubject=" + boardSubject + ", boardContent=" + boardContent
-				+ ", boardViews=" + boardViews + ", boardCreatedate=" + boardCreatedate + ", boardUpdatedate="
-				+ boardUpdatedate + ", boardDeletedate=" + boardDeletedate + ", boardStatecode=" + boardStatecode
-				+ ", hashtagList=" + hashtagList + "]";
+				+ ", boardViews=" + boardViews + ", boardLike=" + boardLike + ", boardCreatedate=" + boardCreatedate
+				+ ", boardUpdatedate=" + boardUpdatedate + ", boardDeletedate=" + boardDeletedate + ", boardStatecode="
+				+ boardStatecode + ", hashtagList=" + hashtagList + "]";
 	}
+	
+	
 	
 	
 	

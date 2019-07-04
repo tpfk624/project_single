@@ -50,6 +50,7 @@ $(function() {
 
 <section class="contents">
 	<div class="container col-lg-9 col-md-9 col-sm-9 whitespace">		
+		<div class="groupmain">
 		<!-- 모임 이름 뿌져지는 곳 -->
 		<section class="groupsection groupheader">
 			<div class="row">
@@ -124,19 +125,8 @@ $(function() {
 					style="background-image: url('${root}/resources/img/group/checked_green.png')"></div>
 			</div>
 		</section>	
-		<section class="row page">
-			<div class="pagination">
-				  <a href="#">&laquo;</a>
-				  <a href="#">1</a>
-				  <a class="active" href="#">2</a>
-				  <a href="#">3</a>
-				  <a href="#">4</a>
-				  <a href="#">5</a>
-				  <a href="#">6</a>
-				  <a href="#">&raquo;</a>
-			</div>
-		</section>
-		
+		<%@ include file="/WEB-INF/views/commons/pagination.jsp"%>	
+	</div>
 	</div>
 </section>
 <!-- /.container -->

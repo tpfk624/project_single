@@ -11,37 +11,7 @@
 .carousel-item{
 	height : 30vh;
 }
-/*진행률바*/
-.progress{
-	margin-top : 1rem;
-	width: 100%;
-  	background-color: grey;
-}
 
-.progress-bar{
-	width: 1%;
-  	background-color: green;
-}
-
-.search-input {
-  background-image: url('${root}/resources/img/group/search.png');
-  background-position: left;
-  background-repeat: no-repeat;
-  background-size: contain;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  margin-bottom: 12px;
-  display: inline-block;
-}
-
-.right{
-	float: right;
-}
-
-.file-icon{
-	font-size: 20px;
-	margin-left: 0.5rem;
-}
 </style>
 <script>
 $(function() {
@@ -87,6 +57,7 @@ $(function() {
 	<%@ include file="hprogresscreatemodal.jsp"%>
 	<%@ include file="hprogressmodal.jsp"%>
 	<div class="container col-lg-9 col-md-9 col-sm-9 whitespace">		
+		<div class="groupmain">
 		<!-- 모임 이름 뿌져지는 곳 -->
 		<section class="groupsection groupheader">
 			<div class="row">
@@ -292,6 +263,7 @@ $(function() {
 			</div>
 		</section>
 		-->
+	</div>
 	</div>
 </section>
 <!-- /.container -->

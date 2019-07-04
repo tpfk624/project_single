@@ -1,5 +1,7 @@
 package com.kitri.single.board.service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kitri.single.board.dao.BoardDao;
 import com.kitri.single.board.model.BoardDto;
+import com.kitri.single.common.dao.CommonDao;
 import com.kitri.single.group.service.GroupServiceImpl;
 
 @Service
@@ -24,9 +27,18 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	@Transactional
 	public int writeArticle(BoardDto boardDto) {
+		
+		int boardNum = sqlSession.getMapper(CommonDao.class).getNextSeq();
+		boardDto.setBoardNum(boardNum);
 		int cnt = sqlSession.getMapper(BoardDao.class).writeArticle(boardDto);
-		int cnthashtag = sqlSession.getMapper(BoardDao.class).writeArticlehashtag(boardDto);
+		int cnthashtag = 0;
+		List<String> hashtagList = boardDto.getHashtagList();
+		for (int i = 0; i < hashtagList.size(); i++) {
+			cnthashtag = sqlSession.getMapper(BoardDao.class).writeArticlehashtag(hashtagList.get(i));
+		}
+		
 		return cnt != 0? boardDto.getBoardNum() : 0;
+		
 	}
 	
 	@Override
@@ -40,3 +52,22 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
