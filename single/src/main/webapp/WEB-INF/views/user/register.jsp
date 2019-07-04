@@ -4,31 +4,28 @@
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
 <script>
 $(document).ready(function(){
-	
 	//달력
 	$('#datepicker').datepicker({
 	    uiLibrary: 'bootstrap4',
-   	 	onSelect: function(dateText) {
-//    	      display("Selected date: " + dateText + "; input's current value: " + this.value);
-   	      console.log(dateText +" "+this.value);
+   		onSelect: function(dateText) {
+//    	console.log("Selected date: " + dateText + "; input's current value: " + this.value);
    	    }
 	}).on("change", function() {
-// 	    display("Got change event from field");
+		//달력 눌를때 이벤트 콜백 위치
+	});
+	
+	//회원가입
+	$('#registBtn').click(function(){
 		var value =$('#datepicker').val();
 		value = $('#datepicker').val().replace('/','');
 		value = value.replace('/','');
 		console.log(value);
 		$('#datepicker').val(value);
-	 });;
-	
-	//회원가입
-	$('#registBtn').click(function(){
 		$('#memberform').attr('action','${root}/user/register').submit();
 	});
 
@@ -51,17 +48,17 @@ $(document).ready(function(){
 <%-- 소셜 유형:${userInfo.snsDto.snsType }<br> --%>
 <%-- 소셜 시간:${userInfo.snsDto.snsConnectDate } --%>
  	<h1>회원가입</h1>
-	    <p>안의 내용들을 채워주세요</p>
+	    <p>안의 내용들을 채워주세요 *: 필수입력</p>
 	    <hr>
 		<input type="hidden" name="act" value="register">
 		<div class="form-group" align="left">
 		<label for="">아이디</label>* 특수문자가 들어가면 안됩니다 (소셜로그인 아이디와 충돌가능성 있기 때문)
 			<c:if test="${empty userInfo.userId }">
-					<input type="text" class="form-control" id="id" name="userId" placeholder="4자이상 16자 이하" >
+					<input type="text" class="form-control" id="id" name="userId" placeholder="4자이상 16자 이하" required="required">
 					<div id="idresult"></div>
 			</c:if>
 			<c:if test="${userInfo.userId != null}">
-					<input type="text" class="form-control" id="id" name="userId" placeholder="4자이상 16자 이하" readonly="readonly"
+					<input type="text" class="form-control" id="id" name="userId" placeholder="4자이상 16자 이하" readonly="readonly" required="required"
 					value= "${userInfo.userId}">
 			</c:if>	
 		</div>
@@ -69,42 +66,39 @@ $(document).ready(function(){
 		<div class="form-group" align="left">
 		<label for="name">이름</label>*
 			<c:if test="${userInfo.userId == null}">
-				<input type="text" class="form-control" id="name" name="userName" placeholder="이름입력" >
+				<input type="text" class="form-control" id="name" name="userName" placeholder="이름입력" required="required">
 			</c:if>
 			<c:if test="${userInfo.userId != null}">
-				<input type="text" class="form-control" id="name" name="userName" placeholder="이름입력" value= "${userInfo.userName}">
+				<input type="text" class="form-control" id="name" name="userName" placeholder="이름입력" value= "${userInfo.userName}" required="required">
 			</c:if>
-		
 		</div>
-		
-
 		
 		<div class="form-group" align="left">
 		<label for="">닉네임</label>*
 			<c:if test="${userInfo.userId == null}">
-				<input type="text" class="form-control" id="nickname" name="userNickname" placeholder="이름입력">
+				<input type="text" class="form-control" id="nickname" name="userNickname" placeholder="이름입력" required="required">
 			</c:if>
 			<c:if test="${userInfo.userId != null}">
-				<input type="text" class="form-control" id="nickname" name="userNickname" placeholder="이름입력" value ="${userInfo.userNickname}">
+				<input type="text" class="form-control" id="nickname" name="userNickname" placeholder="이름입력" value ="${userInfo.userNickname}" required="required">
 			</c:if>
 		</div>
 		<div class="form-group" align="left">
 			<label for="">비밀번호입력</label>* 
 			<c:if test="${userInfo.userId == null}">
-				<input type="password" class="form-control" id="pass" name="passcheck" placeholder="">
+				<input style="font-family:돋움" type="password" class="form-control" id="pass" name="passcheck" placeholder="" required="required">
 			</c:if>
 			<c:if test="${userInfo.userId != null}">
-				<input type="password" class="form-control" id="pass" name="passcheck" placeholder="" value ="${userInfo.userPassword }">
+				<input style="font-family:돋움" type="password" class="form-control" id="pass" name="passcheck" placeholder="" value ="${userInfo.userPassword }" required="required">
 			</c:if>
 		</div>
 		
 		<div class="form-group" align="left">
 			<label for="">비밀번호재입력</label>* 
 			<c:if test="${userInfo.userId == null}">
-				<input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="">
+				<input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="" required="required">
 			</c:if>
 			<c:if test="${userInfo.userId != null}">
-				<input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="" value ="${userInfo.userPassword }">
+				<input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="" value ="${userInfo.userPassword }" required="required">
 			</c:if>
 		</div>
 		
