@@ -20,15 +20,16 @@
 
 	<!-- Bootstrap core JavaScript -->
 	<script src="${root}/resources/template/modern/vendor/jquery/jquery.min.js"></script>
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="${root}/resources/template/modern/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	
 	
 	<!-- Bootstrap core CSS -->
 	<!-- Modern Business - Start Bootstrap Template -->
-  	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
-  	<link rel="stylesheet" href="${root}/resources/template/modern/vendor/bootstrap/css/bootstrap.min.css" >
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<!-- <link rel="stylesheet" href="${root}/resources/template/modern/vendor/bootstrap/css/bootstrap.min.css" >-->
 	<link rel="stylesheet" href="${root}/resources/template/modern/css/modern-business.css" >
 	
 	<!-- font -->
@@ -74,7 +75,18 @@ body {
 	background-color: #004085;
 	border-color: #004085;
 }
-
+tag{
+	background-color: #f0f0f0;
+	color : #43853d;
+	padding: .2em;
+	border-radius: 10%;
+	font-size: large;
+	cursor: pointer;
+}
+tag:active, tag:hover{
+	background-color: #43853d;
+	color: white;
+}
 
 </style>
 </head>
@@ -113,9 +125,11 @@ body {
               	같이놀아요
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-              <a class="dropdown-item" href="${root}/group">그룹 목록보기</a>
-              <a class="dropdown-item" href="${root}/group/groupcreate.jsp">그룹 만들기</a>
-              <a class="dropdown-item" href="${root}/group/groupmain.jsp">그룹 안으로 들어가기</a>
+              <a class="dropdown-item" href="${root}/group">모임 목록보기</a>
+              <a class="dropdown-item" href="${root}/group/create">모임 만들기</a>
+              <a class="dropdown-item" href="${root}/group/groupmain.jsp">모임 안으로 들어가기</a>
+              <a class="dropdown-item" href="${root}/group/grouphomework.jsp">모임 과제 목록보기</a>
+              <a class="dropdown-item" href="${root}/group/grouphprogress.jsp">모임 과제 진행률 보기</a>
             </div>
           </li>
           <li class="nav-item dropdown">

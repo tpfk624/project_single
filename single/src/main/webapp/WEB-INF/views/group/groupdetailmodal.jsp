@@ -13,9 +13,9 @@ function groupDetailModalSetting(json) {
 	var tag = json.taglist;
 	var tagStr = "";
 	for(var i=0; i<tag.length ; i++){
-		tagStr += "#" + tag[i] + " ";
+		tagStr += "<tag>#" + tag[i] + "</tag> ";
 	}
-	$("#groupDetailModal .card-body .taglist").text(tagStr);
+	$("#groupDetailModal .card-body .taglist").html(tagStr);
 	$("#groupDetailModal .modal-footer .btn-primary").attr("data-num", group.groupNum);
 }
 

@@ -1,4 +1,4 @@
-package com.kitri.single.naverlogin.controller;
+package com.kitri.single.sns.controller;
 //네이버 API 예제 - 회원프로필 조회
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -7,7 +7,7 @@ import java.net.URL;
 
 public class APIMemberProfile {
 	public static final  String CLIENT_ID= "3FGMY2V_UXaBQxS0sx0g";
-	public static final  String REDIRECT_URL="http://localhost/single/callback.jsp";
+	public static final  String REDIRECT_URL="http://localhost/single/user/callback.jsp";
 	public String getMemberProfile(String token) {
 	     String header = "Bearer " + token; // Bearer 다음에 공백 추가
 	     String result ="";

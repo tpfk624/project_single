@@ -11,46 +11,77 @@
 	height : 30vh;
 }
 
-/*옮겨도 되는 부분*/
-.groupname{
-	font-size: 2rem;
-}
-.groupdesc{
-	margin-right: 10px;
-	margin-bottom: 10px;
-}
-.whitespace{
-	background-color: white;
-}
-.groupheader{
-	
-}
-.groupsection{
-	border-top: 1px solid #e6e6e6;
-	padding-top: 3%;
-	overflow: hidden;
-	padding-bottom: 3%;
+/* Style the navbar */
+.group-navbar {
+  overflow: hidden;
+  background-color: #333;
+  z-index: 1000;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.group-info{
-		
-}
-.group-info-label{
-	float: left;
-	margin-left: 10px;
-	font-weight: bold;
+/* Navbar links */
+.group-navbar>.group-navbar-item {
+  float: left;
+  display: block;
+  color: #f2f2f2 !important;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
 
-.group-info-content{
-	float: right;
-	width: 80%;
+.group-navbar>.group-navbar-item:hover {
+  background-color: #ddd;
+  color: black !important;
+}
+
+.group-navbar	>.group-navbar-item.active {
+  background-color: #4CAF50;
+  color: white !important;
+}
+
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 3.5rem;
+  width: 100%;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .container {
+  margin-top: 60px;
 }
 </style>
+<script>
+$(function() {
+	var navbar = $("#navbar");
+	var sticky = navbar.offset().top;
+	$(window).scroll(function() {
+		//console.log($(window).scrollTop() + "//" + sticky);
+		if($(window).scrollTop() >= sticky){
+			navbar.addClass("sticky");
+		}else{
+			navbar.removeClass("sticky");
+		}
+	});	
+	
+	$(".group-navbar a").click(function() {
+		$(this).addClass("active");
+		$(this).siblings().removeClass("active");
+	});
+});
+</script>
+
 
 <%@ include file="groupheader.jsp"%>
 
 <section class="contents">
-	<div class="container col-lg-9 col-md-9 col-sm-9 whitespace">		
+	<div id="navbar" class="col-lg-9 col-md-9 col-sm-9 group-navbar">
+	  	<a class="group-navbar-item active">모임메인</a>
+	  	<a class="group-navbar-item">모임설정</a>
+	  	<a class="group-navbar-item">모임과제</a>
+	</div>
+	<div class="container col-lg-9 col-md-9 col-sm-9 whitespace">			
 		<!-- 모임 이름 뿌져지는 곳 -->
 		<section class="groupsection groupheader">
 			<div class="row center">
@@ -65,7 +96,7 @@
 		<section class="groupsection group-info">
 			<label class="group-info-label col-sm-2">모임정보</label>
 			<div class="group-info-content col-sm-10">
-				<div class="groupdesc">#스터디 #개망함 #프로젝트 #조짐</div>
+				<div class="groupdesc"><tag>#스터디</tag> <tag>#개망함</tag> <tag>#프로젝트</tag> <tag>#조짐</tag></div>
 				<div class="groupdesc">인원 : 5 / 10</div>
 				<div class="groupdesc">모임주요장소 : 구로디지털 단지</div>
 			</div>

@@ -85,6 +85,117 @@
 	width: 100%;
 }
 
+/**************************   그룹 메인화면   **********************************/
+/*옮겨도 되는 부분*/
+.groupname{
+	font-size: 2rem;
+}
+.groupdesc{
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+.whitespace{
+	background-color: white;
+}
+.groupheader{
+	
+}
+.groupsection{
+	border-top: 1px solid #e6e6e6;
+	padding-top: 3%;
+	overflow: hidden;
+	padding-bottom: 3%;
+}
+
+.group-info{
+		
+}
+.group-info-label{
+	float: left;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+.group-info-content{
+	float: right;
+	width: 80%;
+}
+
+/* 그룹 과제  */
+.homework{
+	cursor: pointer;
+}
+
+.homework:hover{
+	cursor: pointer;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.homework-end{
+	background-clip: padding-box;
+	background-color: #8080802b;
+	margin-bottom: 0.5rem;
+}
+
+.homework-status{
+	float: right;
+	font-weight: bold;
+	background-image: url("${root}/resources/img/group/checked.png");
+	height: 5rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.homework-body{
+	float: left;
+	margin-left: 10px;
+	width: 80%;
+	height: 5rem;
+}
+/* Pagination links */
+.page{
+	padding-bottom: 1rem;
+	padding-top: 1rem;
+}
+.pagination{
+	margin-left: auto;
+	margin-right: auto;
+	display: block; 
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+/* Style the active/current link */
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+/* Add a grey background color on mouse-over */
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+/*진행률바*/
+.progress{
+	margin-top : 1rem;
+	width: 100%;
+  	background-color: grey;
+}
+
+.progress-bar{
+	width: 1%;
+  	height: 30px;
+  	background-color: green;
+}
+
 /* 그룹 디테일 모달*/
 #groupDetailModal .card-img-top{
 	max-width: 70%;
@@ -96,3 +207,5 @@
 	margin-left: auto;
 	margin-right: auto;	
 }
+
+
