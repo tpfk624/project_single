@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
 //   var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "${callbackURL}");
-  var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/callback.jsp");
+  var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/member/callback.jsp");
   // 접근 토큰 값 출력
   var accessToken =naver_id_login.oauthParams.access_token;
   
@@ -37,7 +37,7 @@
 	$('#accessToken').val(accessToken);
 	console.log('email'+ email);
 	console.log('accessToken'+ accessToken);
-	$("#naverProfileForm").attr("method", "POST").attr("action", "${root}/naverlogin/callback").submit();
+	$("#naverProfileForm").attr("method", "POST").attr("action", "${root}/navermember/callback").submit();
 
 //     var id = naver_id_login.getProfileData('id');
 //     var nickname = naver_id_login.getProfileData('nickname');

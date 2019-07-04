@@ -39,7 +39,7 @@
 	   	<div class="row">
 			<div class="col-lg-2"></div>
 			<!-- 제목 -->
-			<div class="col-lg-5"><h5>라면 맛있게 끓이기</h5><small>좋아요 : 55</small></div>
+			<div class="col-lg-5"><h5>라면 맛있게 끓이기</h5><small>좋아요 : ${article.boardViews }</small></div>
 			<div class="col-lg-0"></div>
 			<div class="col-lg-4">
 				<small>작성자 : ${article.userId }</small>

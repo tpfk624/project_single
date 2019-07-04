@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -26,9 +27,10 @@ import com.kitri.single.user.model.UserDto;
 import com.kitri.single.util.Utill;
 
 @Controller
-@RequestMapping(value = "/naverlogin")
-public class NaverLoginController {
-	Logger logger = LoggerFactory.getLogger(NaverLoginController.class);
+@RequestMapping(value = "/navermember")
+@SessionAttributes("userInfo")
+public class NaverMemberController {
+	Logger logger = LoggerFactory.getLogger(NaverMemberController.class);
 	
 	@Autowired
 	NaverLoginService loginService; 	
@@ -98,11 +100,11 @@ public class NaverLoginController {
 			model.addAttribute("userInfo", userDto);
 			
 			// 회원가입, 소셜 연동 창으로 이동 
-			return "user/register";
+			return "member/register";
 		}else {
 			
 		}
-		return "user/index";
+		return "index";
 
 	}
 

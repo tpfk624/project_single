@@ -276,6 +276,14 @@ body {
 #btn-danger {
 	width: 100%;
 }
+
+
+/* 이미지 변경 */
+.form-group {
+    margin-bottom: 1rem;
+    margin-left: 60px;
+    margin-top: 20px;
+}
 </style>
 
 <div id="my-page-wrap">
@@ -309,6 +317,7 @@ body {
 					<col width="*">
 				</colgroup>
 				<tbody>
+					<!-- 테이블 한 줄  -->
 					<tr>
 						<th>
 							<!--이메일 주소-->이메일 주소
@@ -319,9 +328,12 @@ body {
 					<tr>
 						<td class="space">&nbsp;</td>
 					</tr>
+					<!-- 테이블 한 줄  -->
+					
+					<!-- 테이블 한 줄  -->
 					<tr>
 						<th>
-							<!--이름-->이름
+							<!--이름-->닉네임
 						</th>
 						<td><input type="text" name="name" class="t_input"
 							value="고세라"></td>
@@ -329,7 +341,9 @@ body {
 					<tr>
 						<td class="space">&nbsp;</td>
 					</tr>
-
+					<!-- 테이블 한 줄  -->
+					
+					<!-- 테이블 한 줄  -->
 					<tr>
 						<th>
 							<!--비밀번호-->비밀번호
@@ -373,6 +387,24 @@ body {
 					<tr>
 						<td class="space">&nbsp;</td>
 					</tr>
+					<!-- 테이블 한 줄  -->
+					
+					<!-- 테이블 한 줄  -->
+					<tr>
+						<th>
+							<!--이름-->핸드폰
+						</th>
+						<td><input type="text" name="name" class="t_input"
+							value="01051646737"></td>
+					</tr>
+					<tr>
+						<td class="space">&nbsp;</td>
+					</tr>
+					<!-- 테이블 한 줄  -->
+					
+					
+					<%@ include file="/WEB-INF/views/commons/fileupload.jsp"%>
+
 
 				</tbody>
 			</table>
