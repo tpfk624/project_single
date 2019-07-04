@@ -31,7 +31,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-		<!-- 시작 위치 -->
+	<!-- 시작 위치 -->
 	<welcome-file-list>
 	  	<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

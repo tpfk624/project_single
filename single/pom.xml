@@ -19,6 +19,7 @@
 		<mybatis-spring-version>2.0.1</mybatis-spring-version>
 		<json-version>20180813</json-version>
 		<commons-fileupload-version>1.4</commons-fileupload-version>
+		<imgscalr-lib-version>4.2</imgscalr-lib-version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -202,6 +203,14 @@
 			<version>1.6.1</version>
 		</dependency>
 		
+		<!-- 썸네일 적용부분 -->
+		<dependency> 
+			<groupId>org.imgscalr</groupId> 
+			<artifactId>imgscalr-lib</artifactId> 
+			<version>${imgscalr-lib-version}</version> 
+		</dependency>
+
+
 
 	</dependencies>
     <build>

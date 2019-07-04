@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kitri.single.board.dao.BoardDao;
 import com.kitri.single.board.model.BoardDto;
@@ -21,6 +22,7 @@ public class BoardServiceImpl implements BoardService {
 	private SqlSession sqlSession;
 	
 	@Override
+	@Transactional
 	public int writeArticle(BoardDto boardDto) {
 		int cnt = sqlSession.getMapper(BoardDao.class).writeArticle(boardDto);
 		int cnthashtag = sqlSession.getMapper(BoardDao.class).writeArticlehashtag(boardDto);

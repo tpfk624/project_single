@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kitri.single.user.model.UserDto;
@@ -21,6 +23,7 @@ import com.kitri.single.user.service.UserServiceImpl;
 
 @Controller
 @RequestMapping("/user")
+@SessionAttributes("userInfo")
 public class UserController {
 	private Logger logger =LoggerFactory.getLogger(UserController.class);
     
@@ -41,9 +44,10 @@ public class UserController {
 	
 	//회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST) 
-	public String register(UserDto userDto) {
+	public String register(UserDto userDto,Model model) {
 		logger.info(userDto.toString());
 		userService.regist(userDto);
+		model.addAttribute("userInfo", userDto);
 		return "user/register";
 	}
 
