@@ -52,7 +52,9 @@ public class BoardController {
 		
 		//이달의 추천순
 		
+		
 		//오늘의 새글
+		
 		
 	}
 	
@@ -164,6 +166,8 @@ public class BoardController {
 		return path;
 
 	}
+	
+	
 	
 	
 	
