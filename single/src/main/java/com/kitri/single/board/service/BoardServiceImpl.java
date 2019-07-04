@@ -42,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
 		int cnthashtag = 0;
 		List<String> hashtagList = boardDto.getHashtagList();
 		for (int i = 0; i < hashtagList.size(); i++) {
-			cnthashtag = sqlSession.getMapper(HashtagDao.class).insertHashtag(hashtagList.get(i));
+//			cnthashtag = sqlSession.getMapper(HashtagDao.class).insertHashtag(hashtagList.get(i));
 		}
 		
 		return cnt != 0? boardDto.getBoardNum() : 0;
