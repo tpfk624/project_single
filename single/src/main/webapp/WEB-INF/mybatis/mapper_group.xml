@@ -27,12 +27,20 @@
 	            left outer join single_group_category gc
 	                on g.group_category_num = gc.group_category_num
 	        where g.group_statecode = '1'
+	        
+	        <if test="groupCategoryNum != 0 ">
+	        and g.group_category_num = #{groupCategoryNum}
+	        </if>
+	        <if test="isMyGroup == null || isMyGroup == '' ">
 	        and g.group_member_count &lt; g.group_member_limit
-	        <if test = "groupNum != null and groupNum != '' ">
-			and g.group_num = #{groupNum}
-			</if>
-	        <if test="userId != null and userId != '' ">
 			and g.group_num not in (
+			                        select group_num
+			                        from single_group_member gm
+			                        where gm.user_id = #{userId}
+			                        )
+			</if>
+			<if test="isMyGroup == 'yes' ">
+			and g.group_num in (
 			                        select group_num
 			                        from single_group_member gm
 			                        where gm.user_id = #{userId}
@@ -43,6 +51,26 @@
 	    where rownum &lt; #{endRow}
 	    ) rowgroup
 	where rowgroup.rn > #{startRow}
+	</select>
+	
+	<select id="getGroup" parameterType="int" resultType="groupDto">
+	select 
+        g.group_num groupNum
+        , g.group_category_num groupCategoryNum
+        , gc.group_category_name groupCategoryName
+        , g.group_name as groupName
+        , g.group_description as groupDescription
+        , g.group_img_src as groupImgSrc
+        , g.group_member_count as groupMemberCount
+        , g.group_member_limit as groupMemberLimit	    
+        , g.group_main_place as groupMainPlace
+        , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+    from 
+        single_group g
+        left outer join single_group_category gc
+            on g.group_category_num = gc.group_category_num
+    where g.group_statecode = '1'
+   	and g.group_num = #{groupNum}
 	</select>
 	
 	
@@ -82,17 +110,50 @@
 	    group_num
 	    , user_id
 	    , group_member_statecode
+	    <if test="groupMemberStatecode == 'L' || groupMemberStatecode == 'M'">
 	    , group_joindate
-	    , group_requestdate
+	    </if>
+	    <if test="groupMemberStatecode == 'W' ">
+	   , group_requestdate
+	    </if>
 	)values(
 	    #{groupNum}
 	    , #{userId}
 	    , #{groupMemberStatecode}
-	    , #{groupJoindate}
-	    , #{groupRequestdate}
+	    , sysdate
 	)
 	</insert>
 	
+	<select id="selectGroupMember" parameterType="map" resultType="groupMemberDto">
+	select 
+	    group_num groupNum
+	    , user_id userId
+	    , group_member_statecode groupMemberStatecode
+	    , group_joindate groupJoindate
+	    , group_requestdate groupRequestdate
+	from single_group_member
+	where group_num = #{groupNum}
+	and user_id = #{userId}
+	</select>
 	
+	<select id="getGroupConunt" parameterType="map" resultType="int">
+	select count(group_num)
+	from single_group
+	where 
+	    group_statecode = '1'
+	    <if test="groupCategoryNum != 0 ">
+	    and group_category_num = ${groupCategoryNum}
+	    </if>
+   	    <if test="isMyGroup == 'yes' ">
+	    and group_num in ( select group_num 
+	    						    from single_group_member
+	    							where user_id = #{userId} )
+	    </if>
+	    <if test="isMyGroup == null || isMyGroup == '' ">
+	    and group_num not in ( select group_num 
+	    						    from single_group_member
+	    							where user_id = #{userId} )
+	    </if>
+	</select>
 	
 </mapper>

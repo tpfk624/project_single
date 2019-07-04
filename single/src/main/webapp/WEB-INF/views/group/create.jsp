@@ -40,6 +40,10 @@ $(function() {
 			, dataType : "json"
 			, success : function(result) {
 				console.log(result);
+				showSuccessAlertModal("모임 만들기", "성공적으로 모임이 만들어졌습니다");
+				$("#alertSuccess").on("hide.bs.modal", function() {
+					$(location).attr("href", "${root}/group/" + result.groupNum);
+				});
 			}
 		});	
 	});

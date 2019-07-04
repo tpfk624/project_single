@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
 <link rel="stylesheet" href="${root}/resources/css/group/group.css" >
 <%@ include file="/WEB-INF/views/commons/movetop.jsp"%>
+<c:set var="parameter" value="${requestScope.parameter}"></c:set>
 <% 
 HttpSession httpSession = request.getSession();
 UserDto userInfo = new UserDto();
@@ -11,24 +12,48 @@ httpSession.setAttribute("userInfo", userInfo);
 %>
 <script>
 $(function() {
-	$(".groupcard").click(groupcardClick);
+	//$(".groupcard").on("click", groupcardClick);
+	
+	var page = "${parameter.page}";
+	var key = "${parameter.key}";
+	var word = "${parameter.word}";
+	var isMyGroup = "${parameter.isMyGroup}";
+	var groupCategoryNum = "${parameter.groupCategoryNum}";
+	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
+	
 });
 
-function makeParameterJson(userId, groupNum, key, word){
-	var param = {};
-	if(userId != null && userId != ''){
-		param.userId = userId;
+function getGroupList(page, key, word, isMyGroup, groupCategoryNum){
+	if(page == null || (typeof page) == "undefined"){
+		page = 1;
 	}
-	if(groupNum != null && groupNum != ''){
-		param.groupNum = groupNum;
+	if(key == null || (typeof key) == "undefined" || key.length == 0){
+		key = "";
 	}
-	if(key != null && key != ''){
-		param.key = key;
+	if(isMyGroup == null || (typeof isMyGroup) == "undefined"){
+		isMyGroup = "";
 	}
-	if(word != null && word != ''){
-		param.word = word;
+	if(groupCategoryNum == null || (typeof groupCategoryNum) == "undefined"){
+		groupCategoryNum = "";
 	}
-	return JSON.stringify(param);
+	
+	$.ajax({
+		url : "${root}/group/grouplist"
+		, method : "get"
+		, data : {
+			"page" : page
+			, "key" : key
+			, "word" : word
+			, "isMyGroup" : isMyGroup
+			, "groupCategoryNum" : groupCategoryNum
+		}
+		, success : function(result) {
+			//console.log(result);
+			$(".group-list").html(result);
+			$(".groupcard").click(groupcardClick);
+		}
+		
+	});
 }
 
 function groupcardClick(){
@@ -59,7 +84,10 @@ function groupcardClick(){
 <section class="contents">
 	<div class="container">
 		<div class="row">
-			<h1 class="col-lg-6 col-md-6 col-sm-4 my-4">${requestScope.size} 개의 모임</h1>
+			<h1 class="col-lg-4 col-md-4 col-sm-3 my-4">${requestScope.size} 개의 모임</h1>
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
+				<button type="button" class="btn btn-success">내 모임 보기</button>
+			</div>
 			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
 				<button type="button" class="btn btn-info">추천 받기</button>
 			</div>
@@ -78,33 +106,10 @@ function groupcardClick(){
 			</div>
 		</div>
 		<!-- Marketing Icons Section -->
-		<div class="row">
+		<div class="row group-list">
 			
 			<!-- 모임 출력 시작 -->
-			<c:forEach items="${requestScope.groupList}" var="group">
-			<!-- 카드 사진 위버전 -->
-			<div class="col-lg-4 col-sm-6 portfolio-item groupcard" data-num="${group.groupNum}">
-				<div class="card h-100">
-					<img class="card-img-top"
-						src="${group.groupImgSrc}"
-						alt="">
-					<h4 class="card-title">${group.groupName}</h4>
-					<div class="card-body">
-						<p class="card-text"><c:choose>
-							<c:when test="${fn:length(group.groupDescription) > 100}">${fn:substring(group.groupDescription, 0, 100)}...</c:when>
-							<c:otherwise>${group.groupDescription}</c:otherwise>
-						</c:choose>
-						</p>
-						<p class="card-text">인원 : ${group.groupMemberCount}/${group.groupMemberLimit}</p>
-						<p class="card-text">장소 : ${group.groupMainPlace}</p>
-					</div>
-
-					<div class="overlay">
-						<div class="text">상세보기</div>
-					</div>
-				</div>
-			</div>
-			</c:forEach>
+			
 			<!-- 모임 출력 종료 -->
 			
 		</div>

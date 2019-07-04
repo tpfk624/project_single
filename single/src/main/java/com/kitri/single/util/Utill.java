@@ -14,7 +14,7 @@ public class Utill {
 		return value;
 	}
 
-	public static String profileUpload(MultipartFile multipartFile, String type, String realPath) throws IllegalStateException, IOException {
+	public static String profileUpload(MultipartFile multipartFile, String type, String realPath, String root) throws IllegalStateException, IOException {
 		String originFile = multipartFile.getOriginalFilename();
 		String src = "";
 		realPath += "upload" + File.separator + type;
@@ -28,7 +28,7 @@ public class Utill {
 		File file = new File(realPath, uuid);
 		
 		multipartFile.transferTo(file);
-		src = "upload" + File.separator + type + File.separator + uuid;
+		src = root + "upload" + "/" + type + "/" + uuid;
 		
 		
 		return src;
