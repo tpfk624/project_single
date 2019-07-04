@@ -22,7 +22,7 @@
 	<select id="viewArticle" parameterType="int" resultType="boardDto">
 	select board_num boardNum, board_list_num boardListNum, user_id userId, 
 		user_nickname userNickname, board_subject boardSubject, 
-		board_content boardContent, board_views boardViews, board_like boardLike
+		board_content boardContent, board_views boardViews, board_like boardLike,
 		board_createDate boardCreatedate, 
 		board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
 		board_statecode boardStatecode
