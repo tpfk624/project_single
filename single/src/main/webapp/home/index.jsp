@@ -45,7 +45,6 @@ $(document).ready(function(){
 				console.log(dt);
 				if(dt == "1"){
 					$("#here").html("<img src='${root}/resources/img/seonimg/good.png' height='100'>");
-					
 				}else if(dt == "2"){
 					$("#here").html("<img src='${root}/resources/img/seonimg/soso.png' height='100'>");	
 				}else if(dt == "3"){
