@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%-- 사용법
+1. 원하는 위치에 include
+2. css 조절
+3. 반드시 자신의 page loading부분에서 defaultSetting("기본이미지 경로"); 를 호출하고 사용할것
+ex ) defaultSetting("${root}/resource/img/group/group_default.png"); 
+4. 만약 수정페이지라면 디폴트 이미지는 기존의 이미지 경로가 될 것.
+-- 수정페이지에서는 기존 이미지의 경로를 뿌려주는것이 맞을듯
+--%>
 <style>
 .file-hidden {
 	display: none;
@@ -13,6 +21,10 @@
 	max-height: 10rem;
 	padding: 0px;
 }
+.file-cancel{
+	margin-left: 0.5rem;
+	height: fit-content;
+}
 </style>
 <div class="control-group form-group">
 	<label>대표이미지 : </label>
@@ -21,11 +33,23 @@
 			accept="image/*" name="imgdata"> 
 		<input type="text" placeholder="파일을 등록해주세요" id="ex_file_input" class="form-control col-lg-4 col-md-4 col-sm-4"
 			name="userimg" readonly> 
+		<button type="button" class="file-cancel btn btn-secondary">X</button>
 		<img alt="" class="col-md-2 fileuploadimg"
-			src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145">
+			src="">
 	</div>
 </div>
 <script>
+var defaultImgSrc = "";
+function defaultSetting(src){
+	defaultImgSrc = src;
+	console.log(defaultImgSrc);
+	$(".fileuploadimg").attr("src", defaultImgSrc);
+}
+$(".file-cancel").click(function() {
+	$(".fileupload input[type=file]")[0].files[0].value = "";
+	$(this).siblings("input[type=text]").val("");
+	$(this).siblings("img").attr("src" , defaultImgSrc);
+});
 $("#ex_file_input").click(fileInputClick);
 function fileInputClick() {
 	$("#ex_file").trigger("click");

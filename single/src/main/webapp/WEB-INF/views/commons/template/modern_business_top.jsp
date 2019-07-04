@@ -75,7 +75,18 @@ body {
 	background-color: #004085;
 	border-color: #004085;
 }
-
+tag{
+	background-color: #f0f0f0;
+	color : #43853d;
+	padding: .2em;
+	border-radius: 10%;
+	font-size: large;
+	cursor: pointer;
+}
+tag:active, tag:hover{
+	background-color: #43853d;
+	color: white;
+}
 
 </style>
 </head>
