@@ -46,25 +46,53 @@
 	</select>
 	
 	
-	<select id="getGroup" parameterType="int" resultType="groupDto">
-	select 
-	    g.group_num groupNum
-	    , g.group_category_num groupCategoryNum
-	    , gc.group_category_name groupCategoryName
-	    , g.group_name as groupName
-	    , g.group_description as groupDescription
-	    , g.group_img_src as groupImgSrc
-	    , g.group_member_count as groupMemberCount
-	    , g.group_member_limit as groupMemberLimit	    
-	    , g.group_main_place as groupMainPlace
-	    , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
-	from 
-	    single_group g
-	    left outer join single_group_category gc
-	        on g.group_category_num = gc.group_category_num
-	where g.group_statecode = '1'
-	and g.group_num = #{groupNum}
+	<select id="selectGroupNumSeq" resultType="int">
+	select group_num_seq.nextval
+	from dual
 	</select>
+	
+	<insert id="insertGroup" parameterType="groupDto">
+	insert into single_group(
+	    group_num
+	    , group_category_num
+	    , group_name
+	    , GROUP_DESCRIPTION
+	    , GROUP_IMG_SRC
+	    , GROUP_MEMBER_COUNT
+	    , GROUP_MEMBER_LIMIT
+	    , GROUP_MAIN_PLACE
+	    , GROUP_CREATEDATE
+	    , GROUP_STATECODE
+	)values(
+	    #{groupNum}
+	    , #{groupCategoryNum}
+	    , #{groupName}
+	    , #{groupDescription}
+	    , #{groupImgSrc}
+	    , #{groupMemberCount}
+	    , #{groupMemberLimit}
+	    , #{groupMainPlace}
+	    , sysdate
+	    , '1'
+	)
+	</insert>
+	
+	<insert id="insertGroupMember" parameterType="groupMemberDto">
+	insert into single_group_member(
+	    group_num
+	    , user_id
+	    , group_member_statecode
+	    , group_joindate
+	    , group_requestdate
+	)values(
+	    #{groupNum}
+	    , #{userId}
+	    , #{groupMemberStatecode}
+	    , #{groupJoindate}
+	    , #{groupRequestdate}
+	)
+	</insert>
+	
 	
 	
 </mapper>

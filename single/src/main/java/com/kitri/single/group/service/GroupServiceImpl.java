@@ -1,5 +1,6 @@
 package com.kitri.single.group.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kitri.single.group.dao.GroupDao;
 import com.kitri.single.group.model.GroupDto;
+import com.kitri.single.group.model.GroupMemberDto;
 import com.kitri.single.hashtag.dao.HashtagDao;
+import com.kitri.single.hashtag.model.HashtagDto;
 import com.kitri.single.user.model.UserDto;
 import com.kitri.single.util.SiteConstance;
 
@@ -62,6 +65,53 @@ public class GroupServiceImpl implements GroupService{
 		jsonObject.put("taglist", tagList);
 		
 		return jsonObject.toString();
+	}
+
+	@Override
+	@Transactional
+	public int createGroup(GroupDto groupDto, UserDto userInfo, String groupHashtag) {
+		int groupNum = sqlSession.getMapper(GroupDao.class).selectGroupNumSeq();
+		groupDto.setGroupNum(groupNum);
+		groupNum = sqlSession.getMapper(GroupDao.class).insertGroup(groupDto);
+		
+		String[] hashtags = null;
+		List<String> hashtagList = new ArrayList<String>();
+		if(groupHashtag != null) {
+			hashtags = groupHashtag.split("#");
+			for(int i=0; i<hashtags.length ; i++) {
+				if(hashtags[i] != null && hashtags[i].length() != 0) {
+					hashtagList.add(hashtags[i].trim());
+				}
+			}
+			for(int i=0 ; i<hashtagList.size(); i++) {
+				HashtagDto hashtagDto = new HashtagDto();
+				hashtagDto.setHashtagContent(hashtagList.get(i));
+				hashtagDto.setHashtagTypeNum(2);
+				hashtagDto.setGroupNum(groupDto.getGroupNum());
+				sqlSession.getMapper(HashtagDao.class).insertHashtag(hashtagDto);
+			}
+		}
+		
+		GroupMemberDto groupMemberDto = new GroupMemberDto();
+		groupMemberDto.setGroupNum(groupDto.getGroupNum());
+		groupMemberDto.setUserId(userInfo.getUserId());
+		groupMemberDto.setGroupMemberStatecode("L");
+		
+		sqlSession.getMapper(GroupDao.class).insertGroupMember(groupMemberDto);
+		
+		return groupNum != 0 ? groupDto.getGroupNum() : 0;
+	}
+
+	@Override
+	public void insertGroupMember(GroupMemberDto groupMemberDto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void increaseGroupMemberCount() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -5,8 +5,8 @@ public class HashtagDto {
 	private int hashtagNum;
 	private String hashtagContent;
 	private int hashtagTypeNum;
-	private int boardNum;
-	private int groupNum;
+	private Integer boardNum;
+	private Integer groupNum;
 	
 	public int getHashtagNum() {
 		return hashtagNum;
@@ -26,25 +26,22 @@ public class HashtagDto {
 	public void setHashtagTypeNum(int hashtagTypeNum) {
 		this.hashtagTypeNum = hashtagTypeNum;
 	}
-	public int getBoardNum() {
+	public Integer getBoardNum() {
 		return boardNum;
 	}
-	public void setBoardNum(int boardNum) {
+	public void setBoardNum(Integer boardNum) {
 		this.boardNum = boardNum;
 	}
-	public int getGroupNum() {
+	public Integer getGroupNum() {
 		return groupNum;
 	}
-	public void setGroupNum(int groupNum) {
+	public void setGroupNum(Integer groupNum) {
 		this.groupNum = groupNum;
 	}
-	
 	@Override
 	public String toString() {
 		return "HashtagDto [hashtagNum=" + hashtagNum + ", hashtagContent=" + hashtagContent + ", hashtagTypeNum="
 				+ hashtagTypeNum + ", boardNum=" + boardNum + ", groupNum=" + groupNum + "]";
 	}
-	
-	
 	
 }

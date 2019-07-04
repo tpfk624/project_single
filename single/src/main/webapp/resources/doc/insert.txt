@@ -255,6 +255,8 @@ values(
     1
     , 'calubang@naver.com'
     , 'L'  --그룹장
+    , sysdate
+    , null
 );
 
 insert into single_group_member
@@ -262,6 +264,8 @@ values(
     1
     , 'calubang1@naver.com'
     , 'M'  --그룹원
+    , sysdate
+    , sysdate
 );
 
 insert into single_group_member
@@ -269,6 +273,8 @@ values(
     1
     , 'calubang2@naver.com'
     , 'M'  -- 그룹원
+    , sysdate
+    , sysdate
 );
 
 
@@ -277,6 +283,8 @@ values(
     2
     , 'calubang1@naver.com'
     , 'L'  --그룹장
+    , sysdate
+    , sysdate
 );
 
 insert into single_group_member
@@ -284,6 +292,8 @@ values(
     2
     , 'calubang2@naver.com'
     , 'M'  --그룹원
+    , sysdate
+    , sysdate
 );
 
 insert into single_group_member
@@ -291,6 +301,8 @@ values(
     2
     , 'calubang3@naver.com'
     , 'M'  -- 그룹원
+    , sysdate
+    , sysdate
 );
 
 insert into single_group_member
@@ -298,6 +310,8 @@ values(
     3
     , 'calubang2@naver.com'
     , 'L'  --그룹장
+    , sysdate
+    , sysdate
 );
 
 insert into single_group_member
@@ -305,6 +319,8 @@ values(
     3
     , 'calubang3@naver.com'
     , 'M'  --그룹원
+    , sysdate
+    , sysdate
 );
 
 insert into single_group_member
@@ -312,6 +328,8 @@ values(
     3
     , 'calubang1@naver.com'
     , 'M'  -- 그룹원
+    , sysdate
+    , sysdate
 );
 
 insert into single_group_member
@@ -319,6 +337,8 @@ values(
     4
     , 'calubang3@naver.com'
     , 'L'  --그룹장
+    , sysdate
+    , sysdate
 );
 
 insert into single_group_member
@@ -326,6 +346,8 @@ values(
     4
     , 'calubang1@naver.com'
     , 'M'  --그룹원
+    , sysdate
+    , sysdate
 );
 
 insert into single_group_member
@@ -333,6 +355,8 @@ values(
     4
     , 'calubang2@naver.com'
     , 'M'  -- 그룹원
+    , sysdate
+    , sysdate
 );
 
 

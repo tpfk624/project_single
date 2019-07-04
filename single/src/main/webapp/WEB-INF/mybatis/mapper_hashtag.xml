@@ -18,14 +18,16 @@
 	</select>
 
 
-	<insert id = "insertHashtag" parameterType="string">
+	<insert id = "insertHashtag" parameterType="hashtagDto">
 	insert into single_hashtag 
 	(hashtag_num, hashtag_content, hashtag_type_num, board_num, group_num)
-	values
-	(hashtag_num_seq.nextval ,#{hashtag},1,board_num_seq.currval,null)
+	values(
+		hashtag_num_seq.nextval 
+		, #{hashtagContent}
+		, #{hashtagTypeNum}
+		,#{boardNum}
+		,#{groupNum}
+	)
 	</insert>
-	
-	
-	
 	
 </mapper>

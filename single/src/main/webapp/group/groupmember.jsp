@@ -39,7 +39,7 @@ $(function() {
 			</div>
 		</section>
 		
-		<section class="groupsection group-info">
+		<section class="groupsection group-info" style="overflow: visible;">
 			<div>
 				<input class="col-sm-9 form-control search-input" type="text" 
 					id="myInput" onkeyup="" placeholder="이름을 검색해주세요" title="이름을 검색해주세요">
@@ -57,6 +57,126 @@ $(function() {
 					</tr>
 				</thead>
 				<tbody>
+					<tr>
+						<td>1</td>
+						<td>안병욱<i class="far fa-file file-icon"></i></td>
+						<td></td>
+						<td>2019/04/07</td>
+						<td></td>						
+						<td>
+							<div class="dropdown">
+								<input type="hidden" name="groupCategoryNum" value="" >
+								<button type="button" class="btn btn-primary dropdown-toggle"
+									data-toggle="dropdown">모임장</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="" role="1">모임장위임</a> 
+									<a class="dropdown-item" href="" role="2">으아앙</a> 
+									<a class="dropdown-item" href="" role="3">친목도모</a>
+									<a class="dropdown-item" href="" role="4">맛집탐방</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>안병욱<i class="far fa-file file-icon"></i></td>
+						<td></td>
+						<td>2019/04/07</td>
+						<td></td>						
+						<td>
+							<div class="dropdown">
+								<input type="hidden" name="groupCategoryNum" value="" >
+								<button type="button" class="btn btn-primary dropdown-toggle"
+									data-toggle="dropdown">모임장</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="" role="1">모임장위임</a> 
+									<a class="dropdown-item" href="" role="2">으아앙</a> 
+									<a class="dropdown-item" href="" role="3">친목도모</a>
+									<a class="dropdown-item" href="" role="4">맛집탐방</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>안병욱<i class="far fa-file file-icon"></i></td>
+						<td></td>
+						<td>2019/04/07</td>
+						<td></td>						
+						<td>
+							<div class="dropdown">
+								<input type="hidden" name="groupCategoryNum" value="" >
+								<button type="button" class="btn btn-primary dropdown-toggle"
+									data-toggle="dropdown">모임장</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="" role="1">모임장위임</a> 
+									<a class="dropdown-item" href="" role="2">으아앙</a> 
+									<a class="dropdown-item" href="" role="3">친목도모</a>
+									<a class="dropdown-item" href="" role="4">맛집탐방</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>안병욱<i class="far fa-file file-icon"></i></td>
+						<td></td>
+						<td>2019/04/07</td>
+						<td></td>						
+						<td>
+							<div class="dropdown">
+								<input type="hidden" name="groupCategoryNum" value="" >
+								<button type="button" class="btn btn-primary dropdown-toggle"
+									data-toggle="dropdown">모임장</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="" role="1">모임장위임</a> 
+									<a class="dropdown-item" href="" role="2">으아앙</a> 
+									<a class="dropdown-item" href="" role="3">친목도모</a>
+									<a class="dropdown-item" href="" role="4">맛집탐방</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>안병욱<i class="far fa-file file-icon"></i></td>
+						<td></td>
+						<td>2019/04/07</td>
+						<td></td>						
+						<td>
+							<div class="dropdown">
+								<input type="hidden" name="groupCategoryNum" value="" >
+								<button type="button" class="btn btn-primary dropdown-toggle"
+									data-toggle="dropdown">모임장</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="" role="1">모임장위임</a> 
+									<a class="dropdown-item" href="" role="2">으아앙</a> 
+									<a class="dropdown-item" href="" role="3">친목도모</a>
+									<a class="dropdown-item" href="" role="4">맛집탐방</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>안병욱<i class="far fa-file file-icon"></i></td>
+						<td></td>
+						<td>2019/04/07</td>
+						<td></td>						
+						<td>
+							<div class="dropdown">
+								<input type="hidden" name="groupCategoryNum" value="" >
+								<button type="button" class="btn btn-primary dropdown-toggle"
+									data-toggle="dropdown">모임장</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="" role="1">모임장위임</a> 
+									<a class="dropdown-item" href="" role="2">으아앙</a> 
+									<a class="dropdown-item" href="" role="3">친목도모</a>
+									<a class="dropdown-item" href="" role="4">맛집탐방</a>
+								</div>
+							</div>
+						</td>
+					</tr>
 					<tr>
 						<td>1</td>
 						<td>안병욱<i class="far fa-file file-icon"></i></td>
