@@ -7,6 +7,8 @@
 ex ) defaultSetting("${root}/resource/img/group/group_default.png"); 
 4. 만약 수정페이지라면 디폴트 이미지는 기존의 이미지 경로가 될 것.
 -- 수정페이지에서는 기존 이미지의 경로를 뿌려주는것이 맞을듯
+5. defaultSetting 의 두번째 인자값을 통해 label 여부를 쓸수도 있고 안쓸수도 있다.
+-- 2번째 인자값이 없으면 라벨을 살리고 "non-label"이라고 들어오면 라벨을 없앰
 --%>
 <style>
 .file-hidden {
@@ -17,7 +19,7 @@ ex ) defaultSetting("${root}/resource/img/group/group_default.png");
 	margin-left: 20px;
 	min-width: 15rem;
 	max-width: 15rem;
-	min-height: 10rem;
+	/*  min-height: 10rem; */
 	max-height: 10rem;
 	padding: 0px;
 }
@@ -40,13 +42,16 @@ ex ) defaultSetting("${root}/resource/img/group/group_default.png");
 </div>
 <script>
 var defaultImgSrc = "";
-function defaultSetting(src){
+function defaultSetting(src, label){
 	defaultImgSrc = src;
-	console.log(defaultImgSrc);
+	//console.log(defaultImgSrc);
 	$(".fileuploadimg").attr("src", defaultImgSrc);
+	if(label != null || label == "non-label"){
+		$(".fileupload").prev().remove();
+	}
 }
 $(".file-cancel").click(function() {
-	$(".fileupload input[type=file]")[0].files[0].value = "";
+	$(".fileupload input[type=file]")[0].files.value = "";
 	$(this).siblings("input[type=text]").val("");
 	$(this).siblings("img").attr("src" , defaultImgSrc);
 });
@@ -108,6 +113,9 @@ function fileDropDown() {
 }
 
 function fileChange() {
+	if(this.files[0] == null){
+		return;
+	}
 	var filename = this.files[0].name;
 	var imgtag = $(this).siblings("img");
 						

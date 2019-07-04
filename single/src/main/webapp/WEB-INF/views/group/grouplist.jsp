@@ -60,7 +60,10 @@ function groupcardClick(){
 <section class="contents">
 	<div class="container">
 		<div class="row">
-			<h1 class="col-lg-8 col-md-8 col-sm-6 my-4">${requestScope.size} 개의 모임</h1>
+			<h1 class="col-lg-6 col-md-6 col-sm-4 my-4">${requestScope.size} 개의 모임</h1>
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
+				<button type="button" class="btn btn-info">추천 받기</button>
+			</div>
 			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
 				<button type="button" class="btn btn-primary">모임 만들기</button>
 			</div>
