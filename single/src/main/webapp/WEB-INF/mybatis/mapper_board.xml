@@ -6,34 +6,24 @@
 <mapper namespace="com.kitri.single.board.dao.BoardDao">
 	
 	<insert id = "writeArticle" parameterType="boardDto">
-	insert into single_board values(board_num_seq.nextval, 1,'qjawns0617@naver.com' ,'뿡뿡뿡뿡','들리십니까' ,'들리십니까 내용입니다', 0, 0, sysdate,null,null,'1')
+	insert into single_board values(#{boardNum}, 1, #{userId}, #{userNickname}, #{boardSubject}
+	, #{boardContent}, 0, 0, sysdate, null, null, '1')
 	</insert>
 	
-	<insert id = "writeArticlehashtag" parameterType="boardDto">
-		<foreach collection="hashtagList" item="item" separator=";">
-		insert into single_hashtag values
-			(hashtag_num_seq.nextval ,#{item},1,board_num_seq.currval,null)
-		</foreach>
+	<insert id = "writeArticlehashtag" parameterType="string">
+	insert into single_hashtag 
+	(hashtag_num, hashtag_content, hashtag_type_num, board_num, group_num)
+	values
+	(hashtag_num_seq.nextval ,#{hashtag},1,board_num_seq.currval,null)
 	</insert>
-	
-	
-	
-	
-	<!-- 
-	<insert id="insert" parametertype="java.util.Map">
-        insert into user(username, age)
-        values
-        <foreach collection="list" item="item" separator=" , ">
-            (#{item.username}, #{item.age})
-        </foreach>
- 	</insert> -->
 	
 	
 	<!-- 원래 set,get이나 생성자를 이용해야 하지만 디티오랑 알리아스명이랑 같으면 자동으로 들어감 -->
 	<select id="viewArticle" parameterType="int" resultType="boardDto">
 	select board_num boardNum, board_list_num boardListNum, user_id userId, 
 		user_nickname userNickname, board_subject boardSubject, 
-		board_content boardContent, board_views boardViews, board_createDate boardCreatedate, 
+		board_content boardContent, board_views boardViews, board_like boardLike,
+		board_createDate boardCreatedate, 
 		board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
 		board_statecode boardStatecode
 	from single_board

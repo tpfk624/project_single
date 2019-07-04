@@ -10,47 +10,6 @@
 .carousel-item{
 	height : 30vh;
 }
-
-/* Style the navbar */
-.group-navbar {
-  overflow: hidden;
-  background-color: #333;
-  z-index: 1000;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Navbar links */
-.group-navbar>.group-navbar-item {
-  float: left;
-  display: block;
-  color: #f2f2f2 !important;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.group-navbar>.group-navbar-item:hover {
-  background-color: #ddd;
-  color: black !important;
-}
-
-.group-navbar	>.group-navbar-item.active {
-  background-color: #4CAF50;
-  color: white !important;
-}
-
-/* The sticky class is added to the navbar with JS when it reaches its scroll position */
-.sticky {
-  position: fixed;
-  top: 3.5rem;
-  width: 100%;
-}
-
-/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
-.sticky + .container {
-  margin-top: 60px;
-}
 </style>
 <script>
 $(function() {
@@ -63,7 +22,7 @@ $(function() {
 		}else{
 			navbar.removeClass("sticky");
 		}
-	});	
+	});W
 	
 	$(".group-navbar a").click(function() {
 		$(this).addClass("active");
@@ -76,12 +35,17 @@ $(function() {
 <%@ include file="groupheader.jsp"%>
 
 <section class="contents">
-	<div id="navbar" class="col-lg-9 col-md-9 col-sm-9 group-navbar">
-	  	<a class="group-navbar-item active">모임메인</a>
-	  	<a class="group-navbar-item">모임설정</a>
-	  	<a class="group-navbar-item">모임과제</a>
-	</div>
-	<div class="container col-lg-9 col-md-9 col-sm-9 whitespace">			
+	<div class="container col-lg-9 col-md-9 col-sm-9 whitespace">
+	
+	
+	<div class="groupmain">
+		<div id="navbar" class="group-navbar">
+		  	<a class="group-navbar-item active">모임메인</a>
+		  	<a class="group-navbar-item">모임설정</a>
+		  	<a class="group-navbar-item">모임과제</a>
+		  	<a class="group-navbar-item">모임원 중심점 찾기</a>
+		</div>
+					
 		<!-- 모임 이름 뿌져지는 곳 -->
 		<section class="groupsection groupheader">
 			<div class="row center">
@@ -131,6 +95,7 @@ $(function() {
 			<%@ include file="calendar.jsp"%>
 			</div>
 		</section>
+	</div>
 	</div>
 </section>
 <!-- /.container -->

@@ -87,15 +87,16 @@ public class BoardController {
 			// 2번 적용됨?? - 오라클에 있는 유저랑 인클루드해서 넣어둔 유저랑 겹처서 그런가?
 
 			//System.out.println(" seq : 1 = "+seq);
-			int boardNum = commonService.getNextSeq();
+			//int boardNum = commonService.getNextSeq();
 			
-			boardDto.setBoardNum(boardNum);
+			//boardDto.setBoardNum(boardNum);
 			boardDto.setBoardListNum(Integer.parseInt(parameter.get("boardListNum")));
 			boardDto.setUserId(userdto.getUserId());
 			boardDto.setUserNickname(userdto.getUserNickname());
 			boardDto.setBoardSubject(parameter.get("boardSubject"));
 			boardDto.setBoardContent(parameter.get("boardContent"));
 			boardDto.setBoardViews(0);
+			boardDto.setBoardLike(0);
 			
 			//System.out.println("boardDto = " + boardDto);
 			//System.out.println(" seq : 2 = "+seq);
@@ -108,6 +109,7 @@ public class BoardController {
 			for(int i=0 ; i<hashtags.length ; i++) {
 				
 				hashtagList.add(hashtags[i]);
+				System.out.println(hashtags[i]);
 				
 			}//#해시태그 조아조아   #fsfkjdkfjshfd
 
@@ -116,7 +118,7 @@ public class BoardController {
 
 			
 			// 결과값 반환
-			boardNum = boardService.writeArticle(boardDto);
+			int boardNum = boardService.writeArticle(boardDto);
 			
 			if (boardNum != 0) {
 				model.addAttribute("boardNum",boardNum);
@@ -147,8 +149,8 @@ public class BoardController {
 		if (userDto != null) {
 			BoardDto boardDto = boardService.viewArticle(boardNum);
 			
-			System.out.println("boardDto ==== " + boardDto);
-			System.out.println("parameter ==== " + parameter);
+//			System.out.println("boardDto ==== " + boardDto);
+//			System.out.println("parameter ==== " + parameter);
 			
 			model.addAttribute("article", boardDto);
 			model.addAttribute("parameter", parameter);

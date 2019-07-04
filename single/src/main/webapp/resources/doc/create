@@ -82,6 +82,10 @@ ALTER TABLE single_stamp
 ALTER TABLE single_stamp
 	DROP CONSTRAINT FK_user_TO_stamp; -- 유저 -> 찜한모임
 
+-- 소셜로그인
+ALTER TABLE sns_login
+	DROP CONSTRAINT FK_single_user_TO_sns_login; -- 유저 -> 소셜로그인
+
 -- 모임
 ALTER TABLE single_group
 	DROP CONSTRAINT PK_single_group; -- 모임 기본키
@@ -158,9 +162,9 @@ ALTER TABLE single_stamp
 ALTER TABLE users
 	DROP CONSTRAINT PK_users; -- 네아로유저 기본키
 
--- 네아로유저2
-ALTER TABLE naver_user
-	DROP CONSTRAINT PK_naver_user; -- 네아로유저2 기본키
+-- 소셜로그인
+ALTER TABLE sns_login
+	DROP CONSTRAINT PK_sns_login; -- 소셜로그인 기본키
 
 -- 모임
 DROP TABLE single_group;
@@ -219,8 +223,8 @@ DROP TABLE single_stamp;
 -- 네아로유저
 DROP TABLE users;
 
--- 네아로유저2
-DROP TABLE naver_user;
+-- 소셜로그인
+DROP TABLE sns_login;
 
 -- 모임
 CREATE TABLE single_group (
@@ -263,7 +267,9 @@ ALTER TABLE single_group_category
 CREATE TABLE single_group_member (
 	group_num              number       NOT NULL, -- 모임번호
 	user_id                varchar2(64) NOT NULL, -- 유저아이디
-	group_member_statecode varchar2(1)  NULL      -- 구성원분류상태
+	group_member_statecode varchar2(1)  NULL,     -- 구성원분류상태
+	group_joindate         DATE         NULL,     -- 모임가입일
+	group_requestdate      DATE         NULL      -- 모임요청일
 );
 
 -- 모임구성원
@@ -339,8 +345,8 @@ ALTER TABLE single_hprogress
 CREATE TABLE single_user (
 	user_id            varchar2(64)  NOT NULL, -- 유저아이디
 	user_password      varchar2(32)  NULL,     -- 패스워드
-	user_nickname      varchar2(32)  NULL,     -- 닉네임
-	user_name          varchar2(32)  NULL,     -- 이름
+	user_nickname      varchar2(32)  NOT NULL, -- 닉네임
+	user_name          varchar2(32)  NOT NULL, -- 이름
 	user_profile       varchar2(256) NULL,     -- 유저 프로필
 	user_birthday      DATE          NULL,     -- 생일
 	user_gender        varchar2(1)   NULL,     -- 성별
@@ -350,8 +356,7 @@ CREATE TABLE single_user (
 	user_addressdetail varchar2(128) NULL,     -- 주소상세
 	user_joindate      DATE          NULL,     -- 가입일
 	user_outdate       DATE          NULL,     -- 탈퇴일
-	user_statecode     varchar2(1)   NULL,     -- 유저상태코드
-	sns_token          VARCHAR(45)   NULL      -- 갱신토큰
+	user_statecode     varchar2(1)   NULL      -- 유저상태코드
 );
 
 -- 유저
@@ -402,9 +407,8 @@ ALTER TABLE single_board_category
 
 -- 좋아요
 CREATE TABLE single_like (
-	like_num  number       NOT NULL, -- 좋아요번호
-	board_num number       NULL,     -- 글번호
-	user_id   varchar2(64) NULL      -- 유저아이디
+	board_num number       NOT NULL, -- 글번호
+	user_id   varchar2(64) NOT NULL  -- 유저아이디
 );
 
 -- 좋아요
@@ -412,7 +416,8 @@ ALTER TABLE single_like
 	ADD
 		CONSTRAINT PK_single_like -- 좋아요 기본키
 		PRIMARY KEY (
-			like_num -- 좋아요번호
+			board_num, -- 글번호
+			user_id    -- 유저아이디
 		);
 
 -- 댓글
@@ -566,30 +571,29 @@ ALTER TABLE users
 			id -- 유저아이디
 		);
 
--- 네아로유저2
-CREATE TABLE naver_user (
-	id               number       NOT NULL, -- 유저아이디
-	sns_id           VARCHAR(45)  NULL,     -- 소셜아이디
-	username         VARCHAR(45)  NULL,     -- 이름
-	password         VARCHAR(45)  NULL,     -- 비밀번호
-	email            VARCHAR(45)  NULL,     -- 이메일
-	nickname         VARCHAR(45)  NULL,     -- 닉네임
-	create_date      DATE         NULL,     -- 생성일
-	modify_date      DATE         NULL,     -- 변경일
-	sns_type         VARCHAR(45)  NULL,     -- 소셜타입
-	sns_connect_date VARCHAR(45)  NULL,     -- 소셜연결날짜
-	profile_image    VARCHAR(45)  NULL,     -- 프로필이미지
-	age              VARCHAR(45)  NULL,     -- 나이
-	birthday         VARCHAR(45)  NULL,     -- 생일
-	gender           CHARACTER(1) NULL      -- 성별
+-- 소셜로그인
+CREATE TABLE sns_login (
+	sns_id           VARCHAR2(45) NOT NULL, -- 소셜아이디
+	sns_type         VARCHAR(32)  NOT NULL, -- 소셜타입
+	user_id          varchar2(64) NOT NULL, -- 유저아이디
+	sns_token        VARCHAR2(45) NOT NULL, -- 갱신토큰
+	sns_connect_date VARCHAR2(45) NULL,     -- 소셜접속일
+	sns_email        VARCHAR2(45) NULL,     -- 소셜이메일
+	sns_nickname     VARCHAR2(45) NULL,     -- 소셜닉네임
+	sns_profile      VARCHAR2(45) NULL,     -- 소셜이미지
+	sns_age          VARCHAR2(45) NULL,     -- 소셜나이
+	sns_birthday     VARCHAR2(45) NULL,     -- 소셜생일
+	sns_name         VARCHAR2(45) NULL,     -- 소셜이름
+	sns_gender       VARCHAR2(45) NULL      -- 소셜성별
 );
 
--- 네아로유저2
-ALTER TABLE naver_user
+-- 소셜로그인
+ALTER TABLE sns_login
 	ADD
-		CONSTRAINT PK_naver_user -- 네아로유저2 기본키
+		CONSTRAINT PK_sns_login -- 소셜로그인 기본키
 		PRIMARY KEY (
-			id -- 유저아이디
+			sns_id,   -- 소셜아이디
+			sns_type  -- 소셜타입
 		);
 
 -- 모임
@@ -820,6 +824,17 @@ ALTER TABLE single_stamp
 ALTER TABLE single_stamp
 	ADD
 		CONSTRAINT FK_user_TO_stamp -- 유저 -> 찜한모임
+		FOREIGN KEY (
+			user_id -- 유저아이디
+		)
+		REFERENCES single_user ( -- 유저
+			user_id -- 유저아이디
+		);
+
+-- 소셜로그인
+ALTER TABLE sns_login
+	ADD
+		CONSTRAINT FK_single_user_TO_sns_login -- 유저 -> 소셜로그인
 		FOREIGN KEY (
 			user_id -- 유저아이디
 		)
