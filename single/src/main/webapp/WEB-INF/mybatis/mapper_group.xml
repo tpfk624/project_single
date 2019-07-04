@@ -45,6 +45,7 @@
 	where rowgroup.rn > #{startRow}
 	</select>
 	
+	
 	<select id="getGroup" parameterType="int" resultType="groupDto">
 	select 
 	    g.group_num groupNum

@@ -1,7 +1,4 @@
-
-package com.kitri.single.user.service;
-
-import javax.servlet.http.HttpSession;
+package com.kitri.single.member.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,7 @@ import com.kitri.single.user.model.UserDto;
 
 
 @Service
-public class UserServiceImpl implements UserService {
+public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -23,11 +20,4 @@ public class UserServiceImpl implements UserService {
 		int result = sqlSession.getMapper(UserDao.class).regist(userDto);
 	}
 
-	@Override
-	public Object viewUser(HttpSession session) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
-

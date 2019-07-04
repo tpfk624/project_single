@@ -9,20 +9,13 @@
 
 <script>
 $(document).ready(function(){
-	//버튼이벤트
-	$('.naverlogin-button').click(function() {
-		//로그인 버튼 띄우기
-		$('#loginmodal').css("display","block").attr("width","auto");
-	});
-
 	//회원가입 이동 
 	$('.register').click(function() {
-		$(location).attr("href", "${root}/user/register");
+		$(location).attr("href", "${root}/member/register");
 		return false;
 	});
 	
 });
-
 </script>
  <style>
 
@@ -190,7 +183,7 @@ window.onclick = function(event) {
 //   	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/naverlogin/mvcallback");
   	var state = naver_id_login.getUniqState();
   	naver_id_login.setButton("white", 2,40);
-  	naver_id_login.setDomain("http://localhost/single/user/login.jsp");
+  	naver_id_login.setDomain("http://localhost/single/member/login.jsp");
   	naver_id_login.setState(state);
 //   	naver_id_login.setPopup();
   	naver_id_login.init_naver_id_login();
