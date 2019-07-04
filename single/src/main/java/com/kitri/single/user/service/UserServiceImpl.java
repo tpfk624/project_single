@@ -23,6 +23,18 @@ public class UserServiceImpl implements UserService {
 		int result = sqlSession.getMapper(UserDao.class).regist(userDto);
 	}
 
+	@Override
+	public Object viewUser(HttpSession session) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void create(UserDto userDto) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 

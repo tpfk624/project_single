@@ -11,6 +11,10 @@ import com.kitri.single.user.model.UserDto;
 public interface UserService {
 	void regist(UserDto userDto);
 
+	Object viewUser(HttpSession session);
+
+	void create(UserDto userDto);
+
 
 
 }
