@@ -27,12 +27,17 @@ $(document).ready(function() {
 				var dt = list[0].pm25Grade;
 				//console.log(list[0].dataTime);
 				$("#here").html(list[0].dataTime);
-				if(dt == 2){
-					$("#here1").html(list[0].pm25Grade + "날씨가 좋아요!");
-				}else{
-					$("#here1").html(list[0].pm25Grade + "그렇지 않아요!");
+				if(dt == 1){
+					$("#here1").html(list[0].pm25Grade + "<img src='${root}/resources/img/seonimg/good.png' height='100'>");
 					
+				}else if(dt == 2){
+					$("#here1").html(list[0].pm25Grade + "<img src='${root}/resources/img/seonimg/soso.png' height='100'>");	
+				}else if(dt == 3){
+					$("#here1").html(list[0].pm25Grade + "<img src='${root}/resources/img/seonimg/bad.png' height='100'>");	
+				}else if(dt == 4){
+					$("#here1").html(list[0].pm25Grade + "<img src='${root}/resources/img/seonimg/die.png' height='100'>");	
 				}
+				
 				for(var i=0 ; i<list.length ; i++){
 					list[i].pm25Grade;
 					//console.log("옹?? >> " + list[i].pm25Grade);
