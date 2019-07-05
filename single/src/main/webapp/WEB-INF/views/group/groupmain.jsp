@@ -41,7 +41,7 @@ $(function() {
 		<div class="carousel-inner" role="listbox">
 			<!-- Slide One - Set the background image for this slide in the line below -->
 			<div class="carousel-item active"
-				style="background-image: url('${root}/${group.groupImgSrc}')">
+				style="background-image: url('')">
 				<div class="carousel-caption d-none d-md-block">
 					<h3>${group.groupName}</h3>
 					<p>${group.groupCategoryName}</p>

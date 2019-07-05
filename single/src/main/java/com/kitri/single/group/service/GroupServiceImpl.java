@@ -76,9 +76,10 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	@Transactional
 	public String createGroup(GroupDto groupDto, UserDto userInfo, String groupHashtag) {
-		int groupNum = sqlSession.getMapper(GroupDao.class).selectGroupNumSeq();
+		GroupDao groupDao = (GroupDao)sqlSession.getMapper(GroupDao.class);
+		int groupNum = groupDao.selectGroupNumSeq();
 		groupDto.setGroupNum(groupNum);
-		groupNum = sqlSession.getMapper(GroupDao.class).insertGroup(groupDto);
+		groupNum = groupDao.insertGroup(groupDto);
 		
 		String[] hashtags = null;
 		List<String> hashtagList = new ArrayList<String>();
@@ -94,7 +95,7 @@ public class GroupServiceImpl implements GroupService{
 				hashtagDto.setHashtagContent(hashtagList.get(i));
 				hashtagDto.setHashtagTypeNum(2);
 				hashtagDto.setGroupNum(groupDto.getGroupNum());
-				sqlSession.getMapper(HashtagDao.class).insertHashtag(hashtagDto);
+				groupDao.insertHashtag(hashtagDto);
 			}
 		}
 		
@@ -102,8 +103,8 @@ public class GroupServiceImpl implements GroupService{
 		groupMemberDto.setGroupNum(groupDto.getGroupNum());
 		groupMemberDto.setUserId(userInfo.getUserId());
 		groupMemberDto.setGroupMemberStatecode("L");
-		
-		sqlSession.getMapper(GroupDao.class).insertGroupMember(groupMemberDto);
+		System.out.println(groupMemberDto);
+		groupDao.insertGroupMember(groupMemberDto);
 		
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("groupNum", (groupNum != 0 ? groupDto.getGroupNum() : 0));
