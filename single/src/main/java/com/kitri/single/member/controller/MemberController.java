@@ -65,7 +65,7 @@ public class MemberController {
 	@RequestMapping(value = "/joinpost", method = RequestMethod.POST)
 	public String joinPost(@RequestParam(name = "email") String email) throws Exception {
 		memberService.sendAuthMail(email);
-		return "member/eamilsendok";
+		return "member/emailsendok";
 	}
 
 	// 메일로부터 답장받기 email / authkey
