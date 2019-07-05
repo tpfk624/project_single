@@ -1,5 +1,7 @@
 package com.kitri.single.member.controller;
 
+import java.util.HashMap;
+
 import javax.inject.Inject;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -29,57 +31,61 @@ import com.kitri.single.user.service.UserServiceImpl;
 @RequestMapping("/member")
 @SessionAttributes("userInfo")
 public class MemberController {
-	private Logger logger =LoggerFactory.getLogger(MemberController.class);
-    
+	private Logger logger = LoggerFactory.getLogger(MemberController.class);
+
 	@Autowired
 	MemberService memberService;
-	
-	
-    //회원가입페이지이동
+
+	// 회원가입페이지이동
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register() {		
-    	return "member/register";
+	public String register() {
+		return "member/register";
 	}
-	
-	//회원가입
-	@RequestMapping(value = "/register", method = RequestMethod.POST) 
-	public String register(UserDto userDto,Model model) {
+
+	// 회원가입
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String register(UserDto userDto, Model model) {
 		logger.info(userDto.toString());
 		memberService.regist(userDto);
 		model.addAttribute("userInfo", userDto);
 		return "member/register";
 	}
-	
-	//로그아웃
-	@RequestMapping(value = "/logout", method = RequestMethod.GET) 
+
+	// 로그아웃
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(SessionStatus status, HttpServletRequest request, HttpSession session) {
-		String oldUrl= request.getHeader("referred");
+		String oldUrl = request.getHeader("referred");
 		logger.info(oldUrl);
-		status.setComplete();
-//		session.removeAttribute("userInfo");
-		return oldUrl;
+//		status.setComplete();
+		session.removeAttribute("userInfo");
+		return "redirect:/member/naverlogintest.jsp";
 	}
-	
-	
-	//인증 메일 전달
-	@RequestMapping(value="joinpost", method=RequestMethod.POST)
-	public String joinPost(UserDto userDto) throws Exception {
-		logger.info("currnent join member: " + userDto.toString());
-		memberService.create(userDto);
-		return "/member/login";
+
+	// 인증 메일 전달
+	@RequestMapping(value = "/joinpost", method = RequestMethod.POST)
+	public String joinPost(@RequestParam(name = "email") String email) throws Exception {
+		memberService.sendAuthMail(email);
+		return "member/emailsendok";
 	}
-	
-	//메일로부터 답장받기
-	@RequestMapping(value="joinconfirm", method=RequestMethod.GET)
-	public String emailConfirm(UserDto userDto, Model model) throws Exception {
-		logger.info(userDto.getUserId() + ": auth confirmed");
-		
-		userDto.setAuthState("1");	// authstatus를 1로,, 권한 업데이트
+
+	// 메일로부터 답장받기 email / authkey
+	@RequestMapping(value = "/joinconfirm", method = RequestMethod.GET)
+	public String emailConfirm(@RequestParam HashMap<String, String> paramMap,Model model) throws Exception {
+		String email = paramMap.get("email");
+		String authKey = paramMap.get("authKey");
+		UserDto userDto = new UserDto();
+		logger.info("email:" + email);
+		logger.info("authkey:" + authKey);
+
+		userDto.setUserId(email);
+		userDto.setAuthKey(authKey);
+		userDto.setAuthState("1");
+
+		// 이메일 유효상태
 		memberService.updateAuthstatus(userDto);
-		
-		model.addAttribute("auth_check", 1);
-		
-		return "/user/joinPost";
+
+		model.addAttribute("userInfo", userDto);
+		return "member/emailauthok";
 	}
- 
+
 }

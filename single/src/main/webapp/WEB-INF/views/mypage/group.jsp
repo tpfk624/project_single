@@ -93,7 +93,7 @@
 				'option' : sel
 			},
 			success : function(data) {
-				alert("성공 / 응답 값: " + data);
+				/* alert("성공 / 응답 값: " + data); */
 				$(".jumbotronBottom").html(data);
 			}
 		});

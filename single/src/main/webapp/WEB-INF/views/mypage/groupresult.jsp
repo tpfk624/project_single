@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<!-- 모임 출력 시작 -->
 
 <div class="row">
+<!-- 모임 출력 시작 -->
 <c:forEach items="${groupList}" var="group">
 
 	<!-- 카드 사진 위버전 -->
@@ -54,6 +54,6 @@
 	</div>
 
 </c:forEach>
-</div>
 <!-- 모임 출력 종료 -->
+</div>
 

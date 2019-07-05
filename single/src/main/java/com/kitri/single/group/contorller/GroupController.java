@@ -121,9 +121,9 @@ public class GroupController {
 			, @RequestParam("imgdata") MultipartFile multipartFile
 			, @RequestParam("groupHashtag") String groupHashtag) {
 		
-		System.out.println(groupDto);
-		System.out.println(multipartFile);
-		System.out.println(multipartFile.isEmpty());
+		//System.out.println(groupDto);
+		//System.out.println(multipartFile);
+		//System.out.println(multipartFile.isEmpty());
 		if(multipartFile != null && !multipartFile.isEmpty()) {
 			
 			String realPath = servletContext.getRealPath("");
@@ -143,7 +143,7 @@ public class GroupController {
 		//서비스 시작...
 		String json = groupService.createGroup(groupDto, userInfo, groupHashtag);
 		
-		System.out.println(json);
+		//System.out.println(json);
 	
 		return json;
 
@@ -181,8 +181,8 @@ public class GroupController {
 				model.addAttribute("groupMember", groupMemberDto);
 				path = "group/groupmain";
 				
-				logger.info(groupMemberDto.toString());
-				logger.info(groupDto.toString());
+				//logger.info(groupMemberDto.toString());
+				//logger.info(groupDto.toString());
 			}	
 		}
 		

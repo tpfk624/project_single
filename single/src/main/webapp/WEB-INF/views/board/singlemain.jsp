@@ -2,7 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
-
+<% UserDto userDto = new UserDto();
+userDto.setUserId("qjawns0617@naver.com");
+userDto.setUserNickname("뿡뿡뿡뿡");
+userDto.setUserName("권범준");
+session.setAttribute("userInfo", userDto); %>
 
 <style>
 

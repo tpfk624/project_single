@@ -121,6 +121,8 @@
 
 	</select>
 
+
+
 	<!-- 나의 모임관리  -->
 	<select id="getMyGroup" parameterType="map" resultType="groupDto">
 	select
@@ -159,8 +161,7 @@
 	
 
 	
-
- 
+	 
 
 	
 

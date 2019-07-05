@@ -2,11 +2,7 @@
     pageEncoding="UTF-8" import="com.kitri.single.user.model.UserDto"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<% UserDto userDto = new UserDto();
-userDto.setUserId("qjawns0617@naver.com");
-userDto.setUserNickname("뿡뿡뿡뿡");
-userDto.setUserName("권범준");
-session.setAttribute("userInfo", userDto); %>
+
 
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 

@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
 //   var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "${callbackURL}");
-  var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/member/callback.jsp");
+  var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "${callbackUrl}");
   // 접근 토큰 값 출력
   var accessToken =naver_id_login.oauthParams.access_token;
   

@@ -7,10 +7,11 @@ import org.springframework.stereotype.Controller;
 
 import com.kitri.single.group.model.GroupDto;
 import com.kitri.single.group.model.GroupMemberDto;
+import com.kitri.single.hashtag.dao.HashtagDao;
 import com.kitri.single.user.model.UserDto;
 
 
-public interface GroupDao {
+public interface GroupDao extends HashtagDao{
 	
 	//그룹 개수 조회
 	public int getGroupConunt(Map<String, String> parameter);

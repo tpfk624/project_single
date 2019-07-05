@@ -3,8 +3,8 @@
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
 <!-- 네이버로그인 로그인 오픈 API서비스 환경-->
-<c:set var= "callbackUrl" value="http://localhost/single/member/callback.jsp"/>
-<c:set var="serviceUrl" value= "http://localhost/single"/>
+<c:set var= "callbackUrl" value="http://192.168.14.22/single/member/callback.jsp"/>
+<c:set var="serviceUrl" value= "http://192.168.14.22/single"/>
 
 
 <script>
@@ -15,14 +15,15 @@ $(document).ready(function(){
 		$('#loginmodal').css("display","block").attr("width","auto");
 	});
 	
+	//로그아웃 버튼
 	$('.logoutBtn').click(function() {
 		$(location).attr("href","${root}/member/logout");
 	});
 	
+	//이메일인증버튼
 	$('.emailAuthBtn').click(function() {
 		$('.emailAuthForm').attr("action", "${root}/member/joinpost").submit();
 	});
-	
 });
 </script>
 <%@ include file= "login.jsp"%> 
@@ -39,7 +40,7 @@ $(document).ready(function(){
 
 
 <form class="emailAuthForm" method="post" >
-	<input type="email" placeholder="이메일 입력해주세요" name="userId" required>
+	<input type="email" placeholder="이메일 입력해주세요" name="email" required>
 	<button class="emailAuthBtn" type="button">이메일 인증하기</button>
 </form>
 
