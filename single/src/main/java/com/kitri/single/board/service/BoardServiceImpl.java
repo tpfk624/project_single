@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kitri.single.board.dao.BoardDao;
 import com.kitri.single.board.model.BoardDto;
+import com.kitri.single.board.model.BoardPageDto;
 import com.kitri.single.common.dao.CommonDao;
 import com.kitri.single.hashtag.dao.HashtagDao;
 import com.kitri.single.hashtag.model.HashtagDto;
@@ -79,7 +80,25 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	
-	
+	// 메인페이지 페이징 처리
+	public BoardPageDto selectNewList(int currentPage) {
+		
+		int totalcnt = sqlSession.getMapper(BoardDao.class).totalPage();
+		//System.out.println(totalcnt);
+		
+		int cntPerPage = 7; // 페이지별 보여줄 목록수
+		int cntPerPageGroup = 5;
+		
+		BoardPageDto bP = new BoardPageDto(cntPerPage, totalcnt, cntPerPageGroup, currentPage);
+		//System.out.println(bP);
+		
+		List<BoardDto> list = sqlSession.getMapper(BoardDao.class).findByRows(bP);
+		//System.out.println(list.toString());
+		
+		bP.setList(list);
+		
+		return bP;
+	}
 	
 	
 

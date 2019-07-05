@@ -40,7 +40,7 @@ function selectPage(page, key, word ) {
 	var param = JSON.stringify({'page':page,'key':key,'word':word});
 	$.ajax({
 		url : '${root}/board',
-		type : 'get',
+		type : 'GET',
 		data : {
 			'page':page
 			,'key':key
@@ -209,9 +209,9 @@ function selectPage(page, key, word ) {
 		<div class="row">
 			
 			<div class="col-lg-2">
-				<c:if test="${ap.startPage > 1 }">
+				<c:if test="${bp.startPage > 1 }">
 					<span class="page"> 
-						<a href="${ap.startPage - 1}">
+						<a href="${bp.startPage - 1}">
 							<button class="btn btn-success">이전</button>
 						</a>
 					</span>
@@ -223,10 +223,10 @@ function selectPage(page, key, word ) {
 			<div class="col-lg-4">
 				<ul class="pagination" style="width: 240px; margin-left: auto; margin-right: auto;">
 
-					<c:forEach begin="${ap.startPage}" end="${ap.endPage}" var="i">
+					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" var="i">
 						<c:choose>
 
-							<c:when test="${ap.currentPage == i}">
+							<c:when test="${bp.currentPage == i}">
 								<li class="page-item">
 									<span>
 										<a class="page-link">${i}</a>
@@ -252,9 +252,9 @@ function selectPage(page, key, word ) {
 
 			<div class="col-lg-2">
 
-				<c:if test="${ap.totalPage > ap.endPage }">
+				<c:if test="${bp.totalPage > bp.endPage }">
 					<span class="page"> 
-						<a href="${ap.endPage+1}">
+						<a href="${bp.endPage+1}">
 							<button class="btn btn-success">다음</button>
 						</a>
 					</span>

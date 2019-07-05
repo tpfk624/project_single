@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kitri.single.board.model.BoardDto;
+import com.kitri.single.board.model.BoardPageDto;
 import com.kitri.single.board.model.ReplyDto;
 import com.kitri.single.board.service.BoardService;
 import com.kitri.single.board.service.ReplyService;
@@ -175,15 +176,18 @@ public class BoardController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String newList(@RequestParam Map<String, Object> params) {
+	public String newList(@RequestParam Map<String, Object> params, Model model) {
 		
-		int cp = (int)params.get("page");
+		System.out.println("컨트롤");
+		int currentPage = Integer.parseInt((String)params.get("page"));
 		
-		System.out.println(cp);
+		BoardPageDto bp = boardService.selectNewList(currentPage);
 		
+		model.addAttribute("bp", bp);
 		
+		String path = "board/singlemain";
 		
-		return "";
+		return path;
 	}
 	
 	

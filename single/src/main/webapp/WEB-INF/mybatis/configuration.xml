@@ -21,6 +21,9 @@
 		<typeAlias alias="boardCategoryDto" type="com.kitri.single.board.model.BoardCategoryDto"/>
 		<typeAlias alias="boardDto" type="com.kitri.single.board.model.BoardDto"/>
 		<typeAlias alias="boardListDto" type="com.kitri.single.board.model.BoardListDto"/>
+		<!-- 새로만듬  -->
+		<typeAlias alias="boardPageDto" type="com.kitri.single.board.model.BoardPageDto"/>
+		<!-- ㅡㅡㅡㅡ -->
 		<typeAlias alias="boardTypeDto" type="com.kitri.single.board.model.BoardTypeDto"/>
 		<typeAlias alias="likeDto" type="com.kitri.single.board.model.LikeDto"/>
 		<typeAlias alias="replyDto" type="com.kitri.single.board.model.ReplyDto"/>
