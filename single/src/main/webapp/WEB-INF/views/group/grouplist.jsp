@@ -24,8 +24,8 @@ $(function() {
 });
 
 function getGroupList(page, key, word, isMyGroup, groupCategoryNum){
-	if(page == null || (typeof page) == "undefined"){
-		page = 1;
+	if(page == null || (typeof page) == "undefined" || page == ""){
+		page = "1";
 	}
 	if(key == null || (typeof key) == "undefined" || key.length == 0){
 		key = "";

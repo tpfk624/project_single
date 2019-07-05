@@ -110,12 +110,6 @@
 	    group_num
 	    , user_id
 	    , group_member_statecode
-	    <if test="groupMemberStatecode == 'L' || groupMemberStatecode == 'M'">
-	    , group_joindate
-	    </if>
-	    <if test="groupMemberStatecode == 'W' ">
-	   , group_requestdate
-	    </if>
 	)values(
 	    #{groupNum}
 	    , #{userId}

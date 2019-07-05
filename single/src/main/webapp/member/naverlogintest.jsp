@@ -15,10 +15,12 @@ $(document).ready(function(){
 		$('#loginmodal').css("display","block").attr("width","auto");
 	});
 	
+	//로그아웃 버튼
 	$('.logoutBtn').click(function() {
 		$(location).attr("href","${root}/member/logout");
 	});
 	
+	//이메일인증버튼
 	$('.emailAuthBtn').click(function() {
 		$('.emailAuthForm').attr("action", "${root}/member/joinpost").submit();
 	});
@@ -39,7 +41,7 @@ $(document).ready(function(){
 
 
 <form class="emailAuthForm" method="post" >
-	<input type="email" placeholder="이메일 입력해주세요" name="userId" required>
+	<input type="email" placeholder="이메일 입력해주세요" name="email" required>
 	<button class="emailAuthBtn" type="button">이메일 인증하기</button>
 </form>
 
