@@ -3,8 +3,8 @@
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
 <!-- 네이버로그인 로그인 오픈 API서비스 환경-->
-<c:set var= "callbackUrl" value="http://localhost/single/member/callback.jsp"/>
-<c:set var="serviceUrl" value= "http://localhost/single"/>
+<c:set var= "callbackUrl" value="http://192.168.14.22/single/member/callback.jsp"/>
+<c:set var="serviceUrl" value= "http://192.168.14.22/single"/>
 
 
 <script>

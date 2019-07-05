@@ -58,7 +58,7 @@ public class MemberController {
 		logger.info(oldUrl);
 //		status.setComplete();
 		session.removeAttribute("userInfo");
-		return "member/naverlogintest";
+		return "redirect:/member/naverlogintest.jsp";
 	}
 
 	// 인증 메일 전달
