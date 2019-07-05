@@ -3775,7 +3775,8 @@
 /* Banner */
 
    #banner {
-      background-image: url("img/g.png");
+      background-image: url("img/eu.png");
+      background-position: center;
       display: -ms-flexbox;
       -ms-flex-pack: center;
       -ms-flex-align: center;

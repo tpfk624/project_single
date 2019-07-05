@@ -13,64 +13,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<script>
-
-/* $(document).ready(function(){
-	$('[data-toggle="popover"]').popover({
-		container:'body'
-	});   
-}); */
-
-$(document).ready(function(){
-	
-	$('#weatherimg').on("click", function(){
-		if($("#popover").hasClass("show")){
-			$("#popover").removeClass("show");
-			return;
-		}
-		
-		var form = {
-				'stationName' : $('#stationName').val(),
-				'dataTerm' : $('#dataTerm').val()
-		};
-		$.ajax({
-			url : "${root}/home/dusttest.do",
-			type : "POST",
-			data : JSON.stringify(form)	,
-			contentType:"application/json; charset=UTF-8;",
-			dataType : "json",
-			success : function(data){
-				var list = data.list;
-				var dt = list[0].pm25Grade;
-				console.log(dt);
-				if(dt == "1"){
-					$("#here").html("<img src='${root}/resources/img/seonimg/good.png' height='100'>");
-				}else if(dt == "2"){
-					$("#here").html("<img src='${root}/resources/img/seonimg/soso.png' height='100'>");	
-				}else if(dt == "3"){
-					$("#here").html("<img src='${root}/resources/img/seonimg/bad.png' height='100'>");	
-				}else if(dt == "4"){
-					$("#here").html("<img src='${root}/resources/img/seonimg/die.png' height='100'>");	
-				}
-				
-				$("#popover").addClass("show"); 
-			},
-			error: function(){
-				alert("에러났어요!!!!!!");
-			}
-		});
-	});
-	
-	
-	
-	
-	
-});
 
 
-
-
-</script>
 
 <style>
 #banner .more:before{
@@ -85,6 +29,8 @@ $(document).ready(function(){
 
 .txt{
 	font-size: 30px;
+	text-shadow: 2px 2px 2px gray;
+	font-weight: bolder;
 }
 
 .logo{
@@ -117,20 +63,82 @@ $(document).ready(function(){
     border-radius: 50%;
 }
 
+.input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control, .input-group>.form-control-plaintext {
+    position: relative;
+    /* -ms-flex: 1 1 auto;
+    flex: 1 1 auto; */
+    flex:100px;
+    width: 1%;
+    margin-bottom: 0;
+}
+
 
 </style>
+
+<script>
+
+/* $(document).ready(function(){
+	$('[data-toggle="popover"]').popover({
+		container:'body'
+	});   
+}); */
+
+$(document).ready(function(){
+	
+	$('#weatherimg').on("click", function(){
+		if($("#popover").hasClass("show")){
+			$("#popover").removeClass("show");
+			return;
+		}
+		
+		var form = {
+				'stationName' : $('#stationName').val(),
+				'dataTerm' : $('#dataTerm').val()
+		};
+		$.ajax({
+			url : "${root}/home/dusttest.do",
+			type : "POST",
+			data : JSON.stringify(form)	,
+			contentType:"application/json; charset=UTF-8;",
+			dataType : "json",
+			success : function(data){
+				var list = data.list;
+				var dt = list[0].pm25Grade;
+				console.log(dt);
+				if(dt == "1"){
+					$("#here").html("<img src='${root}/resources/img/seonimg/good.png' height='100'>");
+					$(".txt").html("<strong>미세먼지도 없는데 산책 어떠세요?</strong>");
+				}else if(dt == "2"){
+					$("#here").html("<img src='${root}/resources/img/seonimg/soso.png' height='100'>");	
+					$(".txt").html("<strong>미세먼지 좋아요</strong>");
+				}else if(dt == "3"){
+					$("#here").html("<img src='${root}/resources/img/seonimg/bad.png' height='100'>");	
+					$(".txt").html("<strong>마스크 챙기세요!</strong>");
+				}else if(dt == "4"){
+					$("#here").html("<img src='${root}/resources/img/seonimg/die.png' height='100'>");	
+					$(".txt").html("<strong>미세먼지가 심각해요! 마스크 꼭 챙기세요!</strong>");
+				}
+				
+				$("#popover").addClass("show"); 
+			},
+			error: function(){
+				alert("에러났어요!!!!!!");
+			}
+		});
+	});
+});
+</script>
+
+<input id="stationName" name="stationName" value="구로구" hidden="">
+<input id="dataTerm" name="dataTerm" value="DAILY" hidden="">
+
 
       <!-- Header -->
          <header id="header">
             <div class="logo"><a href="index.html">우리 혼자 살아요 </a></div> <!-- <span>by TEMPLATED</span> -->
-            
-            <!-- <a href="#menu"><span>Menu</span></a> -->
-            <!-- data-content="날씨정보" -->
             <img src="${root}/resources/img/seonimg/rain.png" id="weatherimg" height="100">
          </header>
          
-		<input id="stationName" name="stationName" value="구로구" hidden="">
-		<input id="dataTerm" name="dataTerm" value="DAILY" hidden="">
 		
 		
 
@@ -138,28 +146,28 @@ $(document).ready(function(){
       <!-- menu -->
          <nav id="menu">
             <ul class="links">
+            
+            <c:if test="${userInfo != null}">
             	<li id="profile">
 	            	<div class="profile-userpic">
-						<img id = "userpic" src='${root}/resources/img/seonimg/song.png'  height="100">
+						<img id = "userpic" src='${root}/resources/img/seonimg/kakaopic.png'  height="100">
 					</div>
-					<!-- END SIDEBAR USERPIC -->
-					<!-- SIDEBAR USER TITLE -->
 					<div class="profile-usertitle">
 						<div class="profile-usertitle-name">
 						<br>
-							Marcus Doe
-						</div>
-						<div class="profile-usertitle-job">
-							Developer
+							${userInfo.userNickname}
 						</div>
 					</div>
 				</li>
-				<li>
-					<hr>
-            	</li>
-               <%-- <li><a href="${root}/home/dusttest">로그인</a></li> --%>
-               <li><a href="generic.html">같이놀래요</a></li>
-               <li><a href="${root }/board/write">혼자놀래요</a></li>
+			</c:if>
+						<li>
+							<hr>
+		            	</li>
+			<c:if test="${userInfo == null}">
+               <li><a href="${root}/home/dusttest">로그인</a></li>
+		    </c:if>
+                <li><a href="generic.html">같이놀래요</a></li>
+                <li><a href="${root }/board/write">혼자놀래요</a></li>
             </ul>
          </nav>
       
@@ -168,12 +176,10 @@ $(document).ready(function(){
               <!--  <header>
                   <h1>SingleTrace</h1>
                </header> -->
-               <label class="txt">장마가 시작됐어요 우산 챙겨다니세요</label>
-               <div class="input-group mb-3">
+               <label class="txt"></label>
+                <div class="input-group mb-3">
 				  <input type="text" class="form-control" placeholder="Search" width="100">
-				  <!-- <div class="input-group-append"> -->
 				    <button class="btn btn-success" type="submit">&#8981;</button> 
-				  <!-- </div> -->
 				</div>
             </div>
             <a href="#menu" class="more">menu</a>
@@ -192,3 +198,4 @@ $(document).ready(function(){
          </div>
    </body>
 </html>
+
