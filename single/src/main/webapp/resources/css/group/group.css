@@ -3,7 +3,9 @@
 .carousel-item {
 	height: 40vh;
 }
-
+.group-header .carousel-item{
+	height : 30vh;
+}
 .search{
 	margin-top: 1.5rem;
 }
@@ -256,8 +258,8 @@
 
 /* 그룹 디테일 모달*/
 #groupDetailModal .card-img-top{
-	max-width: 70%;
-	max-height: 70%;
+	max-width: 30rem;
+	max-height: 30rem;
 }
 
 /* 공통부분  */
@@ -265,5 +267,6 @@
 	margin-left: auto;
 	margin-right: auto;	
 }
+
 
 

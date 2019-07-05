@@ -20,6 +20,32 @@
 <script>
 
 
+// 페이징 처리
+$(function() {
+	
+	selectPage(1, "", "");
+	
+	$(".page>.pagination>a").click(function() {
+		var page = $(this).text();
+		selectPage(page, "", "");
+	});
+});
+
+function selectPage(page, key, word ) {
+	var param = JSON.stringify({'page':page,'key':key,'word':word});
+	$.ajax({
+		url : '${root}/board',
+		type : 'get',
+		data : {
+			'page':page
+			,'key':key
+			,'word':word
+		},
+		success : function(response) {
+			/* $(".container").html-<>res */
+		}
+	});
+} 
 
 </script>
 
@@ -168,15 +194,64 @@
 				</tr>
 			</tbody>
 		</table><hr>
-		<ul class="pagination justify-content-center">
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-		</ul>
+		
+		
+		
+		<!-- 페이징 처리 -->
+		<%-- <div class="row">
+				<div class="col-lg-2">
+
+					<c:if test="${ap.startPage > 1 }">
+						<span class="page"> 
+							<a href="${ap.startPage - 1}">&laquo;</a>
+						</span>
+					</c:if>
+				</div>
+
+
+				<div class="col-lg-2"></div>
+
+				<div class="col-lg-4">
+					<ul class="pagination" style="width: 240px; margin-left: auto; margin-right: auto;">
+
+						<c:forEach begin="${ap.startPage}" end="${ap.endPage}" var="i">
+							<c:choose>
+
+								<c:when test="${ap.currentPage == i}">
+									<li class="page-item">
+										<span>
+											<a class="page-link">${i}</a>
+										</span>
+									</li>
+								</c:when>
+
+								<c:otherwise>
+									<li class="page-item">
+										<span class="page">
+											<a class="page-link" href="${i}">${i}</a>
+										</span>
+									</li>
+								</c:otherwise>
+
+							</c:choose>
+						</c:forEach>
+
+					</ul>
+				</div>
+
+				<div class="col-lg-2"></div>
+
+				<div class="col-lg-2">
+					<c:if test="${ap.totalPage > ap.endPage }">
+						<span class="page"> 
+							<a href="${ap.endPage+1}">&raquo;
+							</a>
+						</span>
+					</c:if>
+				</div>
+			</div> --%>
+			
+		<%@ include file = "/WEB-INF/views/commons/pagination.jsp" %>
 	</div>
       
       
@@ -188,7 +263,7 @@
 	<div class="col-lg-2 mb-4" align="center"><br>
 		<div class="list-group">
 			<a href="index.html" class="list-group-item">메인</a>
-			<a href="about.html" class="list-group-item">자취생활 팁</a>
+			<a href="${root }/board/singlelifeboard" class="list-group-item">자취생활 팁</a>
 			<a href="services.html" class="list-group-item">요리 레시피</a>
 			<a href="contact.html" class="list-group-item">명예의 전당</a>
 		</div>

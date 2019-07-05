@@ -7,7 +7,7 @@ public class UserDto {
 	private String userId;
 	private String userPassword;
 	private String userNickname;
-	private String userProfile;	
+	private String userProfile;
 	private String userName;
 	private String userBirthday;
 	private String userGender;
@@ -18,38 +18,18 @@ public class UserDto {
 	private String userJoindate;
 	private String userOutdate;
 	private String userStatecode;
-	
-	
-	//인증키
+
+	// 인증키
 	private String authKey;
-	//인증상태
+	// 인증상태
 	private String authState;
-	
-	//소셜 연동
+
+	// 소셜 연동
 	private SnsDto snsDto;
-	
-	
-	
-	
-	@Override
-	public String toString() {
-		return "UserDto [userId=" + userId + ", userPassword=" + userPassword + ", userNickname=" + userNickname
-				+ ", userProfile=" + userProfile + ", userName=" + userName + ", userBirthday=" + userBirthday
-				+ ", userGender=" + userGender + ", userPhone=" + userPhone + ", userZipcode=" + userZipcode
-				+ ", userAddress=" + userAddress + ", userAddressDetail=" + userAddressDetail + ", userJoindate="
-				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + ", authKey="
-				+ authKey + ", authState=" + authState + ", snsDto=" + snsDto + "]";
-	}
 
 	public String getAuthState() {
 		return authState;
 	}
-
-	public void setAuthState(String authState) {
-		this.authState = authState;
-	}
-
-
 
 	public String getUserId() {
 		return userId;
@@ -163,17 +143,6 @@ public class UserDto {
 		this.userStatecode = userStatecode;
 	}
 
-	public SnsDto getSnsDto() {
-		return snsDto;
-	}
-
-	public void setSnsDto(SnsDto snsDto) {
-		this.snsDto = snsDto;
-	}
-
-
-
-
 	public String getAuthKey() {
 		return authKey;
 	}
@@ -182,6 +151,17 @@ public class UserDto {
 		this.authKey = authKey;
 	}
 
-	
+	public SnsDto getSnsDto() {
+		return snsDto;
+	}
 
+	public void setSnsDto(SnsDto snsDto) {
+		this.snsDto = snsDto;
+	}
+
+	public void setAuthState(String authState) {
+		this.authState = authState;
+	}
+
+	
 }

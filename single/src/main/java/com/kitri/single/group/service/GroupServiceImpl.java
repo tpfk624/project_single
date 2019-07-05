@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -43,36 +44,42 @@ public class GroupServiceImpl implements GroupService{
 		parameter.put("endRow", endRow + "");
 		parameter.put("startRow", startRow + "");
 		
-		return sqlSession.getMapper(GroupDao.class).getGroupList(parameter);
+		System.out.println(parameter);
+		List<GroupDto> list = sqlSession.getMapper(GroupDao.class).getGroupList(parameter);
+		System.out.println(list);
+		JSONObject jsonObject = new JSONObject();
+		JSONArray jsonArray = new JSONArray(list);
+		jsonObject.put("groupList", jsonArray);
+		return list;
 	}
 
 	@Override
 	@Transactional
-	public String getGroupDetail(int groupNum) {
+	public GroupDto getGroup(int groupNum) {
 		//그룹 정보 가져오기
 		GroupDto groupDto = sqlSession.getMapper(GroupDao.class).getGroup(groupNum);
 		
-		//해시태그 정보
-		Map<String, Integer> parameter = new HashMap<String, Integer>();
-		parameter.put("tagType", 2);
-		parameter.put("groupNum", groupNum);
-		List<String> tagList = sqlSession.getMapper(HashtagDao.class).getHashtagList(parameter);
 		
-		JSONObject jsonObject = new JSONObject();
+		if(groupDto != null) {
+			//해시태그 정보
+			Map<String, Integer> parameter = new HashMap<String, Integer>();
+			parameter.put("tagType", 2);
+			parameter.put("groupNum", groupNum);
+			List<String> tagList = sqlSession.getMapper(HashtagDao.class).getHashtagList(parameter);
+			groupDto.setHashtagList(tagList);
+			groupDto.getGroupDescription().replaceAll("\n", "<br>");
+		}
 		
-		JSONObject groupJson = new JSONObject(groupDto);
-		jsonObject.put("group", groupJson);
-		jsonObject.put("taglist", tagList);
-		
-		return jsonObject.toString();
+		return groupDto;
 	}
 
 	@Override
 	@Transactional
-	public int createGroup(GroupDto groupDto, UserDto userInfo, String groupHashtag) {
-		int groupNum = sqlSession.getMapper(GroupDao.class).selectGroupNumSeq();
+	public String createGroup(GroupDto groupDto, UserDto userInfo, String groupHashtag) {
+		GroupDao groupDao = (GroupDao)sqlSession.getMapper(GroupDao.class);
+		int groupNum = groupDao.selectGroupNumSeq();
 		groupDto.setGroupNum(groupNum);
-		groupNum = sqlSession.getMapper(GroupDao.class).insertGroup(groupDto);
+		groupNum = groupDao.insertGroup(groupDto);
 		
 		String[] hashtags = null;
 		List<String> hashtagList = new ArrayList<String>();
@@ -88,7 +95,7 @@ public class GroupServiceImpl implements GroupService{
 				hashtagDto.setHashtagContent(hashtagList.get(i));
 				hashtagDto.setHashtagTypeNum(2);
 				hashtagDto.setGroupNum(groupDto.getGroupNum());
-				sqlSession.getMapper(HashtagDao.class).insertHashtag(hashtagDto);
+				groupDao.insertHashtag(hashtagDto);
 			}
 		}
 		
@@ -96,10 +103,13 @@ public class GroupServiceImpl implements GroupService{
 		groupMemberDto.setGroupNum(groupDto.getGroupNum());
 		groupMemberDto.setUserId(userInfo.getUserId());
 		groupMemberDto.setGroupMemberStatecode("L");
+		System.out.println(groupMemberDto);
+		groupDao.insertGroupMember(groupMemberDto);
 		
-		sqlSession.getMapper(GroupDao.class).insertGroupMember(groupMemberDto);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("groupNum", (groupNum != 0 ? groupDto.getGroupNum() : 0));
 		
-		return groupNum != 0 ? groupDto.getGroupNum() : 0;
+		return jsonObject.toString();
 	}
 
 	@Override
@@ -112,6 +122,17 @@ public class GroupServiceImpl implements GroupService{
 	public void increaseGroupMemberCount() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public GroupMemberDto getGroupMember(Map<String, Object> parameter) {
+		return sqlSession.getMapper(GroupDao.class).selectGroupMember(parameter);
+	}
+
+
+	@Override
+	public int getGroupConunt(Map<String, String> parameter) {
+		return sqlSession.getMapper(GroupDao.class).getGroupConunt(parameter);
 	}
 
 }
