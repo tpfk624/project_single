@@ -60,6 +60,13 @@ public class BoardController {
 		
 	}
 	
+	// 자취생활 페이지 이동
+	@RequestMapping(value="/singlelifeboard")
+	public void singlemain(){
+	}
+	
+	
+	
 	
 	// write 페이지 이동
 	@RequestMapping(value="/write",method = RequestMethod.GET)
@@ -67,6 +74,8 @@ public class BoardController {
 		//write?bcode=${board.bcode}&pg=1&key=&word=  가지고 다녀야 하는 이유는 계속 그 게시판을 유지해야뎀 안하면 실행 안뎀.
 		//model.addAttribute("parameter", parameter);
 	}
+	
+	
 	
 	
 	@RequestMapping(value="/write",method = RequestMethod.POST)
