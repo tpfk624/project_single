@@ -11,7 +11,7 @@
 			<nav id="menu">
 				<ul class="links">
 					<li><a href="login.jsp">로그인</a></li>
-					<li><a href="${root }/mypage/mypage">마이 페이지</a></li>
+					<li><a href="${root }/mypage/groupall">마이 페이지</a></li>
 					<li><a href="${root }/board/singlemain">혼자놀아요</a></li>
 					<li><a href="elements.html">Elements</a></li>
 				</ul>
