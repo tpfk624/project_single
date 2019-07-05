@@ -41,8 +41,6 @@
 
 			</div>
 
-
-
 			<div class="overlay">
 
 				<div class="text">상세보기</div>

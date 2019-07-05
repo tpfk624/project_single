@@ -122,4 +122,40 @@ public class UserServiceImpl implements UserService {
 		return list;
 	}
 
+	@Override
+	public void leaveGroup(Map<String, String> parameter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<GroupDto> getStampGroup(Map<String, String> parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void stampDelete(Map<String, String> parameter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public UserDto userInfom(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void userModify(UserDto userDto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void userDelete(String userId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
