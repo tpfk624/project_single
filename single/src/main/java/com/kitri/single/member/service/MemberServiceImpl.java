@@ -5,6 +5,8 @@ import java.io.UnsupportedEncodingException;
 import javax.mail.MessagingException;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -35,7 +37,8 @@ public class MemberServiceImpl implements MemberService {
 	public void create(UserDto userDto) throws MessagingException, UnsupportedEncodingException {
 		// 임의의 authkey 생성
 		String authkey = new TempKey().getKey(50, false);
-
+		Logger logger= LoggerFactory.getLogger(MemberServiceImpl.class);
+		logger.info(userDto.getUserId());
 		//TODO 이메일 인증키 샛팅
 //		userDto.setAuthkey(authkey);
 //		sqlSession.getMapper(MemberDao.class).updateAuthkey(userDto);
@@ -48,14 +51,17 @@ public class MemberServiceImpl implements MemberService {
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
 				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
 				.append("<a href='http://localhost:8080/user/joinconfirm?uid=")
-				.append(userDto.getUuid())
+//				.append(userDto.getUuid())
+				.append("uuid:123451234")
 				.append("&email=")
-				.append(userDto.getUserId())
+//				.append(userDto.getUserId())
+				.append("hth0893@naver.com")
 				.append("&authkey=")
-				.append(authkey)
+//				.append(authkey)
+				.append("12sd-asd544t-5ewr4")
 				.append("' target='_blenk'>이메일 인증 확인</a>")
 				.toString());
-		sendMail.setFrom("관리자 ", "관리자명");
+		sendMail.setFrom("singlekitri@gmail.com", "태희");
 		sendMail.setTo(userDto.getUserId());
 		sendMail.send();
 	}

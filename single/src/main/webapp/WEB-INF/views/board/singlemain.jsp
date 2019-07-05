@@ -19,7 +19,23 @@
 
 <script>
 
+$(function() {
+	
+	selectPage(1, "", "");
+	
+	$(".page>.pagination>a").click(function() {
+		var page = $(this).text();
+		selectPage(page, "", "");
+	});
+});
 
+function selectPage(page, key, word ) {
+	var param = JSON.stringify({});
+	$.ajax({
+		url : "${root}/", 
+		
+	});
+} 
 
 </script>
 
@@ -168,15 +184,8 @@
 				</tr>
 			</tbody>
 		</table><hr>
-		<ul class="pagination justify-content-center">
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
-			<li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-		</ul>
+		
+		<%@ include file = "/WEB-INF/views/commons/pagination.jsp" %>
 	</div>
       
       

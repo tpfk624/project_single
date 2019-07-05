@@ -15,6 +15,7 @@ import com.kitri.single.board.dao.BoardDao;
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.common.dao.CommonDao;
 import com.kitri.single.hashtag.dao.HashtagDao;
+import com.kitri.single.hashtag.model.HashtagDto;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -42,7 +43,11 @@ public class BoardServiceImpl implements BoardService {
 		int cnthashtag = 0;
 		List<String> hashtagList = boardDto.getHashtagList();
 		for (int i = 0; i < hashtagList.size(); i++) {
-			cnthashtag = sqlSession.getMapper(HashtagDao.class).insertHashtag(hashtagList.get(i));
+			HashtagDto hashtagDto = new HashtagDto();
+			hashtagDto.setHashtagTypeNum(1);
+			hashtagDto.setHashtagContent(hashtagList.get(i));
+			hashtagDto.setBoardNum(boardDto.getBoardNum());
+			sqlSession.getMapper(HashtagDao.class).insertHashtag(hashtagDto);
 		}
 		
 		return cnt != 0? boardDto.getBoardNum() : 0;
