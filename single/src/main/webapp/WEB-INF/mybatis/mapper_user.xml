@@ -160,36 +160,7 @@
 	</select>
 	
 
-	<!-- 찜한 모임 보이기 -->
-	<select id="">
-	select 
-
-	    g.group_num groupNum
-
-		    , g.group_name as groupName
 	
-		    , g.group_description as groupDescription
-	
-		    , g.group_img_src as groupImgSrc
-	
-		    , g.group_member_count as groupMemberCount
-	
-		    , g.group_member_limit as groupMemberLimit	    
-	
-		    , g.group_main_place as groupMainPlace
-	
-		    , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
-
-		from single_group g, single_stamp p
-		
-		where g.group_num = p.group_num
-		
-		    and g.group_statecode = '1'
-		
-		    and p.user_id = #{userId}
-			
-	
-	</select>
 	 
 
 	
