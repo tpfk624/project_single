@@ -12,6 +12,9 @@ import com.kitri.single.user.model.UserDto;
 
 public interface GroupDao {
 	
+	//그룹 개수 조회
+	public int getGroupConunt(Map<String, String> parameter);
+	
 	//전체 조회
 	public List<GroupDto> getGroupList(Map<String, String> parameter);
 	
@@ -27,5 +30,9 @@ public interface GroupDao {
 	public void insertGroupMember(GroupMemberDto groupMemberDto);
 	
 	public void updateGroupMemberCount();
+	
+	
+	//그룹멤버 
+	public GroupMemberDto selectGroupMember(Map<String, Object> parameter);
 	
 }	

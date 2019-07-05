@@ -1,5 +1,7 @@
 package com.kitri.single.group.model;
 
+import java.util.List;
+
 public class GroupDto extends GroupCategoryDto{
 	
 	private int groupNum;
@@ -12,6 +14,7 @@ public class GroupDto extends GroupCategoryDto{
 	private String groupCreatedate;
 	private String groupDeletedate;
 	private int groupStatecode;
+	private List<String> hashtagList;
 	
 	public int getGroupNum() {
 		return groupNum;
@@ -74,15 +77,19 @@ public class GroupDto extends GroupCategoryDto{
 	public void setGroupMemberCount(int groupMemberCount) {
 		this.groupMemberCount = groupMemberCount;
 	}
+	public List<String> getHashtagList() {
+		return hashtagList;
+	}
+	public void setHashtagList(List<String> hashtagList) {
+		this.hashtagList = hashtagList;
+	}
 	@Override
 	public String toString() {
 		return "GroupDto [groupNum=" + groupNum + ", groupName=" + groupName + ", groupDescription=" + groupDescription
 				+ ", groupImgSrc=" + groupImgSrc + ", groupMemberLimit=" + groupMemberLimit + ", groupMemberCount="
 				+ groupMemberCount + ", groupMainPlace=" + groupMainPlace + ", groupCreatedate=" + groupCreatedate
-				+ ", groupDeletedate=" + groupDeletedate + ", groupStatecode=" + groupStatecode
-				+ ", getGroupCategoryNum()=" + getGroupCategoryNum() + ", getGroupCategoryName()="
-				+ getGroupCategoryName() + ", toString()=" + super.toString() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + "]";
+				+ ", groupDeletedate=" + groupDeletedate + ", groupStatecode=" + groupStatecode + ", hashtagList="
+				+ hashtagList + ", getGroupCategoryNum()=" + getGroupCategoryNum() + ", getGroupCategoryName()="
+				+ getGroupCategoryName() + "]";
 	}
-	
 }

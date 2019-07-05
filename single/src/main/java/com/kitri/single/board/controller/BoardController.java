@@ -12,9 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.board.model.ReplyDto;
@@ -59,15 +61,11 @@ public class BoardController {
 	}
 	
 	
+	// write 페이지 이동
 	@RequestMapping(value="/write",method = RequestMethod.GET)
 	public void write(@RequestParam Map<String, String> parameter, Model model){
 		//write?bcode=${board.bcode}&pg=1&key=&word=  가지고 다녀야 하는 이유는 계속 그 게시판을 유지해야뎀 안하면 실행 안뎀.
-		//System.out.println("writepage로 가는중");
-
-		model.addAttribute("parameter", parameter);
-		
-		
-		
+		//model.addAttribute("parameter", parameter);
 	}
 	
 	
@@ -111,9 +109,9 @@ public class BoardController {
 			for(int i=0 ; i<hashtags.length ; i++) {
 				
 				hashtagList.add(hashtags[i]);
-				System.out.println(hashtags[i]);
+				//System.out.println(hashtags[i]);
 				
-			}//#해시태그 조아조아   #fsfkjdkfjshfd
+			}
 
 			boardDto.setHashtagList(hashtagList);
 			
@@ -167,8 +165,15 @@ public class BoardController {
 
 	}
 	
-	
-	
+	@RequestMapping(method = RequestMethod.GET)
+	public String newList(@RequestParam Map<String, Object> params) {
+		
+		System.out.println("들어왔는가");
+		
+		
+		
+		return "";
+	}
 	
 	
 	
