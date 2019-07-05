@@ -24,7 +24,6 @@ $(document).ready(function(){
 	$('.emailAuthBtn').click(function() {
 		$('.emailAuthForm').attr("action", "${root}/member/joinpost").submit();
 	});
-	
 });
 </script>
 <%@ include file= "login.jsp"%> 
