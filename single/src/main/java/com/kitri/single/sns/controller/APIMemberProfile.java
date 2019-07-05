@@ -7,7 +7,7 @@ import java.net.URL;
 
 public class APIMemberProfile {
 	public static final  String CLIENT_ID= "3FGMY2V_UXaBQxS0sx0g";
-	public static final  String REDIRECT_URL="http://192.168.14.22/single/member/callback.jsp";
+	public static final  String REDIRECT_URL="http://localhost/single/member/callback.jsp";
 	public String getMemberProfile(String token) {
 	     String header = "Bearer " + token; // Bearer 다음에 공백 추가
 	     String result ="";
