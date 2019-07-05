@@ -19,10 +19,28 @@ public class UserDto {
 	private String userOutdate;
 	private String userStatecode;
 	
-	private String uuid;
-	private String authState;
-
 	
+	//인증키
+	private String authKey;
+	//인증상태
+	private String authState;
+	
+	//소셜 연동
+	private SnsDto snsDto;
+	
+	
+	
+	
+	@Override
+	public String toString() {
+		return "UserDto [userId=" + userId + ", userPassword=" + userPassword + ", userNickname=" + userNickname
+				+ ", userProfile=" + userProfile + ", userName=" + userName + ", userBirthday=" + userBirthday
+				+ ", userGender=" + userGender + ", userPhone=" + userPhone + ", userZipcode=" + userZipcode
+				+ ", userAddress=" + userAddress + ", userAddressDetail=" + userAddressDetail + ", userJoindate="
+				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + ", authKey="
+				+ authKey + ", authState=" + authState + ", snsDto=" + snsDto + "]";
+	}
+
 	public String getAuthState() {
 		return authState;
 	}
@@ -31,15 +49,7 @@ public class UserDto {
 		this.authState = authState;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	private SnsDto snsDto;
 
 	public String getUserId() {
 		return userId;
@@ -161,22 +171,17 @@ public class UserDto {
 		this.snsDto = snsDto;
 	}
 
-	@Override
-	public String toString() {
-		return "UserDto [userId=" + userId + ", userPassword=" + userPassword + ", userNickname=" + userNickname
-				+ ", userProfile=" + userProfile + ", userName=" + userName + ", userBirthday=" + userBirthday
-				+ ", userGender=" + userGender + ", userPhone=" + userPhone + ", userZipcode=" + userZipcode
-				+ ", userAddress=" + userAddress + ", userAddressDetail=" + userAddressDetail + ", userJoindate="
-				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + ", snsDto="
-				+ snsDto + "]";
+
+
+
+	public String getAuthKey() {
+		return authKey;
 	}
 
-	public void setAuthkey(String authkey) {
-		
+	public void setAuthKey(String authKey) {
+		this.authKey = authKey;
 	}
 
-	
-	
 	
 
 }
