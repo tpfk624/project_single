@@ -178,7 +178,9 @@
 			</ul>
 		</div>
 		<div class="col-lg-2">
-			<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">글작성</button>
+			<a href="${root}/board/write">
+				<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">글작성</button>
+			</a>
 		</div>
     </div> 
       
