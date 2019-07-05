@@ -196,13 +196,14 @@ function selectPage(page, key, word ) {
 		</table><hr>
 		
 		
+		
 		<!-- 페이징 처리 -->
 		<%-- <div class="row">
 				<div class="col-lg-2">
 
 					<c:if test="${ap.startPage > 1 }">
-						<span class="page"> <a href="${ap.startPage - 1}"><button
-									class="btn btn-success">이전</button></a>
+						<span class="page"> 
+							<a href="${ap.startPage - 1}">&laquo;</a>
 						</span>
 					</c:if>
 				</div>
@@ -217,12 +218,19 @@ function selectPage(page, key, word ) {
 							<c:choose>
 
 								<c:when test="${ap.currentPage == i}">
-									<li class="page-item"><span><a class="page-link">${i}</a></span></li>
+									<li class="page-item">
+										<span>
+											<a class="page-link">${i}</a>
+										</span>
+									</li>
 								</c:when>
 
 								<c:otherwise>
-									<li class="page-item"><span class="page"><a
-											class="page-link" href="${i}">${i}</a></span></li>
+									<li class="page-item">
+										<span class="page">
+											<a class="page-link" href="${i}">${i}</a>
+										</span>
+									</li>
 								</c:otherwise>
 
 							</c:choose>
@@ -235,12 +243,14 @@ function selectPage(page, key, word ) {
 
 				<div class="col-lg-2">
 					<c:if test="${ap.totalPage > ap.endPage }">
-						<span class="page"> <a href="${ap.endPage+1}"><button
-									class="btn btn-success">다음</button></a>
+						<span class="page"> 
+							<a href="${ap.endPage+1}">&raquo;
+							</a>
 						</span>
 					</c:if>
 				</div>
 			</div> --%>
+			
 		<%@ include file = "/WEB-INF/views/commons/pagination.jsp" %>
 	</div>
       
@@ -253,7 +263,7 @@ function selectPage(page, key, word ) {
 	<div class="col-lg-2 mb-4" align="center"><br>
 		<div class="list-group">
 			<a href="index.html" class="list-group-item">메인</a>
-			<a href="about.html" class="list-group-item">자취생활 팁</a>
+			<a href="${root }/board/singlelifeboard" class="list-group-item">자취생활 팁</a>
 			<a href="services.html" class="list-group-item">요리 레시피</a>
 			<a href="contact.html" class="list-group-item">명예의 전당</a>
 		</div>
