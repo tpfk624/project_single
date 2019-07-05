@@ -56,9 +56,9 @@ public class MemberController {
 	public String logout(SessionStatus status, HttpServletRequest request, HttpSession session) {
 		String oldUrl = request.getHeader("referred");
 		logger.info(oldUrl);
-		status.setComplete();
-//		session.removeAttribute("userInfo");
-		return oldUrl;
+//		status.setComplete();
+		session.removeAttribute("userInfo");
+		return "member/naverlogintest";
 	}
 
 	// 인증 메일 전달
