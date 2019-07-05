@@ -110,6 +110,7 @@
 	    group_num
 	    , user_id
 	    , group_member_statecode
+	    , group_joindate
 	)values(
 	    #{groupNum}
 	    , #{userId}
