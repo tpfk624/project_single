@@ -177,7 +177,9 @@ public class BoardController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String newList(@RequestParam Map<String, Object> params) {
 		
-		System.out.println("들어왔는가");
+		int cp = (int)params.get("page");
+		
+		System.out.println(cp);
 		
 		
 		

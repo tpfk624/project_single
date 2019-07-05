@@ -26,6 +26,20 @@
 	
 	
 	
+	<!-- <select id="">
+	select *
+	from (
+	    select rownum rn, a.*
+	    from(
+	    select board_num, board_list_num, user_id, user_nickname, board_subject, board_content, board_views,
+	        board_like, board_createdate, board_updatedate, board_deletedate, board_statecode
+	    from single_board
+	    order by board_createdate desc
+	    ) a
+	    where rownum < 10
+	    )
+	where rn > 1
+	</select> -->	
 		
 	
 	
