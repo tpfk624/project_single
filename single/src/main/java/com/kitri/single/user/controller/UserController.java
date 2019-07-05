@@ -63,7 +63,11 @@ public class UserController {
 	// 로그
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	// 첫페이지용
+	
+	//////////////////////////////////모임관리 페이지////////////////////////////////////////////////
+	
+	
+	// 모임 관리 첫페이지용 
 	@RequestMapping(value = "/groupall", method = RequestMethod.GET)
 
 	public String groupall(Model model, HttpSession session) {
@@ -115,6 +119,8 @@ public class UserController {
 		return "/mypage/groupresult" ;
 	}
 
+	
+	//모임리더 	
 	@RequestMapping(value = "/groupleader", method = RequestMethod.GET)
 	@ResponseBody
 	public String groupreader(Model model, HttpSession session) {
@@ -145,7 +151,7 @@ public class UserController {
 	
 	
 	
-
+	//모임멤버
 	@RequestMapping(value = "/groupmember", method = RequestMethod.GET)
 	@ResponseBody
 	public String groupmember(Model model, HttpSession session) {
@@ -184,76 +190,62 @@ public class UserController {
 
 	}
 
-	/////////////// 마이페이지 수정부분////////////////////////
-
+	
+	//////////////////////////////////찜한 모임관리 페이지////////////////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	//////////////////////////////////내정보 수정 페이지////////////////////////////////////////////////
+	
 	@RequestMapping("/mypage")
-
 	public void home(Model model, HttpSession session) {
-
 		System.out.println("home 들어옴");
-
 		// 여기에다가 서비스통해서 userdto를 db에담고 그걸 모델에 담아서 select 홈안에 모델메개변수 잡아주기
-
 		// 모델안에 애드어트리뷰트 하고 화면단에뿌려주기
-
+		
 		String path = "";
-
 		UserDto userDto = (UserDto) session.getAttribute("userinfo");
 
 		/* model.addAttribute("userDto", userService.viewUser(session)); */
-
 		model.addAttribute("article", userDto);
 
 	}
 
+	
+	
 	// 수정
-
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-
 	public String modify(UserDto userDto, @SessionAttribute("userInfo") UserDto userInfo,
-
 			@RequestParam("imgdata") MultipartFile multipartFile) { // 사진정보 파일을 받음
 
 		System.out.println(userDto);
-
 		System.out.println(multipartFile);
-
 		System.out.println("여기까지 들어오니");
-
 		if (multipartFile != null && !multipartFile.isEmpty()) {
-
 			String realPath = servletContext.getRealPath("");
-
 			System.out.println(realPath);
-
 			String src = "";
-
 			try {
-
 				src = Utill.profileUpload(multipartFile, "user", realPath, servletContext.getContextPath());
-
 			} catch (IllegalStateException e) {
-
-				// TODO Auto-generated catch block
-
 				e.printStackTrace();
-
 			} catch (IOException e) {
-
-				// TODO Auto-generated catch block
-
 				e.printStackTrace();
-
 			}
-
 			userDto.setUserProfile(src);// 경로값
-
 			System.out.println(userDto);
-
 		}
-
 		return null;
-
 	}
-
 }
+
+
+
+
+
+
+
