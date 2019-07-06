@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kitri.single.board.dao.BoardDao;
 import com.kitri.single.board.model.BoardDto;
+import com.kitri.single.board.model.BoardPageDto;
 import com.kitri.single.common.dao.CommonDao;
 import com.kitri.single.hashtag.dao.HashtagDao;
 import com.kitri.single.hashtag.model.HashtagDto;
@@ -33,11 +34,13 @@ public class BoardServiceImpl implements BoardService {
 		
 		// boardNum로 글번호 증가( 시퀀스 글번호를 증가시키고 그 글번호를 가져옴 )
 		// select 값을 저절로 반환 됨.
+		
 		int boardNum = sqlSession.getMapper(CommonDao.class).getNextSeq();
 		
 		// 글번호 증가한것을 dto에 추가해주고 글 작성
 		boardDto.setBoardNum(boardNum);
-		int cnt = sqlSession.getMapper(BoardDao.class).writeArticle(boardDto);
+		BoardDao boardDao = (BoardDao)sqlSession.getMapper(BoardDao.class);
+		int cnt = boardDao.writeArticle(boardDto);
 		
 		// 해쉬태그 DB Insert
 		int cnthashtag = 0;
@@ -47,7 +50,7 @@ public class BoardServiceImpl implements BoardService {
 			hashtagDto.setHashtagTypeNum(1);
 			hashtagDto.setHashtagContent(hashtagList.get(i));
 			hashtagDto.setBoardNum(boardDto.getBoardNum());
-			sqlSession.getMapper(HashtagDao.class).insertHashtag(hashtagDto);
+			boardDao.insertHashtag(hashtagDto);
 		}
 		
 		return cnt != 0? boardDto.getBoardNum() : 0;
@@ -77,7 +80,25 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	
-	
+	// 메인페이지 페이징 처리
+	public BoardPageDto selectNewList(int currentPage) {
+		
+		int totalcnt = sqlSession.getMapper(BoardDao.class).totalPage();
+		//System.out.println(totalcnt);
+		
+		int cntPerPage = 7; // 페이지별 보여줄 목록수
+		int cntPerPageGroup = 5;
+		
+		BoardPageDto bP = new BoardPageDto(cntPerPage, totalcnt, cntPerPageGroup, currentPage);
+		//System.out.println(bP);
+		
+		List<BoardDto> list = sqlSession.getMapper(BoardDao.class).findByRows(bP);
+		//System.out.println(list.toString());
+		
+		bP.setList(list);
+		
+		return bP;
+	}
 	
 	
 

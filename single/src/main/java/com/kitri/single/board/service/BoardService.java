@@ -1,9 +1,8 @@
 package com.kitri.single.board.service;
 
 
-import java.util.List;
-
 import com.kitri.single.board.model.BoardDto;
+import com.kitri.single.board.model.BoardPageDto;
 
 
 
@@ -15,6 +14,7 @@ public interface BoardService {
 	// viewDetail
 	BoardDto viewArticle(int boardNum);
 	
-	// viewMain 오늘의 새글
+	// selectNewList 오늘의 새글
+	BoardPageDto selectNewList(int cp);
 	
 }
