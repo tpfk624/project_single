@@ -30,7 +30,11 @@
 			<div class="col-lg-3"><h5>자취생활 팁 공유</h5></div>
 			<div class="col-lg-9"></div>
 		</div>
-	    <div class="container" style=" border: 1px solid #444444;"><br><br>  
+		
+		
+		
+		
+	    <div class="container" style=" border: 4px solid #444444;"><br><br>  
       
       
       

@@ -30,7 +30,10 @@
 	</select>
 	
 	
+	
+	<!-- <(오른쪽이 더 큰 표시)를 쓰려면 &lt; 표시로 써야함. -->
 	<select id="findByRows" parameterType="boardPageDto" resultType="boardDto" >
+	<![CDATA[
 	select *
 	from (
 	    select rownum rn, a.*
@@ -45,11 +48,27 @@
 		    from single_board
 		    order by board_createdate desc
 		    ) a
-	    where rownum &lt; #{endRow}
+	    where rownum <= #{endRow}
 	    ) 
-	where rn > #{startRow}
+	where rn >= #{startRow}
+	]]>
 	</select>
 	
+	
+	<select id="weekList" resultType="boardDto">
+	<![CDATA[
+	select rownum, board.*
+	from (select board_num boardNum, board_list_num boardListNum, user_id userId, 
+	                user_nickname userNickname, board_subject boardSubject, 
+	                board_content boardContent, board_views boardViews, board_like boardLike,
+	                board_createDate boardCreatedate, 
+	                board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
+	                board_statecode boardStatecode
+	    from single_board
+	    order by board_like desc, boardCreatedate desc) board
+	where rownum <= 5
+	]]>
+	</select>
 	
 		
 	

@@ -28,6 +28,9 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	
+	
+	// 글쓰기 ----------------------------------------------------------------
 	@Override
 	@Transactional
 	public int writeArticle(BoardDto boardDto) {
@@ -57,6 +60,8 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 	
+	
+	// 상세글보기 ----------------------------------------------------------------
 	@Override
 //	@Transactional //알아서 트랜잭션해줌 root에서 관리.
 	public BoardDto viewArticle(int boardNum) {
@@ -80,25 +85,38 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	
-	// 메인페이지 페이징 처리
+	// 메인페이지 페이징 처리 ----------------------------------------------------------------
 	public BoardPageDto selectNewList(int currentPage) {
 		
 		int totalcnt = sqlSession.getMapper(BoardDao.class).totalPage();
 		//System.out.println(totalcnt);
 		
-		int cntPerPage = 7; // 페이지별 보여줄 목록수
+		int cntPerPage = 5; // 페이지별 보여줄 목록수
 		int cntPerPageGroup = 5;
 		
-		BoardPageDto bP = new BoardPageDto(cntPerPage, totalcnt, cntPerPageGroup, currentPage);
+		BoardPageDto bp = new BoardPageDto(cntPerPage, totalcnt, cntPerPageGroup, currentPage);
 		//System.out.println(bP);
 		
-		List<BoardDto> list = sqlSession.getMapper(BoardDao.class).findByRows(bP);
+		List<BoardDto> list = sqlSession.getMapper(BoardDao.class).findByRows(bp);
 		//System.out.println(list.toString());
 		
-		bP.setList(list);
+		bp.setList(list);
 		
-		return bP;
+		
+		return bp;
 	}
+	
+	
+	
+	
+	// 메인 이주의 추천순 ----------------------------------------------------------------
+	public List<BoardDto> weekList() {
+		
+		List<BoardDto> boardDtoList = sqlSession.getMapper(BoardDao.class).weekList();
+		
+		return boardDtoList;
+	}
+	
 	
 	
 

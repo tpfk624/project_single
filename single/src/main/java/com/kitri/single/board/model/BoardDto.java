@@ -17,15 +17,15 @@ public class BoardDto {
 	private String boardDeletedate;
 	private String boardStatecode;
 	private List<String> hashtagList;
-	private List<BoardDto> boardDto;
+	private List<BoardDto> list;
 	
 	
 	
-	public List<BoardDto> getBoardDto() {
-		return boardDto;
+	public List<BoardDto> getList() {
+		return list;
 	}
-	public void setBoardDto(List<BoardDto> boardDto) {
-		this.boardDto = boardDto;
+	public void setList(List<BoardDto> list) {
+		this.list = list;
 	}
 	public int getBoardLike() {
 		return boardLike;
@@ -116,7 +116,7 @@ public class BoardDto {
 				+ ", userNickname=" + userNickname + ", boardSubject=" + boardSubject + ", boardContent=" + boardContent
 				+ ", boardViews=" + boardViews + ", boardLike=" + boardLike + ", boardCreatedate=" + boardCreatedate
 				+ ", boardUpdatedate=" + boardUpdatedate + ", boardDeletedate=" + boardDeletedate + ", boardStatecode="
-				+ boardStatecode + ", hashtagList=" + hashtagList + ", boardDto=" + boardDto + "]";
+				+ boardStatecode + ", hashtagList=" + hashtagList + ", list=" + list + "]";
 	}
 	
 	

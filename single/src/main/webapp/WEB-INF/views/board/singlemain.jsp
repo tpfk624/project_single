@@ -30,8 +30,8 @@ $(function() {
 	
 	selectPage(1, "", "");
 	
-	$(".page>.pagination>a").click(function() {
-		var page = $(this).attr("href");
+	$(".page").click(function() {
+		var page = $(this).val();
 		selectPage(page, "", "");
 	});
 });
@@ -47,10 +47,12 @@ function selectPage(page, key, word ) {
 			,'word':word
 		},
 		success : function(response) {
-			/* $(".container").html-<>res */
+			$(".paging").html(response.trim());
 		}
 	});
 } 
+
+
 
 </script>
 
@@ -139,31 +141,24 @@ function selectPage(page, key, word ) {
 					<th>제목</th>
 					<th>닉네임</th>
 				</tr>
+				<!-- 처음부터 List로 가져왔기 때문에 weekList만 씀. -->
+				<!-- BoardDto로 가져온거면 weekList.list(Dto변수 이름)가져와야뎀. -->
+				<c:forEach var="weekList" items="${weekList }">
 				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
+					<c:if test="${weekList.boardListNum == 1 }">
+						<td>자취생활팁</td>
+					</c:if>
+					<c:if test="${weekList.boardListNum == 2 }">
+						<td>요리레시피</td>
+					</c:if>
+					<c:if test="${weekList.boardListNum == 3 }">
+						<td>명예의전당</td>
+					</c:if>
+					
+					<td>${weekList.boardSubject }</td>
+					<td>${weekList.userNickname }</td>
 				</tr>
-				<tr>
-					<td>Mary</td>
-					<td>Moe</td>
-					<td>mary@example.com</td>
-				</tr>
-				<tr>
-					<td>July</td>
-					<td>Dooley</td>
-					<td>july@example.com</td>
-				</tr>
-				<tr>
-					<td>July</td>
-					<td>Dooley</td>
-					<td>july@example.com</td>
-				</tr>
-				<tr>
-					<td>July</td>
-					<td>Dooley</td>
-					<td>july@example.com</td>
-				</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div><hr> 
@@ -181,90 +176,12 @@ function selectPage(page, key, word ) {
 	</div> 
 	  
 	<div class="container">
-		<table class="table">
-			<thead>
-				<tr>
-					 <th width="17%">카테고리</th>
-					 <th width="33%">제목</th>
-					 <th width="33%">작성자</th>
-					 <th width="17%">작성일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>카테고리 이름</td>
-					<td><label class="contentDetail">맛나는 라면</label></td>
-					<td>john@example.com</td>
-					<td>2019-06-25</td>
-				</tr>
-			</tbody>
-		</table><hr>
 		
-		
-		
-		
-		
-		
-		<!-- 페이징 처리 -->
-		<div class="row">
 			
-			<div class="col-lg-2">
-				<c:if test="${bp.startPage > 1 }">
-					<span class="page"> 
-						<a href="${bp.startPage - 1}">
-							<button class="btn btn-success">이전</button>
-						</a>
-					</span>
-				</c:if>
-			</div>
-
-			<div class="col-lg-2"></div>
-
-			<div class="col-lg-4">
-				<ul class="pagination" style="width: 240px; margin-left: auto; margin-right: auto;">
-
-					<c:forEach begin="${bp.startPage}" end="${bp.endPage}" var="i">
-						<c:choose>
-
-							<c:when test="${bp.currentPage == i}">
-								<li class="page-item">
-									<span>
-										<a class="page-link">${i}</a>
-									</span>
-								</li>
-							</c:when>
-
-							<c:otherwise>
-								<li class="page-item">
-									<span class="page">
-										<a class="page-link" href="${i}">${i}</a>
-									</span>
-								</li>
-							</c:otherwise>
-
-						</c:choose>
-					</c:forEach>
-
-				</ul>
-			</div>
-
-			<div class="col-lg-2"></div>
-
-			<div class="col-lg-2">
-
-				<c:if test="${bp.totalPage > bp.endPage }">
-					<span class="page"> 
-						<a href="${bp.endPage+1}">
-							<button class="btn btn-success">다음</button>
-						</a>
-					</span>
-				</c:if>
-
-			</div>
-		</div>
-		
-		<%-- <%@ include file = "/WEB-INF/views/commons/pagination.jsp" %> --%>
-	
+			
+		<!-- 새글 목록,페이징 처리 -->
+		<div class="paging">	
+		</div> <!-- 페이징처리 -->
 	
 	
 	
@@ -278,9 +195,9 @@ function selectPage(page, key, word ) {
 	<!-- Sidebar Column -->
 	<div class="col-lg-2 mb-4" align="center"><br>
 		<div class="list-group">
-			<a href="index.html" class="list-group-item">메인</a>
+			<a href="${root }/index.jsp" class="list-group-item">메인</a>
 			<a href="${root }/board/singlelifeboard" class="list-group-item">자취생활 팁</a>
-			<a href="services.html" class="list-group-item">요리 레시피</a>
+			<a href="${root }/board/singlecookboard" class="list-group-item">요리 레시피</a>
 			<a href="contact.html" class="list-group-item">명예의 전당</a>
 		</div>
 	</div>
