@@ -36,27 +36,27 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	@Transactional
-	public void sendAuthMail(String email) throws MessagingException, UnsupportedEncodingException {
+	public UserDto sendAuthMail(UserDto userDto) throws MessagingException, UnsupportedEncodingException {
 		// 임의의 authkey 생성
 		String authkey = new TempKey().getKey(50, false);
-		
-		logger.info("email"+ email);
-		UserDto userDto = sqlSession.getMapper(MemberDao.class).getUser(email.trim());
-		
+		String email =userDto.getUserId();
+		logger.info("email: "+ email);
+//		System.out.println(">>>>>>> parameter userDto  주소:" +userDto); 
+		userDto = sqlSession.getMapper(MemberDao.class).getUser(email.trim());
+//		System.out.println(">>>>>>> sqlsession userDto  주소:" +userDto); sqlSession으로 값을 얻어오면 주소가 바뀐다.
 		if(userDto == null) {
-			logger.debug("유저의 인증키를 생성합니다.");
+			logger.info(" >>>> 유저의 인증키를 생성합니다.");
 			userDto = new UserDto();
 			userDto.setUserId(email);
 			userDto.setAuthKey(authkey);
 			userDto.setAuthState("0");
 			sqlSession.getMapper(MemberDao.class).createAuthkey(userDto);
 		}else {
-			logger.debug("userEamil :"+ userDto.getUserId());
-			logger.debug("usertoString :"+ userDto.toString());
-			logger.debug("유저의 인증키를 변경합니다.");
+			logger.info("userEamil :"+ userDto.getUserId());
+			logger.info("usertoString :"+ userDto.toString());
+			logger.info(">>>> 유저의 인증키를 변경합니다.");
 			userDto.setAuthKey(authkey);
 			sqlSession.getMapper(MemberDao.class).updateAuthkey(userDto);
-			
 		}
 		
 		// mail 작성 생성
@@ -64,15 +64,17 @@ public class MemberServiceImpl implements MemberService {
 		sendMail.setSubject("[Hoon's Board v2.0] 회원가입 이메일 인증");
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
 				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-				.append("<a href='http://localhost/single/member/joinconfirm?email=")
+				.append("<a href='http://localhost/single/member/authconfirm?email=")
 				.append(userDto.getUserId())
 				.append("&authKey=")
 				.append(authkey)
 				.append("' target='_blenk'>이메일 인증 확인</a>")
+//				.append("인증키:" + userDto.getAuthKey())
 				.toString());
 		sendMail.setFrom("singlekitri@gmail.com", "우리혼자산다");
 		sendMail.setTo(userDto.getUserId());
 		sendMail.send();
+		return userDto;
 	}
 
 	@Override

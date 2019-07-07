@@ -9,9 +9,11 @@ import com.kitri.single.user.model.UserDto;
 public interface MemberService {
 	void regist(UserDto userDto);
 
-	void sendAuthMail(String eamil) throws MessagingException, UnsupportedEncodingException;
+	UserDto sendAuthMail(UserDto userDto) throws MessagingException, UnsupportedEncodingException;
 
 	void updateAuthstatus(UserDto userDto);
+
+
 
 
 

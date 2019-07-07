@@ -85,22 +85,11 @@ public class NaverMemberController {
 			userDto.setUserBirthday(userBirthday);
 			userDto.setUserProfile(userProfile_image);
 			userDto.setSnsDto(snsDto);
-//			snsDto.setUserId(id);
-//			snsDto.setSnsName(userName);
-//			snsDto.setSnsNickname(nickname);
-//			snsDto.setSnsGender(gender);
-//			snsDto.setSnsBirthday(birthday);
-//			snsDto.setSnsProfile(profile_image);
-			
-			
-			
-			//DB에 입력
-//			int result = loginService.registerUser(naverUserDto);
-//			logger.info("regitser result cnt : " + result);
+
 			model.addAttribute("userInfo", userDto);
 			
 			// 회원가입, 소셜 연동 창으로 이동 
-			return "member/register";
+			return "member/register/register";
 		}else {
 			
 		}

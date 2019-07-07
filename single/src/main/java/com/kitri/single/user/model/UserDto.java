@@ -163,5 +163,17 @@ public class UserDto {
 		this.authState = authState;
 	}
 
+	@Override
+	public String toString() {
+		
+		return "객체의주소: "+super.toString()
+				+ "\nUserDto [userId=" + userId + ", userPassword=" + userPassword + ", userNickname=" + userNickname
+				+ ", userProfile=" + userProfile + ", userName=" + userName + ", userBirthday=" + userBirthday
+				+ ", userGender=" + userGender + ", userPhone=" + userPhone + ", userZipcode=" + userZipcode
+				+ ", userAddress=" + userAddress + ", userAddressDetail=" + userAddressDetail + ", userJoindate="
+				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + ", authKey="
+				+ authKey + ", authState=" + authState + ", snsDto=" + snsDto + "]";
+	}
+
 	
 }

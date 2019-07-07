@@ -1,4 +1,4 @@
-package com.kitri.single.sns.service;
+package com.kitri.single.member.service;
 
 import java.io.UnsupportedEncodingException;
 

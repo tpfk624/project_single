@@ -5,14 +5,30 @@
 
 <mapper namespace="com.kitri.single.member.dao.MemberDao">
 
-	<insert id="regist" parameterType="userDto">
-	insert into single_user (user_id, user_password, user_nickname, user_name, user_profile, user_birthday
-                        ,user_gender, user_phone, user_zipcode,user_address, user_addressdetail, user_joindate, user_outdate, user_statecode
-                        ,auth_key, auth_state)
-	values(#{userId}, #{userPassword},#{userNickname},#{userName},#{userProfile},to_date(#{userBirthday},'MMDDYYYY')
-                        ,#{userGender},#{userPhone},#{userZipcode},#{userAddress},#{userAddressDetail},#{userJoindate},#{userOutdate},#{userStatecode}
-                        ,#{authKey}, #{authState})		
-	</insert>
+	<update id="regist" parameterType="userDto">
+<!-- 	insert into single_user (user_id, user_password, user_nickname, user_name, user_profile, user_birthday -->
+<!--                         ,user_gender, user_phone, user_zipcode,user_address, user_addressdetail, user_joindate, user_outdate, user_statecode -->
+<!--                         ,auth_key, auth_state) -->
+<!-- 	values(#{userId}, #{userPassword},#{userNickname},#{userName},#{userProfile},to_date(#{userBirthday},'MMDDYYYY') -->
+<!--                         ,#{userGender},#{userPhone},#{userZipcode},#{userAddress},#{userAddressDetail},#{userJoindate},#{userOutdate},#{userStatecode} -->
+<!--                         ,#{authKey}, #{authState}) -->
+	update single_user 
+	set user_password = #{userPassword}, 
+		user_nickname = #{userNickname},
+		user_profile = #{userProfile},
+		user_name = #{userName},
+		user_birthday = to_date(#{userBirthday},'MMDDYYYY'),
+		user_gender = #{userGender},
+		user_phone = #{userPhone},
+		user_zipcode = #{userZipcode},
+		user_address = #{userAddress},
+		user_addressdetail = #{userAddressDetail},
+		user_joindate = #{userJoindate},
+		user_outdate = #{userOutdate},
+		user_statecode = #{userStatecode}
+	where user_id = #{userId}	
+	</update>
+	
 	
 
 	<select id="createAuthkey" parameterType="userDto">

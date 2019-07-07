@@ -3943,7 +3943,7 @@
          transition-delay: 1.25s;
          content: '';
          display: block;
-         background-image: url('back.jpg');
+/*          background-image: url('back.jpg'); */
          /* background-color: #000; */
          height: 100%;
          left: 0;
