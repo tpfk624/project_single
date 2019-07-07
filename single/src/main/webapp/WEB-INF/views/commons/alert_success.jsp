@@ -14,21 +14,13 @@
  - $("#alertSuccess .modal-footer button").click();
 
  --%>
-<script>
-function showSuccessAlertModal(title, body, footer) {
-	//아짓 footer는 고려안함..
-	$("#alertSuccess .modal-title").html(title);
-	$("#alertSuccess .modal-body>p").html(body);
-	$("#alertSuccess").modal("show");
-}
-</script>
 <style>
 #alertSuccess .modal-dialog{
 	margin-top: 15%;
 }
 </style>
 <!-- 성공창 -->
-<div class="modal fade" id="alertSuccess" role="dialog">
+<div class="modal fade modal-alert" id="alertSuccess" role="dialog" style="z-index: 10000">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
@@ -45,3 +37,16 @@ function showSuccessAlertModal(title, body, footer) {
 		</div>
 	</div>
 </div>
+<script>
+function showSuccessAlertModal(title, body, footer) {
+	//아짓 footer는 고려안함..
+	$("#alertSuccess .modal-title").html(title);
+	$("#alertSuccess .modal-body>p").html(body);
+	$("#alertSuccess").modal("show");
+}
+
+$("#alertSuccess button[name=alertOK]").click(function () {
+	$("#alert").modal("hide");
+});
+
+</script>

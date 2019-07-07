@@ -6,6 +6,7 @@
 <c:set var="groupMember" value="${requestScope.groupMember}"></c:set>
 <c:set var="group" value="${requestScope.group}"></c:set>
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
+<script src="${root}/resources/js/group/group.js"></script>
 
 <style>
 /* 페이지에 유지할 부분*/
@@ -13,6 +14,7 @@
 </style>
 <script>
 $(function() {
+	//그룹 nav 관련 
 	var navbar = $("#navbar");
 	var sticky = navbar.offset().top;
 	$(window).scroll(function() {
@@ -24,11 +26,33 @@ $(function() {
 		}
 	});
 	
-	$(".group-navbar a").click(function() {
+	$("#navbar .group-navbar-item").click(function() {
 		$(this).addClass("active");
 		$(this).siblings().removeClass("active");
 	});
+	
+	$("#navbar .grouppage").click(function() {
+		var data = {
+			groupNum : "${group.groupNum}"
+			, type : $(this).attr("data-page")
+		};
+		var url = "${root}/group/grouppage";
+		var viewChange = function(result){
+			$("#groupmain").remove();
+			$("div[role=calendar]").remove();
+			$("#contents>.container").append(result);
+			//$("#groupmain").html(result);
+		}
+		
+		ajaxPage(data, url, viewChange);
+		
+		return false;
+	
+	});
+	//그룹 nav 관련 끝 
 });
+
+
 </script>
 
 <header class="group-header">
@@ -60,19 +84,19 @@ $(function() {
 	</div>
 </header>
 
-<section class="contents">
+<section class="contents" id="contents">
 	<div class="container col-lg-9 col-md-9 col-sm-9 whitespace">
 	
 	<div id="navbar" class="group-navbar">
-	  	<a class="group-navbar-item active">모임메인</a>
+	  	<a class="group-navbar-item active grouppage" data-page="main">모임메인</a>
 	  	<a class="group-navbar-item">모임과제</a>
 	  	<a class="group-navbar-item">모임원 중심점 찾기</a>
 	  	<c:if test="${groupMember.groupMemberStatecode == 'L'}">
-	  	<a class="group-navbar-item">모임설정변경</a>
+	  	<a class="group-navbar-item grouppage" data-page="modify">모임설정변경</a>
 	  	<a class="group-navbar-item">모임원관리</a>
 	  	</c:if>
 	</div>
-	<div class="groupmain">		
+	<div class="groupmain" id="groupmain">		
 		<!-- 모임 이름 뿌져지는 곳 -->
 		<section class="groupsection groupheader">
 			<div class="row center">

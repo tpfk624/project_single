@@ -3,13 +3,13 @@
 <script>
 function groupDetailModalSetting(json) {
 	var group = json.group;
-	//console.log(group);
 	$("#groupDetailModal .card-body .card-title").text(group.groupName);
 	$("#groupDetailModal .card-body .groupDescription").text(group.groupDescription);
 	$("#groupDetailModal .card-body .groupCategoryName").text("카테고리 : " + group.groupCategoryName);
 	$("#groupDetailModal .card-body .groupMember").text("인원 : " + group.groupMemberCount + " / " + group.groupMemberLimit);
 	$("#groupDetailModal .card-body .groupMainPlace").text("주요장소 : " + group.groupMainPlace);
 	$("#groupDetailModal .modal-body .card-img-top").attr("src", group.groupImgSrc);
+	$("#groupDetailModal .modal-footer").attr("data-num", group.groupNum);
 	var tag = json.taglist;
 	var tagStr = "";
 	for(var i=0; i<tag.length ; i++){
@@ -18,11 +18,6 @@ function groupDetailModalSetting(json) {
 	$("#groupDetailModal .card-body .taglist").html(tagStr);
 	$("#groupDetailModal .modal-footer .btn-primary").attr("data-num", group.groupNum);
 }
-
-$(function() {
-	
-});
-
 </script>
 <div id="groupDetailModal" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -49,10 +44,44 @@ $(function() {
 			</div>
 			
 			<!-- Modal footer -->
-	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-primary" data-num="">가입신청</button>
-	          	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+	        <div class="modal-footer" style="display: block;" data-num="">
+	        	<c:if test="${!empty userInfo}">
+	        	<button type="button" class="btn btn-info left btn-stamp" data-num="">찜하기</button>
+	        	</c:if>
+	          	<button type="button" class="btn btn-danger right" data-dismiss="modal">닫기</button>
+	          	<button type="button" class="btn btn-primary right btn-apply" data-num="">가입신청</button>
 	        </div>
 		</div>
 	</div>
 </div>
+<script>
+$(".btn-stamp").on("click", function(){
+	var url = "${root}/group/groupstamp";
+	var data = {
+		groupNum : $(this).parent().attr("data-num")
+	}
+	var success = function(result) {
+		if(result.resultCode == 1){
+			showSuccessAlertModal("찜하기", "해당 모임을 찜했습니다");
+		}else{
+			var msg = result.resultData+"";
+			console.log(msg);
+			console.log(result);
+			showAlertModal("찜하기", msg);
+		}
+		$(".modal-alert").on("hide.bs.modal", function(){
+			$("#groupDetailModal").modal("hide");
+		});
+		
+		return false;
+	}
+	$.ajax({
+		url : url
+		, method : "get"
+		, data : data
+		, contentType : "json"
+		, success : success
+	});
+	
+});
+</script>

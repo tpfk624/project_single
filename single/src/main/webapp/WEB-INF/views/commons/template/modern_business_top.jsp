@@ -82,10 +82,25 @@ tag{
 	border-radius: 10%;
 	font-size: large;
 	cursor: pointer;
+	margin-right: 0.5rem;
 }
 tag:active, tag:hover{
 	background-color: #43853d;
 	color: white;
+}
+tag>input[type=button]{
+	border: none;
+	background: none;
+}
+tag>input[type=button]:hover{
+	font-weight: bold;
+}
+.taglist{
+	display: inline-block;
+}
+.input-tag{
+	display: inline-block;
+	width: auto;
 }
 
 </style>

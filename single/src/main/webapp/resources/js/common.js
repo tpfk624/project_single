@@ -25,6 +25,7 @@ function dropdownItemClick(){
 	}
 	button.text(text);
 	
-	$(this).parent().removeClass("show");
+	//$(this).parent().removeClass("show");
+	$(this).parent().trigger("click");
 	return false;
 }
