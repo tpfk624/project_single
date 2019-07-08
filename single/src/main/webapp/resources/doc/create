@@ -345,8 +345,8 @@ ALTER TABLE single_hprogress
 CREATE TABLE single_user (
 	user_id            varchar2(64)  NOT NULL, -- 유저아이디
 	user_password      varchar2(32)  NULL,     -- 패스워드
-	user_nickname      varchar2(32)  NOT NULL, -- 닉네임
-	user_name          varchar2(32)  NOT NULL, -- 이름
+	user_nickname      varchar2(32)  NULL,     -- 닉네임
+	user_name          varchar2(32)  NULL,     -- 이름
 	user_profile       varchar2(256) NULL,     -- 유저 프로필
 	user_birthday      DATE          NULL,     -- 생일
 	user_gender        varchar2(1)   NULL,     -- 성별
@@ -356,7 +356,9 @@ CREATE TABLE single_user (
 	user_addressdetail varchar2(128) NULL,     -- 주소상세
 	user_joindate      DATE          NULL,     -- 가입일
 	user_outdate       DATE          NULL,     -- 탈퇴일
-	user_statecode     varchar2(1)   NULL      -- 유저상태코드
+	user_statecode     varchar2(1)   NULL,     -- 유저상태코드
+	auth_state         VARCHAR2(1)   NULL,     -- 인증상태
+	auth_key           VARCHAR2(128) NULL      -- 인증키
 );
 
 -- 유저

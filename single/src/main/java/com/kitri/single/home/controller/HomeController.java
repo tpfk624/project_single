@@ -25,12 +25,16 @@ public class HomeController {
 	@Autowired
 	private HomeService homeService;
 	
+	//테스트용 사용안함
 	@RequestMapping(value = "/dusttest", method = RequestMethod.GET)
 	public String toDust() throws UnsupportedEncodingException {
 		System.out.println("뜨거라!!!");
 		return "home/dusttest";
 	}
-
+	
+	//미세먼지 API통신
+	//stationName : 장소
+	//dataTerm : 데이터의 양 ('daily' : 오늘기준)
 	@ResponseBody
 	@RequestMapping(value = "/dusttest.do", method = RequestMethod.POST)
 	public String dusttest(@RequestBody Map<String, String> map) throws UnsupportedEncodingException { //@RequestBody

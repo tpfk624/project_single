@@ -96,16 +96,17 @@ public class MemberController {
 		logger.info(">>>>"+ userDto.getUserId());
 		//TODO 아이디가 존재할경우 로그인 ㄱㄱ.
 		//아이디 인증키 인증상태
-		userDto = memberService.getUser(userDto);
+//		userDto = memberService.getUser(userDto);
 		
+		userDto = memberService.sendAuthMail(userDto);		
 		// 아이디 부재, 인증상태 ==0 -> 인증메일 발송 
 		// 아이디 존재 , 인증상태 ==0 -> 인증메일 재발송
-		if(userDto == null && "0".equals(userDto.getAuthState()) ) {
-			userDto = memberService.sendAuthMail(userDto);	
-			model.addAttribute("userInfo", userDto);
-		}else {
-			model.addAttribute("userInfo", null);
-		}
+//		if(userDto == null && "0".equals(userDto.getAuthState()) ) {
+//			userDto = memberService.sendAuthMail(userDto);	
+//			model.addAttribute("userInfo", userDto);
+//		}else {
+//			model.addAttribute("userInfo", null);
+//		}
 		
 		
 		

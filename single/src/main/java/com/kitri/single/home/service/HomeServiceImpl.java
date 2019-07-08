@@ -11,6 +11,8 @@ import com.kitri.single.util.ApiConnection;
 @Service
 public class HomeServiceImpl implements HomeService{
 	
+	//미세먼지 API 호출
+	//obvEwnaLdObges0rPROOPP0MNkIAQkTWtFkXdNXvga2%2BdzzDsPj%2B97ZQnMEcJBlCxAxEEg3Srtdb0XAVmKhoOA%3D%3D
 	public String dustFromOpenApi(Map<String, String> parameter){
 		String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty";
 		String serviceKey = "obvEwnaLdObges0rPROOPP0MNkIAQkTWtFkXdNXvga2%2BdzzDsPj%2B97ZQnMEcJBlCxAxEEg3Srtdb0XAVmKhoOA%3D%3D";
