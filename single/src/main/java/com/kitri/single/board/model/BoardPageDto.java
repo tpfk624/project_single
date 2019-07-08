@@ -1,14 +1,10 @@
 package com.kitri.single.board.model;
 
-import java.util.List;
-
-
-public class BoardPageDto {
+public class BoardPageDto extends BoardDto{
 	
 	private int cntPerPage; 	// 페이지별 보여줄 목록수
 	private int startRow = 1; 		// 시작행
 	private int endRow = 1; 		// 끝행
-	private List<BoardDto> list; 	// 목록
 	private int totalPage = 1; 		// 총 페이지수
 	private int totalCnt; 			// 총 게시글 수
 	private int cntPerPageGroup; 	// 페이지그룹에 보여줄 페이지
@@ -87,14 +83,6 @@ public class BoardPageDto {
 		this.endRow = endRow;
 	}
 
-	public List<BoardDto> getList() {
-		return list;
-	}
-
-	public void setList(List<BoardDto> list) {
-		this.list = list;
-	}
-
 	public int getTotalPage() {
 		return totalPage;
 	}
@@ -153,8 +141,8 @@ public class BoardPageDto {
 
 	@Override
 	public String toString() {
-		return "BoardPageDto [cntPerPage=" + cntPerPage + ", startRow=" + startRow + ", endRow=" + endRow + ", list="
-				+ list + ", totalPage=" + totalPage + ", totalCnt=" + totalCnt + ", cntPerPageGroup=" + cntPerPageGroup
+		return "BoardPageDto [cntPerPage=" + cntPerPage + ", startRow=" + startRow + ", endRow=" + endRow 
+				+  ", totalPage=" + totalPage + ", totalCnt=" + totalCnt + ", cntPerPageGroup=" + cntPerPageGroup
 				+ ", startPage=" + startPage + ", endPage=" + endPage + ", url=" + url + ", currentPage=" + currentPage
 				+ "]";
 	}

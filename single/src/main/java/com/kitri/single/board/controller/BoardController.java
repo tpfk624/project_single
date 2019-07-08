@@ -46,24 +46,32 @@ public class BoardController {
 	private CommonService commonService;
 	
 	@RequestMapping("singlemain")
-	public void singleMain(){
-//		System.out.println("main으로 가는중");
+	public String singleMain(Model model){
+		System.out.println("main으로 가는중");
 		//select를 3번해와야뎀.
 		
 		//이달의 자취왕
 		
 		
-		//이달의 추천순
+		//이주의 추천순
+		List<BoardDto> boardDtoList = boardService.weekList();
+		System.out.println(boardDtoList.toString());
+		model.addAttribute("weekList", boardDtoList);
 		
+		String path = "board/singlemain";
 		
-		//오늘의 새글
-		
+		return path;
 		
 	}
 	
-	// 자취생활 페이지 이동
+	// 자취생활 페이지로 이동
 	@RequestMapping(value="/singlelifeboard")
-	public void singlemain(){
+	public void singlelifeboard(){
+	}
+	
+	// 요리 레시피 페이지로 이동
+	@RequestMapping(value="/singlecookboard")
+	public void singlecookboard(){
 	}
 	
 	
@@ -178,14 +186,20 @@ public class BoardController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String newList(@RequestParam Map<String, Object> params, Model model) {
 		
-		System.out.println("컨트롤");
+		//System.out.println("컨트롤");
 		int currentPage = Integer.parseInt((String)params.get("page"));
 		
 		BoardPageDto bp = boardService.selectNewList(currentPage);
+		//System.out.println("bp.tosrting ==== " + bp.getList().toString());
 		
 		model.addAttribute("bp", bp);
+		//System.out.println("model === " + model);
 		
-		String path = "board/singlemain";
+//		List<BoardDto> boardDtoList = boardService.weekList();
+//		System.out.println(boardDtoList.toString());
+//		model.addAttribute("weekList", boardDtoList);
+		
+		String path = "board/main/newlistok";
 		
 		return path;
 	}

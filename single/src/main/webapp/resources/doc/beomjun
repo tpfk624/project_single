@@ -17,9 +17,9 @@ select * from single_board_list;
 
 
 
-insert into single_user values('qjawns0617@naver.com','123123','뿡뿡뿡뿡','권범준',null,'1994-06-18','M','010-5419-0583','77777','경기도 화성시','반송동 떙땡아파트',sysdate,null,'1',null);
-insert into single_board values(board_num_seq.nextval, 1,'qjawns0617@naver.com' ,'뿡뿡뿡뿡','들리십니까' ,'들리십니까 내용입니다','0',15 ,sysdate,null,null,'1');
-insert into single_board values(board_num_seq.nextval, 1,'qjawns0617@naver.com' ,'뿡뿡뿡뿡','들리십니까' ,'들리십니까 내용입니다','0',100 ,sysdate,null,null,'1');
+insert into single_user values('qjawns0617@naver.com','123123','뿡뿡뿡뿡','권범준',null,'1994-06-18','M','010-5419-0583','77777','경기도 화성시','반송동 떙땡아파트',sysdate,null,'1');
+insert into single_board values(board_num_seq.nextval, 1,'qjawns0617@naver.com' ,'카루뱅','들리십니까2222' ,'들리십니까 내용입니다','0',150 ,sysdate,null,null,'1');
+insert into single_board values(board_num_seq.nextval, 1,'qjawns0617@naver.com' ,'카루뱅1','최신222' ,'들리십니까 내용입니다','0',160 ,sysdate,null,null,'1');
 insert into single_like values(1, 'qjawns0617@naver.com');
 insert into single_like values(2, 'qjawns0617@naver.com');
 
@@ -35,14 +35,54 @@ where board_num = 8;
 
 
 
+select *
+from (
+    select rownum rn, a.*
+    from(
+        select 
+            board_num boardNum, board_list_num boardListNum, user_id userId, 
+            user_nickname userNickname, board_subject boardSubject, 
+            board_content boardContent, board_views boardViews, board_like boardLike,
+            board_createDate boardCreatedate, 
+            board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
+            board_statecode boardStatecode
+        from single_board
+        order by board_createdate desc
+        ) a
+    where rownum <= 5
+    ) 
+where rn >= 1;
 
-insert all into single_board values(board_num_seq.nextval, 1,'qjawns0617@naver.com' ,'뿡뿡뿡뿡','들리십니까' ,'들리십니까 내용입니다', '0', 0,sysdate,null,null,'1') 
-into single_hashtag values(hashtag_num_seq.nextval + 0,'1','1',board_num_seq.currval,null) 
-into single_hashtag values(hashtag_num_seq.nextval + 1,'2','1',board_num_seq.currval,null) 
-into single_hashtag values(hashtag_num_seq.nextval + 2,'3','1',board_num_seq.currval,null) 
-into single_hashtag values(hashtag_num_seq.nextval + 3,'4','1',board_num_seq.currval,null)
-select * from dual;
 
+
+select hashtag_num_seq.CURRVAL
+from dual;
+
+select HASHTAG_NUM_SEQ.nextval from dual;
+
+
+select rownum, board.*
+from (select board_num boardNum, board_list_num boardListNum, user_id userId, 
+                user_nickname userNickname, board_subject boardSubject, 
+                board_content boardContent, board_views boardViews, board_like boardLike,
+                board_createDate boardCreatedate, 
+                board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
+                board_statecode boardStatecode
+    from single_board
+    order by board_like desc, boardCreatedate desc) board
+where rownum <= 5; 
+
+
+
+select *
+from single_board;
+
+select *
+from single_user;
+
+select sb.*
+from single_user su, single_board sb
+where su.user_id = sb.user_id;
 
 
 

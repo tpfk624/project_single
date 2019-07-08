@@ -10,6 +10,7 @@ import com.kitri.single.hashtag.dao.HashtagDao;;
 
 public interface BoardDao extends HashtagDao{
 
+	// 글쓰기
 	int writeArticle(BoardDto boardDto);
 	
 	// view
@@ -20,5 +21,9 @@ public interface BoardDao extends HashtagDao{
 	
 	// 메인 페이징 처리
 	List<BoardDto> findByRows(BoardPageDto boardPageDto);
+	
+	// 메인 이주의 추천순
+	List<BoardDto> weekList();
+	
 	
 }

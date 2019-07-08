@@ -1,6 +1,8 @@
 package com.kitri.single.board.service;
 
 
+import java.util.List;
+
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.board.model.BoardPageDto;
 
@@ -16,5 +18,8 @@ public interface BoardService {
 	
 	// selectNewList 오늘의 새글
 	BoardPageDto selectNewList(int cp);
+	
+	// 메인 이주의 추천순
+	List<BoardDto> weekList();
 	
 }
