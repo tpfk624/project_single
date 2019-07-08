@@ -6,27 +6,19 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.REBIND;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kitri.single.board.model.BoardDto;
-import com.kitri.single.board.model.ReplyDto;
+import com.kitri.single.board.model.BoardPageDto;
 import com.kitri.single.board.service.BoardService;
 import com.kitri.single.board.service.ReplyService;
 import com.kitri.single.common.service.CommonService;
-import com.kitri.single.group.contorller.GroupController;
 import com.kitri.single.user.model.UserDto;
-import com.kitri.single.util.NumberCheck;
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 @Controller
 @RequestMapping("/board")
@@ -45,24 +37,32 @@ public class BoardController {
 	private CommonService commonService;
 	
 	@RequestMapping("singlemain")
-	public void singleMain(){
-//		System.out.println("main으로 가는중");
+	public String singleMain(Model model){
+		//System.out.println("main으로 가는중");
 		//select를 3번해와야뎀.
 		
 		//이달의 자취왕
 		
 		
-		//이달의 추천순
+		//이주의 추천순
+		List<BoardDto> boardDtoList = boardService.weekList();
+		//System.out.println(boardDtoList.toString());
+		model.addAttribute("weekList", boardDtoList);
 		
+		String path = "board/singlemain";
 		
-		//오늘의 새글
-		
+		return path;
 		
 	}
 	
-	// 자취생활 페이지 이동
+	// 자취생활 페이지로 이동
 	@RequestMapping(value="/singlelifeboard")
-	public void singlemain(){
+	public void singlelifeboard(){
+	}
+	
+	// 요리 레시피 페이지로 이동
+	@RequestMapping(value="/singlecookboard")
+	public void singlecookboard(){
 	}
 	
 	
@@ -175,13 +175,25 @@ public class BoardController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String newList(@RequestParam Map<String, Object> params) {
+	public String newList(@RequestParam Map<String, Object> params, Model model) {
 		
-		System.out.println("들어왔는가");
+		//System.out.println("컨트롤");
+		int currentPage = Integer.parseInt((String)params.get("page"));
+		System.out.println(currentPage);
 		
+		BoardPageDto bp = boardService.selectNewList(currentPage);
+		//System.out.println("bp.tosrting ==== " + bp.getList().toString());
 		
+		model.addAttribute("bp", bp);
+		//System.out.println("model === " + model);
 		
-		return "";
+//		List<BoardDto> boardDtoList = boardService.weekList();
+//		System.out.println(boardDtoList.toString());
+//		model.addAttribute("weekList", boardDtoList);
+		
+		String path = "board/main/newlistok";
+		
+		return path;
 	}
 	
 	

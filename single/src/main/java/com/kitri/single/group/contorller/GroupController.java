@@ -2,6 +2,7 @@ package com.kitri.single.group.contorller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kitri.single.group.model.CalendarDto;
 import com.kitri.single.group.model.GroupDto;
 import com.kitri.single.group.model.GroupMemberDto;
 import com.kitri.single.group.service.GroupService;
@@ -193,4 +198,179 @@ public class GroupController {
 		
 		return path;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/groupmodify" , method = RequestMethod.POST)
+	public String groupmodify(@SessionAttribute("userInfo") UserDto userInfo
+			, GroupDto groupDto
+			, @RequestParam("imgdata") MultipartFile multipartFile
+			, @RequestParam("groupHashtag") String groupHashtag) {
+		logger.info(groupDto.toString());
+		logger.info(groupHashtag.toString());
+		
+		String json = makeJSON(0, "권한이 없습니다");
+		
+		if("L".equals(getGroupMemberStatecode(userInfo.getUserId(), groupDto.getGroupNum()))) {
+			//파일정보 세팅
+			if(multipartFile != null && !multipartFile.isEmpty()) {
+				String realPath = servletContext.getRealPath("");
+				
+				String src = "";
+				try {
+					src = Utill.profileUpload(multipartFile, "group", realPath, servletContext.getContextPath());
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				groupDto.setGroupImgSrc(src);
+			}
+		
+			//System.out.println(groupDto);
+			json = groupService.groupModify(groupDto, groupHashtag);
+		}		
+		return json;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/groupstamp")
+	public String groupStamp(@SessionAttribute("userInfo") UserDto userInfo
+				, @RequestParam("groupNum") int groupNum) {
+		logger.info("groupNum : " + groupNum);
+		String json = makeJSON(0, "찜하기 실패하였습니다. 관리자에게 문의하세요");
+		if(groupNum != 0) {
+			json = groupService.groupStamp(userInfo.getUserId(), groupNum);
+		}
+		logger.info(json);
+		return json;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/memberstate")
+	public String getMemberStatecode(@SessionAttribute("userInfo") UserDto userInfo
+			, @RequestParam("groupNum") int groupNum) {
+		String json = makeJSON(0, "시스템 에러");
+		
+		String memberStatecode = getGroupMemberStatecode(userInfo.getUserId(), groupNum);
+		
+		if(memberStatecode != null) {
+			if(memberStatecode.equals("L")) {
+				json = makeJSON(1, memberStatecode);
+			}else {
+				json = makeJSON(1, "일정은 모임장만 등록 가능합니다");
+			}	
+		}
+		
+		return json;
+	}
+	
+	@ResponseBody
+	@RequestMapping("groupmember")
+	public void groupMember(HttpSession session, @RequestParam Map<String, String> parameter) {
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		String json = makeJSON(0, "시스템 에러입니다");
+		if(userDto == null) {
+			json = makeJSON(99, "로그인이 필요한 기능입니다");
+		}else {
+			parameter.put("userId", userDto.getUserId());
+			//json = groupService.groupMember(parameter);
+		}
+	}
+	
+	//그룹 내 nav바 이동 관련
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/grouppage", method = RequestMethod.GET)
+	public ModelAndView groupModify(@SessionAttribute("userInfo") UserDto userInfo
+			, @RequestParam Map<String, String> parameter
+			, ModelAndView model) {
+		
+		System.out.println(parameter);
+		if(parameter.get("groupNum") != null) {
+			int groupNum = Integer.parseInt(parameter.get("groupNum"));
+			String type = parameter.get("type");
+			if("main".equals(type)) {
+				model = mainPage(userInfo, groupNum, model);
+			}else if("modify".equals(type)) {
+				model = modifyPage(userInfo, groupNum, model);
+			}
+		}
+		model.addObject("root", servletContext.getContextPath());
+		return model;
+	}
+	
+	private ModelAndView modifyPage(UserDto userInfo, int groupNum, ModelAndView model) {
+		String path = "group/groupmodify";
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userInfo.getUserId());
+		parameter.put("groupNum", groupNum);
+		GroupMemberDto groupMemberDto = groupService.getGroupMember(parameter);
+		
+		if(groupMemberDto.getGroupMemberStatecode().equals("L")) {
+			GroupDto groupDto = groupService.getGroup(groupNum);
+			if(groupDto != null) {
+				model.addObject("group", groupDto);
+				model.setViewName(path);
+			}
+			logger.info(groupDto.toString());
+		}
+		
+		return model;
+	}
+
+	public ModelAndView mainPage(UserDto userInfo, int groupNum, ModelAndView model) {
+		//그룹 멤버인지 확인
+		String path = "group/main";
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userInfo.getUserId());
+		parameter.put("groupNum", groupNum);
+		GroupMemberDto groupMemberDto = groupService.getGroupMember(parameter);
+		
+		//멤버의 상태에 따른 결정
+		// L : 그룹장 Leader   
+		// M : 그룹원 Member
+		// W : 승인대기 Waiting
+
+		GroupDto groupDto = groupService.getGroup(groupNum);
+		if(groupDto != null) {
+			model.addObject("group", groupDto);
+			model.addObject("groupMember", groupMemberDto);
+		}
+		
+		model.setViewName("group/main");
+		return model;
+	}
+	
+	public String getGroupMemberStatecode(String userId, int groupNum) {
+		
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userId);
+		parameter.put("groupNum", groupNum);
+		GroupMemberDto groupMemberDto = groupService.getGroupMember(parameter);
+		
+		//멤버의 상태에 따른 결정
+		// L : 그룹장 Leader   
+		// M : 그룹원 Member
+		// W : 승인대기 Waiting
+
+		return groupMemberDto.getGroupMemberStatecode();
+	}
+	
+	//json데이터 생성
+	public String makeJSON(int resultCode, Object resultData) {
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("resultCode", resultCode);
+		if(resultData instanceof Collection) {
+			jsonObject.put("resultData", new JSONArray(resultData));
+		}else if(resultData instanceof String){
+			jsonObject.put("resultData", resultData.toString());
+		}else {
+			jsonObject.put("resultData", new JSONObject(resultData));
+		}
+		
+		return jsonObject.toString();
+		
+	}
+	
 }

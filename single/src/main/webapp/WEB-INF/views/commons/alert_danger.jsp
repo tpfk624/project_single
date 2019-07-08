@@ -32,7 +32,7 @@ function showAlertModal(title, body, footer) {
 }
 </style>
 <!-- 경고창 -->
-<div class="modal fade" id="alert" role="dialog">
+<div class="modal fade modal-alert" id="alert" role="dialog" style="z-index: 10000">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">

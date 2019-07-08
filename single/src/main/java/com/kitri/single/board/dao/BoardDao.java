@@ -1,17 +1,29 @@
 package com.kitri.single.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
-import com.kitri.single.board.model.BoardDto;;
+import com.kitri.single.board.model.BoardDto;
+import com.kitri.single.board.model.BoardPageDto;
+import com.kitri.single.hashtag.dao.HashtagDao;;
 
 
-public interface BoardDao {
+public interface BoardDao extends HashtagDao{
 
+	// 글쓰기
 	int writeArticle(BoardDto boardDto);
 	
 	// view
 	BoardDto viewArticle(int boardNum);
 	
-	// viewMain 오늘의 새글
+	// totalPage
+	int totalPage();
+	
+	// 메인 페이징 처리
+	List<BoardDto> findByRows(BoardPageDto boardPageDto);
+	
+	// 메인 이주의 추천순
+	List<BoardDto> weekList();
+	
 	
 }

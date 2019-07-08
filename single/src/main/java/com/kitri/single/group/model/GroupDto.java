@@ -91,14 +91,13 @@ public class GroupDto extends GroupCategoryDto{
 	public void setGroupMemberDto(GroupMemberDto groupMemberDto) {
 		this.groupMemberDto = groupMemberDto;
 	}
-	
 	@Override
 	public String toString() {
 		return "GroupDto [groupNum=" + groupNum + ", groupName=" + groupName + ", groupDescription=" + groupDescription
 				+ ", groupImgSrc=" + groupImgSrc + ", groupMemberLimit=" + groupMemberLimit + ", groupMemberCount="
 				+ groupMemberCount + ", groupMainPlace=" + groupMainPlace + ", groupCreatedate=" + groupCreatedate
 				+ ", groupDeletedate=" + groupDeletedate + ", groupStatecode=" + groupStatecode + ", hashtagList="
-				+ hashtagList + ", groupMemberDto=" + groupMemberDto + "]";
+				+ hashtagList + ", groupMemberDto=" + groupMemberDto + ", getGroupCategoryNum()="
+				+ getGroupCategoryNum() + ", getGroupCategoryName()=" + getGroupCategoryName() + "]";
 	}
-	
 }

@@ -36,7 +36,6 @@ function drawCalendar() {
 	}
 	setTableHTML += '</table>';
 	$("#cal_tab").html(setTableHTML);
-
 }
 
 //날짜 초기화
@@ -64,6 +63,7 @@ function drawDays() {
 			+ lastDay.getDate(); i++) {
 		$tdDay.eq(i).text(++dayCount);
 		$tdDay.eq(i).parent().addClass("day");
+		$tdDay.eq(i).parent().addClass("day-"+dayCount);
 	}
 	for (var i = 0; i < 42; i += 7) {
 		$tdDay.eq(i).css("color", "red");
@@ -72,7 +72,12 @@ function drawDays() {
 	for (var i = 6; i < 42; i += 7) {
 		$tdDay.eq(i).css("color", "blue");
 	}
+	
+	$(".day").on("click", function() {
+		showCalendarModal("create", null, $(this).find(".cal-day").text());
 
+		return false;
+	});
 }
 
 //calendar 월 이동
@@ -109,9 +114,15 @@ function moveNextMonth() {
 }
 
 function getNewInfo() {
+	$(".day").off("click");
+	
 	for (var i = 0; i < 42; i++) {
 		$tdDay.eq(i).text("");
+		$tdDay.parent().removeClass("day");
+		$tdDay.parent().removeClass("day-" + i);
 	}
+	
+	
 	dayCount = 0;
 	firstDay = new Date(year, month - 1, 1);
 	lastDay = new Date(year, month, 0);
