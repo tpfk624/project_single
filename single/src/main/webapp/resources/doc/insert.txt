@@ -132,6 +132,9 @@ VALUES(board_list_num_seq.nextval,'명예의전당',1,1);
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
+insert into single_user values
+('qjawns0617@naver.com','123123','뿡뿡뿡뿡','권범준',null,'1994-06-18','M','010-5419-0583','77777','경기도 화성시','반송동 떙땡아파트',sysdate,null,'1',null, null);
+
 -- 테스트용 아이디 생성
 insert into single_user
 (user_id, user_password, user_nickname, user_name, user_birthday, user_gender, user_phone, user_joindate, user_statecode)
