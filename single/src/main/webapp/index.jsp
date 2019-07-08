@@ -2,18 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/roadtrip_top.jsp" %>
 
-		 <script src="${root}/resources/template/roadtrip/assets/js/jquery.min.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrolly.min.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrollex.min.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/skel.min.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/util.js"></script>
-         <script src="${root}/resources/template/roadtrip/assets/js/main.js"></script>
+<script src="${root}/resources/template/roadtrip/assets/js/jquery.min.js"></script>
+<script src="${root}/resources/template/roadtrip/assets/js/jquery.scrolly.min.js"></script>
+<script src="${root}/resources/template/roadtrip/assets/js/jquery.scrollex.min.js"></script>
+<script src="${root}/resources/template/roadtrip/assets/js/skel.min.js"></script>
+<script src="${root}/resources/template/roadtrip/assets/js/util.js"></script>
+<script src="${root}/resources/template/roadtrip/assets/js/main.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
 
 
 <style>
@@ -175,10 +173,11 @@ $(document).ready(function(){
 <%-- 		    <c:if test="${userInfo != null}"> --%>
 <%-- 		    	<li><a href="${root}/home/dusttest">로그아웃</a></li> --%>
 <%-- 		    </c:if> --%>
-                <li><a href="${root }/mypage/groupall">마이 페이지</a></li>
+                <li><a href="${root }/mypage/mypage">마이 페이지</a></li>
                 <li><a href="${root }/board/singlemain">혼자놀래요</a></li>
                 <li><a href="generic.html">같이놀래요</a></li>
             </ul>
+            
          </nav>
       
          <section id="banner"> <!-- class="bg-img" -->
