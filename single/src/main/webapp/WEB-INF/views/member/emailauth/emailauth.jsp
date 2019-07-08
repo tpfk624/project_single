@@ -16,7 +16,7 @@ $(document).ready(function(){
 	
 	//이메일인증버튼
 	$('#emailSendBtn').click(function() {
-		var requestParam = JSON.stringify({"userId": $('#sendEamilForm .userId').val()});
+		var requestParam = JSON.stringify({"userId": $('#sendEamilForm #userId').val()});
 		//이메일 인증완료msgTO
 	 	$.ajax({
 	 		method:"POST",
@@ -87,10 +87,10 @@ min-height: 95%;
 <div class="container">
 <h1 class ="mt-4 mb-3" style="min-height: 100%;">이메일인증</h1>
 <form id="sendEamilForm" method="post" action="">
- 	
 		<div class="form-group">
-		    <input type="email" placeholder="이메일 입력해주세요" name="userId" class="userId" required="required">
-		  	<button id="emailSendBtn" type="button">이메일 인증하기</button>
+		    <input type="email" class="form-control"  id="userId" name="userId"  placeholder="이메일 입력해주세요" required="required" 
+		    style="display:inline-block; width: 20rem;">
+		  	<button type="button" id="emailSendBtn" class="btn btn-primary" >이메일 인증하기</button>
 		</div>
 </form>
 <!-- <form id="registerForm" method="post" action=""> -->

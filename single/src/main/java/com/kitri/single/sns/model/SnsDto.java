@@ -4,10 +4,10 @@ import oracle.sql.DATE;
 
 public class SnsDto {
 
-	private String userId;
-	private String snsType;
-	private String snsToken;
 	private String snsId;
+	private String snsType;
+	private String userId;
+	private String snsToken;
 	private String snsConnectDate;
 	
 	//우선 아래 내용은 모두 null로 입력할 예정
