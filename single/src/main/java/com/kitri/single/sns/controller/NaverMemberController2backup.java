@@ -29,8 +29,8 @@ import com.kitri.single.util.Utill;
 @Controller
 @RequestMapping(value = "/navermember")
 @SessionAttributes("userInfo")
-public class NaverMemberController {
-	Logger logger = LoggerFactory.getLogger(NaverMemberController.class);
+public class NaverMemberController2backup {
+	Logger logger = LoggerFactory.getLogger(NaverMemberController2backup.class);
 	
 	@Autowired
 	NaverLoginService naverLoginService; 	
@@ -46,60 +46,51 @@ public class NaverMemberController {
 		logger.debug(snsEmail);
 		logger.debug(accessToken);
 
-		SnsDto snsDto = new SnsDto();
-		snsDto.setSnsEmail(snsEmail);
-		snsDto.setSnsType("naver");
 		
-		snsDto = naverLoginService.getSnsLogin(snsDto);
-		
-		
+		UserDto userDto = naverLoginService.getUser(snsEmail);
 //		이소셜로는 처음 로그인 합니다.
-		if(snsDto == null) {
-			snsDto = new SnsDto();
-			snsDto.setSnsEmail(snsEmail);
+		if(userDto == null) {
+			String userProfile = apiMemberProfile.getMemberProfile(accessToken);
+			JSONObject resultJson = new JSONObject(userProfile);
+			JSONObject profileObj = (JSONObject) resultJson.get("response");
+			
+			String snsId = Utill.getStringJson(profileObj, "id");
+			
+			String userNickname = Utill.getStringJson(profileObj, "nickname");
+			String userAge= Utill.getStringJson(profileObj, "age");
+			String userGender = Utill.getStringJson(profileObj, "gender");
+			String userName = Utill.getStringJson(profileObj, "name");
+			String userBirthday = Utill.getStringJson(profileObj, "birthday");
+			String userProfile_image = Utill.getStringJson(profileObj, "profile_image");
+			logger.info("id: " + snsId);
+			logger.info("userName: " + userName);
+			logger.info("nickname: " + userNickname);
+			logger.info("age: " + userAge);
+			logger.info("gender: " + userGender);
+			logger.info("birthday: " + userBirthday);
+			logger.info("profile_image: " + userProfile_image);
+			SnsDto snsDto = new SnsDto();
+
 			snsDto.setSnsType("naver");
+			snsDto.setSnsId(snsId);
+			snsDto.setUserId(snsEmail);
 			snsDto.setSnsConnectDate(Calendar.getInstance().getTime().toString());
+
+			userDto = new UserDto();
+			userDto.setUserId(snsEmail);
+			userDto.setUserName(userName);
+			userDto.setUserNickname(userNickname);
+			userDto.setUserGender(userGender);
+			userDto.setUserBirthday(userBirthday);
+			userDto.setUserProfile(userProfile_image);
+			userDto.setSnsDto(snsDto);
+
+			model.addAttribute("userInfo", userDto);
+			
 			// 회원가입, 소셜 연동 창으로 이동 
-			
 			return "member/register/register";
+		}else {
 			
-//			String userProfile = apiMemberProfile.getMemberProfile(accessToken);
-//			JSONObject resultJson = new JSONObject(userProfile);
-//			JSONObject profileObj = (JSONObject) resultJson.get("response");
-//			
-//			String snsId = Utill.getStringJson(profileObj, "id");
-//			
-//			String userNickname = Utill.getStringJson(profileObj, "nickname");
-//			String userAge= Utill.getStringJson(profileObj, "age");
-//			String userGender = Utill.getStringJson(profileObj, "gender");
-//			String userName = Utill.getStringJson(profileObj, "name");
-//			String userBirthday = Utill.getStringJson(profileObj, "birthday");
-//			String userProfile_image = Utill.getStringJson(profileObj, "profile_image");
-//			logger.info("id: " + snsId);
-//			logger.info("userName: " + userName);
-//			logger.info("nickname: " + userNickname);
-//			logger.info("age: " + userAge);
-//			logger.info("gender: " + userGender);
-//			logger.info("birthday: " + userBirthday);
-//			logger.info("profile_image: " + userProfile_image);
-			
-			
-
-//			userDto = new UserDto();
-//			userDto.setUserId(snsEmail);
-//			userDto.setUserName(userName);
-//			userDto.setUserNickname(userNickname);
-//			userDto.setUserGender(userGender);
-//			userDto.setUserBirthday(userBirthday);
-//			userDto.setUserProfile(userProfile_image);
-//			userDto.setSnsDto(snsDto);
-
-//			model.addAttribute("userInfo", userDto);
-			
-
-			
-		}else if (snsDto!= null && snsDto.getUserId() !=null){
-			//이미 연동된 아이디입니다. => 로그인
 		}
 		return "index";
 

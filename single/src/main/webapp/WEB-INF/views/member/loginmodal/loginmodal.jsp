@@ -6,13 +6,14 @@
 현재 페이지를 import한 후 
 id: loginmodal의 display를 block으로 변경해주세요.
 -->
-
+ 
 <!-- 네아로 설정값-->
 <!-- <c:set var= "callbackUrl" value="http://localhost/single/member/callback.jsp"/> -->
 <!-- <c:set var="serviceUrl" value= "http://localhost/single"/> -->
-<c:set var= "callbackUrl" value="http://192.168.14.40/single/member/callback.jsp"/>
-<c:set var="serviceUrl" value= "http://192.168.14.40/single"/>
-<c:set var="clientId" value= "3FGMY2V_UXaBQxS0sx0g"/>
+<c:set var="url" value = "localhost" />
+<c:set var = "callbackUrl" value = "http://${url}/single/member/callback.jsp"/>
+<c:set var = "serviceUrl" value = "http://${url}/single"/>
+<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 
 
 <!-- 네아로 자바스크립트-->
@@ -23,19 +24,12 @@ id: loginmodal의 display를 block으로 변경해주세요.
 
 <script>
 $(document).ready(function(){
-	var loginBtn =$('.loginBtn'); //로그인 버튼을 등록해주세요.  
-	var logoutBtn=$('.logoutBtn'); //로그아웃 버튼을 등록해주세요.
+	var loginBtn =$('#loginBtn'); //로그인 버튼을 등록해주세요.  
 	
 	//로그인 모달 띄우기  loginmodal id를 통해서 사용됨
 	loginBtn.click(function() {
 		$('#loginmodal').css("display","block").attr("width","auto");
 	});
-	
-	//로그아웃 버튼
-	logoutBtn.click(function() {
-		$(location).attr("href","${root}/member/logout");
-	});
-	
 	
 	//회원가입 버튼
 	$('.registerBtn').click(function(){

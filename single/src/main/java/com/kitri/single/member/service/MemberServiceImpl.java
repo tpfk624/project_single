@@ -31,6 +31,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void regist(UserDto userDto) {
+		userDto.setUserStatecode("1");
 		sqlSession.getMapper(MemberDao.class).regist(userDto);
 	}
 
@@ -48,6 +49,7 @@ public class MemberServiceImpl implements MemberService {
 		if(userDto == null) {
 			logger.info(" >>>> 유저의 인증키를 생성합니다.");
 			userDto = new UserDto();
+			userDto.setUserStatecode("0");
 			userDto.setUserId(email);
 			userDto.setAuthKey(authkey);
 			userDto.setAuthState("0");

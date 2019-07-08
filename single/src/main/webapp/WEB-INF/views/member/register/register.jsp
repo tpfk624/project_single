@@ -86,7 +86,7 @@ function validate() {
 		
 		<div class="form-group" align="left">
 		<label for="">닉네임</label>*
-				<input type="text" class="form-control" id="nickname" name="userNickname" placeholder="이름입력" value ="${userInfo.userNickname}" required="required">
+				<input type="text" class="form-control" id="nickname" name="userNickname" placeholder="이름입력" required="required">
 		</div>
 		
 	<div class="form-group" align="left">

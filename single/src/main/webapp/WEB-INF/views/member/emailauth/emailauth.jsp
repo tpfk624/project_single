@@ -25,8 +25,14 @@ $(document).ready(function(){
 			dataType: "json",
 		    contentType: "application/json; charset=utf-8;",
 			success:function(data){
-				console.log(data);
-				$('#status').html(data.userId + "로 메일이 전송되었습니다. <br>메일을 확인해주세요.");
+				if(data.msgcode ==2){
+					var email = data.userDto.userId;
+					$('#status').html(email + "로 메일이 전송되었습니다. <br>메일을 확인해주세요.");
+				}else if(data.msgcode ==1){
+					$('#status').html(email + "의 메일은 회원가입이 되어있습니다.");
+				}
+				
+				
 // 				console.log('결과');
 // 				console.log(data.authKey);
 // 				console.log(data.userId);
