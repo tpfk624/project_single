@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/views/commons/movetop.jsp"%>
 <%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
 <%@ include file="/WEB-INF/views/commons/alert_success.jsp"%>
+<script src="${root}/resources/js/group/group.js"></script>
 <c:set var="parameter" value="${requestScope.parameter}"></c:set>
 <% 
 HttpSession httpSession = request.getSession();

@@ -64,7 +64,7 @@
 	        	<button type="button" class="btn btn-secondary right" data-dismiss="modal">닫기</button>
 	        	<button type="button" class="btn btn-primary okbtn right"></button>        	       	
 	        	</c:if>
-	        	<c:if test="${groupMember.groupMemberStatecode != 'L'}">
+	        	<c:if test="${groupMember.groupMemberStatecode == 'M'}">
 	        	<button type="button" class="btn btn-secondary right" data-dismiss="modal">닫기</button>
 	        	</c:if>
 	          	
@@ -169,22 +169,40 @@ var dataValidate = function (){
 }
 
 function showCalendarModal(type, json, day) {
+		
 	var calendarModal = $("#calendarModal");
 	if(type == 'create'){
-		calendarModal.find(".modal-header>label").text("그룹 일정 등록");
-		calendarModal.find("input[name=type]").val("create");
-		calendarModal.find("input[name=calendarDate]").removeAttr("disabled");
-		calendarModal.find("input[name=calendarNum]").val(0);
-		calendarModal.find("input[name=calendarXLoc]").val(0);
-		calendarModal.find("input[name=calendarYLoc]").val(0);
-		calendarModal.find(".deletebtn").css("display", "none");
-		calendarModal.find(".okbtn").text("등록");
+		var url = "${root}/group/memberstate";
+		var data = {
+			groupNum : $("#calendarModal input[name=groupNum]").val()
+		};
+		var success = function(result) {
+			if(result.resultCode == 1){
+				if(result.resultData == "L"){
+					calendarModal.find(".modal-header>label").text("그룹 일정 등록");
+					calendarModal.find("input[name=type]").val("create");
+					calendarModal.find("input[name=calendarDate]").removeAttr("disabled");
+					calendarModal.find("input[name=calendarNum]").val(0);
+					calendarModal.find("input[name=calendarXLoc]").val(0);
+					calendarModal.find("input[name=calendarYLoc]").val(0);
+					calendarModal.find(".deletebtn").css("display", "none");
+					calendarModal.find(".okbtn").text("등록");
+					
+					day = parseInt(day);
+					var date = month + "/" + (day < 10 ? '0' + day : day) + "/" + year;
+					$("#calendarModal input[name=calendarDate]").val(date);
+					
+					calendarModal.modal("show");
+				}else{
+					showSuccessAlertModal("일정등록", result.resultData);
+				}
+			}else{
+				return false;
+			}
+		}
+		console.log(data);
+		ajaxFunc(data, url, "get", success);
 		
-		day = parseInt(day);
-		var date = month + "/" + (day < 10 ? '0' + day : day) + "/" + year;
-		$("#calendarModal input[name=calendarDate]").val(date);
-		
-		calendarModal.modal("show");
 	}else{
 		calendarModal.find(".modal-header>label").text("그룹 일정 보기");
 		calendarModal.find("input[name=calendarNum]").val(json.calendarNum);

@@ -7,35 +7,6 @@
 //url : controller 주소
 //successFunc : 성공시 호출할 func
 //ajax, post 방식
-function ajaxFunc(data, url, method, successFunc) {	
-	var processData = true;
-	var contentType = "application/json";
-	
-	if(method.toUpperCase() == "POST"){
-		processData = false;
-		contentType = false;
-	}
-	$.ajax({
-		url : url
-		, method : method
-		, processData : processData
-		, contentType : contentType
-		, dataType : "json"
-		, data : data
-		, success : successFunc
-	});	
-}
-
-function ajaxPage(data, url, successFunc) {
-	$.ajax({
-		url : url
-		, data : data
-		, method : "get"
-		, success : successFunc
-		, async: true
-	});
-}
-
 //일정을 그리는 method
 //calendarData : json 형태의 calendarDto 
 function drawSchedule(calendarData){
@@ -112,4 +83,21 @@ function deleteSchedule(calendarData) {
 	
 	schedule.remove();
 	return false;
+}
+function groupMemberUpdate(e, groupNum, type){
+	var url = "${root}/group/groupmember";
+	var data = {
+		groupNum : $(this).parent().attr("data-num")
+		, type : apply
+	}
+	var success = function(result) {
+		if(result.resultCode == 1){
+			showSuccessAlertModal("가입신청", "모임에 가입신청 되었습니다. 모임장이 수락하면 가입이 수락됩니다.");
+		}else{
+			showAlertModal("가입신청", result.resultData);
+		}
+		
+		return false;
+	}
+	ajaxFunc(data, url, "get", success);
 }

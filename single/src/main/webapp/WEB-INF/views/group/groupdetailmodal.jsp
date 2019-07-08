@@ -55,6 +55,12 @@ function groupDetailModalSetting(json) {
 	</div>
 </div>
 <script>
+$(".btn-apply").on("click", function(e){
+	groupMemberUpdate(e, $(this).parent().attr("data-num"), "apply");
+});
+
+
+
 $(".btn-stamp").on("click", function(){
 	var url = "${root}/group/groupstamp";
 	var data = {
@@ -64,24 +70,12 @@ $(".btn-stamp").on("click", function(){
 		if(result.resultCode == 1){
 			showSuccessAlertModal("찜하기", "해당 모임을 찜했습니다");
 		}else{
-			var msg = result.resultData+"";
-			console.log(msg);
-			console.log(result);
-			showAlertModal("찜하기", msg);
+			showAlertModal("찜하기", result.resultData);
 		}
-		$(".modal-alert").on("hide.bs.modal", function(){
-			$("#groupDetailModal").modal("hide");
-		});
 		
 		return false;
 	}
-	$.ajax({
-		url : url
-		, method : "get"
-		, data : data
-		, contentType : "json"
-		, success : success
-	});
+	ajaxFunc(data, url, "get", success);
 	
 });
 </script>

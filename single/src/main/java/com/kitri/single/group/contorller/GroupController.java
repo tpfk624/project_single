@@ -246,6 +246,38 @@ public class GroupController {
 		return json;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/memberstate")
+	public String getMemberStatecode(@SessionAttribute("userInfo") UserDto userInfo
+			, @RequestParam("groupNum") int groupNum) {
+		String json = makeJSON(0, "시스템 에러");
+		
+		String memberStatecode = getGroupMemberStatecode(userInfo.getUserId(), groupNum);
+		
+		if(memberStatecode != null) {
+			if(memberStatecode.equals("L")) {
+				json = makeJSON(1, memberStatecode);
+			}else {
+				json = makeJSON(1, "일정은 모임장만 등록 가능합니다");
+			}	
+		}
+		
+		return json;
+	}
+	
+	@ResponseBody
+	@RequestMapping("groupmember")
+	public void groupMember(HttpSession session, @RequestParam Map<String, String> parameter) {
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		String json = makeJSON(0, "시스템 에러입니다");
+		if(userDto == null) {
+			json = makeJSON(99, "로그인이 필요한 기능입니다");
+		}else {
+			parameter.put("userId", userDto.getUserId());
+			//json = groupService.groupMember(parameter);
+		}
+	}
+	
 	//그룹 내 nav바 이동 관련
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/grouppage", method = RequestMethod.GET)
@@ -331,6 +363,8 @@ public class GroupController {
 		jsonObject.put("resultCode", resultCode);
 		if(resultData instanceof Collection) {
 			jsonObject.put("resultData", new JSONArray(resultData));
+		}else if(resultData instanceof String){
+			jsonObject.put("resultData", resultData.toString());
 		}else {
 			jsonObject.put("resultData", new JSONObject(resultData));
 		}

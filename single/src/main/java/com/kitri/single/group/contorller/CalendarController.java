@@ -36,7 +36,7 @@ public class CalendarController {
 			, CalendarDto calendarDto
 			, @RequestParam(name = "type") String type) {
 		
-		System.out.println("POST : " + calendarDto);
+		//System.out.println("POST : " + calendarDto);
 		String json = "";
 		if("create".equals(type)) {
 			json = groupService.createCalendar(calendarDto);
@@ -53,7 +53,7 @@ public class CalendarController {
 	public String deleteCreate(@SessionAttribute("userInfo") UserDto userInfo
 			, @RequestBody CalendarDto calendarDtol) {
 		
-		System.out.println("DELETE : " + calendarDtol);
+		//System.out.println("DELETE : " + calendarDtol);
 		String json = groupService.deleteCalendar(calendarDtol);
 		logger.info(json.toString());
 		
@@ -64,7 +64,7 @@ public class CalendarController {
 	public String getCalendar(@SessionAttribute("userInfo") UserDto userInfo
 			, @RequestParam Map<String, String> parameter) {
 		
-		System.out.println(parameter);
+		//System.out.println(parameter);
 		String json = "";
 		if(parameter != null) {
 			String tyep = parameter.get("type");
@@ -76,7 +76,7 @@ public class CalendarController {
 				json = groupService.getCalendarList(parameter);
 			}
 		}
-		System.out.println(json);
+		//System.out.println(json);
 		return json;
 	}
 	

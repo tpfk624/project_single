@@ -38,6 +38,11 @@
 	</div>
 </div>
 <script>
+$(function() {
+	$("#alertSuccess button[name=alertOK]").click(function () {
+		$("#alertSuccess").modal("hide");
+	});
+});
 function showSuccessAlertModal(title, body, footer) {
 	//아짓 footer는 고려안함..
 	$("#alertSuccess .modal-title").html(title);

@@ -29,3 +29,32 @@ function dropdownItemClick(){
 	$(this).parent().trigger("click");
 	return false;
 }
+
+function ajaxFunc(data, url, method, successFunc) {	
+	var processData = true;
+	var contentType = "application/json";
+	
+	if(method.toUpperCase() == "POST"){
+		processData = false;
+		contentType = false;
+	}
+	$.ajax({
+		url : url
+		, method : method
+		, processData : processData
+		, contentType : contentType
+		, dataType : "json"
+		, data : data
+		, success : successFunc
+	});	
+}
+
+function ajaxPage(data, url, successFunc) {
+	$.ajax({
+		url : url
+		, data : data
+		, method : "get"
+		, success : successFunc
+		, async: true
+	});
+}
