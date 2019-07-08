@@ -12,6 +12,7 @@ import javax.servlet.ServletContext;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -46,11 +47,8 @@ import com.kitri.single.user.service.UserService;
 import com.kitri.single.util.Utill;
 
 @Controller
-
 @RequestMapping("/mypage")
-
 @SessionAttributes("userInfo")
-
 public class UserController {
 
 	@Autowired
@@ -59,143 +57,118 @@ public class UserController {
 	@Autowired
 	private ServletContext servletContext;
 
-
 	// 로그
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	
 	//////////////////////////////////모임관리 페이지////////////////////////////////////////////////
-	
-	
-	// 모임 관리 첫페이지용 
+
+	//모임불러오기(모든모임 첫페이지용) 
 	@RequestMapping(value = "/groupall", method = RequestMethod.GET)
-
 	public String groupall(Model model, HttpSession session) {
-
+		
+		System.out.println("모임 첫페이지옴");
+		
 		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
-
 		Map<String, String> parameter = new HashMap<String, String>();
-
-		parameter.put("page", "1");
-
+		
 		if (userInfo != null) {
-
 			parameter.put("userId", userInfo.getUserId());
-
 		}
-
 		parameter.put("groupNum", null);
 
-		parameter.put("key", null);
-
-		parameter.put("word", null);
-
 		List<GroupDto> list = userService.getGroupAll(parameter);
-
+		
 		int size = list.size();
-
 		System.out.println(parameter);
-
+		
 		model.addAttribute("parameter", parameter);
-
 		model.addAttribute("size", size);
-
 		model.addAttribute("groupList", list);
-
+		
 		return "mypage/group";
-
 	}
 	
+	//모임불러오기(모임장/모임원)
 	@RequestMapping("/select")
 	public String groupSelect(@SessionAttribute("userInfo") UserDto user, 
-			@RequestParam(name = "option") String option,
-			Model model) {
+			@RequestParam(name = "option") String option, Model model) {
 		System.out.println("option : " + option);
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userId", user.getUserId());
-		map.put("option", option);		
+		map.put("option", option);
+		
 		List<GroupDto> list = userService.getMyGroup(map);
 		model.addAttribute("groupList", list);
+		
 		return "/mypage/groupresult" ;
 	}
 
-	
-	//모임리더 	
-	@RequestMapping(value = "/groupleader", method = RequestMethod.GET)
-	@ResponseBody
-	public String groupreader(Model model, HttpSession session) {
-		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
-		Map<String, String> parameter = new HashMap<String, String>();
-		parameter.put("page", "1");
-		if (userInfo != null) {
-			parameter.put("userId", userInfo.getUserId());
-		}
+	//그룹디테일
+	@RequestMapping(value = "/groupdetail", method = RequestMethod.GET)
+	public @ResponseBody String getGroup(@RequestParam(name = "groupNum") int groupNum){
+		//String json = groupService.getGrou(parameter);
+		//System.out.println(groupNum);
+		System.out.println("여기는 옴??");
+		GroupDto groupDto = userService.getGroup(groupNum);
 		
-		parameter.put("groupNum", null);
-		parameter.put("key", null);
-		parameter.put("word", null);
+		JSONObject jsonObject = new JSONObject();
 		
-		List<GroupDto> list = userService.getGroupLeader(parameter);
-		int size = list.size();
-
-		System.out.println(parameter);
-
-		model.addAttribute("parameter", parameter);
-
-		model.addAttribute("size", size);
-
-		model.addAttribute("groupList", list);
+		JSONObject groupJson = new JSONObject(groupDto);
+		jsonObject.put("group", groupJson);
+		jsonObject.put("taglist", groupDto.getHashtagList());
 		
-		return "000";
+		return jsonObject.toString();
 	}
 	
-	
-	
-	//모임멤버
-	@RequestMapping(value = "/groupmember", method = RequestMethod.GET)
-	@ResponseBody
-	public String groupmember(Model model, HttpSession session) {
-
-		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
-
-		Map<String, String> parameter = new HashMap<String, String>();
-
-		parameter.put("page", "1");
-
-		if (userInfo != null) {
-
-			parameter.put("userId", userInfo.getUserId());
-
-		}
-
-		parameter.put("groupNum", null);
-
-		parameter.put("key", null);
-
-		parameter.put("word", null);
-
-		List<GroupDto> list = userService.getGroupMember(parameter);
-
-		int size = list.size();
-
-		System.out.println(parameter);
-
-		model.addAttribute("parameter", parameter);
-
-		model.addAttribute("size", size);
-
-		model.addAttribute("groupList", list);
-
-		return "000";
-
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public void groupCreate(@SessionAttribute("userInfo") UserDto userInfo) {
+		
 	}
 
-	
 	//////////////////////////////////찜한 모임관리 페이지////////////////////////////////////////////////
 	
+	//찜모임불러오기(찜 모든모임 첫페이지용) 
+	@RequestMapping(value = "/stampgroup", method = RequestMethod.GET)
+	public String stampgroup(Model model, HttpSession session) {
+		System.out.println("찜모임첫페이지");
+		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
+		
+		Map<String, String> parameter = new HashMap<String, String>();
+		if (userInfo != null) {
+			parameter.put("userId", userInfo.getUserId());
+		}
+		
+		parameter.put("groupNum", null);
+
+		List<GroupDto> list = userService.getStampGroup(parameter);
+		
+		int size = list.size();
+		System.out.println(parameter);
+		
+		model.addAttribute("parameter", parameter);
+		model.addAttribute("size", size);
+		model.addAttribute("groupList", list);
+		
+		return "mypage/groupzzim";
+	}
 	
-	
-	
+	//모임불러오기(모임장/모임원)
+	@RequestMapping("/zselect")
+	public String zselect(@SessionAttribute("userInfo") UserDto user, 
+			@RequestParam(name = "option") String option, Model model) {
+		System.out.println("option : " + option);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", user.getUserId());
+		map.put("option", option);
+		
+		List<GroupDto> list = userService.getMyStamp(map);
+		model.addAttribute("groupList", list);
+		
+		return "/mypage/groupresult" ;
+	}
 	
 	
 	

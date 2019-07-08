@@ -209,18 +209,18 @@ body {
 }
 
 .btn_submit {
-	font-size: 15px;
-	font-weight: bold;
-	color: white;
-	display: block;
-	width: 121px;
-	height: 40px;
-	line-height: 40px;
-	border: 1px solid #3099dd;
-	background: #49b2e9;
-	text-align: center;
-	float: right;
-	margin-top: 21px;
+    font-size: 15px;
+    font-weight: bold;
+    color: white !important;
+    display: block;
+    width: 121px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #3099dd;
+    background: #49b2e9;
+    text-align: center;
+    float: right;
+    margin-top: 21px;
 }
 
 .et-radio_txt {
@@ -258,16 +258,18 @@ body {
 }
 
 .pw_input {
-	width: 100%;
-	height: 29px;
-	line-height: 29px;
-	padding-left: 10px;
-	padding-right: 10px;
-	font-size: 13px;
-	color: #808080;
-	border: 1px solid #c8c8ca;
-	margin-bottom: 10px;
+    width: 100%;
+    height: 29px;
+    line-height: 29px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 13px;
+    color: #808080;
+    border: 1px solid #c8c8ca;
+    margin-bottom: 10px;
+    font-family: '돋움';
 }
+
 
 #btn-danger {
 	width: 100%;
@@ -280,3 +282,7 @@ body {
     margin-left: 60px;
     margin-top: 20px;
 }
+
+
+
+

@@ -11,142 +11,41 @@
 
 <mapper namespace="com.kitri.single.user.dao.UserDao">
 
- 
 
- 
-
-	<!-- 나의 모임관리  -->
-
+	<!-- <<<<<<<<<<<<<<<<나의 모임 관리 >>>>>>>>>>>>>>>>>>>>>> -->
+	
+	<!-- 나의 모임관리(전체보기) -->
 	<select id="getGroupAll" parameterType="string" resultType="groupDto">
-
 		select
-
 			g.group_num groupNum
-
 			, m.user_id as userId
-
 			, g.group_name as groupName
-
 			, g.group_description as groupDescription
-
 			, g.group_img_src as groupImgSrc
-
 			, g.group_member_count as groupMemberCount
-
 			, g.group_member_limit as groupMemberLimit
-
 			, g.group_main_place as groupMainPlace
-
 			, to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
-
 		from single_group g, single_group_member m
-
 		where g.group_num = m.group_num
-
 			and g.group_statecode = '1'
-
 			and m.user_id = #{userId}
-
-	</select>
-
- 
-
-	<select id="getGroupLeader" parameterType="string" resultType="groupDto">
-
-		select
-
-			g.group_num groupNum
-
-			, m.user_id as userId
-
-			, g.group_name as groupName
-
-			, g.group_description as groupDescription
-
-			, g.group_img_src as groupImgSrc
-
-			, g.group_member_count as groupMemberCount
-
-			, g.group_member_limit as groupMemberLimit
-
-			, g.group_main_place as groupMainPlace
-
-			, to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
-
-		from single_group g, single_group_member m
-
-		where g.group_num = m.group_num
-
-			and g.group_statecode = '1'
-
-			and m.group_member_statecode = 'L'
-
-			and m.user_id = #{userId}
-
-	</select>
-
- 
-
-	<select id="getGroupMember" parameterType="string" resultType="groupDto">
-
-		select
-
-			g.group_num groupNum
-
-			, m.user_id as userId
-
-			, g.group_name as groupName
-
-			, g.group_description as groupDescription
-
-			, g.group_img_src as groupImgSrc
-
-			, g.group_member_count as groupMemberCount
-
-			, g.group_member_limit as groupMemberLimit
-
-			, g.group_main_place as groupMainPlace
-
-			, to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
-
-			from single_group g, single_group_member m
-
-		where g.group_num = m.group_num
-
-			and g.group_statecode = '1'
-
-			and m.group_member_statecode = 'M'
-
-			and m.user_id = #{userId}
-
 	</select>
 
 
-
-	<!-- 나의 모임관리  -->
+	<!-- 나의 모임관리(개설모임,가입모임) -->
 	<select id="getMyGroup" parameterType="map" resultType="groupDto">
 	select
-
 			g.group_num groupNum
-
 			, m.user_id as userId
-
 			, g.group_name as groupName
-
 			, g.group_description as groupDescription
-
 			, g.group_img_src as groupImgSrc
-
 			, g.group_member_count as groupMemberCount
-
 			, g.group_member_limit as groupMemberLimit
-
 			, g.group_main_place as groupMainPlace
-
 			, to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
-
 		from single_group g, single_group_member m
-
 		where g.group_num = m.group_num
 			and g.group_statecode = '1'
 			and m.user_id = #{userId}
@@ -156,16 +55,78 @@
 			<if test="option == 'groupmember' " >
 			and m.group_member_statecode = 'M'
 			</if>
-			
 	</select>
 	
-
+	<!-- 나의 모임관리(모임 상세페이지) -->
+	<select id="getGroup" parameterType="int" resultType="groupDto">
+	select 
+        g.group_num groupNum
+        , g.group_category_num groupCategoryNum
+        , gc.group_category_name groupCategoryName
+        , g.group_name as groupName
+        , g.group_description as groupDescription
+        , g.group_img_src as groupImgSrc
+        , g.group_member_count as groupMemberCount
+        , g.group_member_limit as groupMemberLimit	    
+        , g.group_main_place as groupMainPlace
+        , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+    from 
+        single_group g
+        left outer join single_group_category gc
+            on g.group_category_num = gc.group_category_num
+    where g.group_statecode = '1'
+   	and g.group_num = #{groupNum}
+	</select>
 	
+	
+	
+	<!-- <<<<<<<<<<<<<<<<찜모임 >>>>>>>>>>>>>>>>>>>>>> -->
+	
+	<!-- 찜모임관리(전체보기) -->
+	<select id="getStampGroup" parameterType="string" resultType="groupDto">
+	select 
+	    g.group_num groupNum
+	    , g.group_name as groupName
+	    , g.group_description as groupDescription
+	    , g.group_img_src as groupImgSrc
+	    , g.group_member_count as groupMemberCount
+	    , g.group_member_limit as groupMemberLimit	    
+	    , g.group_main_place as groupMainPlace
+	    , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+	from single_group g, single_stamp p
+	where g.group_num = p.group_num
+	    and g.group_statecode = '1'
+	    and p.user_id = #{userId}
+	</select>
 	 
-
-	
-
- 
+ 	<!-- 찜모임관리(카테고리별 보기) -->
+	<select id="getMyStamp" parameterType="map" resultType="groupDto">
+	select 
+	    g.group_num groupNum
+	    , g.group_name as groupName
+	    , g.group_description as groupDescription
+	    , g.group_img_src as groupImgSrc
+	    , g.group_member_count as groupMemberCount
+	    , g.group_member_limit as groupMemberLimit	    
+	    , g.group_main_place as groupMainPlace
+	    , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+	from single_group g, single_stamp p
+	where g.group_num = p.group_num
+	    and g.group_statecode = '1'
+	    and p.user_id = #{userId}
+	    <if test="option == 'study' " >
+		 and g.group_category_num = 1
+		</if>
+		<if test="option == 'hobby' " >
+		 and g.group_category_num = 2
+		</if>
+		<if test="option == 'friend' " >
+		 and g.group_category_num = 3
+		</if>
+		<if test="option == 'foodtour' " >
+		 and g.group_category_num = 4
+		</if>  
+	</select>
 
  
 

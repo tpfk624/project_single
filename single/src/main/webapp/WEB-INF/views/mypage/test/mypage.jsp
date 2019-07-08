@@ -7,7 +7,6 @@
 .modal-body{
 	 font-family : '돋움'
 }
-
 label {
     display: inline-block;
     margin-bottom: .5rem;
@@ -23,11 +22,6 @@ label {
 
 .btn_submit {
     color: white !important;
-}
-
-.old_pw, .new_pw, .pw_vali {
-    width: 421px;
-    font-family: '돋움';
 }
 
 
@@ -99,6 +93,40 @@ $(function(){
 		</div>
 	</div>
 
+	<br><br>
+	<!-- 여기서부터 비밀번호 모달  -->
+	<div class="modal" id="myModal">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">비밀번호 재설정</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<form action="/ko/member/change_pw" method="post" id="pw_form">
+					<div class="modal-body">
+						<input type="password" placeholder="현재 비밀번호"
+							class="pw_input old_pw" name="old_pw"> <input
+							type="password" placeholder="신규 비밀번호"
+							class="pw_input new_pw" name="userPassword"> <input
+							type="password" placeholder="신규 비밀번호 확인"
+							class="pw_input pw_vali" name="pw_vali">
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" id="btn-danger"
+							data-dismiss="modal">변경</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- 여기서부터 비밀번호 모달 끝 -->
+	
 	
 	<!-- 여기서부터 탈퇴 모달  -->
 	<div class="modal" id="deleteModal">
@@ -122,7 +150,7 @@ $(function(){
 						</h6>
 
 						</div>
-						<input type="password" placeholder="현재 비밀번호"class="pw_input delete_pw" name="delete_pw"> 
+						<input type="password" placeholder="현재 비밀번호"class="pw_input old_pw" name="old_pw"> 
 					</div>
 
 					<!-- Modal footer -->
@@ -196,39 +224,19 @@ $(function(){
 					<!-- 테이블 한 줄  -->
 					<tr>
 						<th>
-							<!--이름-->현재 비밀번호 :
+							<!--비밀번호-->비밀번호 :
 						</th>
-						<td><input type="password" name="old_pw" class="pw_input old_pw" value=""></td>
+						<td>
+							<!-- Button to Open the Modal -->
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#myModal">비밀번호 재설정</button> <!-- The Modal -->
+							
+						</td>
 					</tr>
 					<tr>
 						<td class="space">&nbsp;</td>
 					</tr>
 					<!-- 테이블 한 줄  -->
-					
-					<!-- 테이블 한 줄  -->
-					<tr>
-						<th>
-							<!--이름-->신규 비밀번호 :
-						</th>
-						<td><input type="password" name="userPassword" class="pw_input new_pw" value=""></td>
-					</tr>
-					<tr>
-						<td class="space">&nbsp;</td>
-					</tr>
-					<!-- 테이블 한 줄  -->
-					
-					<!-- 테이블 한 줄  -->
-					<tr>
-						<th>
-							<!--이름-->비밀번호 확인 :
-						</th>
-						<td><input type="password" name="pw_vali" class="pw_input pw_vali" value=""></td>
-					</tr>
-					<tr>
-						<td class="space">&nbsp;</td>
-					</tr>
-					<!-- 테이블 한 줄  -->
-					
 					
 					<!-- 테이블 한 줄  -->
 					<tr>
