@@ -318,6 +318,7 @@ public class GroupController {
 			
 			System.out.println(list);
 			
+			model.addObject("groupNum", list.get(0).getGroupNum());
 			model.addObject("memberlist", list);
 			model.setViewName(path);
 		}

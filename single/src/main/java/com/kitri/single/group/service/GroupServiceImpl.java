@@ -251,17 +251,32 @@ public class GroupServiceImpl implements GroupService {
 		String type = parameter.get("type");
 		String json = makeJSON(0, "잘못된 요청입니다");
 		GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+		System.out.println(parameter);
 		if(type != null) {
-			GroupMemberDto groupMemberDto = new GroupMemberDto();
-			groupMemberDto.setGroupNum(Integer.parseInt(parameter.get("groupNum")));
-			groupMemberDto.setGroupMemberStatecode("W");
-			groupMemberDto.setUserId(parameter.get("userId"));
-			
-			System.out.println(groupMemberDto);
-			groupDao.insertGroupMember(groupMemberDto);
+			if(type.equals("apply")) {
+				GroupMemberDto groupMemberDto = new GroupMemberDto();
+				groupMemberDto.setGroupNum(Integer.parseInt(parameter.get("groupNum")));
+				groupMemberDto.setGroupMemberStatecode("W");
+				groupMemberDto.setUserId(parameter.get("userId"));
+				groupDao.insertGroupMember(groupMemberDto);
+				
+				json = makeJSON(1, "모임에 가입신청 되었습니다. 모임장이 승인해야 가입이 완료됩니다.");
+			}else if(type.equals("leader")) {
+				//TO-DO
+			}else if(type.equals("fire")) {
+				//TO-DO
+			}else if(type.equals("applyok")) {
+				//TO-DO
+			}else if(type.equals("applyno")) {
+				//TO-DO
+			}
 		}
+		//1 : apply - 가입요청  
+		//2 : leader - 리더변경  
+		//3 : fire - 퇴출   
+		//4 : applyok - 승인   
+		//5 : applyno - 승인거부
 		
-		json = makeJSON(1, "모임에 가입신청 되었습니다. 모임장이 승인해야 가입이 완료됩니다.");
 		return json;
 	}
 	
