@@ -89,22 +89,26 @@ public class MemberController {
 		return "member/emailauth/emailauth";
 	}
 	
-	// 인증 메일 전달
+	// 메일인증 
 	@ResponseBody
 	@RequestMapping(value = "/sendemail", method = RequestMethod.POST)
 	public String sendemail(@RequestBody UserDto userDto,Model model) throws Exception {
 		logger.info(">>>>"+ userDto.getUserId());
 		//TODO 아이디가 존재할경우 로그인 ㄱㄱ.
-//		userDto = memberService.getUser(userDto);
-//		//로그인 성공
-//		if(userDto != null) {
-//			model.addAttribute("userInfo", userDto);
-//		}else {
-//			model.addAttribute("userInfo", null);
-//		}
+		//아이디 인증키 인증상태
+		userDto = memberService.getUser(userDto);
+		
+		// 아이디 부재, 인증상태 ==0 -> 인증메일 발송 
+		// 아이디 존재 , 인증상태 ==0 -> 인증메일 재발송
+		if(userDto == null && "0".equals(userDto.getAuthState()) ) {
+			userDto = memberService.sendAuthMail(userDto);	
+			model.addAttribute("userInfo", userDto);
+		}else {
+			model.addAttribute("userInfo", null);
+		}
 		
 		
-		userDto = memberService.sendAuthMail(userDto);
+		
 		logger.info(">>>>"+ userDto.toString());
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(userDto);

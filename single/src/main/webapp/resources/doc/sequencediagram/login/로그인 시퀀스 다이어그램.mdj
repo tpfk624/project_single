@@ -86,8 +86,8 @@
 									"font": "Arial;13;0",
 									"left": 5,
 									"top": 8,
-									"width": 804,
-									"height": 353,
+									"width": 695,
+									"height": 332,
 									"nameLabel": {
 										"$ref": "AAAAAAFrz8NHkoDMj+M="
 									},
@@ -414,7 +414,7 @@
 											"left": 221,
 											"top": 112,
 											"width": 14,
-											"height": 177
+											"height": 116
 										}
 									],
 									"font": "Arial;13;0",
@@ -693,7 +693,7 @@
 													},
 													"visible": false,
 													"font": "Arial;13;0",
-													"left": 320,
+													"left": 256,
 													"height": 13
 												},
 												{
@@ -703,11 +703,11 @@
 														"$ref": "AAAAAAFrz8NHk4Dyhck="
 													},
 													"font": "Arial;13;1",
-													"left": 613,
+													"left": 581,
 													"top": 47,
-													"width": 121.2236328125,
+													"width": 62.736328125,
 													"height": 13,
-													"text": "로그인 페이지 이동"
+													"text": "로그인"
 												},
 												{
 													"_type": "LabelView",
@@ -717,7 +717,7 @@
 													},
 													"visible": false,
 													"font": "Arial;13;0",
-													"left": 320,
+													"left": 256,
 													"width": 106.20263671875,
 													"height": 13,
 													"text": "(from Interaction1)"
@@ -730,15 +730,15 @@
 													},
 													"visible": false,
 													"font": "Arial;13;0",
-													"left": 320,
+													"left": 256,
 													"height": 13,
 													"horizontalAlignment": 1
 												}
 											],
 											"font": "Arial;13;0",
-											"left": 608,
+											"left": 576,
 											"top": 40,
-											"width": 131.2236328125,
+											"width": 72.736328125,
 											"height": 40,
 											"stereotypeLabel": {
 												"$ref": "AAAAAAFrz8NHkoDu58k="
@@ -763,16 +763,16 @@
 												"$ref": "AAAAAAFrz8NHk4EORLI="
 											},
 											"font": "Arial;13;0",
-											"left": 674,
+											"left": 612,
 											"top": 80,
 											"width": 1,
 											"height": 231
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 608,
+									"left": 576,
 									"top": 40,
-									"width": 131.2236328125,
+									"width": 72.736328125,
 									"height": 271,
 									"nameCompartment": {
 										"$ref": "AAAAAAFrz8NHk4Dyhck="
@@ -820,9 +820,9 @@
 													"font": "Arial;13;1",
 													"left": 469,
 													"top": 47,
-													"width": 119,
+													"width": 78.61181640625,
 													"height": 13,
-													"text": "회원가입 폼 이동"
+													"text": "회원가입 폼"
 												},
 												{
 													"_type": "LabelView",
@@ -851,7 +851,7 @@
 											"font": "Arial;13;0",
 											"left": 464,
 											"top": 40,
-											"width": 129,
+											"width": 88.61181640625,
 											"height": 40,
 											"stereotypeLabel": {
 												"$ref": "AAAAAAFrz8NHk4D1weY="
@@ -876,7 +876,7 @@
 												"$ref": "AAAAAAFrz8NHk4EPkr0="
 											},
 											"font": "Arial;13;0",
-											"left": 529,
+											"left": 508,
 											"top": 80,
 											"width": 1,
 											"height": 233
@@ -885,7 +885,7 @@
 									"font": "Arial;13;0",
 									"left": 464,
 									"top": 40,
-									"width": 129,
+									"width": 88.61181640625,
 									"height": 273,
 									"nameCompartment": {
 										"$ref": "AAAAAAFrz8NHk4D5YTM="
@@ -914,7 +914,7 @@
 												"$ref": "AAAAAAFrz8NHk4EJyg4="
 											},
 											"font": "Arial;13;0",
-											"left": 279,
+											"left": 268,
 											"top": 166,
 											"width": 180.9462890625,
 											"height": 13,
@@ -937,7 +937,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 378,
+											"left": 367,
 											"top": 153,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -958,7 +958,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 378,
+											"left": 367,
 											"top": 188,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -978,7 +978,7 @@
 												"$ref": "AAAAAAFrz8NHk4EJyg4="
 											},
 											"font": "Arial;13;0",
-											"left": 522,
+											"left": 501,
 											"top": 184,
 											"width": 14,
 											"height": 54
@@ -991,7 +991,7 @@
 									"tail": {
 										"$ref": "AAAAAAFrz8NHkoDbMrM="
 									},
-									"points": "234:184;522:184",
+									"points": "234:184;501:184",
 									"nameLabel": {
 										"$ref": "AAAAAAFrz8NHk4D8qpI="
 									},
@@ -1025,7 +1025,7 @@
 												"$ref": "AAAAAAFrz8NHk4EK56o="
 											},
 											"font": "Arial;13;0",
-											"left": 360,
+											"left": 326,
 											"top": 248,
 											"width": 180.9462890625,
 											"height": 13,
@@ -1048,7 +1048,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 450,
+											"left": 416,
 											"top": 233,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -1069,7 +1069,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 450,
+											"left": 416,
 											"top": 268,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -1089,7 +1089,7 @@
 												"$ref": "AAAAAAFrz8NHk4EK56o="
 											},
 											"font": "Arial;13;0",
-											"left": 667,
+											"left": 605,
 											"top": 264,
 											"width": 14,
 											"height": 33
@@ -1102,7 +1102,7 @@
 									"tail": {
 										"$ref": "AAAAAAFrz8NHkoDbMrM="
 									},
-									"points": "234:264;667:264",
+									"points": "228:264;605:264",
 									"nameLabel": {
 										"$ref": "AAAAAAFrz8NHk4EB7So="
 									},
@@ -1214,7 +1214,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFrz8NHk4EQMb0="
 							},
-							"name": "로그인 페이지 이동",
+							"name": "로그인",
 							"isMultiInstance": false
 						},
 						{
@@ -1223,7 +1223,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFrz8NHk4EQMb0="
 							},
-							"name": "회원가입 폼 이동",
+							"name": "회원가입 폼",
 							"isMultiInstance": false
 						}
 					]
