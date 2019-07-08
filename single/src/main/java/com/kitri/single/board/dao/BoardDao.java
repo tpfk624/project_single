@@ -17,9 +17,9 @@ public interface BoardDao extends HashtagDao{
 	BoardDto viewArticle(int boardNum);
 	
 	// totalPage
-	int totalPage();
-	
-	// 메인 페이징 처리
+	int totalPage(BoardDto boardDto);
+
+	// 페이징 처리
 	List<BoardDto> findByRows(BoardPageDto boardPageDto);
 	
 	// 메인 이주의 추천순

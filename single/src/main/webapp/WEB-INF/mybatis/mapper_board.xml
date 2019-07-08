@@ -24,16 +24,20 @@
 	and board_num = #{boardNum}
 	</select>
 	
-	<select id="totalPage" resultType="int">
+	
+	<select id="totalPage" resultType="int" parameterType="boardDto">
 	select count(*)
-	from (  select * from single_board )
+	from single_board
+	<if test="boardListNum != 0">
+	where board_list_num = #{boardListNum}
+	</if>
+	
 	</select>
 	
 	
 	
 	<!-- <(오른쪽이 더 큰 표시)를 쓰려면 &lt; 표시로 써야함. -->
 	<select id="findByRows" parameterType="boardPageDto" resultType="boardDto" >
-	<![CDATA[
 	select *
 	from (
 	    select rownum rn, a.*
@@ -46,12 +50,16 @@
 				board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
 				board_statecode boardStatecode
 		    from single_board
+		    <if test="boardListNum != 0">
+			where board_list_num = #{boardListNum}
+			</if>
 		    order by board_createdate desc
 		    ) a
+		<![CDATA[
 	    where rownum <= #{endRow}
+	    ]]>
 	    ) 
 	where rn >= #{startRow}
-	]]>
 	</select>
 	
 	
@@ -70,7 +78,6 @@
 	]]>
 	</select>
 	
-		
 	
 	
 </mapper>

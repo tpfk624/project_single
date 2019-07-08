@@ -25,26 +25,26 @@ session.setAttribute("userInfo", userDto); %>
 <script>
 
 
-// 페이징 처리
+//페이징 처리
 $(function() {
 	
-	selectPage(1, "", "");
+	selectPage(1, "", "", 0);
 	
 	// 페이지 숫자
 	// this 대신에 클래스로 바로 접근하면 전체적으로 접근한 것이라 어느것이 클릭된지 판별이 안됌.
 	$(document).on("click", ".page", function(){
 		var page = $(this).find(".page-link").val();
-		selectPage(page, "", "");
+		selectPage(page, "", "", 0);
 	});
 	
-	
+	 
 });
 
 
 
 
-function selectPage(page, key, word ) {
-	var param = JSON.stringify({'page':page,'key':key,'word':word});
+function selectPage(page, key, word, boardListNum ) {
+	var param = JSON.stringify({'page':page,'key':key,'word':word,'boardListNum':boardListNum});
 	$.ajax({
 		url : '${root}/board',
 		type : 'GET',
@@ -52,6 +52,7 @@ function selectPage(page, key, word ) {
 			'page':page
 			,'key':key
 			,'word':word
+			,'boardListNum':boardListNum
 		},
 		success : function(response) {
 			$(".paging").html(response.trim());

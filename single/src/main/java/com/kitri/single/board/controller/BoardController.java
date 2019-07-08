@@ -44,6 +44,9 @@ public class BoardController {
 		//이달의 자취왕
 		
 		
+		
+		
+		
 		//이주의 추천순
 		List<BoardDto> boardDtoList = boardService.weekList();
 		//System.out.println(boardDtoList.toString());
@@ -55,10 +58,15 @@ public class BoardController {
 		
 	}
 	
+	
+	
 	// 자취생활 페이지로 이동
 	@RequestMapping(value="/singlelifeboard")
 	public void singlelifeboard(){
 	}
+	
+	
+	
 	
 	// 요리 레시피 페이지로 이동
 	@RequestMapping(value="/singlecookboard")
@@ -174,24 +182,30 @@ public class BoardController {
 
 	}
 	
+	// 전체 페이징 처리
 	@RequestMapping(method = RequestMethod.GET)
-	public String newList(@RequestParam Map<String, Object> params, Model model) {
+	public String boardList(@RequestParam Map<String, Object> params, Model model) {
 		
 		//System.out.println("컨트롤");
 		int currentPage = Integer.parseInt((String)params.get("page"));
-		System.out.println(currentPage);
 		
-		BoardPageDto bp = boardService.selectNewList(currentPage);
+		// boardListNum로 나눔.
+		int boardListNum = Integer.parseInt((String)params.get("boardListNum"));
+		//System.out.println(boardListNum);
+		
+		BoardPageDto bp = boardService.selectBoardList(currentPage, boardListNum);
 		//System.out.println("bp.tosrting ==== " + bp.getList().toString());
 		
 		model.addAttribute("bp", bp);
 		//System.out.println("model === " + model);
 		
-//		List<BoardDto> boardDtoList = boardService.weekList();
-//		System.out.println(boardDtoList.toString());
-//		model.addAttribute("weekList", boardDtoList);
+		String path = "";
 		
-		String path = "board/main/newlistok";
+		if (boardListNum == 0) {
+			path = "board/boardlist/newlistok";
+		} else {
+			path = "board/boardlist/commonlist";
+		}
 		
 		return path;
 	}
