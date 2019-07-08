@@ -31,6 +31,7 @@
 		
 		<typeAlias alias="SnsDto" type="com.kitri.single.sns.model.SnsDto"/>
 		<typeAlias alias="groupMemberDto" type="com.kitri.single.group.model.GroupMemberDto"/>
+		<typeAlias alias="calendarDto" type="com.kitri.single.group.model.CalendarDto"/>
 		
 	</typeAliases>
 	

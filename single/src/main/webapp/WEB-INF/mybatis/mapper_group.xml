@@ -151,4 +151,111 @@
 	    </if>
 	</select>
 	
+	<select id="selectCalendarSeq" resultType="int">
+	select calendar_num_seq.nextval
+	from dual
+	</select>
+	
+	<insert id="insertCalendar" parameterType="calendarDto">
+	insert into single_calendar(
+	    calendar_num
+	    , group_num
+	    , calendar_subject
+	    , calendar_content
+	    , calendar_date
+	    , calendar_x_loc
+	    , calendar_y_loc
+	)values(
+	    #{calendarNum}
+	    , #{groupNum}
+	    , #{calendarSubject}
+	    , #{calendarContent}
+	    , to_date(#{calendarDate}, 'mm/dd/yyyy')
+	    , #{calendarXLoc}
+	    , #{calendarYLoc}
+	)
+	</insert>
+	
+	<select id="selectCalendar" parameterType="map" resultType="calendarDto">
+	select 
+	    calendar_num calendarNum
+	    , group_num groupNum
+	    , calendar_subject calendarSubject
+	    , calendar_content calendarContent
+	    , to_char(calendar_date, 'mm/dd/yyyy') calendarDate
+	    , calendar_x_loc calendarXLoc
+	    , calendar_y_loc calendarYLoc
+	from single_calendar
+	where calendar_num = #{calendarNum}
+	and group_num = #{groupNum}
+	</select>
+	
+	<select id="selectCalendarList" parameterType="map" resultType="calendarDto">
+	select 
+	    calendar_num calendarNum
+	    , group_num groupNum
+	    , calendar_subject calendarSubject
+	    , calendar_content calendarContent
+	    , to_char(calendar_date, 'mm/dd/yyyy') calendarDate
+	    , calendar_x_loc calendarXLoc
+	    , calendar_y_loc calendarYLoc
+	from single_calendar
+	where group_num = #{groupNum}
+	and to_char(calendar_date, 'yyyy/mm') = #{date}
+	</select>
+	
+	<update id="updateCalendar" parameterType="calendarDto">
+	update single_calendar
+	set
+		group_num = #{groupNum}
+		, calendar_subject = #{calendarSubject}
+	    , calendar_content = #{calendarContent}
+	    , calendar_date = to_date(#{calendarDate}, 'mm/dd/yyyy')
+	    , calendar_x_loc = #{calendarXLoc}
+	    , calendar_y_loc = #{calendarYLoc}
+	where
+		calendar_num = #{calendarNum}
+	</update>
+	
+	<delete id="deleteCalendar" parameterType="int">
+	delete from single_calendar
+	where calendar_num = #{calendarNum}
+	</delete>
+	
+	<update id="updateGroup" parameterType="groupDto">
+	update single_group
+	set
+	    group_category_num = #{groupCategoryNum}
+	    , group_name = #{groupName}
+	    , group_description = #{groupDescription}
+	    , group_img_src = #{groupImgSrc}
+	    , group_member_limit = #{groupMemberLimit}
+	    , group_main_place = #{groupMainPlace}
+	where
+	    group_statecode = '1'
+	    and group_num = #{groupNum}
+	</update>
+	
+	<delete id="deleteHashtag" parameterType="map">
+	delete from single_hashtag
+	where
+		hashtag_type_num = #{hashtagTypeNum}
+		and group_num = #{groupNum}
+	</delete>
+	
+	<insert id="insertGroupStamp" parameterType="map">
+	insert into single_stamp
+	values(
+		#{userId}
+		, #{groupNum}
+	)
+	</insert>
+	
+	<select id="countGroupStamp" parameterType="map" resultType="int">
+	select count(*)
+	from single_stamp
+	where user_id = #{userId}
+	and group_num = #{groupNum}
+	</select>
+	
 </mapper>

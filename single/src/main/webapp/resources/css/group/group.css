@@ -147,7 +147,7 @@
 .homework-status{
 	float: right;
 	font-weight: bold;
-	background-image: url("${root}/resources/img/group/checked.png");
+	background-image: url("/single/resources/img/group/checked.png");
 	height: 5rem;
     background-repeat: no-repeat;
     background-size: contain;

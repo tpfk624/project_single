@@ -8,50 +8,40 @@
 	height: 300px;
 }
 </style>
-<script>
-$(function() {
-	//달력
-	$('.datepicker').datepicker({
-	    uiLibrary: 'bootstrap4',
-   		onSelect: function(dateText) {
-//    	console.log("Selected date: " + dateText + "; input's current value: " + this.value);
-   	    }
-	}).on("change", function() {
-		//달력 눌를때 이벤트 콜백 위치
-	});
-
-})
-</script>
-<div id="makeCalendarModal" class="modal fade" role="dialog">
+<div id="calendarModal" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-dialog-scrollable modal-lg">
 		<div class="modal-content">
 			<div class="modal-header text-center">
-				<label style="margin-left: auto; margin-bottom:auto; margin-top:auto; font-size: 1.5rem">그룹 일정 등록</label>
+				<label style="margin-left: auto; margin-bottom:auto; margin-top:auto; font-size: 1.5rem"></label>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">X</span>
 				</button>
 			</div>
 			<div class="modal-body text-center">
-				<input type="hidden" value="" name="calendarSubject">
-				<input type="hidden" value="" name="groupNum">
+				<form class="calendarForm">
+				<input type="hidden" value="" name="type">
+				<input type="hidden" value="${group.groupNum}" name="groupNum">
+				<input type="hidden" value="" name="calendarNum">
 				<section class="groupsection group-info">
-					<label class="group-info-label col-sm-2">일정이름</label>
+					<label class="group-info-label col-sm-2">일정이름(*)</label>
 					<div class="group-info-content col-sm-10">
-						<input type="text" class="form-control" name="calendarSubject" placeholder="일정 이름을 입력해주세요" value="">
+						<input type="text" class="form-control" name="calendarSubject" placeholder="일정 이름을 입력해주세요" 
+						value="">
+					</div>
+				</section>
+				<section class="groupsection group-info">
+					<label class="group-info-label col-sm-2">일정날짜(*)</label>
+					<div class="group-info-content col-sm-10">
+						<input class="datepicker" name ="calendarDate" width="276" readonly="readonly" disabled="disabled"
+							value=""/>
 					</div>
 				</section>
 				<section class="groupsection group-info">
 					<label class="group-info-label col-sm-2">내용</label>
 					<div class="group-info-content col-sm-10">
 						<textarea name="calendarContent" rows="10" cols="100" class="form-control" id="message"
-							placeholder="내용을 입력해주세요" style="resize: none"></textarea>
-					</div>
-				</section>
-				<section class="groupsection group-info">
-					<label class="group-info-label col-sm-2">일정날짜</label>
-					<div class="group-info-content col-sm-10">
-						<input class="datepicker" name ="userBirthday" width="276" />
+							placeholder="" style="resize: none"></textarea>
 					</div>
 				</section>
 				<section class="groupsection group-info">
@@ -64,14 +54,169 @@ $(function() {
 						</div>
 					</div>
 				</section>
-			
+				</form>
 			</div>
 			
 			<!-- Modal footer -->
-	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-primary">일정등록</button>
-	          	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+	        <div class="modal-footer" style="display: block;">
+	        	<c:if test="${groupMember.groupMemberStatecode == 'L'}">
+	        	<button type="button" class="btn btn-danger deletebtn" style="float: left;">삭제</button>
+	        	<button type="button" class="btn btn-secondary right" data-dismiss="modal">닫기</button>
+	        	<button type="button" class="btn btn-primary okbtn right"></button>        	       	
+	        	</c:if>
+	        	<c:if test="${groupMember.groupMemberStatecode == 'M'}">
+	        	<button type="button" class="btn btn-secondary right" data-dismiss="modal">닫기</button>
+	        	</c:if>
+	          	
 	        </div>
 		</div>
 	</div>
 </div>
+<script>
+$("#calendarModal").on("hidden.bs.modal", function() {
+	$(this).find("textarea[name=calendarContent]").text("");
+	$(this).find("textarea[name=calendarContent]").val("");
+	$(this).find("input[name=calendarDate]").val("");
+	$(this).find("input[name=calendarXLoc]").val("");
+	$(this).find("input[name=calendarYLoc]").val("");
+	$(this).find("input[name=calendarSubject]").val("");
+});
+//달력
+$('.datepicker').datepicker({
+    uiLibrary: 'bootstrap4',
+		onSelect: function(dateText) {
+//	console.log("Selected date: " + dateText + "; input's current value: " + this.value);
+	    }
+}).on("change", function() {
+	//달력 눌를때 이벤트 콜백 위치
+});
+
+$("#alertSuccess button[name=alertOK]").click(function() {
+	$("#alertSuccess").modal("hide");
+});
+
+$(".deletebtn").click(function() {
+	
+});
+
+$(".okbtn").click(function() {
+	var url = "${root}/calendar";
+	var form = $(".calendarForm");
+	var data = new FormData(form[0]);
+	ajaxFunc(data, url, "post",  success);
+	
+	return false;
+});
+
+$(".deletebtn").click(function() {
+	var url = "${root}/calendar";
+	var form = $(".calendarForm");
+	var data = {
+		calendarNum : $("#calendarModal input[name=calendarNum]").val()
+	};
+	if(dataValidate() == 1){
+		ajaxFunc(JSON.stringify(data), url, "delete",  success);
+	}
+	
+	return false;
+});
+
+var success = function(result) {
+	console.log(result)
+	if(result.resultCode == 1){
+		showSuccessAlertModal("일정등록 성공", "일정이 등록되었습니다.");
+		drawSchedule(result.resultData);
+	}else if(result.resultCode == 2){
+		showSuccessAlertModal("일정수정 성공", "일정이 수정되었습니다.");
+		modifySchedule(result.resultData);
+	}else if(result.resultCode == 3){
+		showSuccessAlertModal("일정수정 삭제", "일정이 삭제되었습니다.");
+		deleteSchedule(result.resultData);
+	}else{
+		showAlertModal("일정등록 실패", "등록 실패하였습니다. 관리자에게 문의하세요");
+	}
+	
+	$("#alertSuccess").on("hidden.bs.modal", function() {
+		 $("#calendarModal").modal("hide");
+	});
+}
+
+var dataValidate = function (){
+	//console.log($("input[name=calendarSubject]"));
+	var calendarSubject = $("input[name=calendarSubject]").val();
+ 	var calendarContent = $("input[name=calendarContent]").val();
+ 	var calendarDate = $("input[name=calendarDate]").val();
+ 	var calendarXLoc = $("input[name=calendarXLoc]").val();
+ 	var calendarYLoc = $("input[name=calendarYLoc]").val();
+ 	
+ 	if(calendarSubject == null || calendarSubject == '' ){
+ 		showAlertModal("필수값 확인", "일정이름을 확인해주세요");
+ 		return 0;
+ 	}
+ 	if(calendarDate == null || calendarDate == '' ){
+ 		showAlertModal("필수값 확인", "일정날짜를 확인해주세요");
+ 		return 0;
+ 	}
+ 	if(calendarXLoc == null || calendarXLoc == ''){
+ 		$("input[name=calendarXLoc]").val(0);
+ 	}
+ 	if(calendarYLoc == null || calendarYLoc == ''){
+ 		$("input[name=calendarYLoc]").val(0);
+ 	}
+ 	//console.log(calendarXLoc);
+ 	//console.log(calendarYLoc);
+ 	return 1;
+}
+
+function showCalendarModal(type, json, day) {
+		
+	var calendarModal = $("#calendarModal");
+	if(type == 'create'){
+		var url = "${root}/group/memberstate";
+		var data = {
+			groupNum : $("#calendarModal input[name=groupNum]").val()
+		};
+		var success = function(result) {
+			if(result.resultCode == 1){
+				if(result.resultData == "L"){
+					calendarModal.find(".modal-header>label").text("그룹 일정 등록");
+					calendarModal.find("input[name=type]").val("create");
+					calendarModal.find("input[name=calendarDate]").removeAttr("disabled");
+					calendarModal.find("input[name=calendarNum]").val(0);
+					calendarModal.find("input[name=calendarXLoc]").val(0);
+					calendarModal.find("input[name=calendarYLoc]").val(0);
+					calendarModal.find(".deletebtn").css("display", "none");
+					calendarModal.find(".okbtn").text("등록");
+					
+					day = parseInt(day);
+					var date = month + "/" + (day < 10 ? '0' + day : day) + "/" + year;
+					$("#calendarModal input[name=calendarDate]").val(date);
+					
+					calendarModal.modal("show");
+				}else{
+					showSuccessAlertModal("일정등록", result.resultData);
+				}
+			}else{
+				return false;
+			}
+		}
+		console.log(data);
+		ajaxFunc(data, url, "get", success);
+		
+	}else{
+		calendarModal.find(".modal-header>label").text("그룹 일정 보기");
+		calendarModal.find("input[name=calendarNum]").val(json.calendarNum);
+		calendarModal.find("input[name=groupNum]").val(json.groupNum);
+		calendarModal.find("input[name=type]").val("modify");
+		calendarModal.find("input[name=calendarSubject]").val(json.calendarSubject);
+		calendarModal.find("input[name=calendarDate]").css("disabled", "disabled").val(json.calendarDate);
+		calendarModal.find("textarea[name=calendarContent]").text(json.calendarContent);
+		calendarModal.find("input[name=calendarXLoc]").val(json.calendarXLoc);
+		calendarModal.find("input[name=calendarYLoc]").val(json.calendarYLoc);
+		
+		calendarModal.find(".deletebtn").css("display", "inline-block");
+		calendarModal.find(".okbtn").text("수정");
+		calendarModal.modal("show");
+	}
+}
+</script>

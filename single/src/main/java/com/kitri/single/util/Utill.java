@@ -28,7 +28,7 @@ public class Utill {
 		File file = new File(realPath, uuid);
 		
 		multipartFile.transferTo(file);
-		src = root + "upload" + "/" + type + "/" + uuid;
+		src = root + "/upload/" + type + "/" + uuid;
 		
 		
 		return src;
