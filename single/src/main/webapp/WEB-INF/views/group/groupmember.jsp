@@ -23,12 +23,15 @@ $(function() {
 		return false;
 	});
 	
+	$("#groupDelete").on("click", function() {	
+		showAlertConfirmModal("확인해주세요", "정말로 모임을 삭제 하시겠습니까?(되돌릴 수 없습니다)", "groupDelete", "", "");
+	});
+	
 	$(".member-state-table .btn-danger").click(function () {
 		var text = $(this).text();
 		var name = $(this).parent().siblings(".userNickname").text();
 		var type = $(this).attr("data-type");
-		var userId = $(this).parent().parent().attr("data-userId");
-		var userNickname = $(this).parent().parent().attr("data-userNickname");
+		var targetId = $(this).parent().parent().attr("data-userId");
 		
 		var body = "";
 		if(text == '모임장위임'){
@@ -39,44 +42,60 @@ $(function() {
 			body = "정말 " + name + " 님을 퇴출 하시겠습니까?";
 		}
 		
-		showAlertConfirmModal("확인해주세요", body, type, userId, userNickname);
+		showAlertConfirmModal("확인해주세요", body, type, targetId, name);
+	});
+	
+	$(".member-state-table .btn-primary").click(function () {
+		var name = $(this).parent().siblings(".userNickname").text();
+		var type = $(this).attr("data-type");
+		var targetId = $(this).parent().parent().attr("data-userId");
+		
+		var data = {
+			groupNum : "${groupNum}"
+			, type : type
+			, targetId : targetId
+			, userNickname : name
+		}
+		var url = "${root}/group/groupmember";
+		
+		groupMemberUpdate(data, url);
 	});
 	
 	$("#alert_confirm .okbtn").on("click", function() {
-		console.log($(this).attr("data-type"));
-		var url = "${root}/group/groupmember";
-		var data = {
-			groupNum : "${groupNum}"
-			, type : $(this).attr("data-type")
-			, userId : $(this).attr("data-userId")
-			, userNickname : $(this).attr("data-userNickname")
-		}
-		var success = function(result) {
-			var title = "";
-			var body = "";
-			if(result.resultCode == 2){
-				title = "리더변경 ";
-			}else if(result.resultCode == 3){
-				title = "멤버 퇴출";
-			}else if(result.resultCode == 4){
-				title = "가입 요청 승인";
-			}else if(result.resultCode == 5){
-				title = "가입 요청 거부";
-			}else{
-				showAlertModal("잘못된 요청", "잘못된 요청입니다");
-				return false;
+		//console.log($(this).attr("data-type"));
+		var type = $(this).attr("data-type");
+		
+		if(type == 'groupDelete'){
+			console.log("dd");
+			var url = "${root}/group/groupdelete";
+			var data = {
+				groupNum : "${groupNum}"
+			}
+			var success = function(result) {
+				$("#alert_confirm").modal("hide");
+				if(result.resultCode == 1){
+					showSuccessAlertModal("모임 삭제", "정상적으로 모임이 삭제되었습니다(더이상 되돌릴 수 없습니다)");
+					
+					$("#alertSuccess").on("hidden.bs.modal", function () {
+						$(location).attr("href", "${root}/group");
+					});
+				}else{
+					showAlertModal("모임 삭제 실패", result.resultData);
+				}
+			}
+			ajaxFunc(data, url, "get", success);
+		}else{
+			var url = "${root}/group/groupmember";
+			var data = {
+				groupNum : "${groupNum}"
+				, type : type
+				, targetId : $(this).attr("data-targetId")
+				, userNickname : $(this).attr("data-userNickname")
 			}
 			
-			body = result.resultData;
-			showSuccessAlertModal(title, body);
-			
-			$("#alertSuccess").on("hidden.bs.modal", function () {
-				$("#navbar>a[data-page=member]").trigger();
-			});	
+			groupMemberUpdate(data, url);
 		}
-		console.log(data);
-		console.log(url);
-		ajaxFunc(data, url, "get", success);
+		return false;
 	});
 });
 </script>
@@ -96,7 +115,7 @@ $(function() {
 	<div>
 		<input class="col-sm-9 form-control search-input" type="text" 
 			id="myInput" onkeyup="" placeholder="이름을 검색해주세요" title="이름을 검색해주세요">
-		<button type="button" class="btn btn-danger col-sm-2 right writeBtn">모임삭제</button>
+		<button type="button" class="btn btn-danger col-sm-2 right writeBtn" data-type="deleteGroup" id="groupDelete">모임삭제</button>
 	</div>
 	<table class="table hprogress-table member-state-table">
 		<thead>
@@ -111,7 +130,7 @@ $(function() {
 		</thead>
 		<tbody>
 			<c:forEach items="${memberlist}" var="member" varStatus="status">
-			<tr data-userId="${member.userId}" data-userNickname="${member.userNickname}">
+			<tr data-userId="${member.userId}" >
 				<td>${status.index}</td>
 				<td class="userNickname">${member.userNickname}</td>
 				<td>${member.groupRequestdate}</td>
@@ -125,7 +144,7 @@ $(function() {
 					<c:when test="${member.groupMemberStatecode == 'L'}">
 					</c:when>
 					<c:when test="${member.groupMemberStatecode == 'M'}">
-						<button class="btn btn-danger btn-primary" data-type="leader">모임장위임</button>
+						<button class="btn btn-danger" data-type="leader" style="background-color: #004085; border-color: #004085;">모임장위임</button>
 						<button class="btn btn-danger" data-type="fire">퇴출</button>
 					</c:when>
 					<c:when test="${member.groupMemberStatecode == 'W'}">

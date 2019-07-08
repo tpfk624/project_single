@@ -115,18 +115,6 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public void insertGroupMember(GroupMemberDto groupMemberDto) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void increaseGroupMemberCount() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public GroupMemberDto getGroupMember(Map<String, Object> parameter) {
 		return sqlSession.getMapper(GroupDao.class).selectGroupMember(parameter);
 	}
@@ -247,43 +235,107 @@ public class GroupServiceImpl implements GroupService {
 	}
 	
 	@Override
+	@Transactional
 	public String groupMember(Map<String, String> parameter) {
 		String type = parameter.get("type");
 		String json = makeJSON(0, "잘못된 요청입니다");
 		GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
 		System.out.println(parameter);
-		if(type != null) {
-			if(type.equals("apply")) {
-				GroupMemberDto groupMemberDto = new GroupMemberDto();
-				groupMemberDto.setGroupNum(Integer.parseInt(parameter.get("groupNum")));
-				groupMemberDto.setGroupMemberStatecode("W");
-				groupMemberDto.setUserId(parameter.get("userId"));
-				groupDao.insertGroupMember(groupMemberDto);
-				
-				json = makeJSON(1, "모임에 가입신청 되었습니다. 모임장이 승인해야 가입이 완료됩니다.");
-			}else if(type.equals("leader")) {
-				//TO-DO
-			}else if(type.equals("fire")) {
-				//TO-DO
-			}else if(type.equals("applyok")) {
-				//TO-DO
-			}else if(type.equals("applyno")) {
-				//TO-DO
-			}
-		}
+		
 		//1 : apply - 가입요청  
 		//2 : leader - 리더변경  
 		//3 : fire - 퇴출   
 		//4 : applyok - 승인   
 		//5 : applyno - 승인거부
 		
+		if(type != null) {
+			GroupMemberDto groupMemberDto = new GroupMemberDto();
+			groupMemberDto.setGroupNum(Integer.parseInt(parameter.get("groupNum")));
+			if(type.equals("apply")) {
+				//가입요청
+				groupMemberDto.setGroupMemberStatecode("W");
+				groupMemberDto.setUserId(parameter.get("userId"));
+				groupDao.insertGroupMember(groupMemberDto);
+				
+				json = makeJSON(1, "모임에 가입신청 되었습니다. 모임장이 승인해야 가입이 완료됩니다.");
+			}else if(type.equals("leader")) {
+				//리더 변경
+				//대상자 리더 만들기
+				groupMemberDto.setGroupMemberStatecode("L");
+				groupMemberDto.setUserId(parameter.get("targetId"));	
+				groupDao.updateGroupMember(groupMemberDto);
+				
+				//로그인 사용자 일반모임원 만들기
+				groupMemberDto.setGroupMemberStatecode("M");
+				groupMemberDto.setUserId(parameter.get("userId"));
+				groupDao.updateGroupMember(groupMemberDto);
+				
+				json = makeJSON(2, parameter.get("userNickname") + " 님으로 모임장이 변경되었습니다");
+				
+			}else if(type.equals("fire")) {
+				//퇴출
+				groupMemberDto.setGroupMemberStatecode("D");
+				groupMemberDto.setUserId(parameter.get("targetId"));				
+				groupDao.updateGroupMember(groupMemberDto);
+				
+				//그룹 멤버 숫자 내리기
+				groupDao.groupMemberCountDown(Integer.parseInt(parameter.get("groupNum")));
+				
+				json = makeJSON(3, parameter.get("userNickname") + " 님을 모임에서 퇴출하였습니다");
+				
+			}else if(type.equals("applyok")) {
+				//그룹 멤버 숫자 확인하기
+				int result = groupDao.groupMemberCountUp(Integer.parseInt(parameter.get("groupNum")));
+				
+				if(result == 0) {
+					json = makeJSON(0, "모임의 인원수가 가득 찼습니다. 인원제한을 변경하세요");
+				}else {
+					//가입승인
+					groupMemberDto.setGroupMemberStatecode("M");
+					groupMemberDto.setUserId(parameter.get("targetId"));		
+					groupDao.updateGroupMember(groupMemberDto);
+					
+					json = makeJSON(4, parameter.get("userNickname") + " 님을 가입승인 하였습니다");
+				}
+				
+			}else if(type.equals("applyno")) {
+				//가입 승인 거절
+				groupMemberDto.setUserId(parameter.get("targetId"));	
+				groupDao.deleteGroupMember(groupMemberDto);
+				
+				json = makeJSON(5, parameter.get("userNickname") + " 님의 가입승인을 거절하였습니다");
+				
+			}
+		}
+		
 		return json;
 	}
 	
+	@Transactional
+	private void groupMemberCountDown(int groupNum) {
+		sqlSession.getMapper(GroupDao.class).groupMemberCountDown(groupNum);
+	}
+	
+	@Transactional
+	private int groupMemberCountUp(int groupNum) {
+		return sqlSession.getMapper(GroupDao.class).groupMemberCountUp(groupNum);
+	}
+
+
 	@Override
 	public List<GroupMemberDto> getGroupMemberList(int groupNum) {
 		return sqlSession.getMapper(GroupDao.class).getGroupMemberList(groupNum);
 	}
+	
+	@Override
+	public String groupDelete(int groupNum) {
+		GroupDto groupDto = new GroupDto();
+		groupDto.setGroupNum(groupNum);
+		groupDto.setGroupStatecode(99);
+		sqlSession.getMapper(GroupDao.class).updateGroup(groupDto);
+		return makeJSON(1, "정상적으로 모임이 삭제되었습니다");
+	}
+	
 	
 	public String makeJSON(int resultCode, Object resultData) {
 		

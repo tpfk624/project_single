@@ -114,20 +114,56 @@ function deleteSchedule(calendarData) {
 	schedule.remove();
 	return false;
 }
-function groupMemberUpdate(e, groupNum, type, root){
+function groupMemberApply(e, groupNum, type, root){
 	var url = root + "/group/groupmember";
 	var data = {
 		groupNum : groupNum
 		, type : type
 	}
 	var success = function(result) {
+		
 		if(result.resultCode == 1){
-			showSuccessAlertModal("가입신청", "모임에 가입신청 되었습니다. 모임장이 수락하면 가입이 수락됩니다.");
+			showSuccessAlertModal("가입 신청", "모임에 가입신청 되었습니다. 모임장이 수락하면 가입이 수락됩니다.");
 		}else{
 			showAlertModal("가입신청", result.resultData);
 		}
-		
 		return false;
 	}
+	ajaxFunc(data, url, "get", success);
+}
+function groupMemberUpdate(data, url){
+	var success = function(result) {
+		$("#alert_confirm").modal("hide");
+		var title = "";
+		var body = "";
+		if(result.resultCode == 2){
+			title = "리더변경 ";
+		}else if(result.resultCode == 3){
+			title = "멤버 퇴출";
+		}else if(result.resultCode == 4){
+			title = "가입 요청 승인";
+		}else if(result.resultCode == 5){
+			title = "가입 요청 거부";
+		}else{
+			showAlertModal("잘못된 요청", "잘못된 요청입니다");
+			$("#alert").on("hidden.bs.modal", function () {
+				$("#navbar>a[data-page=member]").trigger("click");
+			});
+			return false;
+		}
+		
+		body = result.resultData;
+		showSuccessAlertModal(title, body);
+		
+		$("#alertSuccess").on("hidden.bs.modal", function () {
+			if(result.resultCode == 2){
+				location.reload();
+			}else{
+				$("#navbar>a[data-page=member]").trigger("click");
+			}
+		});
+		return false;
+	}
+	
 	ajaxFunc(data, url, "get", success);
 }

@@ -14,12 +14,12 @@
 
  --%>
 <script>
-function showAlertConfirmModal(title, body, type, userId, userNickname) {
+function showAlertConfirmModal(title, body, type, targetId, userNickname) {
 	//아짓 footer는 고려안함..
 	$("#alert_confirm .modal-title").html(title);
 	$("#alert_confirm .modal-body>p").html(body);
 	$("#alert_confirm .modal-footer button[name=alertOK]").attr("data-type", type);
-	$("#alert_confirm .modal-footer button[name=alertOK]").attr("data-userId", userId);
+	$("#alert_confirm .modal-footer button[name=alertOK]").attr("data-targetId", targetId);
 	$("#alert_confirm .modal-footer button[name=alertOK]").attr("data-userNickname", userNickname);
 	$("#alert_confirm").modal("show");
 }
@@ -42,7 +42,7 @@ function showAlertConfirmModal(title, body, type, userId, userNickname) {
 				<p></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger okbtn" name="alertOK" data-type="" data-userId="" data-userNickname="">확인</button>
+				<button type="button" class="btn btn-danger okbtn" name="alertOK" data-type="" data-targetId="" data-userNickname="">확인</button>
 				<button type="button" class="btn btn-primary" name="" data-dismiss="modal">취소</button>
 			</div>
 		</div>

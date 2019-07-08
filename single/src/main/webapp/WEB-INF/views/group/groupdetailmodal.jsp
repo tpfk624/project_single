@@ -56,7 +56,7 @@ function groupDetailModalSetting(json) {
 </div>
 <script>
 $(".btn-apply").on("click", function(e){
-	groupMemberUpdate(e, $(this).parent().attr("data-num"), "apply", "${root}");
+	groupMemberApply(e, $(this).parent().attr("data-num"), "apply", "${root}");
 });
 
 $(".btn-stamp").on("click", function(){
