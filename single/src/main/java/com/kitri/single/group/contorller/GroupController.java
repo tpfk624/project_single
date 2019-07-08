@@ -266,16 +266,20 @@ public class GroupController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("groupmember")
-	public void groupMember(HttpSession session, @RequestParam Map<String, String> parameter) {
+	@RequestMapping("/groupmember")
+	public String groupMember(HttpSession session, @RequestParam Map<String, String> parameter) {
+		
+		logger.info(parameter.toString());
+		
 		UserDto userDto = (UserDto)session.getAttribute("userInfo");
 		String json = makeJSON(0, "시스템 에러입니다");
 		if(userDto == null) {
 			json = makeJSON(99, "로그인이 필요한 기능입니다");
 		}else {
 			parameter.put("userId", userDto.getUserId());
-			//json = groupService.groupMember(parameter);
+			json = groupService.groupMember(parameter);
 		}
+		return json;
 	}
 	
 	//그룹 내 nav바 이동 관련
@@ -285,7 +289,7 @@ public class GroupController {
 			, @RequestParam Map<String, String> parameter
 			, ModelAndView model) {
 		
-		System.out.println(parameter);
+		logger.info(parameter.toString());
 		if(parameter.get("groupNum") != null) {
 			int groupNum = Integer.parseInt(parameter.get("groupNum"));
 			String type = parameter.get("type");
@@ -293,12 +297,34 @@ public class GroupController {
 				model = mainPage(userInfo, groupNum, model);
 			}else if("modify".equals(type)) {
 				model = modifyPage(userInfo, groupNum, model);
+			}else if("member".equals(type)) {
+				model = memberPage(userInfo, groupNum, model);
 			}
 		}
 		model.addObject("root", servletContext.getContextPath());
 		return model;
 	}
 	
+	private ModelAndView memberPage(UserDto userInfo, int groupNum, ModelAndView model) {
+		String path = "group/groupmember";
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userInfo.getUserId());
+		parameter.put("groupNum", groupNum);
+		GroupMemberDto groupMemberDto = groupService.getGroupMember(parameter);
+		
+		if(groupMemberDto.getGroupMemberStatecode().equals("L")) {
+			
+			List<GroupMemberDto> list = groupService.getGroupMemberList(groupNum);
+			
+			System.out.println(list);
+			
+			model.addObject("memberlist", list);
+			model.setViewName(path);
+		}
+		
+		return model;
+	}
+
 	private ModelAndView modifyPage(UserDto userInfo, int groupNum, ModelAndView model) {
 		String path = "group/groupmodify";
 		Map<String, Object> parameter = new HashMap<String, Object>();

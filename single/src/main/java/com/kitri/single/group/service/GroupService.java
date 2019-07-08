@@ -22,6 +22,7 @@ public interface GroupService {
 	public void increaseGroupMemberCount();
 	public void insertGroupMember(GroupMemberDto groupMemberDto);
 	public GroupMemberDto getGroupMember(Map<String, Object> parameter);
+	public List<GroupMemberDto> getGroupMemberList(int groupNum);
 	
 	//그룹 일정
 	public String createCalendar(CalendarDto calendarDto);
@@ -32,4 +33,7 @@ public interface GroupService {
 	
 	//그룹 찜하기
 	public String groupStamp(String userId, int groupNum);
+	public String groupMember(Map<String, String> parameter);
+
+	
 }

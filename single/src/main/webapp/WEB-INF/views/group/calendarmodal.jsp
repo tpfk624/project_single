@@ -194,13 +194,13 @@ function showCalendarModal(type, json, day) {
 					
 					calendarModal.modal("show");
 				}else{
-					showSuccessAlertModal("일정등록", result.resultData);
+					return false;
 				}
 			}else{
 				return false;
 			}
 		}
-		console.log(data);
+
 		ajaxFunc(data, url, "get", success);
 		
 	}else{
@@ -211,6 +211,7 @@ function showCalendarModal(type, json, day) {
 		calendarModal.find("input[name=calendarSubject]").val(json.calendarSubject);
 		calendarModal.find("input[name=calendarDate]").css("disabled", "disabled").val(json.calendarDate);
 		calendarModal.find("textarea[name=calendarContent]").text(json.calendarContent);
+		calendarModal.find("textarea[name=calendarContent]").val(json.calendarContent);
 		calendarModal.find("input[name=calendarXLoc]").val(json.calendarXLoc);
 		calendarModal.find("input[name=calendarYLoc]").val(json.calendarYLoc);
 		

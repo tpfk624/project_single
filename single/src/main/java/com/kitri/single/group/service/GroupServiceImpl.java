@@ -246,8 +246,29 @@ public class GroupServiceImpl implements GroupService {
 		return makeJSON(1, "모임을 찜했습니다. 나의 찜목록 페이지에서 확인하세요");
 	}
 	
+	@Override
+	public String groupMember(Map<String, String> parameter) {
+		String type = parameter.get("type");
+		String json = makeJSON(0, "잘못된 요청입니다");
+		GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+		if(type != null) {
+			GroupMemberDto groupMemberDto = new GroupMemberDto();
+			groupMemberDto.setGroupNum(Integer.parseInt(parameter.get("groupNum")));
+			groupMemberDto.setGroupMemberStatecode("W");
+			groupMemberDto.setUserId(parameter.get("userId"));
+			
+			System.out.println(groupMemberDto);
+			groupDao.insertGroupMember(groupMemberDto);
+		}
+		
+		json = makeJSON(1, "모임에 가입신청 되었습니다. 모임장이 승인해야 가입이 완료됩니다.");
+		return json;
+	}
 	
-	
+	@Override
+	public List<GroupMemberDto> getGroupMemberList(int groupNum) {
+		return sqlSession.getMapper(GroupDao.class).getGroupMemberList(groupNum);
+	}
 	
 	public String makeJSON(int resultCode, Object resultData) {
 		

@@ -56,10 +56,8 @@ function groupDetailModalSetting(json) {
 </div>
 <script>
 $(".btn-apply").on("click", function(e){
-	groupMemberUpdate(e, $(this).parent().attr("data-num"), "apply");
+	groupMemberUpdate(e, $(this).parent().attr("data-num"), "apply", "${root}");
 });
-
-
 
 $(".btn-stamp").on("click", function(){
 	var url = "${root}/group/groupstamp";

@@ -7,12 +7,6 @@
 <%@ include file="/WEB-INF/views/commons/alert_success.jsp"%>
 <script src="${root}/resources/js/group/group.js"></script>
 <c:set var="parameter" value="${requestScope.parameter}"></c:set>
-<% 
-HttpSession httpSession = request.getSession();
-UserDto userInfo = new UserDto();
-userInfo.setUserId("calubang@naver.com");
-httpSession.setAttribute("userInfo", userInfo);
-%>
 <script>
 $(function() {
 	//$(".groupcard").on("click", groupcardClick);

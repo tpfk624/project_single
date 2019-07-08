@@ -7,10 +7,11 @@
 <c:set var="group" value="${requestScope.group}"></c:set>
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <script src="${root}/resources/js/group/group.js"></script>
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" 
+	integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/5ed7132c4a.js"></script>
 <style>
 /* 페이지에 유지할 부분*/
-
 </style>
 <script>
 $(function() {
@@ -65,7 +66,7 @@ $(function() {
 		<div class="carousel-inner" role="listbox">
 			<!-- Slide One - Set the background image for this slide in the line below -->
 			<div class="carousel-item active"
-				style="background-image: url('')">
+				style="background-image: url('${group.groupImgSrc}')">
 				<div class="carousel-caption d-none d-md-block">
 					<h3>${group.groupName}</h3>
 					<p>${group.groupCategoryName}</p>
@@ -93,7 +94,7 @@ $(function() {
 	  	<a class="group-navbar-item">모임원 중심점 찾기</a>
 	  	<c:if test="${groupMember.groupMemberStatecode == 'L'}">
 	  	<a class="group-navbar-item grouppage" data-page="modify">모임설정변경</a>
-	  	<a class="group-navbar-item">모임원관리</a>
+	  	<a class="group-navbar-item grouppage" data-page="member">모임원관리</a>
 	  	</c:if>
 	</div>
 	<div class="groupmain" id="groupmain">		

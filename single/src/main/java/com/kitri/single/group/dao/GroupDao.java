@@ -29,6 +29,7 @@ public interface GroupDao extends HashtagDao{
 	//그룹 멤버
 	public void insertGroupMember(GroupMemberDto groupMemberDto);
 	public GroupMemberDto selectGroupMember(Map<String, Object> parameter);
+	public List<GroupMemberDto> getGroupMemberList(int groupNum);
 		
 	//그룹 일정
 	public int selectCalendarSeq();
@@ -41,5 +42,6 @@ public interface GroupDao extends HashtagDao{
 	//그룹 찜하기
 	public void insertGroupStamp(Map<String, Object> parameter);
 	public int countGroupStamp(Map<String, Object> parameter);
+	
 	
 }	

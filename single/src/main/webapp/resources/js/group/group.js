@@ -114,11 +114,11 @@ function deleteSchedule(calendarData) {
 	schedule.remove();
 	return false;
 }
-function groupMemberUpdate(e, groupNum, type){
-	var url = "${root}/group/groupmember";
+function groupMemberUpdate(e, groupNum, type, root){
+	var url = root + "/group/groupmember";
 	var data = {
-		groupNum : $(this).parent().attr("data-num")
-		, type : apply
+		groupNum : groupNum
+		, type : type
 	}
 	var success = function(result) {
 		if(result.resultCode == 1){

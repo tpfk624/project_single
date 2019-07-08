@@ -110,7 +110,12 @@
 	    group_num
 	    , user_id
 	    , group_member_statecode
+		<if test="groupMemberStatecode != null and (groupMemberStatecode eq 'W'.toString) ">
+	    , group_requestdate
+	    </if>
+	    <if test="groupMemberStatecode != null and (groupMemberStatecode eq 'L'.toString) ">
 	    , group_joindate
+	    </if>
 	)values(
 	    #{groupNum}
 	    , #{userId}
@@ -258,4 +263,25 @@
 	and group_num = #{groupNum}
 	</select>
 	
+	<select id="getGroupMemberList" parameterType="int" resultType="groupMemberDto">
+	select 
+	    gm.group_num groupNum
+	    , gm.user_id userId
+	    , gm.group_member_statecode groupMemberStatecode
+	    , gm.group_joindate 
+	    , gm.group_requestdate
+	    , decode(gm.group_joindate, null, null, to_char(gm.group_joindate , 'yyyy') 
+	        || '년 ' || to_char(gm.group_joindate , 'mm') 
+	        || '월 ' || to_char(gm.group_joindate , 'dd') || '일') groupJoindate
+	    , decode(gm.group_requestdate, null, null, to_char(gm.group_requestdate , 'yyyy') 
+	        || '년 ' || to_char(gm.group_requestdate , 'mm') 
+	        || '월 ' || to_char(gm.group_requestdate , 'dd') || '일') groupRequestdate 
+	    , u.user_nickname userNickname
+	from single_group_member gm
+	    inner join single_user u
+	        on gm.user_id = u.user_id
+	where gm.group_member_statecode != 'D'
+	and gm.group_num = #{groupNum}
+	order by gm.group_joindate, gm.group_member_statecode
+	</select>
 </mapper>
