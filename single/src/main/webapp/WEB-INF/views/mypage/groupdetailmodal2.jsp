@@ -50,7 +50,7 @@ $(function() {
 			
 			<!-- Modal footer -->
 	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-primary" data-num="">모임 탈퇴</button>
+	        	<button type="button" class="btn btn-primary" data-num="">찜한 모임 취소</button>
 	          	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 	        </div>
 		</div>
