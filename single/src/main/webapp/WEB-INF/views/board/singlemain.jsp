@@ -30,11 +30,18 @@ $(function() {
 	
 	selectPage(1, "", "");
 	
-	$(".page").click(function() {
-		var page = $(this).val();
+	// 페이지 숫자
+	// this 대신에 클래스로 바로 접근하면 전체적으로 접근한 것이라 어느것이 클릭된지 판별이 안됌.
+	$(document).on("click", ".page", function(){
+		var page = $(this).find(".page-link").val();
 		selectPage(page, "", "");
 	});
+	
+	
 });
+
+
+
 
 function selectPage(page, key, word ) {
 	var param = JSON.stringify({'page':page,'key':key,'word':word});

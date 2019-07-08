@@ -42,10 +42,8 @@
 		
 		<div class="col-lg-2">
 			<c:if test="${bp.startPage > 1 }">
-				<span class="page"> 
-					<a href="${bp.startPage - 1}">
-						<button class="btn btn-success">이전</button>
-					</a>
+				<span class="page">
+					<button class="page-link" value="${bp.startPage - 1}">이전</button>
 				</span>
 			</c:if>
 		</div>
@@ -55,13 +53,13 @@
 		<div class="col-lg-4">
 			<ul class="pagination" style="width: 240px; margin-left: auto; margin-right: auto;">
 
-				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" var="i">
+				<c:forEach begin="${bp.startPage}" end="${bp.endPage}" step="1" varStatus="i">
 					<c:choose>
 
-						<c:when test="${bp.currentPage == i}">
+						<c:when test="${bp.currentPage == i.index}">
 							<li class="page-item">
 								<span>
-									<a class="page-link">${i}</a>
+									<a class="page-link">${i.index}</a>
 								</span>
 							</li>
 						</c:when>
@@ -69,7 +67,7 @@
 						<c:otherwise>
 							<li class="page-item">
 								<span class="page">
-									<a class="page-link" href="${i}">${i}</a>
+									<input class="page-link" type="button" value="${i.index}">
 								</span>
 							</li>
 						</c:otherwise>
@@ -85,12 +83,26 @@
 		<div class="col-lg-2">
 
 			<c:if test="${bp.totalPage > bp.endPage }">
-				<span class="page"> 
-					<a href="${bp.endPage+1}">
-						<button class="btn btn-success">다음</button>
-					</a>
+				<span class="page">
+					<button class="page-link" value="${bp.endPage+1}">다음</button>
 				</span>
 			</c:if>
 
 		</div>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
