@@ -10,6 +10,7 @@ $(function() {
 	
 	$(".search-input").on("keyup", function () {
 		var text = $("this").val();
+		var names = $("")
 	});
 });
 </script>
