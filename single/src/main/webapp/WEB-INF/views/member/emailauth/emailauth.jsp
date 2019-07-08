@@ -54,17 +54,34 @@ $(document).ready(function(){
 </script>
 
 <style>
-#center{
-	margin: auto;
-	width: 70%;
+html{
+    min-height: 100% ;
+    height: 100%;
 }
+body{
+    height: 95%;
+}
+
+.footer{
+  height: 5%;
+  margin-top: 5%;
+  padding-top: 0.rem!important;
+}
+.container{
+min-height: 95%;
+}
+
+
 </style>
 
 
 
-<div id="center">
+
+<!-- <div id="center"> -->
+<div class="container">
+<h1 class ="mt-4 mb-3" style="min-height: 100%;">이메일인증</h1>
 <form id="sendEamilForm" method="post" action="">
- 	<h1>이메일인증</h1>
+ 	
 		<div class="form-group">
 		    <input type="email" placeholder="이메일 입력해주세요" name="userId" class="userId" required="required">
 		  	<button id="emailSendBtn" type="button">이메일 인증하기</button>

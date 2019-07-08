@@ -60,6 +60,16 @@
 	set auth_state = #{authState}
 	where user_id = #{userId}
 	</update>
+	
+	<select id="login" parameterType="userDto" resultType="userDto">
+	select user_id userId, user_password userPassword, user_nickname userNickname, user_profile userProfile, user_name userName, user_birthday userBirthday
+                       , user_gender userGender, user_phone userPhone, user_zipcode userZipcode, user_address userAddress, user_addressdetail userAddressDetail
+                       , user_joindate userJoindate, user_outdate userOutdate, user_statecode userStatecode
+                       , auth_key authKey, auth_state authState
+	from single_user
+	where user_id = #{userId}
+		  and user_password = #{userPassword}
+	</select>
 </mapper>
    
    

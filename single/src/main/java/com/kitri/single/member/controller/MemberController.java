@@ -3,6 +3,7 @@ package com.kitri.single.member.controller;
 import java.util.HashMap;
 
 import javax.inject.Inject;
+import javax.mail.Session;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,16 +33,15 @@ import com.kitri.single.user.model.UserDto;
 import com.kitri.single.user.service.UserService;
 import com.kitri.single.user.service.UserServiceImpl;
 
+//Controller는 요청과 응답을 처리한다.
 @Controller
 @RequestMapping("/member")
 @SessionAttributes("userInfo")
 public class MemberController {
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
-
+	public static final String HOME_REDIRECT_URL ="redirect:/index_logintest.jsp";
 	@Autowired
-	MemberService memberService;
-
-	
+	MemberService memberService;	
 	
 	// 회원가입페이지이동
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -55,9 +55,22 @@ public class MemberController {
 		logger.info(userDto.toString());
 		memberService.regist(userDto);
 		model.addAttribute("userInfo", userDto);
-		return "member/register/registerok";
+		return HOME_REDIRECT_URL;
 	}
-
+	
+	// 로그인
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(UserDto userDto, Model model) {
+		userDto = memberService.login(userDto);
+		//로그인 성공
+		if(userDto != null) {
+			model.addAttribute("userInfo", userDto);
+		}else {
+			model.addAttribute("userInfo", null);
+		}
+		return HOME_REDIRECT_URL ;
+	}
+	
 	// 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(SessionStatus status, HttpServletRequest request, HttpSession session) {
@@ -79,11 +92,19 @@ public class MemberController {
 	// 인증 메일 전달
 	@ResponseBody
 	@RequestMapping(value = "/sendemail", method = RequestMethod.POST)
-	public String sendemail(@RequestBody UserDto userDto) throws Exception {
+	public String sendemail(@RequestBody UserDto userDto,Model model) throws Exception {
 		logger.info(">>>>"+ userDto.getUserId());
+		//TODO 아이디가 존재할경우 로그인 ㄱㄱ.
+//		userDto = memberService.getUser(userDto);
+//		//로그인 성공
+//		if(userDto != null) {
+//			model.addAttribute("userInfo", userDto);
+//		}else {
+//			model.addAttribute("userInfo", null);
+//		}
+		
 		
 		userDto = memberService.sendAuthMail(userDto);
-		
 		logger.info(">>>>"+ userDto.toString());
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(userDto);

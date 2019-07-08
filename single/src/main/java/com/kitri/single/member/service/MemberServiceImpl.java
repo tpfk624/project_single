@@ -17,7 +17,7 @@ import com.kitri.single.user.dao.UserDao;
 import com.kitri.single.user.model.UserDto;
 
 
-
+//DB에서 받은 내용을 가공 전달한다. (처리작업)
 @Service
 public class MemberServiceImpl implements MemberService {
 	Logger logger= LoggerFactory.getLogger(MemberServiceImpl.class);
@@ -27,8 +27,8 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private SqlSession sqlSession;
-
 	
+
 	@Override
 	public void regist(UserDto userDto) {
 		sqlSession.getMapper(MemberDao.class).regist(userDto);
@@ -37,6 +37,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public UserDto sendAuthMail(UserDto userDto) throws MessagingException, UnsupportedEncodingException {
+		MemberDao memberDao  = sqlSession.getMapper(MemberDao.class);
 		// 임의의 authkey 생성
 		String authkey = new TempKey().getKey(50, false);
 		String email =userDto.getUserId();
@@ -50,13 +51,13 @@ public class MemberServiceImpl implements MemberService {
 			userDto.setUserId(email);
 			userDto.setAuthKey(authkey);
 			userDto.setAuthState("0");
-			sqlSession.getMapper(MemberDao.class).createAuthkey(userDto);
+			memberDao.createAuthkey(userDto);
 		}else {
 			logger.info("userEamil :"+ userDto.getUserId());
 			logger.info("usertoString :"+ userDto.toString());
 			logger.info(">>>> 유저의 인증키를 변경합니다.");
 			userDto.setAuthKey(authkey);
-			sqlSession.getMapper(MemberDao.class).updateAuthkey(userDto);
+			memberDao.updateAuthkey(userDto);
 		}
 		
 		// mail 작성 생성
@@ -80,6 +81,20 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void updateAuthstatus(UserDto userDto) {
 		sqlSession.getMapper(MemberDao.class).updateUserAuthState(userDto);
+	}
+
+	@Override
+	public UserDto login(UserDto userDto) {
+		MemberDao memberDao  = sqlSession.getMapper(MemberDao.class);
+		userDto = memberDao.login(userDto);
+		return userDto;
+	}
+
+	@Override
+	public UserDto getUser(UserDto userDto) {
+		MemberDao memberDao  = sqlSession.getMapper(MemberDao.class);
+		userDto = memberDao.getUser(userDto.getUserId());
+		return userDto;
 	}
 
 }

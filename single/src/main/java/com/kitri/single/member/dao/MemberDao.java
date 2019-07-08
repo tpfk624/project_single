@@ -8,5 +8,6 @@ public interface MemberDao {
 	void updateAuthkey(UserDto userDto);
 	UserDto getUser(String email);
 	void updateUserAuthState(UserDto user);
+	UserDto login(UserDto userDto);
 }
 

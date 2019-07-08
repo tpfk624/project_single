@@ -23,10 +23,9 @@ id: loginmodal의 display를 block으로 변경해주세요.
 $(document).ready(function(){
 	var loginBtn =$('.loginBtn'); //로그인 버튼을 등록해주세요.  
 	var logoutBtn=$('.logoutBtn'); //로그아웃 버튼을 등록해주세요.
-	var registerBtn = $('.registerBtn');
-	//로그인 버튼
+	
+	//로그인 모달 띄우기  loginmodal id를 통해서 사용됨
 	loginBtn.click(function() {
-		//로그인 모달 띄우기 !!! loginmodal id를 통해서 사용됨
 		$('#loginmodal').css("display","block").attr("width","auto");
 	});
 	
@@ -35,11 +34,14 @@ $(document).ready(function(){
 		$(location).attr("href","${root}/member/logout");
 	});
 	
-
+	
 	//회원가입 버튼
-	registerBtn.click(function(){
+	$('.registerBtn').click(function(){
 		$(location).attr("href","${root}/member/emailauth");
 	})
+	
+	//로그인 
+	$('#loginForm').attr("action", "${root}/member/login").attr("method", "post")
 });
 
 
@@ -49,23 +51,22 @@ $(document).ready(function(){
 
 <!-- <button class = "naverlogin-button" onclick="document.getElementById('loginmodal').style.display='block'" style="width:auto;">Login</button> -->
   <div id="loginmodal" class="modal">  
-  <form class="modal-content animate" action="/action_page.php">
+  <form id="loginForm" class="modal-content animate" >
     <div class="imgcontainer">
       <span onclick="document.getElementById('loginmodal').style.display='none'" class="close" title="Close Modal">&times;</span>
     </div>
 
     <div class="container">
     	<h3>우리 혼자 살아요</h3>
-<!--       <label for="uemail"><b>이메일입력</b></label> -->
-<!--       <input type="email" placeholder="이메일 입력해주세요" name="uemail" required> -->
       
-      <label class="loginmodal-label" for="uname"><b>아이디</b></label>
-      <input type="text" placeholder="아이디를 입력해주세요" name="uname" required>
+      <label class="loginmodal-label" for="userId"><b>아이디</b></label>
+      <input type="email" placeholder="아이디를 입력해주세요" name="userId" required>
 
-      <label class="loginmodal-label" for="psw" ><b>비밀번호</b></label>
-      <input  type="password" placeholder="비밀번호를 입력해주세요" name="psw" required style="font-family:돋움">
+      <label class="loginmodal-label" for="userPassword" ><b>비밀번호</b></label>
+      <input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" required style="font-family:돋움">
         
       <button type="submit">Login</button>
+      
       <div id="naver_id_login"></div>
       <span class="other"> <a href="#" class = "registerBtn">회원가입</a>  <a href="#" >비밀번호변경</a> <a href="#">비밀번호 찾기</a></span>
       <input type="checkbox"  name="remember" id="remember"/> <label for="remember">아이디 기억하기</label>
@@ -74,7 +75,6 @@ $(document).ready(function(){
 
     <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('loginmodal').style.display='none'" class="cancelbtn">Cancel</button>
-      
     </div>
     
      

@@ -13,6 +13,10 @@ public interface MemberService {
 
 	void updateAuthstatus(UserDto userDto);
 
+	UserDto login(UserDto userDto);
+
+	UserDto getUser(UserDto userDto);
+
 
 
 
