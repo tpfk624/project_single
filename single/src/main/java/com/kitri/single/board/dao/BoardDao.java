@@ -25,5 +25,8 @@ public interface BoardDao extends HashtagDao{
 	// 메인 이주의 추천순
 	List<BoardDto> weekList();
 	
+	// 검색
+	List<BoardDto> search(String search);
+	
 	
 }

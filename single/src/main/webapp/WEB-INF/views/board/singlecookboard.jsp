@@ -4,7 +4,47 @@
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
 
+<script>
 
+
+// 페이징 처리
+$(function() {
+	
+	selectPage(1, "", "", 2);
+	
+	// 페이지 숫자
+	// this 대신에 클래스로 바로 접근하면 전체적으로 접근한 것이라 어느것이 클릭된지 판별이 안됌.
+	$(document).on("click", ".page", function(){
+		var page = $(this).find(".page-link").val();
+		selectPage(page, "", "", 2);
+	});
+	
+	 
+});
+
+
+
+
+function selectPage(page, key, word, boardListNum ) {
+	var param = JSON.stringify({'page':page,'key':key,'word':word,'boardListNum':boardListNum});
+	$.ajax({
+		url : '${root}/board',
+		type : 'GET',
+		data : {
+			'page':page
+			,'key':key
+			,'word':word
+			,'boardListNum':boardListNum
+		},
+		success : function(response) {
+			$(".paging").html(response.trim());
+		}
+	});
+} 
+
+
+
+</script>
 
 
 
@@ -76,111 +116,11 @@
 	<br><br><br>	
 	
 	
-	<!-- 오늘의 새글 테이블 -->
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-2">
-				<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">글작성</button>
-			</div>
-			<div class="col-lg-2"></div>
-			<div class="col-lg-1" style="margin-top: 0.5rem;">
-			<select name="fruit">
-				<option value="제목" selected="selected">제목</option>
-				<option value="작성자">작성자</option>
-			</select>
-			</div>
-			<div class="col-lg-7" style="margin-bottom: 1rem;">
-				<div class="input-group lg-3">
-					<input type="text" class="form-control" placeholder="검색 내용">
-					<div class="input-group-prepend">
-						<button class="btn btn-outline-primary" type="button">검색</button>  
-					</div>
-				</div>
-			</div>
-			
-		</div>
-	</div> 
-	  
-	<div class="container">
-		<table class="table">
-			<thead>
-				<tr>
-					 <th>제목</th>
-					 <th>작성자</th>
-					 <th>작성일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-				<tr>
-					<td width="70%"><strong>맛나는 라면</strong></td>
-					<td width="15%">john@example.com</td>
-					<td width="15%">2019-06-25</td>
-				</tr>
-			</tbody>
-		</table><hr>
-	</div>
-	<div class="row">
-		<div class="col-lg-2"><small>총 글수 : </small></div>
-		<div class="col-lg-8">
-			<ul class="pagination justify-content-center">
-				<li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-				<li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-				<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-				<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-				<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-				<li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
-				<li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-			</ul>
-		</div>
-		<div class="col-lg-2">
-			<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">글작성</button>
-		</div>
-    </div> 
+	
+	<!-- 새글 목록,페이징 처리 -->
+	<div class="paging">	
+	</div> <!-- 페이징처리 -->
+	
       
       
       

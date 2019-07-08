@@ -12,13 +12,39 @@
 // 페이징 처리
 $(function() {
 	
+	
+	
 	selectPage(1, "", "", 1);
 	
 	// 페이지 숫자
 	// this 대신에 클래스로 바로 접근하면 전체적으로 접근한 것이라 어느것이 클릭된지 판별이 안됌.
 	$(document).on("click", ".page", function(){
+		
 		var page = $(this).find(".page-link").val();
 		selectPage(page, "", "", 1);
+		
+	});
+	
+	
+	$(document).on("click", "#search", function(){
+		
+		var searchkey = $("#searchkey").val();
+		var searchword =  $("#searchword").val();
+		alert(searchkey);
+		alert(searchword);
+		
+		if (searchkey == null && searchword == null) {
+			var word = $("#word").val();
+			var key = $("#key").val();
+			
+			var page = $(this).find(".page-link").val();
+			selectPage(1, key, word, 1);
+		}
+		
+		var page = $(this).find(".page-link").val();
+		selectPage(1, searchkey, searchword, 1);
+		
+		
 	});
 	
 	 
@@ -117,14 +143,10 @@ function selectPage(page, key, word, boardListNum ) {
 	<br><br><br>	
 	
 	
-	 
-	 
-		
 			
-			
-		<!-- 새글 목록,페이징 처리 -->
-		<div class="paging">	
-		</div> <!-- 페이징처리 -->
+	<!-- 새글 목록,페이징 처리 -->
+	<div class="paging">	
+	</div> <!-- 페이징처리 -->
 	
 	
 	

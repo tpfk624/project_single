@@ -14,6 +14,8 @@ public class BoardPageDto extends BoardDto{
 	private int endPage; 			// 페이지 그룹의 끝 페이지
 	private String url; 			// 페이지링크 클릭시 요청할 url
 	private int currentPage; 		//현재페이지
+	private String key;
+	private String word;
 	//private List<BoardDto> list;
 	
 	
@@ -32,6 +34,20 @@ public class BoardPageDto extends BoardDto{
 	}
 	
 	
+	public BoardPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, int currentPage, String key, String word) {
+		super();
+		this.cntPerPage = cntPerPage;
+		this.totalCnt = totalCnt;
+		this.cntPerPageGroup = cntPerPageGroup;
+		this.currentPage = currentPage;
+		this.key = key;
+		this.word = word;
+		
+		execute();
+		
+	}
+
+
 	public BoardPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, String url, int currentPage) {
 		super();
 		
@@ -60,7 +76,24 @@ public class BoardPageDto extends BoardDto{
 	}
 
 	
-
+	
+	
+	public String getKey() {
+		return key;
+	}
+	
+	public void setKey(String key) {
+		this.key = key;
+	}
+	
+	public String getWord() {
+		return word;
+	}
+	
+	public void setWord(String word) {
+		this.word = word;
+	}
+	
 	public int getCntPerPage() {
 		return cntPerPage;
 	}

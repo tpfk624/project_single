@@ -86,13 +86,12 @@ public class BoardServiceImpl implements BoardService {
 
 	
 	// 메인페이지 페이징 처리 ----------------------------------------------------------------
-	public BoardPageDto selectBoardList(int currentPage, int boardListNum) {
+	public BoardPageDto selectBoardList(int currentPage, int boardListNum, String key, String word) {
 		
 		BoardDto boardDto = new BoardDto();
 		boardDto.setBoardListNum(boardListNum);
 		
 		int totalcnt = sqlSession.getMapper(BoardDao.class).totalPage(boardDto);
-		System.out.println(totalcnt);
 		
 		
 		int cntPerPage = 0; // 페이지별 보여줄 목록수
@@ -107,15 +106,12 @@ public class BoardServiceImpl implements BoardService {
 		}
 
 		
-		BoardPageDto bp = new BoardPageDto(cntPerPage, totalcnt, cntPerPageGroup, currentPage);
-		//System.out.println(bp);
+		BoardPageDto bp = new BoardPageDto(cntPerPage, totalcnt, cntPerPageGroup, currentPage, key, word);
 		
 		List<BoardDto> list = sqlSession.getMapper(BoardDao.class).findByRows(bp);
 		//System.out.println(list.toString());
 		
 		bp.setList(list);
-		System.out.println(bp);
-		System.out.println(bp.getList());
 		
 		return bp;
 	}

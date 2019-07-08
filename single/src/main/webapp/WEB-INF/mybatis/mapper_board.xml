@@ -28,8 +28,9 @@
 	<select id="totalPage" resultType="int" parameterType="boardDto">
 	select count(*)
 	from single_board
+	where board_statecode = '1'
 	<if test="boardListNum != 0">
-	where board_list_num = #{boardListNum}
+	and board_list_num = #{boardListNum}
 	</if>
 	
 	</select>
@@ -50,9 +51,19 @@
 				board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
 				board_statecode boardStatecode
 		    from single_board
+		    where board_statecode = '1'
 		    <if test="boardListNum != 0">
-			where board_list_num = #{boardListNum}
+			and board_list_num = #{boardListNum}
 			</if>
+			
+			<if test="key=='제목'">
+			and board_subject like '%'||#{word}||'%'
+			</if>
+			
+			<if test="key=='작성자'">
+			and user_nickname like '%'||#{word}||'%'
+			</if>
+
 		    order by board_createdate desc
 		    ) a
 		<![CDATA[
@@ -61,7 +72,8 @@
 	    ) 
 	where rn >= #{startRow}
 	</select>
-	
+
+
 	
 	<select id="weekList" resultType="boardDto">
 	<![CDATA[
@@ -73,10 +85,12 @@
 	                board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
 	                board_statecode boardStatecode
 	    from single_board
+	    where board_statecode = '1'
 	    order by board_like desc, boardCreatedate desc) board
 	where rownum <= 5
 	]]>
 	</select>
+	
 	
 	
 	

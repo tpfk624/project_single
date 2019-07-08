@@ -4,7 +4,17 @@
 
 
 
-<!-- 오늘의 새글 테이블 -->
+<%-- <c:set var="boardListNum" value="${parameter.boardListNum }"/>
+<c:set var="pg" value="${parameter.pg }"/>
+<c:set var="boardNum" value="${boardNum }"/> --%>
+<c:set var="key" value="${bp.key }"/>
+<c:set var="word" value="${bp.word }"/>
+<input type="hidden" id="searchkey" name="key" value="${key}">
+<input type="hidden" id="searchword" name="word" value="${word}">
+
+
+
+<!-- 테이블 -->
 <div class="container">
 	<div class="row">
 		<div class="col-lg-2">
@@ -14,16 +24,16 @@
 		</div>
 		<div class="col-lg-2"></div>
 		<div class="col-lg-1" style="margin-top: 0.5rem;">
-		<select name="fruit">
+		<select name="fruit" id="key">
 			<option value="제목" selected="selected">제목</option>
 			<option value="작성자">작성자</option>
 		</select>
 		</div>
 		<div class="col-lg-7" style="margin-bottom: 1rem;">
 			<div class="input-group lg-3">
-				<input type="text" class="form-control" placeholder="검색 내용">
+				<input id="word" type="text" class="form-control" placeholder="검색 내용">
 				<div class="input-group-prepend">
-					<button class="btn btn-outline-primary" type="button">검색</button>  
+					<button id="search" class="btn btn-outline-primary" type="button">검색</button>  
 				</div>
 			</div>
 		</div>
@@ -109,7 +119,7 @@
 	</div>
 
 
-	<div class="col-lg-2"><small>총 글수 : </small></div>
+	<div class="col-lg-2"><small>총 글수 : ${bp.totalCnt}</small></div>
 
 	
 </div>

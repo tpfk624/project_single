@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class BoardController {
 	
 	//로그
 	//private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	@Autowired
+	private ServletContext servletContext;
 	
 	@Autowired
 	private BoardService boardService;
@@ -42,10 +45,6 @@ public class BoardController {
 		//select를 3번해와야뎀.
 		
 		//이달의 자취왕
-		
-		
-		
-		
 		
 		//이주의 추천순
 		List<BoardDto> boardDtoList = boardService.weekList();
@@ -78,9 +77,11 @@ public class BoardController {
 	
 	// write 페이지 이동
 	@RequestMapping(value="/write",method = RequestMethod.GET)
-	public void write(@RequestParam Map<String, String> parameter, Model model){
+	public void write(){
 		//write?bcode=${board.bcode}&pg=1&key=&word=  가지고 다녀야 하는 이유는 계속 그 게시판을 유지해야뎀 안하면 실행 안뎀.
 		//model.addAttribute("parameter", parameter);
+		
+		
 	}
 	
 	
@@ -191,13 +192,17 @@ public class BoardController {
 		
 		// boardListNum로 나눔.
 		int boardListNum = Integer.parseInt((String)params.get("boardListNum"));
-		//System.out.println(boardListNum);
+		String key = (String)params.get("key");
+		String word = (String)params.get("word");
 		
-		BoardPageDto bp = boardService.selectBoardList(currentPage, boardListNum);
+		BoardPageDto bp = boardService.selectBoardList(currentPage, boardListNum, key, word);
 		//System.out.println("bp.tosrting ==== " + bp.getList().toString());
 		
 		model.addAttribute("bp", bp);
 		//System.out.println("model === " + model);
+		
+		System.out.println("key == " + bp.getKey());
+		System.out.println("word == " + bp.getWord());
 		
 		String path = "";
 		
@@ -206,6 +211,7 @@ public class BoardController {
 		} else {
 			path = "board/boardlist/commonlist";
 		}
+		model.addAttribute("root", servletContext.getContextPath());
 		
 		return path;
 	}
