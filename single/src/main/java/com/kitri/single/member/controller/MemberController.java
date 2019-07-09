@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kitri.single.member.service.MemberService;
+import com.kitri.single.sns.model.SnsDto;
 import com.kitri.single.user.model.UserDto;
 import com.kitri.single.user.service.UserService;
 import com.kitri.single.user.service.UserServiceImpl;
@@ -37,10 +38,10 @@ import com.kitri.single.user.service.UserServiceImpl;
 //Controller는 요청과 응답을 처리한다.
 @Controller
 @RequestMapping("/member")
-@SessionAttributes("userInfo")
+//@SessionAttributes("userInfo")
 public class MemberController {
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
-	public static final String HOME_REDIRECT_URL ="redirect:/index_logintest.jsp";
+	
 	@Autowired
 	MemberService memberService;	
 	
@@ -49,22 +50,39 @@ public class MemberController {
 	public String register() {
 		return "member/register/register";
 	}
-
-	// 회원가입 (유저정보 입력)
+	
+	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(UserDto userDto, Model model) {
+	public String register(UserDto userDto, Model model, 
+			String snsId, String snsType, String snsToken, String snsConnectDate) {
+		
+		logger.info(snsId+" " +snsType+" "+snsToken+" "+snsConnectDate);
 		logger.info(userDto.toString());
+		logger.info(">>>>>>>>>>>>>>>>>");
+		
+		
+		SnsDto snsDto = new SnsDto();
+		snsDto.setSnsId(snsId);
+		snsDto.setSnsType(snsType);
+		snsDto.setSnsToken(snsToken);
+		snsDto.setSnsConnectDate(snsConnectDate);
+		
+		
+		userDto.setSnsDto(snsDto);
+		logger.info(userDto.getSnsDto().toString());
+		
 		
 		memberService.regist(userDto);
+		
 		model.addAttribute("userInfo", userDto);
-		return HOME_REDIRECT_URL;
+		return "redirect:/index.jsp";
 	}
 	// 로그인 페이지
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginpage() {
 		return "member/login/loginpage";
 	}
-
+	
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody

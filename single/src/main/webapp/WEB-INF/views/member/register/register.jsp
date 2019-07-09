@@ -2,9 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
-
+<%-- 리퀘스트 스코프 : ${requestScope.userInfo } --%>
+<%-- 세션스코프 : ${sessionScope.userInfo } --%>
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
 
 <script>
 $(document).ready(function(){
@@ -45,17 +47,18 @@ $(document).ready(function(){
 </style>
 
 
-
-<br/>
-
-
 <form id="memberform" method="post" action="">
 <%-- 소셜 유형:${userInfo.snsDto.snsType }<br> --%>
 <%-- 소셜 시간:${userInfo.snsDto.snsConnectDate } --%>
+	
  	<h1>회원가입</h1>
 	    <p>안의 내용들을 채워주세요 *: 필수입력</p>
 	    <hr>
-		<input type="hidden" name="act" value="register">
+		<input type="hidden" name="snsId" value="${userInfo.snsDto.snsId }">
+		<input type="hidden" name="snsType" value="${userInfo.snsDto.snsType }">
+		<input type="hidden" name="userId" value="${userInfo.snsDto.userId }">
+		<input type="hidden" name="snsToken" value="${userInfo.snsDto.snsToken }">
+		<input type="hidden" name="snsConnectDate" value="${userInfo.snsDto.snsConnectDate }">
 		<div class="form-group" align="left">
 		
 		<label for="">아이디</label>* (이메일과 동일)
@@ -69,7 +72,7 @@ $(document).ready(function(){
 		
 		<div class="form-group" align="left">
 			<label for="">비밀번호재입력</label>* 
-				<input style="font-family:돋움" type="password" class="form-control" id="passcheck" name="passcheck" placeholder="" value ="${userInfo.userPassword }" required="required">
+				<input style="font-family:돋움" type="password" class="form-control" id="passcheck" name="passcheck" placeholder=""  required="required">
 		</div>
 		
 		<div class="form-group" align="left">
@@ -133,7 +136,7 @@ $(document).ready(function(){
 <%-- 			</c:when> --%>
 <%-- 		</c:choose>			 --%>
 	</div>
-	
+		
 </form>
 
 

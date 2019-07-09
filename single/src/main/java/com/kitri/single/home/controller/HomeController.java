@@ -38,7 +38,7 @@ public class HomeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String home(HttpSession session, HttpServletRequest request) {
 		UserDto userDto =(UserDto) session.getAttribute("userInfo");
-		System.out.println("userDto>>>>>>>" +userDto.toString());
+		logger.debug("userDto>>>>>>>" +userDto.toString());
 		WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
 		return "redirect:/index.jsp";
 	}
@@ -46,7 +46,7 @@ public class HomeController {
 	//테스트용 사용안함
 	@RequestMapping(value = "/dusttest", method = RequestMethod.GET)
 	public String toDust() throws UnsupportedEncodingException {
-		System.out.println("뜨거라!!!");
+		logger.debug("dusttest");
 		return "home/dusttest";
 	}
 	
@@ -56,12 +56,10 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "/dusttest.do", method = RequestMethod.POST)
 	public String dusttest(@RequestBody Map<String, String> map) throws UnsupportedEncodingException { //@RequestBody
-		System.out.println("컨트롤러!!!");
-		
-		System.out.println("map >>>>> " + map);
-		
+		logger.debug("컨트롤러!!!");
+		logger.debug("map >>>>> " + map);
 		String json = homeService.dustFromOpenApi(map);
-		
+		logger.debug("json >>>>> " + map);
 		return json;
 	}
 	

@@ -11,9 +11,13 @@ id: loginmodal의 display를 block으로 변경해주세요.
 <!-- 네아로 설정값-->
 <!-- <c:set var= "callbackUrl" value="http://localhost/single/member/callback.jsp"/> -->
 <!-- <c:set var="serviceUrl" value= "http://localhost/single"/> -->
-<c:set var="url" value = "localhost" />
-<c:set var = "callbackUrl" value = "http://${url}/single/member/callback.jsp"/>
-<c:set var = "serviceUrl" value = "http://${url}/single"/>
+
+<%-- <c:set var = "callbackUrl" value = "http://${url}/single/member/callback.jsp"/> --%>
+<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
+
+<%-- <c:set var = "serviceUrl" value = "http://${url}/single"/> --%>
+<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
+
 <c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 
 

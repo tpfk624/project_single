@@ -6,9 +6,10 @@ public class SnsDto {
 
 	private String snsId;
 	private String snsType;
-	private String userId;
+	private String userId; //snsEmail과 동일
 	private String snsToken;
 	private String snsConnectDate;
+
 	
 	//우선 아래 내용은 모두 null로 입력할 예정
 	private String snsEmail;
@@ -91,6 +92,13 @@ public class SnsDto {
 	}
 	public void setSnsGender(String snsGender) {
 		this.snsGender = snsGender;
+	}
+	@Override
+	public String toString() {
+		return "SnsDto [snsId=" + snsId + ", snsType=" + snsType + ", userId=" + userId + ", snsToken=" + snsToken
+				+ ", snsConnectDate=" + snsConnectDate + ", snsEmail=" + snsEmail + ", snsNickname=" + snsNickname
+				+ ", snsProfile=" + snsProfile + ", snsAge=" + snsAge + ", snsBirthday=" + snsBirthday + ", snsName="
+				+ snsName + ", snsGender=" + snsGender + "]";
 	}
 	
 	

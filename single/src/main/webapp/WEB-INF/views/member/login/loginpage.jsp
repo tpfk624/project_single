@@ -9,8 +9,6 @@
   	
 	
   $(document).ready(function(){
-  
-    
     //로그인
 	  $('#btnLogin').click(function() {
 //	 	  $('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
