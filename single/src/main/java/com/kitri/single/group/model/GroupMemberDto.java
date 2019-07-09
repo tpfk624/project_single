@@ -1,6 +1,8 @@
 package com.kitri.single.group.model;
 
-public class GroupMemberDto {
+import com.kitri.single.user.model.UserDto;
+
+public class GroupMemberDto extends UserDto{
 	private int groupNum;
 	private String userId;
 	private String groupMemberStatecode;

@@ -205,8 +205,8 @@ public class GroupController {
 			, GroupDto groupDto
 			, @RequestParam("imgdata") MultipartFile multipartFile
 			, @RequestParam("groupHashtag") String groupHashtag) {
-		logger.info(groupDto.toString());
-		logger.info(groupHashtag.toString());
+		//logger.info(groupDto.toString());
+		//logger.info(groupHashtag.toString());
 		
 		String json = makeJSON(0, "권한이 없습니다");
 		
@@ -237,12 +237,12 @@ public class GroupController {
 	@RequestMapping("/groupstamp")
 	public String groupStamp(@SessionAttribute("userInfo") UserDto userInfo
 				, @RequestParam("groupNum") int groupNum) {
-		logger.info("groupNum : " + groupNum);
+		//logger.info("groupNum : " + groupNum);
 		String json = makeJSON(0, "찜하기 실패하였습니다. 관리자에게 문의하세요");
 		if(groupNum != 0) {
 			json = groupService.groupStamp(userInfo.getUserId(), groupNum);
 		}
-		logger.info(json);
+		//logger.info(json);
 		return json;
 	}
 	
@@ -258,7 +258,7 @@ public class GroupController {
 			if(memberStatecode.equals("L")) {
 				json = makeJSON(1, memberStatecode);
 			}else {
-				json = makeJSON(1, "일정은 모임장만 등록 가능합니다");
+				json = makeJSON(1, memberStatecode);
 			}	
 		}
 		
@@ -266,16 +266,36 @@ public class GroupController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("groupmember")
-	public void groupMember(HttpSession session, @RequestParam Map<String, String> parameter) {
+	@RequestMapping("/groupmember")
+	public String groupMember(HttpSession session, @RequestParam Map<String, String> parameter) {
+		
+		//logger.info(parameter.toString());
+		
 		UserDto userDto = (UserDto)session.getAttribute("userInfo");
 		String json = makeJSON(0, "시스템 에러입니다");
 		if(userDto == null) {
 			json = makeJSON(99, "로그인이 필요한 기능입니다");
 		}else {
 			parameter.put("userId", userDto.getUserId());
-			//json = groupService.groupMember(parameter);
+			json = groupService.groupMember(parameter);
 		}
+		return json;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/groupdelete")
+	public String groupDelete(@SessionAttribute("userInfo") UserDto userInfo
+			, @RequestParam("groupNum") int groupNum) {
+		String json = makeJSON(99, "시스템 에러입니다");
+		String memberStatecode = getGroupMemberStatecode(userInfo.getUserId(), groupNum);
+
+		if(memberStatecode != null && memberStatecode.equals("L")) {
+			json = groupService.groupDelete(groupNum);
+		}else {
+			json = makeJSON(0, "권한이 없습니다");
+		}
+		
+		return json;
 	}
 	
 	//그룹 내 nav바 이동 관련
@@ -285,7 +305,7 @@ public class GroupController {
 			, @RequestParam Map<String, String> parameter
 			, ModelAndView model) {
 		
-		System.out.println(parameter);
+		logger.info(parameter.toString());
 		if(parameter.get("groupNum") != null) {
 			int groupNum = Integer.parseInt(parameter.get("groupNum"));
 			String type = parameter.get("type");
@@ -293,12 +313,35 @@ public class GroupController {
 				model = mainPage(userInfo, groupNum, model);
 			}else if("modify".equals(type)) {
 				model = modifyPage(userInfo, groupNum, model);
+			}else if("member".equals(type)) {
+				model = memberPage(userInfo, groupNum, model);
 			}
 		}
 		model.addObject("root", servletContext.getContextPath());
 		return model;
 	}
 	
+	private ModelAndView memberPage(UserDto userInfo, int groupNum, ModelAndView model) {
+		String path = "group/groupmember";
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userInfo.getUserId());
+		parameter.put("groupNum", groupNum);
+		GroupMemberDto groupMemberDto = groupService.getGroupMember(parameter);
+		
+		if(groupMemberDto.getGroupMemberStatecode().equals("L")) {
+			
+			List<GroupMemberDto> list = groupService.getGroupMemberList(groupNum);
+			
+			System.out.println(list);
+			
+			model.addObject("groupNum", list.get(0).getGroupNum());
+			model.addObject("memberlist", list);
+			model.setViewName(path);
+		}
+		
+		return model;
+	}
+
 	private ModelAndView modifyPage(UserDto userInfo, int groupNum, ModelAndView model) {
 		String path = "group/groupmodify";
 		Map<String, Object> parameter = new HashMap<String, Object>();
@@ -312,7 +355,7 @@ public class GroupController {
 				model.addObject("group", groupDto);
 				model.setViewName(path);
 			}
-			logger.info(groupDto.toString());
+			//logger.info(groupDto.toString());
 		}
 		
 		return model;

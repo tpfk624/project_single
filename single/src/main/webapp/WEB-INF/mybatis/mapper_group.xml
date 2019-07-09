@@ -36,7 +36,8 @@
 			and g.group_num not in (
 			                        select group_num
 			                        from single_group_member gm
-			                        where gm.user_id = #{userId}
+			                        where upper(gm.group_member_statecode) != upper('D')
+			                        and gm.user_id = #{userId}
 			                        )
 			</if>
 			<if test="isMyGroup == 'yes' ">
@@ -106,17 +107,32 @@
 	</insert>
 	
 	<insert id="insertGroupMember" parameterType="groupMemberDto">
-	insert into single_group_member(
-	    group_num
-	    , user_id
-	    , group_member_statecode
-	    , group_joindate
-	)values(
-	    #{groupNum}
-	    , #{userId}
-	    , #{groupMemberStatecode}
-	    , sysdate
-	)
+	merge into single_group_member
+		using dual
+			on (group_num = #{groupNum}
+					and user_id = #{userId})
+		when matched then
+			update set
+				group_joindate = null
+				, group_requestdate = sysdate
+				, group_member_statecode = #{groupMemberStatecode}
+		when not matched then
+			insert (
+				group_num
+				, user_id
+				, group_member_statecode
+				<if test="groupMemberStatecode != null and (groupMemberStatecode eq 'W'.toString) ">
+			    , group_requestdate
+			    </if>
+			    <if test="groupMemberStatecode != null and (groupMemberStatecode eq 'L'.toString) ">
+			    , group_joindate
+	   			 </if>
+			)values(
+			    #{groupNum}
+			    , #{userId}
+			    , upper(#{groupMemberStatecode})
+			    , sysdate
+			)
 	</insert>
 	
 	<select id="selectGroupMember" parameterType="map" resultType="groupMemberDto">
@@ -139,15 +155,17 @@
 	    <if test="groupCategoryNum != 0 ">
 	    and group_category_num = ${groupCategoryNum}
 	    </if>
-   	    <if test="isMyGroup == 'yes' ">
+   	    <if test="isMyGroup eq 'yes'.toString ">
 	    and group_num in ( select group_num 
 	    						    from single_group_member
-	    							where user_id = #{userId} )
+	    							where upper(group_member_statecode) != 'D'
+	    							and user_id = #{userId} )
 	    </if>
 	    <if test="isMyGroup == null || isMyGroup == '' ">
 	    and group_num not in ( select group_num 
 	    						    from single_group_member
-	    							where user_id = #{userId} )
+	    							where upper(group_member_statecode) != 'D'
+	    							and user_id = #{userId} )
 	    </if>
 	</select>
 	
@@ -225,12 +243,18 @@
 	<update id="updateGroup" parameterType="groupDto">
 	update single_group
 	set
+		<if test="groupStatecode != 99">
 	    group_category_num = #{groupCategoryNum}
 	    , group_name = #{groupName}
 	    , group_description = #{groupDescription}
 	    , group_img_src = #{groupImgSrc}
 	    , group_member_limit = #{groupMemberLimit}
 	    , group_main_place = #{groupMainPlace}
+	    </if>
+	    <if test="groupStatecode == 99">
+	    group_deletedate = sysdate
+	    , group_statecode = 0
+	    </if>
 	where
 	    group_statecode = '1'
 	    and group_num = #{groupNum}
@@ -258,4 +282,64 @@
 	and group_num = #{groupNum}
 	</select>
 	
+	<select id="getGroupMemberList" parameterType="int" resultType="groupMemberDto">
+	select 
+	    gm.group_num groupNum
+	    , gm.user_id userId
+	    , gm.group_member_statecode groupMemberStatecode
+	    , gm.group_joindate 
+	    , gm.group_requestdate
+	    , decode(gm.group_joindate, null, null, to_char(gm.group_joindate , 'yyyy') 
+	        || '년 ' || to_char(gm.group_joindate , 'mm') 
+	        || '월 ' || to_char(gm.group_joindate , 'dd') || '일') groupJoindate
+	    , decode(gm.group_requestdate, null, null, to_char(gm.group_requestdate , 'yyyy') 
+	        || '년 ' || to_char(gm.group_requestdate , 'mm') 
+	        || '월 ' || to_char(gm.group_requestdate , 'dd') || '일') groupRequestdate 
+	    , u.user_nickname userNickname
+	from single_group_member gm
+	    inner join single_user u
+	        on gm.user_id = u.user_id
+	where gm.group_member_statecode != 'D'
+	and gm.group_num = #{groupNum}
+	order by gm.group_member_statecode, gm.group_joindate
+	</select>
+	
+	<update id="updateGroupMember" parameterType="groupMemberDto">
+	update single_group_member
+	set
+		group_member_statecode = #{groupMemberStatecode}
+		<if test="groupMemberStatecode != null and (groupMemberStatecode eq 'M'.toString) ">
+		, group_joindate = sysdate
+		, group_requestdate = null
+		</if>
+	where group_num = upper(#{groupNum})
+	and user_id = #{userId}
+	</update>
+	
+	<delete id="deleteGroupMember" parameterType="groupMemberDto">
+	delete from single_group_member
+	where
+		group_num = #{groupNum}
+		and user_id = #{userId}
+	</delete>
+	
+	<update id="groupMemberCountUp" parameterType="int">
+	update single_group
+	set
+	    group_member_count = group_member_count + 1
+	where 
+		group_statecode = 1
+		and group_num = #{groupNum}
+		and group_member_count &lt; group_member_limit
+	</update>
+	
+	<update id="groupMemberCountDown" parameterType="int">
+	update single_group
+	set
+	    group_member_count = group_member_count - 1
+	where 
+		group_statecode = 1
+		and group_num = #{groupNum}
+		and group_member_count > 1
+	</update>
 </mapper>

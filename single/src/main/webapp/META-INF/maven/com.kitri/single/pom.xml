@@ -210,6 +210,13 @@
 			<version>${imgscalr-lib-version}</version> 
 		</dependency>
 
+		<!-- 웹 소켓 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>5.1.8.RELEASE</version>
+		</dependency>
 
 
 	</dependencies>
