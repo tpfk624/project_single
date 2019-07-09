@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <link rel="stylesheet" href="${root}/resources/css/user/user.css">
 
+
 <style>
 .modal-body{
 	 font-family : '돋움'
@@ -33,22 +34,19 @@ label {
 
 </style>
 	
-<%
-HttpSession httpSession = request.getSession();
-UserDto userInfo = new UserDto();
-userInfo.setUserId("calubang1@naver.com");
-userInfo.setUserNickname("카루뱅");
-userInfo.setUserName("안병욱");
-httpSession.setAttribute("userInfo", userInfo);
-%>
+
 
 <script>
 
 
 
-/* 변경사항 저장 버튼 클릭 시  */
+
  $(function() {
+	 
+	 
+	 /* 변경사항 저장 버튼 클릭 시  */
 	 $(".userinfoBtn").click(function() {
+		 console.log("버튼클릭됨");
 		//나중에 입력하라고 경고문구띄우기
 		$.ajax({
 			url: "${root}/mypage/modify",
@@ -62,11 +60,34 @@ httpSession.setAttribute("userInfo", userInfo);
 			}
 		});	
 	});
-})
+	 
+	 
+	/* 회원 탈퇴 */
+	 $("#DeletePressBtn").click(function(){
+	 	alert("탈퇴 버튼 클릭됨");
+	 	
+	 	var pass = $(this).attr("data-num");
+	 	alert(pass);
+	 	
+	 	var pw_input = $("#pw_input").val();
+	 	alert(pw_input);
+	 	
+	 	if( pw_input != pass){
+	 		alert("비밀번호가 일치하지 않습니다.");
+	 	} else{
+	 		var result = confirm('정말 탈퇴하시겠습니까?');
+	 		
+	 		if(result){
+	 			alert("탈퇴가 완료되었습니다.");		
+	 			location.href="${root}/mypage/userdelete";
+	 		}
+	 	}
+	 });
+});
 
 
 /* 비밀번호 변경 클릭 시  */
-$(function(){
+/* $(function(){
 	$(".btn-primary").click(function(){
 		var result = confirm('정말 탈퇴하시겠습니까?');
 
@@ -75,7 +96,12 @@ $(function(){
 			   $(this).attr("href", "${root}/member/exit");
 		   }
 	});
-});
+}); */
+
+
+
+
+
 
 
 
@@ -122,12 +148,12 @@ $(function(){
 						</h6>
 
 						</div>
-						<input type="password" placeholder="현재 비밀번호"class="pw_input delete_pw" name="delete_pw"> 
+						<input type="password" id="pw_input" placeholder="현재 비밀번호"class="pw_input delete_pw userInput" name="delete_pw"> 
 					</div>
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-num="">탈퇴</button>
+						<button type="button" id="DeletePressBtn" class="btn btn-primary deletebtn" data-num="${userInfo.userPassword}">탈퇴</button>
 	          			<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 					</div>
 				</form>
@@ -157,7 +183,7 @@ $(function(){
 							<!--이메일 주소-->아이디 :
 						</th>
 						<td>
-							<input type="text" name="userId" class="t_input" value="${userInfo.userId}">
+							<input type="text" name="userId" class="t_input" value="${userInfos.userId}">
 							<%-- <input type="text" name="userId" class="t_input" value="${dto.userId}" disabled=""> --%>
 						</td>
 					</tr>
@@ -172,7 +198,7 @@ $(function(){
 							<!--이메일 주소-->이   름 :
 						</th>
 						<td>
-							<input type="text" name="userId" class="t_input" value="${userInfo.userName}">
+							<input type="text" name="userId" class="t_input" value="${userInfos.userName}">
 							<%-- <input type="text" name="userId" class="t_input" value="${dto.userId}" disabled=""> --%>
 						</td>
 					</tr>
@@ -186,7 +212,7 @@ $(function(){
 						<th>
 							<!--이름-->닉네임 :
 						</th>
-						<td><input type="text" name="userNickname" class="t_input" value="${userInfo.userNickname}"></td>
+						<td><input type="text" name="userNickname" class="t_input" value="${userInfos.userNickname}"></td>
 					</tr>
 					<tr>
 						<td class="space">&nbsp;</td>
@@ -236,7 +262,7 @@ $(function(){
 							<!--이름-->핸드폰 :
 						</th>
 						<td><input type="text" name="userPhone" class="t_input"
-							value="${userInfo.userPhone}"></td>
+							value="${userInfos.userPhone}"></td>
 					</tr>
 					<tr>
 						<td class="space">&nbsp;</td>
