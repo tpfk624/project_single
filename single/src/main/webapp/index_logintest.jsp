@@ -19,10 +19,10 @@
 
 
 
-<!-- 로그인, 로그아웃 기능 추가  -->
+<!-- 로그인 -->
 <!-- 사용법:파일 안의 로그인 로그아웃 버튼 선택자를 등록해주세요. -->
-<%@ include file = "/WEB-INF/views/member/loginmodal/loginmodal.jsp"%> 
-<!--end 로그인, 로그아웃 기능 추가  -->
+<%@ include file = "/WEB-INF/views/member/login/loginmodal.jsp"%> 
+<!--end 로그인  -->	
 
 
 <script>
@@ -37,8 +37,23 @@
 $(document).ready(function(){
 
 	//로그인 버튼 누를때 네비바 닫히기
-	$('.loginBtn').click(function() {
+	$('#loginBtn').click(function() {
 		$('#menu').attr("class","");
+	});
+	
+	//로그아웃기능 추가
+	$('#logoutBtn').click(function(){
+		$.ajax({
+			url:"${root}/member/logout",
+			method: "GET",
+			success: function(data){
+				console.log(data);
+				location.reload();
+			},
+			error: function (data){
+			}
+		});
+		return false;
 	});
 	
 	
@@ -117,18 +132,19 @@ $(document).ready(function(){
 				<hr>
            	</li>
 			<c:if test="${userInfo == null}">
-                <li><a class="loginBtn" href="#">로그인</a></li> <!-- href = "${root}/member/loginmodal/loginmodal.jsp-->
+                <li><a id="loginBtn" href="#">로그인</a></li> <!-- href = "${root}/member/loginmodal/loginmodal.jsp-->
 		    </c:if>
 		    <c:if test="${userInfo != null}">
-		    	<li><a class="logoutBtn"  href ="${root}/member/logout" >로그아웃</a></li><!-- href = "${root}/member/login" -->
+		    	<li><a id="logoutBtn" href="#">로그아웃</a></li><!-- href = "${root}/member/login" -->
 		    </c:if>
  <%-- 		    <c:if test="${userInfo != null}"> --%>
 <%-- 		    	<li><a href="${root}/home/dusttest">로그아웃</a></li> --%>
 <%-- 		    </c:if> --%>
-                <li><a href="${root }/mypage/groupall">마이 페이지</a></li>
+                <li><a href="${root }/mypage/mypage">마이 페이지</a></li>
                 <li><a href="${root }/board/singlemain">혼자놀래요</a></li>
                 <li><a href="generic.html">같이놀래요</a></li>
             </ul>
+            
          </nav>
       
          <section id="banner"> <!-- class="bg-img" -->

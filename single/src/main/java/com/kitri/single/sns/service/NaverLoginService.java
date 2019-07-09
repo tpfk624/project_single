@@ -11,8 +11,17 @@ import com.kitri.single.user.model.UserDto;
 
 public interface NaverLoginService {
 	
+	
+	SnsDto getSnsLogin(SnsDto snsDto);
+	
+	//backup 2019-07-08 
 	UserDto getUser(String email);
 	int registerUser(SnsDto naverUserDto);
+	
+	
+	
+	
+	
 
 	
 }

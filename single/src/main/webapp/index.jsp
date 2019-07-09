@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/roadtrip_top.jsp" %>
 
+
+
 <script src="${root}/resources/template/roadtrip/assets/js/jquery.min.js"></script>
 <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrolly.min.js"></script>
 <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrollex.min.js"></script>
@@ -9,76 +11,22 @@
 <script src="${root}/resources/template/roadtrip/assets/js/util.js"></script>
 <script src="${root}/resources/template/roadtrip/assets/js/main.js"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="${root}/resources/css/common.css" type="text/css">
 
 
-<style>
-#banner .more:before{
-   content: "";
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-transform: none !important;
-}
 
-.txt{
-	font-size: 30px;
-	text-shadow: 2px 2px 2px gray;
-	font-weight: bolder;
-}
+<!-- 로그인 -->
+<!-- 사용법:파일 안의 로그인 로그아웃 버튼 선택자를 등록해주세요. -->
+<%@ include file = "/WEB-INF/views/member/login/loginmodal.jsp"%> 
+<!--end 로그인  -->	
 
-.logo{
-	text-shadow: 2px 2px 2px gray;
-}
-
-#weatherimg{
-	margin-top: 10px;
-	cursor: pointer;
-
-}
-#weatherimg:hover{
-	transform:scale(1.1);             /*  default */
-	-webkit-transform:scale(1.1);     /*  크롬 */
-	-moz-transform:scale(1.1);       /* FireFox */
-	-o-transform:scale(1.1);           /* Opera */
-	/* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); */
-}
-
-#popover{
-	width: 500px
-}
-
-#profile{
-	text-align: center;
-}
-#userpic{
-	width: 100px; height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control, .input-group>.form-control-plaintext {
-    position: relative;
-    /* -ms-flex: 1 1 auto;
-    flex: 1 1 auto; */
-    flex:100px;
-    width: 1%;
-    margin-bottom: 0;
-}
-
-.input-group>.custom-select:not(:last-child), .input-group>.form-control:not(:last-child) {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    background-color: white;
-}
-
-</style>
 
 <script>
+
 
 /* $(document).ready(function(){
 	$('[data-toggle="popover"]').popover({
@@ -87,6 +35,27 @@
 }); */
 
 $(document).ready(function(){
+
+	//로그인 버튼 누를때 네비바 닫히기
+	$('#loginBtn').click(function() {
+		$('#menu').attr("class","");
+	});
+	
+	//로그아웃기능 추가
+	$('#logoutBtn').click(function(){
+		$.ajax({
+			url:"${root}/member/logout",
+			method: "GET",
+			success: function(data){
+				console.log(data);
+				location.reload();
+			},
+			error: function (data){
+			}
+		});
+		return false;
+	});
+	
 	
 	$('#weatherimg').on("click", function(){
 		if($("#popover").hasClass("show")){
@@ -138,13 +107,9 @@ $(document).ready(function(){
 
       <!-- Header -->
          <header id="header">
-            <div class="logo"><a href="index.html">우리 혼자 살아요 </a></div> <!-- <span>by TEMPLATED</span> -->
+            <div class="logo"><a href="index.jsp">우리 혼자 살아요 </a></div> <!-- <span>by TEMPLATED</span> -->
             <img src="${root}/resources/img/seonimg/rain.png" id="weatherimg" height="100">
          </header>
-         
-		
-		
-
 
       <!-- menu -->
          <nav id="menu">
@@ -163,14 +128,16 @@ $(document).ready(function(){
 					</div>
 				</li>
 			</c:if>
-						<li>
-							<hr>
-		            	</li>
+			<li>
+				<hr>
+           	</li>
 			<c:if test="${userInfo == null}">
-               
+                <li><a id="loginBtn" href="#">로그인</a></li> <!-- href = "${root}/member/loginmodal/loginmodal.jsp-->
 		    </c:if>
-		    <li><a href="${root}/member/naverlogintest.jsp">로그인페이지</a></li>
-<%-- 		    <c:if test="${userInfo != null}"> --%>
+		    <c:if test="${userInfo != null}">
+		    	<li><a id="logoutBtn" href="#">로그아웃</a></li><!-- href = "${root}/member/login" -->
+		    </c:if>
+ <%-- 		    <c:if test="${userInfo != null}"> --%>
 <%-- 		    	<li><a href="${root}/home/dusttest">로그아웃</a></li> --%>
 <%-- 		    </c:if> --%>
                 <li><a href="${root }/mypage/mypage">마이 페이지</a></li>

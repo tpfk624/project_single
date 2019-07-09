@@ -17,11 +17,12 @@ public interface GroupService {
 	public List<GroupDto> getGroupList(Map<String, String> parameter);
 	public String groupModify(GroupDto groupDto, String groupHashtag);
 	public String createGroup(GroupDto groupDto, UserDto userInfo, String groupHashtag);
+	public String groupDelete(int groupNum);
 
 	//그룹멤버 관련
-	public void increaseGroupMemberCount();
-	public void insertGroupMember(GroupMemberDto groupMemberDto);
 	public GroupMemberDto getGroupMember(Map<String, Object> parameter);
+	public List<GroupMemberDto> getGroupMemberList(int groupNum);
+	public String groupMember(Map<String, String> parameter);
 	
 	//그룹 일정
 	public String createCalendar(CalendarDto calendarDto);
@@ -32,4 +33,5 @@ public interface GroupService {
 	
 	//그룹 찜하기
 	public String groupStamp(String userId, int groupNum);
+	
 }
