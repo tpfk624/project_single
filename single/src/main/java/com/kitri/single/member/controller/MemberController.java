@@ -59,18 +59,29 @@ public class MemberController {
 		model.addAttribute("userInfo", userDto);
 		return HOME_REDIRECT_URL;
 	}
-	
+	// 로그인 페이지
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginpage() {
+		return "member/login/loginpage";
+	}
+
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@ResponseBody
 	public String login(UserDto userDto, Model model) {
+		logger.debug("login>>>" +userDto.toString());
+		System.out.println("login>>>" +userDto.toString());
 		userDto = memberService.login(userDto);
 		//로그인 성공
 		if(userDto != null) {
 			model.addAttribute("userInfo", userDto);
+			return "{\"msg\":\"1\"}";
 		}else {
 			model.addAttribute("userInfo", null);
+			return "{\"msg\":\"0\"}";
 		}
-		return HOME_REDIRECT_URL ;
+		
+//		return HOME_REDIRECT_URL ;
 	}
 	
 	// 로그아웃
@@ -109,6 +120,7 @@ public class MemberController {
 		//이미 회원가입한 상태
 		if(userDto  != null && userDto.getUserStatecode().equals("1")) {
 			map.put("msgcode", "1");
+			map.put("userDto", userDto);
 		}
 		//비 회원인상태
 		else {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!-- 
 ----설명---- 
 네이버 로그인 모달창 입니다.
@@ -35,9 +36,39 @@ $(document).ready(function(){
 	$('.registerBtn').click(function(){
 		$(location).attr("href","${root}/member/emailauth");
 	})
+	  //로그인
+  $(document).ready(function(){
+
+		$('#btnLogin').click(function() {
+//		 	  $('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
+
+// 	 		var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
+// 			contentType: false, //서버에 전달하는 형식
+// 			processData: false,
+			var formdata = $('#loginForm').serialize(); //-> contentType:"application/x-www-form-urlencoded; charset=UTF-8", //default
+			console.log(formdata);
+			$.ajax({
+				url:"${root}/member/login",
+				type: "POST",
+				data: formdata,
+				dataType : "json", //서버에서 반환되는 형식
+				success :function(data){
+					console.log('datareceive :'+ data)
+					console.log('datareceive :'+ data.msg)
+					location.reload();
+//	 				history.back();
+//	 				history.go();
+//	 				history.forward();
+				},error: function (){
+					console.log('error')
+				}
+			});
+		})
+		 
 	
-	//로그인 
-	$('#loginForm').attr("action", "${root}/member/login").attr("method", "post")
+  });
+// 	//로그인 
+// 	$('#loginForm').attr("action", "${root}/member/login").attr("method", "post")
 });
 
 
@@ -60,10 +91,12 @@ $(document).ready(function(){
 
       <label class="loginmodal-label" for="userPassword" ><b>비밀번호</b></label>
       <input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" required style="font-family:돋움">
-        
-      <button type="submit">Login</button>
       
+      <!-- 로그인 -->  
+      <button id= "btnLogin" type="button">Login</button>
+      <!-- 네이버로그인 -->
       <div id="naver_id_login"></div>
+      
       <span class="other"> <a href="#" class = "registerBtn">회원가입</a>  <a href="#" >비밀번호변경</a> <a href="#">비밀번호 찾기</a></span>
       <input type="checkbox"  name="remember" id="remember"/> <label for="remember">아이디 기억하기</label>
       
@@ -100,5 +133,4 @@ window.onclick = function(event) {
   	naver_id_login.init_naver_id_login();
 </script>
 <!-- //네이버 로그인 실행-->
-  
 

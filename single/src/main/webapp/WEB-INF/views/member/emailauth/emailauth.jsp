@@ -2,6 +2,31 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
+<c:if test="${userInfo != null }">
+	<c:redirect url="/index.jsp" context= "${root}" />
+</c:if>    
+
+<style>
+html{
+    min-height: 100% ;
+    height: 100%;
+}
+body{
+    height: 95%;
+}
+
+.footer{
+  height: 5%;
+  margin-top: 5%;
+  padding-top: 0.rem!important;
+}
+.container{
+min-height: 95%;
+}
+
+
+</style>
+
 <form id ="userInfo" display ="none">
 	<input type="hidden" name = "authKey" class ="authKey" >
 	<input type="hidden" name = "userId" class ="userId">
@@ -25,11 +50,12 @@ $(document).ready(function(){
 			dataType: "json",
 		    contentType: "application/json; charset=utf-8;",
 			success:function(data){
+				var email = data.userDto.userId;
 				if(data.msgcode ==2){
-					var email = data.userDto.userId;
 					$('#status').html(email + "로 메일이 전송되었습니다. <br>메일을 확인해주세요.");
 				}else if(data.msgcode ==1){
-					$('#status').html(email + "의 메일은 회원가입이 되어있습니다.");
+					$('#status').html(email + "의 메일은 회원가입이 되어있습니다.<br>"
+							+"<button type='button' class='btn btn-primary'> <a href='${root}/member/login'>로그인 하러가기</a></button>");
 				}
 				
 				
@@ -59,26 +85,7 @@ $(document).ready(function(){
 });
 </script>
 
-<style>
-html{
-    min-height: 100% ;
-    height: 100%;
-}
-body{
-    height: 95%;
-}
 
-.footer{
-  height: 5%;
-  margin-top: 5%;
-  padding-top: 0.rem!important;
-}
-.container{
-min-height: 95%;
-}
-
-
-</style>
 
 
 

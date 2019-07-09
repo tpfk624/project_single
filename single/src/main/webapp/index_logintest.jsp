@@ -21,8 +21,8 @@
 
 <!-- 로그인 -->
 <!-- 사용법:파일 안의 로그인 로그아웃 버튼 선택자를 등록해주세요. -->
-<%@ include file = "/WEB-INF/views/member/loginmodal/loginmodal.jsp"%> 
-<!--end 로그인  -->
+<%@ include file = "/WEB-INF/views/member/login/loginmodal.jsp"%> 
+<!--end 로그인  -->	
 
 
 <script>
@@ -47,8 +47,8 @@ $(document).ready(function(){
 			url:"${root}/member/logout",
 			method: "GET",
 			success: function(data){
-				location.reload();
 				console.log(data);
+				location.reload();
 			},
 			error: function (data){
 			}
