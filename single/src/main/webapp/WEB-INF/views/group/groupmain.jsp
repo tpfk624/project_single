@@ -7,9 +7,12 @@
 <c:set var="group" value="${requestScope.group}"></c:set>
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <script src="${root}/resources/js/group/group.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" 
-	integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 <script src="https://kit.fontawesome.com/5ed7132c4a.js"></script>
+<!-- 카카오 맵 관련 -->
+<link rel="stylesheet" href="${root}/resources/css/group/kakaomap.css">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd79caa5868b0543c6672702825597f8&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="${root}/resources/js/group/kakaomap.js"></script>
 <style>
 /* 페이지에 유지할 부분*/
 </style>

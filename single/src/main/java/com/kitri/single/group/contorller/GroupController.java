@@ -258,7 +258,7 @@ public class GroupController {
 			if(memberStatecode.equals("L")) {
 				json = makeJSON(1, memberStatecode);
 			}else {
-				json = makeJSON(1, "일정은 모임장만 등록 가능합니다");
+				json = makeJSON(1, memberStatecode);
 			}	
 		}
 		

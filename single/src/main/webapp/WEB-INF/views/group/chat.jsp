@@ -1,77 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-<style type="text/css">
-/* chatting */
-.chat{
-	position: fixed;
-	height: 100%;
-	top : 56px;
-	right : 0px;
-	width : 18rem;
-	z-index: 1000;
-	background-color: #ebebeb;
-	padding-left: 1rem;
-	padding-right: 1rem;
-}
-
-.chatSmall{
-	position: fixed;
-	height: 100%;
-	top : 56px;
-	right : -16rem;
-	z-index: 1000;
-	background-color: #ebebeb;
-	padding-left: 1rem;
-	padding-right: 1rem;
-}
-
-#chat>.chatheader{
-	height: 4vh;
-	width: 90%;
-	padding: 3%;
-}
-#chat>.chatheader a{
-	height: 100%;
-}
-#chat>.chatheader label{
-	height: 100%;
-	font-size: 1rem;
-}
-#chat>.chatMsgArea{
-	position : relative;
-	height : 84%;
-	width: 100%;
-	resize: none;
-	background-color: white;
-	border-radius: 0.5rem;
-	margin-bottom: 0.3rem;
-	line-height: 1.2rem;
-	font-weight: 100;
-	padding: 5%;
-}
-
-#chat>.chatfooter{
-	height: 4vh;
-	width: 100%;
-}
-
-#chat>.chatfooter>input{
-	height : 100%;
-	width: 70%;
-	display: inline;
-	border-radius: 0.5rem;
-}
-#chat>.chatfooter>button{
-	height : 100%;
-	width: 26%;
-	border-radius: 0.5rem;
-}
-
-#chat>.chat-toggle{
-}
-</style>
 <div id="chat" class="chat">
 	<div class="chatheader">
 		<a class="text-gray-500 mr-4 mr-lg-5 lead chat-toggle">
@@ -86,20 +14,21 @@
 	</div>
 </div>
 <script type="text/javascript">
-var groupId = "${groupid}";
-var userId = "${user.user_id}";
-var nickName = "${user.nickname}";
+var groupNum = "${group.groupNum}";
+var userId = "${groupMember.userId}";
+//var nickName = "${user.nickname}";
 //var serverUrl = "ws://192.168.14.53:80/plzdaengs/chatserver?groupid="+groupId;
-//var serverUrl = "ws://localhost:8080/plzdaengs/chatserver?groupid="+groupId;
-var serverUrl = "${chatserver}" + "?groupid="+groupId;
+var serverUrl = "wss://localhost:8443/single/chat";
+//?groupNum="+groupNum;
+//var serverUrl = "${chatserver}" + "?groupid="+groupId;
 var websocket; 
 chatInit();
 function chatInit() {
-	//websocket = new WebSocket(serverUrl);
-	//websocket.onopen = webSocketOpen;
-	//websocket.onclose = webSocketClose;
-	//websocket.onerror = webSocketError;
-	//websocket.onmessage = webSocketMessage;
+	websocket = new WebSocket(serverUrl);
+	websocket.onopen = webSocketOpen;
+	websocket.onclose = webSocketClose;
+	websocket.onerror = webSocketError;
+	websocket.onmessage = webSocketMessage;
 	
 	$("#chat .sendBtn").click(msgSend);
 	$("#chat #togglechat").click(chatToggle);

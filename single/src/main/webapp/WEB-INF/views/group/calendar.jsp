@@ -47,26 +47,6 @@ function getScheduleList(date) {
 			for(var i=0 ; i<resultData.length ; i++){
 				drawSchedule(resultData[i]);
 			}
-			
-			$(".schedule").on("click", function() {
-				//console.log($(this));
-				var data = {
-					groupNum : "${group.groupNum}"
-					, calendarNum : $(this).attr("data-num")
-					, type : "detail"
-				};
-				//console.log(data);
-				function detailResult(result) {
-					//console.log(result);
-					if(result.resultCode == 1){
-						showCalendarModal("view", result.resultData);
-					}
-				};
-				
-				ajaxFunc(data, "${root}/calendar", "get",  detailResult);
-
-				return false;
-			});
 		}
 	};
 	

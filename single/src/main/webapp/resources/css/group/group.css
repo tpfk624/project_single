@@ -271,5 +271,73 @@
 	margin-right: auto;	
 }
 
+/* 채팅 */
+/* chatting */
+.chat{
+	position: fixed;
+	height: 100%;
+	top : 56px;
+	right : 0px;
+	width : 18rem;
+	z-index: 1000;
+	background-color: #ebebeb;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
 
+.chatSmall{
+	position: fixed;
+	height: 100%;
+	top : 56px;
+	right : -16rem;
+	z-index: 1000;
+	background-color: #ebebeb;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+#chat>.chatheader{
+	height: 4vh;
+	width: 90%;
+	padding: 3%;
+}
+#chat>.chatheader a{
+	height: 100%;
+}
+#chat>.chatheader label{
+	height: 100%;
+	font-size: 1rem;
+}
+#chat>.chatMsgArea{
+	position : relative;
+	height : 84%;
+	width: 100%;
+	resize: none;
+	background-color: white;
+	border-radius: 0.5rem;
+	margin-bottom: 0.3rem;
+	line-height: 1.2rem;
+	font-weight: 100;
+	padding: 5%;
+}
+
+#chat>.chatfooter{
+	height: 4vh;
+	width: 100%;
+}
+
+#chat>.chatfooter>input{
+	height : 100%;
+	width: 70%;
+	display: inline;
+	border-radius: 0.5rem;
+}
+#chat>.chatfooter>button{
+	height : 100%;
+	width: 26%;
+	border-radius: 0.5rem;
+}
+
+#chat>.chat-toggle{
+}
 

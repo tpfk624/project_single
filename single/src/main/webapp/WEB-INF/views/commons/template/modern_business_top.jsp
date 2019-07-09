@@ -104,6 +104,11 @@ tag>input[type=button]:hover{
 }
 
 </style>
+<script>
+var GROUP_RESOURCES_IMG = "/single/resources/img/group/";
+var GROUP_RESOURCES_CSS = "/single/resources/css/group/";
+var GROUP_RESOURCES_JS = "/single/resources/js/group/";
+</script>
 </head>
 <body>
   <!-- Navigation -->
