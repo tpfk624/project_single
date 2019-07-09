@@ -6,8 +6,8 @@
 </div>
 <input type="hidden" name="groupHashtag" value="">
 <input type="text" class="form-control input-tag" 
-		id="text" placeholder="모임을 표현할 수 있는 태그를 입력해주세요"
-		value="">
+		id="text" placeholder="엔터키로 태그를 추가할 수 있습니다"
+		value="" style="width: 20rem">
 <script>
 function makeTagList(){
 	var taglist = $(".taglist>tag");

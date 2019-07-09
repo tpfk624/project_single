@@ -10,4 +10,6 @@ public class SiteConstance {
 	
 	//모임리스트에서 한번에 불러오는 모임의 개수
 	public static final int GROUP_SIZE = 15;
+	
+	public static final String GROUP_DEFAULT_IMG_PATH = "/resources/img/group/";
 }

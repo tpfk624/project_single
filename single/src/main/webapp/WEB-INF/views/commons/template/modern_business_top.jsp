@@ -71,9 +71,14 @@ body {
 	border-color: #004085cc;
 }
 
-.dropdown-item.active, .dropdown-item:active{
+.dropdown-item{
+	cursor: pointer;
+}
+
+.dropdown-item.active, .dropdown-item:active, .dropdown-item.active:hover{
 	background-color: #004085;
 	border-color: #004085;
+	color: white!important;
 }
 tag{
 	background-color: #f0f0f0;
