@@ -1,6 +1,5 @@
 package com.kitri.single.sns.controller;
 
-
 import java.util.Calendar;
 import java.util.Map;
 import java.util.UUID;
@@ -31,67 +30,69 @@ import com.kitri.single.util.Utill;
 @SessionAttributes("userInfo")
 public class NaverMemberController {
 	Logger logger = LoggerFactory.getLogger(NaverMemberController.class);
-	
+
 	@Autowired
-	NaverLoginService loginService; 	
+	NaverLoginService naverLoginService;
 
 	APIMemberProfile apiMemberProfile = new APIMemberProfile();
-	
 
 	@RequestMapping(value = "/callback", method = RequestMethod.POST)
 	public String callback(@RequestParam Map<String, String> parameter, Model model) {
-		
-		String email = parameter.get("email");//인증시 필수입력값
+		// TODO sns에 따라 회원가입할지 기존아이디와 연동할지 테스트 필요
+		// 소셜 로그인 아이디 수신
+		// 첫 로그인
+		// -> 새로운페이지 오픈 -> 기존아이디와 연동? 새로 회원가입?
+
+		// 기존 소셜아이디 존재
+		// -> 해당 아이디로 로그인 진행
+
+		String snsEmail = parameter.get("email");// 인증시 필수입력값
 		String accessToken = parameter.get("accessToken");
-		logger.debug(email);
+		logger.debug(snsEmail);
 		logger.debug(accessToken);
 
-		UserDto userDto = loginService.getUser(email);
-//		이소셜로는 처음 로그인 합니다.
-		if(userDto == null) {
+		SnsDto snsDto = new SnsDto();
+		snsDto.setSnsEmail(snsEmail);
+		snsDto.setSnsType("naver");
+
+		snsDto = naverLoginService.getSnsLogin(snsDto);
+
+		if (snsDto != null && snsDto.getUserId() != null) {
+			// 이미 연동된 아이디입니다. => 로그인
+			
+		}else if (snsDto == null) {
+			//이소셜로는 처음 로그인 합니다.
+			snsDto = new SnsDto();
+			snsDto.setSnsEmail(snsEmail);
+			snsDto.setSnsType("naver");
+			snsDto.setSnsConnectDate(Calendar.getInstance().getTime().toString());
+
+			// 회원가입, 소셜 연동 창으로 이동
 			String userProfile = apiMemberProfile.getMemberProfile(accessToken);
+
 			JSONObject resultJson = new JSONObject(userProfile);
 			JSONObject profileObj = (JSONObject) resultJson.get("response");
-			
+
 			String snsId = Utill.getStringJson(profileObj, "id");
-			
 			String userNickname = Utill.getStringJson(profileObj, "nickname");
-			if( userNickname == null) {
-				userNickname= UUID.randomUUID().toString();
-			}
-			String userAge= Utill.getStringJson(profileObj, "age");
+//			String userAge= Utill.getStringJson(profileObj, "age");
 			String userGender = Utill.getStringJson(profileObj, "gender");
 			String userName = Utill.getStringJson(profileObj, "name");
 			String userBirthday = Utill.getStringJson(profileObj, "birthday");
 			String userProfile_image = Utill.getStringJson(profileObj, "profile_image");
-			logger.info("id: " + snsId);
-			logger.info("userName: " + userName);
-			logger.info("nickname: " + userNickname);
-			logger.info("age: " + userAge);
-			logger.info("gender: " + userGender);
-			logger.info("birthday: " + userBirthday);
-			logger.info("profile_image: " + userProfile_image);
-			SnsDto snsDto = new SnsDto();
-			//TODO 갱신토큰 DB 저장 필요
-			snsDto.setSnsType("naver");
-			snsDto.setSnsId(snsId);
-			snsDto.setSnsConnectDate(Calendar.getInstance().getTime().toString());
-			//TODO 닉네임이 없다면 랜덤uuid값으로 지정
-			userDto = new UserDto();
-			userDto.setUserId(email);
+
+			UserDto userDto = new UserDto();
 			userDto.setUserName(userName);
 			userDto.setUserNickname(userNickname);
 			userDto.setUserGender(userGender);
 			userDto.setUserBirthday(userBirthday);
 			userDto.setUserProfile(userProfile_image);
+
 			userDto.setSnsDto(snsDto);
 
 			model.addAttribute("userInfo", userDto);
-			
-			// 회원가입, 소셜 연동 창으로 이동 
+
 			return "member/register/register";
-		}else {
-			
 		}
 		return "index";
 

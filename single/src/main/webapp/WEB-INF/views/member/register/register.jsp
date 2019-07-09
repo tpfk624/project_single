@@ -33,16 +33,7 @@ $(document).ready(function(){
 	 	$('.emailAuthForm').attr("action", "${root}/member/joinpost").submit();
 	});
 });
-//참고사이트: https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%EC%A0%95%EA%B7%9C%EC%8B%9D 
-// var re = /ab+c/; //상수방식 
-// var re = new RegExp("ab+c"); //생성자함수 호출 (실행시점에 컴파일된다 => 동적으로 사용할 때 사용)
-function validate() {
-	//^ 시작부분 대응 
-	//- 범위
-	//[] 괄호안의 어떤문자와도 대응됨
-	
-	       
-}
+
 </script>
 
 
@@ -56,6 +47,8 @@ function validate() {
 
 
 <br/>
+
+
 <form id="memberform" method="post" action="">
 <%-- 소셜 유형:${userInfo.snsDto.snsType }<br> --%>
 <%-- 소셜 시간:${userInfo.snsDto.snsConnectDate } --%>
@@ -86,7 +79,7 @@ function validate() {
 		
 		<div class="form-group" align="left">
 		<label for="">닉네임</label>*
-				<input type="text" class="form-control" id="nickname" name="userNickname" placeholder="이름입력" value ="${userInfo.userNickname}" required="required">
+				<input type="text" class="form-control" id="nickname" name="userNickname" placeholder="이름입력" required="required">
 		</div>
 		
 	<div class="form-group" align="left">

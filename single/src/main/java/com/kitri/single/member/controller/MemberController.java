@@ -1,6 +1,7 @@
 package com.kitri.single.member.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.mail.Session;
@@ -53,34 +54,49 @@ public class MemberController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(UserDto userDto, Model model) {
 		logger.info(userDto.toString());
+		
 		memberService.regist(userDto);
 		model.addAttribute("userInfo", userDto);
 		return HOME_REDIRECT_URL;
 	}
-	
+	// 로그인 페이지
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginpage() {
+		return "member/login/loginpage";
+	}
+
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@ResponseBody
 	public String login(UserDto userDto, Model model) {
+		logger.debug("login>>>" +userDto.toString());
+//		System.out.println("login>>>" +userDto.toString());
 		userDto = memberService.login(userDto);
 		//로그인 성공
 		if(userDto != null) {
 			model.addAttribute("userInfo", userDto);
+			return "{\"msg\":\"1\"}";
 		}else {
 			model.addAttribute("userInfo", null);
+			return "{\"msg\":\"0\"}";
 		}
-		return HOME_REDIRECT_URL ;
+//		return HOME_REDIRECT_URL ;
 	}
 	
 	// 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@ResponseBody
 	public String logout(SessionStatus status, HttpServletRequest request, HttpSession session) {
-		String oldUrl = request.getHeader("REFERER");
-		logger.info(oldUrl);
-//		status.setComplete();
-		if(session.getAttribute("userInfo") != null) {
-			session.removeAttribute("userInfo");	
-		}
-		return "redirect:/"+oldUrl;
+//		String oldUrl = request.getHeader("REFERER");
+//		logger.info(oldUrl);
+		
+		status.setComplete();
+		// 이렇게 나와야하는데 "redirect:/index_logintest.jsp";
+		// 이렇게 나와야하는데 "redirect:/http://localhost/single/index_logintest.jsp 이렇게되어서 문제
+		
+		//ajax 호출부분에서 location.reload();가 필요하다
+		String json ="{'msg':'1'}";
+		return json;
 	}
 
 	// 이메일 인증페이지 이동
@@ -93,27 +109,30 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "/sendemail", method = RequestMethod.POST)
 	public String sendemail(@RequestBody UserDto userDto,Model model) throws Exception {
-		logger.info(">>>>"+ userDto.getUserId());
-		//TODO 아이디가 존재할경우 로그인 ㄱㄱ.
-		//아이디 인증키 인증상태
-//		userDto = memberService.getUser(userDto);
-		
-		userDto = memberService.sendAuthMail(userDto);		
-		// 아이디 부재, 인증상태 ==0 -> 인증메일 발송 
-		// 아이디 존재 , 인증상태 ==0 -> 인증메일 재발송
-//		if(userDto == null && "0".equals(userDto.getAuthState()) ) {
-//			userDto = memberService.sendAuthMail(userDto);	
-//			model.addAttribute("userInfo", userDto);
-//		}else {
-//			model.addAttribute("userInfo", null);
-//		}
-		
-		
-		
-		logger.info(">>>>"+ userDto.toString());
+		String email = userDto.getUserId();
+		logger.info("sendemail>>>>: "+email);
+
+		Map<String,Object > map = new HashMap<String, Object>();
 		ObjectMapper mapper = new ObjectMapper();
-		String json = mapper.writeValueAsString(userDto);
+		
+		userDto = memberService.getUser(userDto);
+		//이미 회원가입한 상태
+		if(userDto  != null && userDto.getUserStatecode().equals("1")) {
+			map.put("msgcode", "1");
+			map.put("userDto", userDto);
+		}
+		//비 회원인상태
+		else {
+			//이메일 인증을 보냈다.
+			userDto= new UserDto();
+			userDto.setUserId(email);
+			userDto = memberService.sendAuthMail(userDto);
+			map.put("msgcode", "2");
+			map.put("userDto", userDto);
+		}
+		String json = mapper.writeValueAsString(map);
 		return json;
+		
 	}
 
 	// 인증키 확인

@@ -16,6 +16,14 @@ public class NaverLoginServiceImpl implements NaverLoginService {
 	private SqlSession sqlSession;
 	
 	@Override
+	public SnsDto getSnsLogin(SnsDto snsDto) {
+		snsDto = sqlSession.getMapper(SnsDao.class).getSnsLogin(snsDto);
+		return snsDto ;
+	}
+	
+	
+	//2019-07-08 백업
+	@Override
 	public UserDto getUser(String snsEmail) {
 		UserDto userDto = sqlSession.getMapper(SnsDao.class).getUser(snsEmail);
 		return userDto;
@@ -26,6 +34,8 @@ public class NaverLoginServiceImpl implements NaverLoginService {
 		int result = sqlSession.getMapper(SnsDao.class).register(userDto);
 		return result;
 	}
+
+
 
 
 }

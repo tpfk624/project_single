@@ -2,6 +2,35 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
+
+<c:if test="${userInfo != null }">
+<script>
+	location.href = "/single/home";
+</script>
+</c:if>    
+
+
+<style>
+html{
+    min-height: 100% ;
+    height: 100%;
+}
+body{
+    height: 95%;
+}
+
+.footer{
+  height: 5%;
+  margin-top: 5%;
+  padding-top: 0.rem!important;
+}
+.container{
+min-height: 95%;
+}
+
+
+</style>
+
 <form id ="userInfo" display ="none">
 	<input type="hidden" name = "authKey" class ="authKey" >
 	<input type="hidden" name = "userId" class ="userId">
@@ -16,7 +45,7 @@ $(document).ready(function(){
 	
 	//이메일인증버튼
 	$('#emailSendBtn').click(function() {
-		var requestParam = JSON.stringify({"userId": $('#sendEamilForm .userId').val()});
+		var requestParam = JSON.stringify({"userId": $('#sendEamilForm #userId').val()});
 		//이메일 인증완료msgTO
 	 	$.ajax({
 	 		method:"POST",
@@ -25,8 +54,15 @@ $(document).ready(function(){
 			dataType: "json",
 		    contentType: "application/json; charset=utf-8;",
 			success:function(data){
-				console.log(data);
-				$('#status').html(data.userId + "로 메일이 전송되었습니다. <br>메일을 확인해주세요.");
+				var email = data.userDto.userId;
+				if(data.msgcode ==2){
+					$('#status').html(email + "로 메일이 전송되었습니다. <br>메일을 확인해주세요.");
+				}else if(data.msgcode ==1){
+					$('#status').html(email + "의 메일은 회원가입이 되어있습니다.<br>"
+							+"<button type='button' class='btn btn-primary'> <a href='${root}/member/login'>로그인 하러가기</a></button>");
+				}
+				
+				
 // 				console.log('결과');
 // 				console.log(data.authKey);
 // 				console.log(data.userId);
@@ -53,26 +89,7 @@ $(document).ready(function(){
 });
 </script>
 
-<style>
-html{
-    min-height: 100% ;
-    height: 100%;
-}
-body{
-    height: 95%;
-}
 
-.footer{
-  height: 5%;
-  margin-top: 5%;
-  padding-top: 0.rem!important;
-}
-.container{
-min-height: 95%;
-}
-
-
-</style>
 
 
 
@@ -81,10 +98,10 @@ min-height: 95%;
 <div class="container">
 <h1 class ="mt-4 mb-3" style="min-height: 100%;">이메일인증</h1>
 <form id="sendEamilForm" method="post" action="">
- 	
 		<div class="form-group">
-		    <input type="email" placeholder="이메일 입력해주세요" name="userId" class="userId" required="required">
-		  	<button id="emailSendBtn" type="button">이메일 인증하기</button>
+		    <input type="email" class="form-control"  id="userId" name="userId"  placeholder="이메일 입력해주세요" required="required" 
+		    style="display:inline-block; width: 20rem;">
+		  	<button type="button" id="emailSendBtn" class="btn btn-primary" >이메일 인증하기</button>
 		</div>
 </form>
 <!-- <form id="registerForm" method="post" action=""> -->
