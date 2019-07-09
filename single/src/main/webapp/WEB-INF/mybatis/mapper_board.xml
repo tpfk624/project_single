@@ -6,11 +6,12 @@
 <mapper namespace="com.kitri.single.board.dao.BoardDao">
 	
 	<insert id = "writeArticle" parameterType="boardDto">
-	insert into single_board values(#{boardNum}, 1, #{userId}, #{userNickname}, #{boardSubject}
+	insert into single_board values(#{boardNum}, #{boardListNum}, #{userId}, #{userNickname}, #{boardSubject}
 	, #{boardContent}, 0, 0, sysdate, null, null, '1')
 	</insert>
 	
 	
+	<!-- 작성한 글 보기 -->
 	<!-- 원래 set,get이나 생성자를 이용해야 하지만 디티오랑 알리아스명이랑 같으면 자동으로 들어감 -->
 	<select id="viewArticle" parameterType="int" resultType="boardDto">
 	select board_num boardNum, board_list_num boardListNum, user_id userId, 
@@ -25,12 +26,20 @@
 	</select>
 	
 	
-	<select id="totalPage" resultType="int" parameterType="boardDto">
+	<!-- 토탈값 -->
+	<select id="totalPage" resultType="int" parameterType="boardPageDto">
 	select count(*)
 	from single_board
 	where board_statecode = '1'
 	<if test="boardListNum != 0">
 	and board_list_num = #{boardListNum}
+	</if>
+	<if test="key=='제목'">
+	and board_subject like '%'||#{word}||'%'
+	</if>
+	
+	<if test="key=='작성자'">
+	and user_nickname like '%'||#{word}||'%'
 	</if>
 	
 	</select>
@@ -74,7 +83,7 @@
 	</select>
 
 
-	
+	<!-- 메인 이주의 추천수 -->
 	<select id="weekList" resultType="boardDto">
 	<![CDATA[
 	select rownum, board.*

@@ -19,7 +19,9 @@ public class BoardPageDto extends BoardDto{
 	//private List<BoardDto> list;
 	
 	
-	
+	public BoardPageDto() {
+		
+	}
 
 	public BoardPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, int currentPage) {
 		super();

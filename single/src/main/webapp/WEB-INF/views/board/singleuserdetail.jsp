@@ -111,14 +111,7 @@
 	  
 	  
 	<!-- Sidebar Column -->
-	<div class="col-lg-2 mb-4" align="center"><br>
-		<div class="list-group">
-			<a href="index.html" class="list-group-item">메인</a>
-			<a href="about.html" class="list-group-item">자취생활 팁</a>
-			<a href="services.html" class="list-group-item">요리 레시피</a>
-			<a href="contact.html" class="list-group-item">명예의 전당</a>
-		</div>
-	</div>
+	<%@ include file = "/WEB-INF/views/commons/singlecategory.jsp" %>
 		
 		
 		

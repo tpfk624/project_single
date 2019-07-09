@@ -13,7 +13,17 @@
 
     <!-- Page Heading/Breadcrumbs -->
     <h2 class="mt-4 mb-3">혼자놀아요
-      <small>- 자취생활 팁</small>
+		<small>- 
+		<c:if test="${article.boardListNum == 1 }">
+			자취생활팁
+		</c:if>
+		<c:if test="${article.boardListNum == 2 }">
+			요리레시피
+		</c:if>
+		<c:if test="${article.boardListNum == 3 }">
+			명예의전당
+		</c:if>
+		</small>
     </h2>
 
     <ol class="breadcrumb" style="background-color: #004085!important;"></ol>
@@ -27,7 +37,19 @@
       
       
 		<div class="row">
-			<div class="col-lg-3"><h5>자취생활 팁 공유</h5></div>
+			<div class="col-lg-3">
+				<h5>
+					<c:if test="${article.boardListNum == 1 }">
+						자취생활 팁 공유
+					</c:if>
+					<c:if test="${article.boardListNum == 2 }">
+						요리레시피 팁 공유
+					</c:if>
+					<c:if test="${article.boardListNum == 3 }">
+						명예의전당
+					</c:if>
+				</h5>
+			</div>
 			<div class="col-lg-9"></div>
 		</div>
 		
@@ -43,7 +65,7 @@
 	   	<div class="row">
 			<div class="col-lg-2"></div>
 			<!-- 제목 -->
-			<div class="col-lg-5"><h5>라면 맛있게 끓이기</h5><small>좋아요 : ${article.boardViews }</small></div>
+			<div class="col-lg-5"><h5>${article.boardSubject }</h5><small>좋아요 : ${article.boardViews }</small></div>
 			<div class="col-lg-0"></div>
 			<div class="col-lg-4">
 				<small>작성자 : ${article.userId }</small>
@@ -94,7 +116,7 @@
 	   		<div class="col-lg-2">
 	   		</div>
 	   		<div class="col-lg-2">
-	   			<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">글작성</button>
+	   			<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">답변</button>
 	   		</div>
 	   		<div class="col-lg-1"></div>
 	   	</div>
@@ -159,14 +181,7 @@
 	  
 	  
 	<!-- Sidebar Column -->
-	<div class="col-lg-2 mb-4" align="center"><br>
-		<div class="list-group">
-			<a href="index.html" class="list-group-item">메인</a>
-			<a href="about.html" class="list-group-item">자취생활 팁</a>
-			<a href="services.html" class="list-group-item">요리 레시피</a>
-			<a href="contact.html" class="list-group-item">명예의 전당</a>
-		</div>
-	</div>
+	<%@ include file = "/WEB-INF/views/commons/singlecategory.jsp" %>
 		
 		
 		

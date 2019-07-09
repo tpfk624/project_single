@@ -4,19 +4,58 @@
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
 
+
+
 <script>
 
 
-// 페이징 처리
+
+
 $(function() {
 	
+	
+	// 페이징 처리
 	selectPage(1, "", "", 2);
 	
 	// 페이지 숫자
 	// this 대신에 클래스로 바로 접근하면 전체적으로 접근한 것이라 어느것이 클릭된지 판별이 안됌.
 	$(document).on("click", ".page", function(){
-		var page = $(this).find(".page-link").val();
-		selectPage(page, "", "", 2);
+		
+		var key = $("#searchkey").val();
+		var word =  $("#searchword").val();
+	
+		if (key == "" && word == "") {	
+			var page = $(this).find(".page-link").val();
+			selectPage(page, "", "", 2);
+		}else {
+			var page = $(this).find(".page-link").val();
+			selectPage(page, key, word, 2);
+		}	
+		
+	});
+	
+	// 검색 후 페이징처리 유지할때
+	$(document).on("click", "#search", function(){
+		
+			var word = $("#word").val();
+			var key = $("#key").val();
+			
+			var page = $(this).find(".page-link").val();
+			selectPage(1, key, word, 2);
+		
+	});
+	
+	
+	// 글 상세보기.
+	$(document).on("click",".boardDetail", function () {
+		var boardNum = $(this).find(".boardNum").val();
+		
+		if (boardNum == null || boardNum == "" || boardNum == 0) {
+			alert("오류로 인해 접근이 불가능 합니다.");
+		} else {
+			location.href="${root}/board/view?boardNum=" + boardNum;
+		}
+		
 	});
 	
 	 
@@ -45,7 +84,6 @@ function selectPage(page, key, word, boardListNum ) {
 
 
 </script>
-
 
 
 
@@ -116,28 +154,21 @@ function selectPage(page, key, word, boardListNum ) {
 	<br><br><br>	
 	
 	
-	
+			
 	<!-- 새글 목록,페이징 처리 -->
 	<div class="paging">	
 	</div> <!-- 페이징처리 -->
 	
-      
-      
-      
+	
+	
+	
 	</div>
 	  
 	  
 	  
 	  
 	<!-- Sidebar Column -->
-	<div class="col-lg-2 mb-4" align="center"><br>
-		<div class="list-group">
-			<a href="index.html" class="list-group-item">메인</a>
-			<a href="about.html" class="list-group-item">자취생활 팁</a>
-			<a href="services.html" class="list-group-item">요리 레시피</a>
-			<a href="contact.html" class="list-group-item">명예의 전당</a>
-		</div>
-	</div>
+	<%@ include file = "/WEB-INF/views/commons/singlecategory.jsp" %>
 		
 		
 		

@@ -2,15 +2,36 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!-- 들고다님 위에 있어야뎀. -->
+<c:set var="boardListNum" value="${bp.boardListNum}"/>
+<c:set var="key" value="${bp.key}"/>
+<c:set var="word" value="${bp.word}"/>
+
+<script type="text/javascript">
+
+//글작성으로 이동
+$(function () {
+	$(".write").on("click", function () {
+		location.href="${root}/board/write?boardListNum="+${boardListNum};
+	});
+	
+	/* $(document).on("click", ".wrtie", function(){
+		console.log("11");
+		location.href="${root}/board/write?boardListNum="+boardListNum;
+	}); */
+});
 
 
+
+</script>
+
+
+<!-- 가지고 다님. -->
 <%-- <c:set var="boardListNum" value="${parameter.boardListNum }"/>
-<c:set var="pg" value="${parameter.pg }"/>
-<c:set var="boardNum" value="${boardNum }"/> --%>
-<c:set var="key" value="${bp.key }"/>
-<c:set var="word" value="${bp.word }"/>
+<c:set var="pg" value="${parameter.pg }"/> --%>
 <input type="hidden" id="searchkey" name="key" value="${key}">
 <input type="hidden" id="searchword" name="word" value="${word}">
+<input type="hidden" id="write" name="write" value="${boardListNum}">
 
 
 
@@ -18,8 +39,8 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-2">
-			<a href="${root}/board/write">
-				<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">글작성</button>
+			<a class="">
+				<button type="button" class="btn btn-outline-secondary write" style="color: #007bff; border-color: #007bff;">글작성</button>
 			</a>
 		</div>
 		<div class="col-lg-2"></div>
@@ -53,11 +74,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${bp.list}" var="boardDto">
+			<c:forEach items="${bp.list}" var="bp">
 			<tr>
-				<td><label width="70%" class="contentDetail"><strong>${boardDto.boardSubject }</strong></label></td>
-				<td width="15%">${boardDto.userNickname }</td>
-				<td width="15%">${boardDto.boardCreatedate }</td>
+				<td>
+					<label width="70%" class="contentDetail">
+						<a class="boardDetail">
+							<input class="boardNum" type="hidden" value="${bp.boardNum }">
+							<strong>${bp.boardSubject }</strong>
+						</a>
+					</label>
+				</td>
+				<td width="15%">${bp.userNickname }</td>
+				<td width="15%">${bp.boardCreatedate }</td>
 			</tr>
 			</c:forEach>
 		</tbody>
