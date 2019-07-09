@@ -70,7 +70,7 @@ public class MemberController {
 	@ResponseBody
 	public String login(UserDto userDto, Model model) {
 		logger.debug("login>>>" +userDto.toString());
-		System.out.println("login>>>" +userDto.toString());
+//		System.out.println("login>>>" +userDto.toString());
 		userDto = memberService.login(userDto);
 		//로그인 성공
 		if(userDto != null) {
@@ -80,7 +80,6 @@ public class MemberController {
 			model.addAttribute("userInfo", null);
 			return "{\"msg\":\"0\"}";
 		}
-		
 //		return HOME_REDIRECT_URL ;
 	}
 	

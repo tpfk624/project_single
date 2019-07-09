@@ -2,9 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
+
 <c:if test="${userInfo != null }">
-	<c:redirect url="/index.jsp" context= "${root}" />
+<script>
+	location.href = "/single/home";
+</script>
 </c:if>    
+
 
 <style>
 html{

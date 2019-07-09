@@ -3,6 +3,46 @@
 
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
+  <!-- 네이버 로그인 실행-->
+<script type="text/javascript">
+
+  	
+	
+  $(document).ready(function(){
+  
+    
+    //로그인
+	  $('#btnLogin').click(function() {
+//	 	  $('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
+
+//	 		var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
+//			contentType: false, //서버에 전달하는 형식
+//			processData: false,
+		var formdata = $('#loginForm').serialize(); //-> contentType:"application/x-www-form-urlencoded; charset=UTF-8", //default
+		console.log(formdata);
+		$.ajax({
+			url:"${root}/member/login",
+			type: "POST",
+			data: formdata,
+			dataType : "json", //서버에서 반환되는 형식
+			success :function(data){
+				console.log('datareceive :'+ data);
+				console.log('datareceive :'+ data.msg);
+				
+// 				location.href= "${root}/index.jsp"
+// 				location.reload();
+				history.back();
+// 				history.go();
+// 				history.forward();
+			},error: function (){
+				console.log('error')
+			}
+		});
+	})
+  });
+
+</script>
+
 <style>
 html{
     min-height: 100% ;
@@ -64,47 +104,17 @@ min-height: 95%;
 		</div>
 	</form>
 </div>
-
-  <!-- 네이버 로그인 실행-->
-<script type="text/javascript">http://localhost/single/naverlogintest.jsp
-  	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g","${callbackUrl}");
-//   	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/naverlogin/mvcallback");
-  	var state = naver_id_login.getUniqState();
-  	naver_id_login.setButton("white", 2,40);
-  	naver_id_login.setDomain("${serviceUrl}");
-  	naver_id_login.setState(state);
-//   	naver_id_login.setPopup(); 
-  	naver_id_login.init_naver_id_login();
-  	
-  //로그인
-  $(document).ready(function(){
-	  $('#btnLogin').click(function() {
-//	 	  $('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
-
-//	 		var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
-//			contentType: false, //서버에 전달하는 형식
-//			processData: false,
-		var formdata = $('#loginForm').serialize(); //-> contentType:"application/x-www-form-urlencoded; charset=UTF-8", //default
-		console.log(formdata);
-		$.ajax({
-			url:"${root}/member/login",
-			type: "POST",
-			data: formdata,
-			dataType : "json", //서버에서 반환되는 형식
-			success :function(data){
-				console.log('datareceive :'+ data)
-				console.log('datareceive :'+ data.msg)
-// 				location.reload();
-				history.back();
-// 				history.go();
-// 				history.forward();
-			},error: function (){
-				console.log('error')
-			}
-		});
-	})
-  });
-  
+<script>
+<!-- 네이버 로그인 실행-->  
+var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g","${callbackUrl}");
+//  var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/naverlogin/mvcallback");
+	var state = naver_id_login.getUniqState();
+	naver_id_login.setButton("white", 2,40);
+	naver_id_login.setDomain("${serviceUrl}");
+	naver_id_login.setState(state);
+//	naver_id_login.setPopup(); 
+	naver_id_login.init_naver_id_login();
+<!-- //네이버 로그인 실행-->  
 </script>
-<!-- //네이버 로그인 실행-->
+
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_bottom.jsp" %>
