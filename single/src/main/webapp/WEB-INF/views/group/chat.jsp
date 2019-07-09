@@ -18,7 +18,7 @@ var groupNum = "${group.groupNum}";
 var userId = "${groupMember.userId}";
 //var nickName = "${user.nickname}";
 //var serverUrl = "ws://192.168.14.53:80/plzdaengs/chatserver?groupid="+groupId;
-var serverUrl = "wss://localhost:8443/single/chat";
+var serverUrl = "wss://localhost:8443/single/chat/websocket?groupNum="+groupNum;
 //?groupNum="+groupNum;
 //var serverUrl = "${chatserver}" + "?groupid="+groupId;
 var websocket; 

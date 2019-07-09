@@ -1,5 +1,7 @@
 package com.kitri.single.group.contorller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,7 +18,7 @@ public class ChatController extends TextWebSocketHandler{
 	//로그
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
-	Map<String, WebSocketSession> chatMap = new ConcurrentHashMap<String, WebSocketSession>();
+	Map<String, List<WebSocketSession>> chatMap = new ConcurrentHashMap<String, List<WebSocketSession>>();
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
@@ -27,18 +29,22 @@ public class ChatController extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("session : " + session);
-		super.afterConnectionEstablished(session);
-	}
-	
-	@Override
-	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+		logger.info((String)session.getAttributes().get("groupNum"));
+		String groupNum = (String)session.getAttributes().get("groupNum");
 		
-		super.handleMessage(session, message);
+		List<WebSocketSession> list =  chatMap.get(groupNum);
+		if(list == null) {
+			list = new ArrayList<WebSocketSession>();
+			chatMap.put(groupNum, list);
+		}
+		list.add(session);
+		
+		//super.afterConnectionEstablished(session);
 	}
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		// TODO Auto-generated method stub
+		logger.info(message.toString());
 		super.handleTextMessage(session, message);
 	}
 

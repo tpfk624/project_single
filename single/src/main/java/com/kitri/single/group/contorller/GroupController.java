@@ -277,7 +277,49 @@ public class GroupController {
 			json = makeJSON(99, "로그인이 필요한 기능입니다");
 		}else {
 			parameter.put("userId", userDto.getUserId());
-			json = groupService.groupMember(parameter);
+			String type = parameter.get("type");
+			
+			if(type != null) {
+				GroupMemberDto groupMemberDto = new GroupMemberDto();
+				groupMemberDto.setGroupNum(Integer.parseInt(parameter.get("groupNum")));
+				if(type.equals("apply")) {
+					//가입요청
+					groupMemberDto.setGroupMemberStatecode("W");
+					groupMemberDto.setUserId(parameter.get("userId"));
+					groupService.insertGroupMember(groupMemberDto);
+
+					json = makeJSON(1, "모임에 가입신청 되었습니다. 모임장이 승인해야 가입이 완료됩니다.");
+				}else if(type.equals("leader")) {
+					
+					groupService.changeGroupLeader(parameter);
+					
+					json = makeJSON(2, parameter.get("userNickname") + " 님으로 모임장이 변경되었습니다");
+					
+				}else if(type.equals("fire")) {
+					//퇴출
+					groupMemberDto.setGroupMemberStatecode("D");
+					groupMemberDto.setUserId(parameter.get("targetId"));				
+					
+					groupService.fireGroupMember(groupMemberDto);
+					
+					json = makeJSON(3, parameter.get("userNickname") + " 님을 모임에서 퇴출하였습니다");
+					
+				}else if(type.equals("applyok")) {
+					//그룹 멤버 숫자 확인하기
+					int result = groupService.applyokGroupMember(parameter);
+					if(result == 0) {
+						json = makeJSON(0, "모임의 인원수가 가득 찼습니다. 인원제한을 변경하세요");
+					}else {
+						json = makeJSON(4, parameter.get("userNickname") + " 님을 가입승인 하였습니다");
+					}
+				}else if(type.equals("applyno")) {
+					//가입 승인 거절
+					groupMemberDto.setUserId(parameter.get("targetId"));	
+					groupService.applynoGroupMember(groupMemberDto);
+					
+					json = makeJSON(5, parameter.get("userNickname") + " 님의 가입승인을 거절하였습니다");
+				}
+			}
 		}
 		return json;
 	}
