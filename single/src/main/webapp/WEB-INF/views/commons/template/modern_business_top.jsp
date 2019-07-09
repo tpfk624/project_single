@@ -104,6 +104,11 @@ tag>input[type=button]:hover{
 }
 
 </style>
+<script>
+var GROUP_RESOURCES_IMG = "/single/resources/img/group/";
+var GROUP_RESOURCES_CSS = "/single/resources/css/group/";
+var GROUP_RESOURCES_JS = "/single/resources/js/group/";
+</script>
 </head>
 <body>
   <!-- Navigation -->
@@ -140,6 +145,8 @@ tag>input[type=button]:hover{
               	같이놀아요
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+              <a class="dropdown-item" href="${root}/group/calubang.jsp">calubang로그인</a>
+              <a class="dropdown-item" href="${root}/group/calubang2.jsp">calubang2로그인</a>
               <a class="dropdown-item" href="${root}/group">모임 목록보기</a>
               <a class="dropdown-item" href="${root}/group/create">모임 만들기</a>
               <a class="dropdown-item" href="${root}/group/groupmain.jsp">모임 안으로 들어가기</a>

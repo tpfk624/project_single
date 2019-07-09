@@ -4,14 +4,14 @@
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <style>
 .map{
-	width: 300px;
-	height: 300px;
+	width: 100%;
+	height: 20rem;
 }
 </style>
 <div id="calendarModal" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-dialog-scrollable modal-lg">
 		<div class="modal-content">
-			<div class="modal-header text-center">
+			<div class="modal-header text-center" style="border-bottom: 0px; padding-bottom: 0px;">
 				<label style="margin-left: auto; margin-bottom:auto; margin-top:auto; font-size: 1.5rem"></label>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
@@ -40,17 +40,23 @@
 				<section class="groupsection group-info">
 					<label class="group-info-label col-sm-2">내용</label>
 					<div class="group-info-content col-sm-10">
-						<textarea name="calendarContent" rows="10" cols="100" class="form-control" id="message"
+						<textarea name="calendarContent" rows="5" cols="100" class="form-control" id="message"
 							placeholder="" style="resize: none"></textarea>
 					</div>
 				</section>
 				<section class="groupsection group-info">
 					<label class="group-info-label col-sm-2">일정장소</label>
 					<div class="group-info-content col-sm-10">
-						<input type="hidden" name="calendarXLoc">
-						<input type="hidden" name="calendarYLoc">
+						<input type="hidden" name="calendarXLoc" value="">
+						<input type="hidden" name="calendarYLoc" value="">
+						<label id="kakaomapSearchLabel" class="group-info-label" style="height: calc(1.5em + .75rem + 2px); padding-top: 0.5rem; margin-right: 0.5rem;">주소검색창 : </label>
+						<input type="text" id="kakaomapSearch" class="form-control col-sm-7" name="" placeholder="검색할 주소를 입력해주세요" 
+								value="" style="margin-bottom: 0.5rem;">
+						<div class="group-info-content col-sm-10">
+							
+						</div>
 						<div class="map" id="map">
-						
+							
 						</div>
 					</div>
 				</section>
@@ -73,6 +79,14 @@
 	</div>
 </div>
 <script>
+$("#kakaomapSearch").on("keyup", function(e){
+	if(e.keyCode == 13){
+		// 주소로 좌표를 검색합니다
+		var text = $(this).val();
+		addressToMapMarker(text);
+	}
+});
+
 $("#calendarModal").on("hidden.bs.modal", function() {
 	$(this).find("textarea[name=calendarContent]").text("");
 	$(this).find("textarea[name=calendarContent]").val("");
@@ -80,7 +94,10 @@ $("#calendarModal").on("hidden.bs.modal", function() {
 	$(this).find("input[name=calendarXLoc]").val("");
 	$(this).find("input[name=calendarYLoc]").val("");
 	$(this).find("input[name=calendarSubject]").val("");
+	
+	$(this).find("#map").empty();
 });
+
 //달력
 $('.datepicker').datepicker({
     uiLibrary: 'bootstrap4',
@@ -171,14 +188,22 @@ var dataValidate = function (){
 function showCalendarModal(type, json, day) {
 		
 	var calendarModal = $("#calendarModal");
-	if(type == 'create'){
-		var url = "${root}/group/memberstate";
-		var data = {
-			groupNum : $("#calendarModal input[name=groupNum]").val()
-		};
-		var success = function(result) {
-			if(result.resultCode == 1){
-				if(result.resultData == "L"){
+	
+	var url = "${root}/group/memberstate";
+	var data = {
+		groupNum : $("#calendarModal input[name=groupNum]").val()
+	};
+	var success = function(result) {
+		if(result.resultCode == 1){
+			if(result.resultData == "L"){
+				$("#calendarModal").on("shown.bs.modal", function() {
+					
+					var container = $(this).find("#map")[0];
+					createKakaoMap(container);
+				});
+				
+				
+				if(type == 'create'){
 					calendarModal.find(".modal-header>label").text("그룹 일정 등록");
 					calendarModal.find("input[name=type]").val("create");
 					calendarModal.find("input[name=calendarDate]").removeAttr("disabled");
@@ -194,29 +219,57 @@ function showCalendarModal(type, json, day) {
 					
 					calendarModal.modal("show");
 				}else{
-					showSuccessAlertModal("일정등록", result.resultData);
+					calendarModal.find(".modal-header>label").text("그룹 일정 보기");
+					calendarModal.find("input[name=calendarNum]").val(json.calendarNum);
+					calendarModal.find("input[name=groupNum]").val(json.groupNum);
+					calendarModal.find("input[name=type]").val("modify");
+					calendarModal.find("input[name=calendarSubject]").val(json.calendarSubject);
+					calendarModal.find("input[name=calendarDate]").css("disabled", "disabled").val(json.calendarDate);
+					calendarModal.find("textarea[name=calendarContent]").text(json.calendarContent);
+					calendarModal.find("textarea[name=calendarContent]").val(json.calendarContent);
+					calendarModal.find("input[name=calendarXLoc]").val(json.calendarXLoc);
+					calendarModal.find("input[name=calendarYLoc]").val(json.calendarYLoc);
+					
+					calendarModal.find(".deletebtn").css("display", "inline-block");
+					calendarModal.find(".okbtn").text("수정");
+					calendarModal.modal("show");
+				}
+			}else if(result.resultData == "M"){
+				
+				$("#calendarModal").on("shown.bs.modal", function() {
+					
+					var container = $(this).find("#map")[0];
+					viewKakaoMap(container);
+				});
+				
+				if(type == 'create'){
+					return false;	
+				}else{
+					calendarModal.find(".modal-header>label").text("그룹 일정 보기");
+					calendarModal.find("input[name=calendarNum]").val(json.calendarNum);
+					calendarModal.find("input[name=groupNum]").val(json.groupNum);
+					calendarModal.find("input[name=type]").val("view");
+					calendarModal.find("input[name=calendarSubject]").val(json.calendarSubject);
+					calendarModal.find("input[name=calendarDate]").css("disabled", "disabled").val(json.calendarDate);
+					calendarModal.find("textarea[name=calendarContent]").text(json.calendarContent);
+					calendarModal.find("textarea[name=calendarContent]").val(json.calendarContent);
+					calendarModal.find("input[name=calendarXLoc]").val(json.calendarXLoc);
+					calendarModal.find("input[name=calendarYLoc]").val(json.calendarYLoc);
+					
+					calendarModal.find(".deletebtn").css("display", "inline-block");
+					calendarModal.find(".okbtn").text("수정");
+					calendarModal.modal("show");
+					
 				}
 			}else{
 				return false;
 			}
+		}else{
+			return false;
 		}
-		console.log(data);
-		ajaxFunc(data, url, "get", success);
 		
-	}else{
-		calendarModal.find(".modal-header>label").text("그룹 일정 보기");
-		calendarModal.find("input[name=calendarNum]").val(json.calendarNum);
-		calendarModal.find("input[name=groupNum]").val(json.groupNum);
-		calendarModal.find("input[name=type]").val("modify");
-		calendarModal.find("input[name=calendarSubject]").val(json.calendarSubject);
-		calendarModal.find("input[name=calendarDate]").css("disabled", "disabled").val(json.calendarDate);
-		calendarModal.find("textarea[name=calendarContent]").text(json.calendarContent);
-		calendarModal.find("input[name=calendarXLoc]").val(json.calendarXLoc);
-		calendarModal.find("input[name=calendarYLoc]").val(json.calendarYLoc);
-		
-		calendarModal.find(".deletebtn").css("display", "inline-block");
-		calendarModal.find(".okbtn").text("수정");
-		calendarModal.modal("show");
 	}
+	ajaxFunc(data, url, "get", success);
+	return false;
 }
 </script>
