@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.board.model.BoardPageDto;
+import com.kitri.single.board.model.ReplyDto;
 import com.kitri.single.board.service.BoardService;
 import com.kitri.single.board.service.ReplyService;
 import com.kitri.single.common.service.CommonService;
@@ -32,6 +33,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+
+	@Autowired
+	private ReplyService reService ;
 	
 	@Autowired
 	private ReplyService replyService;
@@ -65,7 +69,11 @@ public class BoardController {
 	}
 	
 	
-	
+	// 단순 글쓰기 ajax
+	@RequestMapping(value="/answerwritepage")
+	public String answerok(){
+		return "board/write/answerwrite";
+	}
 	// 자취생활 페이지로 이동
 	@RequestMapping(value="/singlelifeboard")
 	public void singlelifeboard(){
@@ -226,6 +234,9 @@ public class BoardController {
 
 	}
 	
+	
+	
+	
 	// 전체 페이징 처리
 	@RequestMapping(method = RequestMethod.GET)
 	public String boardList(@RequestParam Map<String, Object> params, Model model) {
@@ -255,6 +266,43 @@ public class BoardController {
 	
 	
 	
+	
+	
+	// 답변 글들 보여주기.
+	@RequestMapping("/answerview")
+	public String answerview(@RequestParam("boardNum") int boardNum, Model model ) {
+		
+		List<ReplyDto> answerList = new ArrayList<ReplyDto>();
+		
+		BoardDto boardDto = new BoardDto();
+		boardDto.setBoardNum(boardNum);
+		
+		answerList = reService.answerview(boardDto);
+		
+		model.addAttribute("answerList", answerList);
+		
+		String path = "board/write/answerview";
+		
+		return path;
+	}
+	
+	// 답변 쓰기.
+	@RequestMapping("/answerwrite")
+	public String answerwrite(@RequestParam Map<String, Object> params
+			, Model model, HttpSession session) {
+		
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		String replyContent = (String)params.get("replyContent");
+		int boardNum = Integer.parseInt((String)params.get("boardNum"));
+		
+		System.out.println("여기로 안왔나??");
+		System.out.println("replyContent" + replyContent);
+		System.out.println("boardNum" + boardNum);
+		
+		String path = "board/singleview";
+		
+		return path;
+	}
 	
 	
 

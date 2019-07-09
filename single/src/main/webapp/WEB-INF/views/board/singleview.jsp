@@ -5,6 +5,75 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
 
 
+<script>
+
+$(function() {
+	
+	var boardNum = $(".boardNum").val();
+	
+	// 답변 보기를 들어와서 보여주는 이유는 답변 작성하고 나서 다시 서버에 들렸다 내것을 보여주기 위해서임.
+	selectanswer(boardNum);
+	
+	// 답변 글쓰기 textarea불러오기.
+	$(document).on("click",".answerBtn",function (){
+		
+		$.ajax({
+			url : '${root}/board/answerwritepage',
+			type : 'GET',
+			success : function(response) {
+				$(".answer").html(response.trim());
+			}
+		});
+		
+	});
+	
+	// 답변 글쓰기.
+	$(document).on("click","#completeBtn",function (){
+		
+		var replyContent = $('#replyContent').val();
+		
+		$.ajax({
+			url : '${root}/board/answerwrite',
+			type : 'GET',
+			data : {
+				'boardNum': boardNum,
+				'replyContent': replyContent
+			},
+			success : function(response) {
+				$(".answer").html(response.trim());
+			}
+		});
+		
+	});
+	
+	
+	
+	
+});
+
+
+function selectanswer(boardNum) {
+	
+	// 답변 글쓰기 불러오기.
+	$.ajax({
+		url : '${root}/board/answerview',
+		type : 'GET',
+		data : {
+		'boardNum':boardNum
+		},
+		success : function(response) {
+			$(".answerview").html(response.trim());
+		}
+	});
+		
+}
+
+
+</script>
+
+
+<!-- 글번호 -->
+<input class="boardNum" type="hidden" value="${article.boardNum }">
 
 
 
@@ -116,61 +185,31 @@
 	   		<div class="col-lg-2">
 	   		</div>
 	   		<div class="col-lg-2">
-	   			<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">답변</button>
+	   			<a class="answerBtn">
+		   			<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">답변</button>
+	   			</a>
 	   		</div>
 	   		<div class="col-lg-1"></div>
 	   	</div>
 	   	
 	   	
-	   	<!-- 답변글 -->
 		<div class="row">
 			<div class="col-lg-1"></div>
 			<div class="col-lg-10"><hr style="background-color: #adb5bd"></div>
 			<div class="col-lg-1"></div>
 		</div>
-		<div class="row">
-			<div class="col-lg-2"></div>
-			<div class="col-lg-5"><small>작성일 : 2019-06-28</small></div>
-			<div class="col-lg-5"></div>
+
+
+
+
+
+	   	<!-- 답변글 쓰기 -->
+		<div class="answer">	
 		</div>
-      	<div class="row">
-	   		<div class="col-lg-2"></div>
-			<div class="col-lg-8" style="border: 1px solid #444444;">
-			<br><br>
-				
-				
-				
-				<div class="row">
-					<div class="col-lg-1"></div>
-					<div class="col-lg-3">______님 답변</div>
-					<div class="col-lg-8"></div>
-				</div>
-				<div class="row">
-					<div class="col-lg-1"></div>
-					<div class="col-lg-10"><hr style="background-color: #6c757d"></div>
-					<div class="col-lg-1">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-1"></div>
-					<div class="col-lg-10">
-						<br>
-						<!-- 내용넣기 -->
-						잘 보고 갑니다요~~~
-						<br>
-					</div>
-					<div class="col-lg-1"></div>
-				</div>
-				
-				
-				
-				
-				
-			<br><br><br><!-- 글 내용 -->
-			</div>
-			<div class="col-lg-2"></div>
-	   	</div><br>
-      	
+		
+		<!-- 답별글 보기 -->
+      	<div class="answerview">
+      	</div>
       	
       	
       	
