@@ -1,13 +1,22 @@
 package com.kitri.single.board.model;
 
-public class ReplyDto extends BoardDto {
+public class ReplyDto{
 	
 	private int replyNum;
+	private int boardNum;
 	private String userId;
 	private String userNickname;
 	private String replyContent;
 	private String replyCreatedate;
 	
+	
+	
+	public int getBoardNum() {
+		return boardNum;
+	}
+	public void setBoardNum(int boardNum) {
+		this.boardNum = boardNum;
+	}
 	public int getReplyNum() {
 		return replyNum;
 	}
@@ -39,9 +48,11 @@ public class ReplyDto extends BoardDto {
 		this.replyCreatedate = replyCreatedate;
 	}
 	
+	
+	
 	@Override
 	public String toString() {
-		return "ReplyDto [replyNum=" + replyNum + ", userId=" + userId + ", userNickname="
+		return "ReplyDto [replyNum=" + replyNum + ", boardNum=" + boardNum + ", userId=" + userId + ", userNickname="
 				+ userNickname + ", replyContent=" + replyContent + ", replyCreatedate=" + replyCreatedate + "]";
 	}
 	

@@ -27,7 +27,14 @@
 				<c:if test="${bp.boardListNum == 3 }">
 					<td>명예의전당</td>
 				</c:if>
-				<td><label class="contentDetail">${bp.boardSubject }</label></td>
+				<td>
+					<label class="contentDetail">
+						<a class="boardDetail">
+							<input class="boardNum" type="hidden" value="${bp.boardNum }">
+							<strong>${bp.boardSubject }</strong>
+						</a>
+					</label>
+				</td>
 				<td>${bp.userNickname }</td>
 				<td>${bp.boardCreatedate }</td>
 			</tr>

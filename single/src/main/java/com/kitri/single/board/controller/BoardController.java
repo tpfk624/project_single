@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.board.model.BoardPageDto;
+import com.kitri.single.board.model.ReplyDto;
 import com.kitri.single.board.service.BoardService;
 import com.kitri.single.board.service.ReplyService;
 import com.kitri.single.common.service.CommonService;
@@ -26,9 +28,14 @@ public class BoardController {
 	
 	//로그
 	//private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	@Autowired
+	private ServletContext servletContext;
 	
 	@Autowired
 	private BoardService boardService;
+
+	@Autowired
+	private ReplyService reService ;
 	
 	@Autowired
 	private ReplyService replyService;
@@ -36,13 +43,19 @@ public class BoardController {
 	@Autowired
 	private CommonService commonService;
 	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("singlemain")
 	public String singleMain(Model model){
 		//System.out.println("main으로 가는중");
 		//select를 3번해와야뎀.
 		
 		//이달의 자취왕
-		
 		
 		//이주의 추천순
 		List<BoardDto> boardDtoList = boardService.weekList();
@@ -55,14 +68,42 @@ public class BoardController {
 		
 	}
 	
+	
+	// 단순 글쓰기 ajax
+	@RequestMapping(value="/answerwritepage")
+	public String answerok(){
+		return "board/write/answerwrite";
+	}
 	// 자취생활 페이지로 이동
 	@RequestMapping(value="/singlelifeboard")
 	public void singlelifeboard(){
 	}
-	
 	// 요리 레시피 페이지로 이동
 	@RequestMapping(value="/singlecookboard")
 	public void singlecookboard(){
+	}
+	// 글 작성후 자취 or 요리 페이지로 이동
+	@RequestMapping(value="/list")
+	public String list(@RequestParam Map<String, String> parameter, 
+			Model model){
+		
+		int boardListNum = Integer.parseInt(parameter.get("boardListNum")); 
+		
+		String path = "";
+
+		if (boardListNum != 0) {
+			if (boardListNum == 1) {
+				path = "board/singlelifeboard";
+			}else if (boardListNum == 2) {
+				path = "board/singlecookboard";
+			}
+		}else {
+			path = "redirect:/index.jsp";
+		}
+		
+		
+				
+		return path;
 	}
 	
 	
@@ -70,9 +111,25 @@ public class BoardController {
 	
 	// write 페이지 이동
 	@RequestMapping(value="/write",method = RequestMethod.GET)
-	public void write(@RequestParam Map<String, String> parameter, Model model){
-		//write?bcode=${board.bcode}&pg=1&key=&word=  가지고 다녀야 하는 이유는 계속 그 게시판을 유지해야뎀 안하면 실행 안뎀.
-		//model.addAttribute("parameter", parameter);
+	public String write(@RequestParam("boardListNum") int boardListNum, Model model
+			, HttpSession session){
+
+		UserDto userdto = (UserDto)session.getAttribute("userInfo");
+		String path = "";
+		
+		if (userdto != null) {
+			
+			BoardPageDto bp = new BoardPageDto();
+			bp.setBoardListNum(boardListNum);
+			
+			model.addAttribute("bp", bp);
+			
+			path = "board/write";
+		} else {
+			path = "redirect:/index.jsp";
+		}
+		
+		return path;
 	}
 	
 	
@@ -154,6 +211,7 @@ public class BoardController {
 		UserDto userDto = (UserDto)session.getAttribute("userInfo");
 		String path = "";
 		
+		
 		// if문으로 로그인 했는지 안했는지 체크하기
 		if (userDto != null) {
 			BoardDto boardDto = boardService.viewArticle(boardNum);
@@ -162,6 +220,8 @@ public class BoardController {
 //			System.out.println("parameter ==== " + parameter);
 			
 			model.addAttribute("article", boardDto);
+			
+			// ????
 			model.addAttribute("parameter", parameter);
 			
 			path = "board/singleview";
@@ -174,30 +234,75 @@ public class BoardController {
 
 	}
 	
+	
+	
+	
+	// 전체 페이징 처리
 	@RequestMapping(method = RequestMethod.GET)
-	public String newList(@RequestParam Map<String, Object> params, Model model) {
+	public String boardList(@RequestParam Map<String, Object> params, Model model) {
 		
 		//System.out.println("컨트롤");
 		int currentPage = Integer.parseInt((String)params.get("page"));
-		System.out.println(currentPage);
+		// boardListNum로 나눔.
+		int boardListNum = Integer.parseInt((String)params.get("boardListNum"));
+		String key = (String)params.get("key");
+		String word = (String)params.get("word");
 		
-		BoardPageDto bp = boardService.selectNewList(currentPage);
-		//System.out.println("bp.tosrting ==== " + bp.getList().toString());
+		BoardPageDto bp = boardService.selectBoardList(currentPage, boardListNum, key, word);
 		
 		model.addAttribute("bp", bp);
-		//System.out.println("model === " + model);
 		
-//		List<BoardDto> boardDtoList = boardService.weekList();
-//		System.out.println(boardDtoList.toString());
-//		model.addAttribute("weekList", boardDtoList);
+		String path = "";
 		
-		String path = "board/main/newlistok";
+		if (boardListNum == 0) {
+			path = "board/boardlist/newlistok";
+		} else {
+			path = "board/boardlist/commonlist";
+		}
+		model.addAttribute("root", servletContext.getContextPath());
 		
 		return path;
 	}
 	
 	
 	
+	
+	
+	// 답변 글들 보여주기.
+	@RequestMapping("/answerview")
+	public String answerview(@RequestParam("boardNum") int boardNum, Model model ) {
+		
+		List<ReplyDto> answerList = new ArrayList<ReplyDto>();
+		
+		BoardDto boardDto = new BoardDto();
+		boardDto.setBoardNum(boardNum);
+		
+		answerList = reService.answerview(boardDto);
+		
+		model.addAttribute("answerList", answerList);
+		
+		String path = "board/write/answerview";
+		
+		return path;
+	}
+	
+	// 답변 쓰기.
+	@RequestMapping("/answerwrite")
+	public String answerwrite(@RequestParam Map<String, Object> params
+			, Model model, HttpSession session) {
+		
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		String replyContent = (String)params.get("replyContent");
+		int boardNum = Integer.parseInt((String)params.get("boardNum"));
+		
+		System.out.println("여기로 안왔나??");
+		System.out.println("replyContent" + replyContent);
+		System.out.println("boardNum" + boardNum);
+		
+		String path = "board/singleview";
+		
+		return path;
+	}
 	
 	
 
