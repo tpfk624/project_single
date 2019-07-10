@@ -95,7 +95,7 @@ $("#calendarModal").on("hidden.bs.modal", function() {
 	$(this).find("input[name=calendarYLoc]").val("");
 	$(this).find("input[name=calendarSubject]").val("");
 	
-	$(this).find("#map").empty();
+	$(this).find("#map").empty().css("background", "none");
 });
 
 //달력
@@ -116,7 +116,16 @@ $(".deletebtn").click(function() {
 	
 });
 
-$(".okbtn").click(function() {
+$("#calendarModal .okbtn").click(function() {
+	var text = $("#calendarModal input[name=calendarSubject]").val();
+	if(text == null || text == '' ){
+		showAlertModal("필수값 확인", "일정이름을 입력해주세요");
+		$("#alert").on('hidden.bs.modal', function () {
+			$("#calendarModal input[name=calendarSubject]").focus().get(0).scrollIntoView(true);
+			return false;
+		});
+		return false;
+	}
 	var url = "${root}/calendar";
 	var form = $(".calendarForm");
 	var data = new FormData(form[0]);
@@ -196,12 +205,6 @@ function showCalendarModal(type, json, day) {
 	var success = function(result) {
 		if(result.resultCode == 1){
 			if(result.resultData == "L"){
-				$("#calendarModal").on("shown.bs.modal", function() {
-					
-					var container = $(this).find("#map")[0];
-					createKakaoMap(container);
-				});
-				
 				
 				if(type == 'create'){
 					calendarModal.find(".modal-header>label").text("그룹 일정 등록");
@@ -218,6 +221,12 @@ function showCalendarModal(type, json, day) {
 					$("#calendarModal input[name=calendarDate]").val(date);
 					
 					calendarModal.modal("show");
+					$("#calendarModal").off("shown.bs.modal").on("shown.bs.modal", function() {
+						
+						var container = $(this).find("#map")[0];
+						createKakaoMap(container);
+					});
+					
 				}else{
 					calendarModal.find(".modal-header>label").text("그룹 일정 보기");
 					calendarModal.find("input[name=calendarNum]").val(json.calendarNum);
@@ -233,10 +242,17 @@ function showCalendarModal(type, json, day) {
 					calendarModal.find(".deletebtn").css("display", "inline-block");
 					calendarModal.find(".okbtn").text("수정");
 					calendarModal.modal("show");
+					
+					$("#calendarModal").off("shown.bs.modal").on("shown.bs.modal", function() {
+						
+						var container = $(this).find("#map")[0];
+						modifyKakaoMap(container);
+					});
+					
 				}
 			}else if(result.resultData == "M"){
 				
-				$("#calendarModal").on("shown.bs.modal", function() {
+				$("#calendarModal").off("shown.bs.modal").on("shown.bs.modal", function() {
 					
 					var container = $(this).find("#map")[0];
 					viewKakaoMap(container);

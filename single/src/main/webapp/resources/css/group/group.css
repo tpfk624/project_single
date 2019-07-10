@@ -3,6 +3,12 @@
 .carousel-item {
 	height: 40vh;
 }
+
+.carousel-caption{
+	background-color: #00408538;
+}
+
+
 .group-header .carousel-item{
 	height : 30vh;
 	background-position: center;

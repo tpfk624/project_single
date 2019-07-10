@@ -18,7 +18,7 @@ var groupNum = "${group.groupNum}";
 var userId = "${groupMember.userId}";
 //var nickName = "${user.nickname}";
 //var serverUrl = "ws://192.168.14.53:80/plzdaengs/chatserver?groupid="+groupId;
-var serverUrl = "wss://localhost:8443/single/chat";
+var serverUrl = "wss://localhost:8443/single/chat/websocket?groupNum="+groupNum;
 //?groupNum="+groupNum;
 //var serverUrl = "${chatserver}" + "?groupid="+groupId;
 var websocket; 
@@ -114,26 +114,21 @@ function msgSend(){
 	
 	//JSON 형태로 변형
 	var type = "message";
-	var groupid = parseInt(groupId);
-	var userid = userId;
-	var nickname = nickName;
-	var msg = makeMsg(type, userid, nickname, groupid, input);
+	//var userid = userId;
+	//var nickname = nickName;
+	var msg = makeMsg(type, groupNum, input);
 	
 	websocket.send(JSON.stringify(msg));
 	var msgInput = $("#chat .msgInput");
 	msgInput.val("");
 }
 
-function makeMsg(type, userid, nickname, groupid, text) {
-	var nowdate = nowDate();
+function makeMsg(type, groupNum, text) {
 	//console.log(nowdate);
 	var msg = {
-		type : type
-		, group_id : groupid
-		, user_id : userid
-		, nickname : nickname
-		, chat_contents : text
-		, chat_date : nowdate
+		"type" : type
+		, "groupNum" : groupNum
+		, "chatContents" : text
 	};
 	return msg;
 }
