@@ -6,7 +6,7 @@
 
 
 <c:set var="root" value="${pageContext.request.contextPath}"/>
-
+<%-- <c:set var="userInfo" value="${sessionScope.userInfo }" scope="request"/> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,13 +154,13 @@ $(document).ready(function(){
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <c:if test="${empty userInfo}">
+          <c:if test="${empty sessionScope.userInfo}" >
           <li class="nav-item">
             <a class="nav-link loginModalBtn"  href="#">로그인</a>
 <%--             <a class="nav-link" href="${root}/member/loginmodal">로그인</a> --%>
           </li>
           </c:if>
-          <c:if test="${!empty userInfo}">
+          <c:if test="${!empty sessionScope.userInfo}">
 	          <li class="nav-item">
 	            <a class="nav-link logoutBtn"  href="#">로그아웃</a>
 	          </li>
