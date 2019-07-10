@@ -6,7 +6,7 @@ public class SnsDto {
 
 	private String snsId;
 	private String snsType;
-	private String userId; //snsEmail과 동일
+	private String userId; 
 	private String snsToken;
 	private String snsConnectDate;
 	private String snsEmail;

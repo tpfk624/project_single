@@ -29,48 +29,48 @@ id: loginmodal의 display를 block으로 변경해주세요.
 
 <script>
 $(document).ready(function(){
-	var loginBtn =$('#loginBtn'); //로그인 버튼을 등록해주세요.  
+	var loginBtn =$('.loginModalBtn'); //로그인 버튼을 등록해주세요.  
 	
 	//로그인 모달 띄우기  loginmodal id를 통해서 사용됨
 	loginBtn.click(function() {
 		$('#loginmodal').css("display","block").attr("width","auto");
+		return false;
 	});
 	
 	//회원가입 버튼
 	$('.registerBtn').click(function(){
 		$(location).attr("href","${root}/member/emailauth");
 	})
-	  //로그인
-  $(document).ready(function(){
+	  
+	//로그인
+	$('#btnLogin').click(function() {
+//		$('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
 
-		$('#btnLogin').click(function() {
-//		 	  $('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
-
-// 	 		var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
-// 			contentType: false, //서버에 전달하는 형식
-// 			processData: false,
-			var formdata = $('#loginForm').serialize(); //-> contentType:"application/x-www-form-urlencoded; charset=UTF-8", //default
-			console.log(formdata);
-			$.ajax({
-				url:"${root}/member/login",
-				type: "POST",
-				data: formdata,
-				dataType : "json", //서버에서 반환되는 형식
-				success :function(data){
-					console.log('datareceive :'+ data)
-					console.log('datareceive :'+ data.msg)
-					location.reload();
+// 	 	var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
+// 		contentType: false, //서버에 전달하는 형식
+// 		processData: false,
+		var formdata = $('#loginForm').serialize(); //-> contentType:"application/x-www-form-urlencoded; charset=UTF-8", //default
+		console.log(formdata);
+		$.ajax({
+			url:"${root}/member/login",
+			type: "POST",
+			data: formdata,
+			dataType : "json", //서버에서 반환되는 형식
+			success :function(data){
+				console.log('datareceive :'+ data);
+				console.log('datareceive :'+ data.msg);
+				location.reload();
 //	 				history.back();
 //	 				history.go();
 //	 				history.forward();
-				},error: function (){
-					console.log('error')
-				}
-			});
-		})
+			},error: function (){
+				console.log('error')
+			}
+		});
+	})
 		 
 	
-  });
+
 // 	//로그인 
 // 	$('#loginForm').attr("action", "${root}/member/login").attr("method", "post")
 });
@@ -91,7 +91,7 @@ $(document).ready(function(){
     	<h3>우리 혼자 살아요</h3>
       
       <label class="loginmodal-label" for="userId"><b>아이디</b></label>
-      <input type="email" placeholder="아이디를 입력해주세요" name="userId" required>
+      <input type="email" placeholder="아이디를 입력해주세요" name="userId" required style="font-family:돋움">
 
       <label class="loginmodal-label" for="userPassword" ><b>비밀번호</b></label>
       <input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" required style="font-family:돋움">
@@ -125,13 +125,14 @@ window.onclick = function(event) {
 }
 </script>
 
-<!-- 네이버 로그인 실행-->
-<script type="text/javascript">http://localhost/single/naverlogintest.jsp
+<!-- 네이버 로그인 실행  http://localhost/single/naverlogintest.jsp-->
+<script type="text/javascript">
   	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g","${callbackUrl}");
 //   	var naver_id_login = new naver_id_login("3FGMY2V_UXaBQxS0sx0g", "http://localhost/single/naverlogin/mvcallback");
   	var state = naver_id_login.getUniqState();
   	naver_id_login.setButton("white", 2,40);
   	naver_id_login.setDomain("${serviceUrl}");
+
   	naver_id_login.setState(state);
 //   	naver_id_login.setPopup();
   	naver_id_login.init_naver_id_login();

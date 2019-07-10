@@ -12,8 +12,8 @@
                          ,user_gender, user_phone, user_zipcode,user_address, user_addressdetail, user_joindate, user_outdate, user_statecode 
                          ,auth_key, auth_state)
                          VALUES
-                         (#{userId}, #{userPassword}, #{userNickname}, #{userName}, #{userProfile}, #{userBirthday}
-                         , #{userGender}, #{userPhone}, #{userZipcode}, #{userAddress}, #{userAddressDetail}, #{userJoindate}, #{userOutdate},#{userStatecode}
+                         (#{userId}, #{userPassword}, #{userNickname}, #{userName}, #{userProfile} ,to_date(#{userBirthday},'MMDDYYYY')
+                         ,#{userGender}, #{userPhone}, #{userZipcode}, #{userAddress}, #{userAddressDetail}, #{userJoindate}, #{userOutdate},#{userStatecode}
                           ,#{authKey}, #{authState}) 
 		INTO sns_login (sns_id, sns_type, user_id, sns_token, sns_connect_date)
 								VALUES 

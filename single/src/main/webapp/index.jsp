@@ -36,12 +36,12 @@
 $(document).ready(function(){
 
 	//로그인 버튼 누를때 네비바 닫히기
-	$('#loginBtn').click(function() {
+	$('.loginModalBtn').click(function() {
 		$('#menu').attr("class","");
 	});
 	
 	//로그아웃기능 추가
-	$('#logoutBtn').click(function(){
+	$('.logoutBtn').click(function(){
 		$.ajax({
 			url:"${root}/member/logout",
 			method: "GET",
@@ -131,10 +131,10 @@ $(document).ready(function(){
 				<hr>
            	</li>
 			<c:if test="${userInfo == null}">
-                <li><a id="loginBtn" href="#">로그인</a></li> <!-- href = "${root}/member/loginmodal/loginmodal.jsp-->
+                <li><a class="loginModalBtn" href="#">로그인</a></li> <!-- href = "${root}/member/loginmodal/loginmodal.jsp-->
 		    </c:if>
 		    <c:if test="${userInfo != null}">
-		    	<li><a id="logoutBtn" href="#">로그아웃</a></li><!-- href = "${root}/member/login" -->
+		    	<li><a class="logoutBtn" href="#">로그아웃</a></li><!-- href = "${root}/member/login" -->
 		    	<li><a href="${root }/mypage/mypage">마이 페이지</a></li>
 		    </c:if>
  <%-- 		    <c:if test="${userInfo != null}"> --%>

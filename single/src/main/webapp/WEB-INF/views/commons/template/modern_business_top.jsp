@@ -109,13 +109,42 @@ tag>input[type=button]:hover{
 }
 
 </style>
+
+<!-- 로그인 -->
+<!-- 사용법:파일 안의 로그인 로그아웃 버튼 선택자: loginModalBtn 등록해주세요. -->
+<%@ include file = "/WEB-INF/views/member/login/loginmodal.jsp"%> 
+<!--end 로그인  -->	
+
 <script>
 var GROUP_RESOURCES_IMG = "/single/resources/img/group/";
 var GROUP_RESOURCES_CSS = "/single/resources/css/group/";
 var GROUP_RESOURCES_JS = "/single/resources/js/group/";
+
+$(document).ready(function(){
+	
+	//로그아웃기능 추가
+	$('.logoutBtn').click(function(){
+		$.ajax({
+			url:"${root}/member/logout",
+			method: "GET",
+			success: function(data){
+				console.log(data);
+				location.reload();
+			},
+			error: function (data){
+			}
+		});
+		return false;
+	});	
+});
+
 </script>
 </head>
 <body>
+
+
+
+
   <!-- Navigation -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark background-blue fixed-top">
     <div class="container">
@@ -127,24 +156,25 @@ var GROUP_RESOURCES_JS = "/single/resources/js/group/";
         <ul class="navbar-nav ml-auto">
           <c:if test="${empty userInfo}">
           <li class="nav-item">
-            <a class="nav-link" href="${root}/member/login">로그인</a>
+            <a class="nav-link loginModalBtn"  href="#">로그인</a>
+<%--             <a class="nav-link" href="${root}/member/loginmodal">로그인</a> --%>
           </li>
           </c:if>
           <c:if test="${!empty userInfo}">
-          <li class="nav-item">
-            <a class="nav-link" href="${root}/member/logout">로그아웃</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              	마이페이지
-            </a>   
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
-              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
-              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
-              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
-            </div>
-          </li>
+	          <li class="nav-item">
+	            <a class="nav-link logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
           </c:if>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

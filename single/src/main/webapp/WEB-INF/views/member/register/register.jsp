@@ -57,18 +57,16 @@ $(document).ready(function(){
 	    <hr>
 		<input type="hidden" name="snsId" value="${userInfo.snsDto.snsId }">
 		<input type="hidden" name="snsType" value="${userInfo.snsDto.snsType }">
-<%-- 		<input type="hidden" name="snsemail" value="${userInfo.snsDto.userId }"> 한페이지에서 두개의 값을 전달하면 배열로 전달된다.--%>
+<%-- 	<input type="hidden" name="snsemail" value="${userInfo.snsDto.userId }"> 한페이지에서 두개의 값을 전달하면 배열로 전달된다.--%>
 		<input type="hidden" name="snsToken" value="${userInfo.snsDto.snsToken }">
 		<input type="hidden" name="snsConnectDate" value="${userInfo.snsDto.snsConnectDate }">
 		<div class="form-group" align="left">
-		
 		<label for="">아이디</label>* (이메일과 동일)
 			<input type="text" class="form-control" id="userId" name="userId" placeholder="4자이상 16자 이하" readonly="readonly" required="required" value= "${userInfo.userId}">
 		</div>
 		<div class="form-group" align="left">
 			<label for="">비밀번호입력</label>* 
 			<input style="font-family:돋움" type="password" class="form-control" id="userPassword" name="userPassword" placeholder=""  required="required">
-
 		</div>
 		
 		<div class="form-group" align="left">

@@ -5,9 +5,6 @@
 
   <!-- 네이버 로그인 실행-->
 <script type="text/javascript">
-
-  	
-	
   $(document).ready(function(){
     //로그인
 	  $('#btnLogin').click(function() {
