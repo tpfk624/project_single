@@ -67,9 +67,10 @@ public class NaverMemberController {
 		String userProfile_image = Utill.getStringJson(profileObj, "profile_image");
 		
 		SnsDto snsDto = new SnsDto();
+		
+		snsDto.setSnsId(snsId);
 		snsDto.setSnsEmail(snsEmail);
 		snsDto.setSnsType("naver");
-		
 		SnsDto oldSnsDto = naverLoginService.getSnsLogin(snsDto);
 		
 		UserDto userDto= new UserDto();
@@ -80,19 +81,19 @@ public class NaverMemberController {
 		logger.debug("callback>>>oldSnsDto: "+oldSnsDto);
 	
 		if(userDto!= null && oldSnsDto == null) {
+			logger.debug("callback>>>userDto exists oldSns null");
 			//이 아이디로 회원가입한 적이 있습니다, 소셜로는 첫 로그인 
 			//1. snsDto 생성 및 연결
 			//2. 세션 생성 
 			//3. 메인페이지 이동
 			snsDto = new SnsDto();
 			snsDto.setSnsId(snsId);
-			snsDto.setUserId(snsEmail);
 			snsDto.setSnsEmail(snsEmail);
+			snsDto.setUserId(userDto.getUserId());
 			snsDto.setSnsType("naver");
 			snsDto.setSnsToken(accessToken);
 			snsDto.setSnsConnectDate(Calendar.getInstance().getTime().toString());
-			
-			naverLoginService.registSns(snsDto);
+			naverLoginService.registSnsLogin(snsDto);
 			
 			WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
 			userDto.setSnsDto(snsDto);
@@ -101,6 +102,7 @@ public class NaverMemberController {
 			
 		}
 		else if(userDto != null && oldSnsDto != null) {
+			logger.debug("callback>>>userDto exists oldSns exists");
 			//이 아이디로 회원가입한 적이 있습니다, 소셜과 연결되어있음 
 			//1. 세션 생성 
 			//2. 메인페이지 이동		
@@ -111,7 +113,7 @@ public class NaverMemberController {
 			return "redirect:/index.jsp";
 		}
 		else if (oldSnsDto == null) {
-			logger.debug(">>>callback>>>snsDto null");
+			logger.debug("callback>>>oldSns null");
 			//이소셜로는 처음 로그인 합니다. 
 			userDto = new UserDto();
 			userDto.setUserId(snsEmail);

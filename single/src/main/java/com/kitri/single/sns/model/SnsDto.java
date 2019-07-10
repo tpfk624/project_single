@@ -9,10 +9,10 @@ public class SnsDto {
 	private String userId; //snsEmail과 동일
 	private String snsToken;
 	private String snsConnectDate;
+	private String snsEmail;
 
 	
 	//우선 아래 내용은 모두 null로 입력할 예정
-	private String snsEmail;
 	private String snsNickname;
 	private String snsProfile;
 	private String snsAge;

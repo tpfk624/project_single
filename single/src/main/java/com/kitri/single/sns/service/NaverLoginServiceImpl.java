@@ -19,20 +19,18 @@ public class NaverLoginServiceImpl implements NaverLoginService {
 	
 	@Override
 	public SnsDto getSnsLogin(SnsDto snsDto) {
-		
-		return snsDto ;
+		return sqlSession.getMapper(SnsDao.class).getSnsLogin(snsDto);
 	}
 	
 
 	@Override
-	public void registSns(SnsDto snsDto) {
-		snsDto = sqlSession.getMapper(SnsDao.class).registSnsDto(snsDto);
+	public void registSnsLogin(SnsDto snsDto) {
+		sqlSession.getMapper(SnsDao.class).registSnsLogin(snsDto);
 	}
-	//2019-07-08 백업
+
 	@Override
 	public UserDto getUser(UserDto userDto) {
-		sqlSession.getMapper(MemberDao.class).getUser(userDto);
-		return userDto;
+		return sqlSession.getMapper(MemberDao.class).getUser(userDto);
 	}
 	
 //	@Override
