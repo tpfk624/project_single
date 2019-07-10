@@ -174,6 +174,7 @@ public class UserDto {
 		this.newpass = newpass;
 	}
 
+
 	@Override
 	public String toString() {
 		return "UserDto [userId=" + userId + ", userPassword=" + userPassword + ", userNickname=" + userNickname

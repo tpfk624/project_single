@@ -55,14 +55,17 @@ $(document).ready(function(){
 		    contentType: "application/json; charset=utf-8;",
 			success:function(data){
 				var email = data.userDto.userId;
-				if(data.msgcode ==2){
+				console.log(data);
+				if(data.msgcode ==3){
 					$('#status').html(email + "로 메일이 전송되었습니다. <br>메일을 확인해주세요.");
-				}else if(data.msgcode ==1){
+				}
+// 				else if (data.msgcode ==2){
+// 					$('#status').html(email + "의 메일은 이미 인증되었있습니다. <button type='button' class='btn btn-primary'> <a href ='${root}/member/register>회원가입하러가기 </a></button>");
+// 				}
+				else if(data.msgcode ==1){
 					$('#status').html(email + "의 메일은 회원가입이 되어있습니다.<br>"
 							+"<button type='button' class='btn btn-primary'> <a href='${root}/member/login'>로그인 하러가기</a></button>");
 				}
-				
-				
 // 				console.log('결과');
 // 				console.log(data.authKey);
 // 				console.log(data.userId);

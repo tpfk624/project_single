@@ -28,11 +28,13 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private SqlSession sqlSession;
 	
-
 	@Override
-	public void regist(UserDto userDto) {
-		userDto.setUserStatecode("1");
-		sqlSession.getMapper(MemberDao.class).regist(userDto);
+	public void registCommon(UserDto userDto) {
+		sqlSession.getMapper(MemberDao.class).registCommon(userDto);
+	}
+	@Override
+	public void registSns(UserDto userDto) {
+		sqlSession.getMapper(MemberDao.class).registSns(userDto);
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class MemberServiceImpl implements MemberService {
 		String email =userDto.getUserId();
 		logger.info("email: "+ email);
 //		System.out.println(">>>>>>> parameter userDto  주소:" +userDto); 
-		userDto = sqlSession.getMapper(MemberDao.class).getUser(email.trim());
+		userDto = sqlSession.getMapper(MemberDao.class).getUser(userDto);
 //		System.out.println(">>>>>>> sqlsession userDto  주소:" +userDto); sqlSession으로 값을 얻어오면 주소가 바뀐다.
 		if(userDto == null) {
 			logger.info(" >>>> 유저의 인증키를 생성합니다.");
@@ -54,9 +56,9 @@ public class MemberServiceImpl implements MemberService {
 			userDto.setAuthKey(authkey);
 			userDto.setAuthState("0");
 			memberDao.createAuthkey(userDto);
-		}else {
-			logger.info("userEamil :"+ userDto.getUserId());
-			logger.info("usertoString :"+ userDto.toString());
+		}else if(userDto != null &&userDto.getAuthKey() !=null &&"0".equals(userDto.getAuthState())){
+//			logger.info("userEamil :"+ userDto.getUserId());
+//			logger.info("usertoString :"+ userDto.toString());
 			logger.info(">>>> 유저의 인증키를 변경합니다.");
 			userDto.setAuthKey(authkey);
 			memberDao.updateAuthkey(userDto);
@@ -95,8 +97,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public UserDto getUser(UserDto userDto) {
 		MemberDao memberDao  = sqlSession.getMapper(MemberDao.class);
-		userDto = memberDao.getUser(userDto.getUserId());
+		userDto = memberDao.getUser(userDto);
 		return userDto;
 	}
+
+
 
 }

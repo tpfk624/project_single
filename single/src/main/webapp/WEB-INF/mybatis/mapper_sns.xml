@@ -9,11 +9,18 @@
      		from single_user 
      		where user_id = #{snsEmail} 
      	</select>
+     	
      	<select id ="getSnsLogin" parameterType="snsDto" resultType="snsDto">
-     		select sns_id snsId, sns_type snsType, user_id userId, sns_token snsToken, sns_connect_date snsConnectDate
+     		select sns_id snsId, sns_type snsType, user_id userId, sns_token snsToken, sns_connect_date snsConnectDate,sns_email snsEmail
      		from sns_login
-     		where sns_id = #{snsId} 
-     	</select>	
+     		where sns_email = #{snsEmail}
+     		and sns_type =#{snsType}      	
+     	</select>
+     	
+     	<insert id="registSnsLogin" parameterType="snsDto">
+     		insert into sns_login (sns_id, sns_Type, user_id, sns_token, sns_connect_date, sns_email)
+     		values(#{snsId}, #{snsType}, #{userId}, #{snsToken}, #{snsConnectDate},#{snsEmail})    		
+     	</insert>	
      </mapper>
      
      

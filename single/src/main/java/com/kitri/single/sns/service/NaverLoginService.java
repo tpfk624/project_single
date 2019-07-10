@@ -13,10 +13,12 @@ public interface NaverLoginService {
 	
 	
 	SnsDto getSnsLogin(SnsDto snsDto);
-	
+	void registSnsLogin(SnsDto snsDto);
 	//backup 2019-07-08 
-	UserDto getUser(String email);
-	int registerUser(SnsDto naverUserDto);
+//	int registerUser(SnsDto naverUserDto);
+	UserDto getUser(UserDto userDto);
+
+
 	
 	
 	

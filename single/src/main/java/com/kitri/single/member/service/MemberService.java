@@ -7,7 +7,9 @@ import javax.mail.MessagingException;
 import com.kitri.single.user.model.UserDto;
 
 public interface MemberService {
-	void regist(UserDto userDto);
+	void registCommon(UserDto userDto);
+	
+	void registSns(UserDto userDto);
 
 	UserDto sendAuthMail(UserDto userDto) throws MessagingException, UnsupportedEncodingException;
 
@@ -16,6 +18,8 @@ public interface MemberService {
 	UserDto login(UserDto userDto);
 
 	UserDto getUser(UserDto userDto);
+
+	
 
 
 

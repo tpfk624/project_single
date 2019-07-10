@@ -15,7 +15,7 @@ public class HomeServiceImpl implements HomeService{
 	//obvEwnaLdObges0rPROOPP0MNkIAQkTWtFkXdNXvga2%2BdzzDsPj%2B97ZQnMEcJBlCxAxEEg3Srtdb0XAVmKhoOA%3D%3D
 	public String dustFromOpenApi(Map<String, String> parameter){
 		String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty";
-		String serviceKey = "obvEwnaLdObges0rPROOPP0MNkIAQkTWtFkXdNXvga2%2BdzzDsPj%2B97ZQnMEcJBlCxAxEEg3Srtdb0XAVmKhoOA%3D%3D";
+		String serviceKey = "k5EXfZI2TpJSTBIMzczHGdJ7mCb%2Fh6d9TdvqF6scwSylPdfUG%2FRj%2FceWuVcQhBuxPzR9oBAz9w%2Fq6bHhHOLCuQ%3D%3D";
 		String result = "";
 		parameter.put("_returnType", "json");
 		try {
@@ -31,9 +31,6 @@ public class HomeServiceImpl implements HomeService{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("서비스야.....");
-		
 		return result;
 	}
 }

@@ -27,9 +27,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kitri.single.member.service.MemberService;
+import com.kitri.single.sns.model.SnsDto;
 import com.kitri.single.user.model.UserDto;
 import com.kitri.single.user.service.UserService;
 import com.kitri.single.user.service.UserServiceImpl;
@@ -40,7 +42,7 @@ import com.kitri.single.user.service.UserServiceImpl;
 @SessionAttributes("userInfo")
 public class MemberController {
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
-	public static final String HOME_REDIRECT_URL ="redirect:/index_logintest.jsp";
+	
 	@Autowired
 	MemberService memberService;	
 	
@@ -49,22 +51,60 @@ public class MemberController {
 	public String register() {
 		return "member/register/register";
 	}
-
-	// 회원가입 (유저정보 입력)
+	
+	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(UserDto userDto, Model model) {
-		logger.info(userDto.toString());
+	public String register(UserDto userDto, Model model 
+			, String snsId, String snsType, String snsToken, String snsConnectDate
+			, HttpServletRequest request) {
+		logger.info(">>>>>register UserDto >>>" +userDto.toString());
+		logger.info(">>>>>register UserDto.userId >>>" +userDto.getUserId());
 		
-		memberService.regist(userDto);
-		model.addAttribute("userInfo", userDto);
-		return HOME_REDIRECT_URL;
+		
+		UserDto oldUser = memberService.getUser(userDto); //이메일 인증당시 이메일을 생성한상태
+		
+		logger.info(">>>>>register oldUser >>>" +oldUser.toString());
+		if(snsId != null && !"".equals(snsId)) { 
+			logger.info(">>>>>sns계정으로 가입");
+			logger.info(">>>>>register>>>>: snsid:" +snsId+"snsType: " +snsType+"snsToken: "+snsToken+"snsConnectDate: "+snsConnectDate);
+			logger.info(userDto.toString());
+			logger.info(">>>>>>>>>>>>>>>>>");
+			userDto.setAuthKey("confirmed");
+			userDto.setAuthState("1");
+			
+			SnsDto snsDto = new SnsDto();
+			snsDto.setSnsId(snsId);
+			snsDto.setSnsType(snsType);
+			snsDto.setSnsToken(snsToken);
+			snsDto.setSnsConnectDate(snsConnectDate); // 월 일 년
+			
+			userDto.setSnsDto(snsDto);
+			userDto.setUserStatecode("1");			
+			logger.info(userDto.getSnsDto().toString());
+			memberService.registSns(userDto);
+//			model.addAttribute("userInfo", userDto);
+			WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
+			
+		}else if(oldUser.getAuthState().equals("1")){ //이메일 인증이되어 있을경우 =>일반회원가입 ()
+			logger.info(">>>>>일반회원가입");
+			logger.info(userDto.toString());
+			logger.info(">>>>>>>>>>>>>>>>>");
+			userDto.setUserStatecode("1");
+			
+//			SnsDto snsDto = new SnsDto();
+//			userDto.setSnsDto(snsDto);
+			memberService.registCommon(userDto);
+			WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
+//			model.addAttribute("userInfo", userDto);
+		}
+		return "redirect:/index.jsp";
 	}
 	// 로그인 페이지
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginpage() {
 		return "member/login/loginpage";
 	}
-
+	
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -72,11 +112,13 @@ public class MemberController {
 		logger.debug("login>>>" +userDto.toString());
 //		System.out.println("login>>>" +userDto.toString());
 		userDto = memberService.login(userDto);
-		//로그인 성공
+
 		if(userDto != null) {
+			//로그인 성공
 			model.addAttribute("userInfo", userDto);
 			return "{\"msg\":\"1\"}";
 		}else {
+			//로그인 실패
 			model.addAttribute("userInfo", null);
 			return "{\"msg\":\"0\"}";
 		}
@@ -116,18 +158,24 @@ public class MemberController {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		userDto = memberService.getUser(userDto);
-		//이미 회원가입한 상태
 		if(userDto  != null && userDto.getUserStatecode().equals("1")) {
+			//이미 회원가입한 상태
 			map.put("msgcode", "1");
 			map.put("userDto", userDto);
+			logger.info("userDto>>>>: "+userDto.toString());
 		}
-		//비 회원인상태
+//		else if(userDto != null &&userDto.getAuthState().equals("1")) {
+//			//이미 이메일 인증된 상태
+//			map.put("msgcode", "2");
+//			map.put("userDto", userDto);
+//			logger.info("userDto>>>>: "+userDto.toString());
+//		}
 		else {
 			//이메일 인증을 보냈다.
 			userDto= new UserDto();
 			userDto.setUserId(email);
 			userDto = memberService.sendAuthMail(userDto);
-			map.put("msgcode", "2");
+			map.put("msgcode", "3");
 			map.put("userDto", userDto);
 		}
 		String json = mapper.writeValueAsString(map);
