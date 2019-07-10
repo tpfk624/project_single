@@ -22,10 +22,11 @@ $(function() {
 			type : 'GET',
 			success : function(response) {
 				$(".answer").html(response.trim());
+				$(".answer").show();
 			}
 		});
-		
 	});
+	
 	
 	// 답변 글쓰기.
 	$(document).on("click","#completeBtn",function (){
@@ -34,19 +35,54 @@ $(function() {
 		
 		$.ajax({
 			url : '${root}/board/answerwrite',
+			contentType : "application/json",
+			dataType : "json",
 			type : 'GET',
 			data : {
 				'boardNum': boardNum,
 				'replyContent': replyContent
 			},
 			success : function(response) {
-				$(".answer").html(response.trim());
+				if(response.resultCode == 1){
+					$(".answer").hide();
+					$("#replyContent").val("");
+					selectanswer(boardNum);
+				} else {
+					alert("답변쓰기가 실패하였습니다. 다시 시도해주세요.");
+					$(".answer").hide();
+					$("#replyContent").val("");
+				}
+			}
+		});
+	});
+	
+	
+	
+	$(document).on("click",".answerDelete",function (){
+		
+		var replyNum = $(".replyNum").val();
+		alert(replyNum);
+		//location.href="${root}/board/delete?replyNum=" + replyNum;
+		
+		$.ajax({
+			url : '${root}/board/delete',
+			contentType : "application/json",
+			dataType : "json",
+			type : 'delete',
+			data : {
+				'replyNum': replyNum,
+			},
+			success : function(response) {
+				if(response.resultCode == 1){
+					alert("삭제 성공");
+					selectanswer(boardNum);
+				} else {
+					alert("삭제가 실패하였습니다. 다시 시도해주세요.");
+				}
 			}
 		});
 		
 	});
-	
-	
 	
 	
 });
@@ -54,7 +90,7 @@ $(function() {
 
 function selectanswer(boardNum) {
 	
-	// 답변 글쓰기 불러오기.
+	// 답변들 불러오기.
 	$.ajax({
 		url : '${root}/board/answerview',
 		type : 'GET',
