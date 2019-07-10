@@ -17,9 +17,10 @@ public interface BoardService {
 	BoardDto viewArticle(int boardNum);
 	
 	// selectNewList 오늘의 새글
-	BoardPageDto selectNewList(int cp);
+	BoardPageDto selectBoardList(int currentPage, int boardListNum, String key, String word);
 	
 	// 메인 이주의 추천순
 	List<BoardDto> weekList();
+	
 	
 }

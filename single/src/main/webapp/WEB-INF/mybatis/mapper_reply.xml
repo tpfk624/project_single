@@ -5,14 +5,18 @@
      
 <mapper namespace="com.kitri.single.board.dao.ReplyDao">
 	
-	<insert id = "writeArticle" parameterType="replyDto">
-		<!-- insert all
-		into single_board
-		values(board_num_seq.nextval, #{boardListNum}, #{userId}, #{userNickname},
-		 #{boardSubject} , #{boardContent}, '0', sysdate, null,null, '1')
-		into single_reply (reply_num, board_num, user_id, user_nickname, reply_content, reply_createdate)
-      	values (reply_num_seq.nextval, #{boardSubject}, #{ref}, 0, 0, 0, 0)
-    	select * from dual -->
+	<select id = "answerview" parameterType="boardDto" resultType="replyDto">
+		select reply_num replyNum, board_num boardNum, user_id userId, user_nickname userNickname,
+		 reply_content replyContent, reply_createdate replyCreatedate 
+		from single_reply 
+		where board_num = #{boardNum} 
+		order by reply_createdate desc
+	</select>
+	
+	<insert id="" >
+	insert into 
+	single_reply(reply_num, board_num, user_id, user_nickname, reply_content, reply_createdate)
+	values(reply_num_seq.nextval, 153, 'calubang@naver.com', '카루뱅', '답글입니다.', sysdate)
 	</insert>
 	
 </mapper>

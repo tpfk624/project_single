@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
 <% UserDto userDto = new UserDto();
 userDto.setUserId("qjawns0617@naver.com");
@@ -25,17 +26,33 @@ session.setAttribute("userInfo", userDto); %>
 <script>
 
 
-// 페이징 처리
 $(function() {
 	
-	selectPage(1, "", "");
+	//페이징 처리
+	selectPage(1, "", "", 0);
 	
 	// 페이지 숫자
 	// this 대신에 클래스로 바로 접근하면 전체적으로 접근한 것이라 어느것이 클릭된지 판별이 안됌.
 	$(document).on("click", ".page", function(){
 		var page = $(this).find(".page-link").val();
-		selectPage(page, "", "");
+		selectPage(page, "", "", 0);
 	});
+	
+	
+	// 글 상세보기.
+	$(document).on("click",".boardDetail", function () {
+		var boardNum = $(this).find(".boardNum").val();
+		
+		if (boardNum == null || boardNum == "" || boardNum == 0) {
+			alert("오류로 인해 접근이 불가능 합니다.");
+		} else {
+			location.href="${root}/board/view?boardNum=" + boardNum;
+		}
+		
+	});
+	 
+	
+	
 	
 	
 });
@@ -43,8 +60,8 @@ $(function() {
 
 
 
-function selectPage(page, key, word ) {
-	var param = JSON.stringify({'page':page,'key':key,'word':word});
+function selectPage(page, key, word, boardListNum ) {
+	var param = JSON.stringify({'page':page,'key':key,'word':word,'boardListNum':boardListNum});
 	$.ajax({
 		url : '${root}/board',
 		type : 'GET',
@@ -52,6 +69,7 @@ function selectPage(page, key, word ) {
 			'page':page
 			,'key':key
 			,'word':word
+			,'boardListNum':boardListNum
 		},
 		success : function(response) {
 			$(".paging").html(response.trim());
@@ -133,7 +151,7 @@ function selectPage(page, key, word ) {
 	<br><br><br>	
 	
 	
-	<!-- 이달의 추천글 테이블 -->
+	<!-- 이주의 추천글 테이블 -->
 	<div class="container">
 	
 		<table class="table" align="center">
@@ -162,7 +180,12 @@ function selectPage(page, key, word ) {
 						<td>명예의전당</td>
 					</c:if>
 					
-					<td>${weekList.boardSubject }</td>
+					<td>
+						<a class="boardDetail">
+							<input class="boardNum" type="hidden" value="${weekList.boardNum }">
+							${weekList.boardSubject }
+						</a>
+					</td>
 					<td>${weekList.userNickname }</td>
 				</tr>
 				</c:forEach>
@@ -200,14 +223,7 @@ function selectPage(page, key, word ) {
 	</div>
 	  
 	<!-- Sidebar Column -->
-	<div class="col-lg-2 mb-4" align="center"><br>
-		<div class="list-group">
-			<a href="${root }/index.jsp" class="list-group-item">메인</a>
-			<a href="${root }/board/singlelifeboard" class="list-group-item">자취생활 팁</a>
-			<a href="${root }/board/singlecookboard" class="list-group-item">요리 레시피</a>
-			<a href="contact.html" class="list-group-item">명예의 전당</a>
-		</div>
-	</div>
+	<%@ include file = "/WEB-INF/views/commons/singlecategory.jsp" %>
 		
 		
 		
