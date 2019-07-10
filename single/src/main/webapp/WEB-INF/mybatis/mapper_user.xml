@@ -157,8 +157,26 @@
     	and group_num = #{groupNum}
  	</delete>
 
+<!-- 	<update id="updateGroupMember" parameterType="groupMemberDto"> -->
+<!-- 	update single_group_member -->
+<!-- 	set -->
+<!-- 		group_member_statecode = #{groupMemberStatecode} -->
+<!-- 		<if test="groupMemberStatecode != null and (groupMemberStatecode eq 'M'.toString) "> -->
+<!-- 		, group_joindate = sysdate -->
+<!-- 		, group_requestdate = null -->
+<!-- 		</if> -->
+<!-- 	where group_num = upper(#{groupNum}) -->
+<!-- 	and user_id = #{userId} -->
+<!-- 	</update> -->
 
-
-
+<!-- <update id="groupMemberCountDown" parameterType="int"> -->
+<!-- 	update single_group -->
+<!-- 	set -->
+<!-- 	    group_member_count = group_member_count - 1 -->
+<!-- 	where  -->
+<!-- 		group_statecode = 1 -->
+<!-- 		and group_num = #{groupNum} -->
+<!-- 		and group_member_count > 1 -->
+<!-- 	</update> -->
 
 </mapper>

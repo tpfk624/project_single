@@ -65,7 +65,7 @@ public class UserController {
 
 	//////////////////////////////////내정보 수정 페이지////////////////////////////////////////////////
 	
-	//회원상세정보 조회
+	//회원 상세 정보 조회
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public String home(String userId, Model model, HttpSession session) {
 		System.out.println("home 들어옴");
@@ -82,15 +82,18 @@ public class UserController {
 	}
 
 	
-	// 수정
+	//회원 정보 수정
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modify(UserDto userDto, @SessionAttribute("userInfo") UserDto userInfo,
-			@RequestParam("imgdata") MultipartFile multipartFile) { // 사진정보 파일을 받음
-
+	public String modify(UserDto userDto, Model model,
+			@SessionAttribute("userInfo") UserDto userInfo,
+			@RequestParam("imgdata") MultipartFile multipartFile ) { //사진정보 파일을 얻음 
+		
 		System.out.println(userDto);
 		System.out.println(multipartFile);
-		System.out.println("여기까지 들어오니");
+		System.out.println("회원 정보 수정 여기까지 들어오니");
+		
 		if (multipartFile != null && !multipartFile.isEmpty()) {
+			
 			String realPath = servletContext.getRealPath("");
 			System.out.println(realPath);
 			String src = "";
@@ -106,7 +109,7 @@ public class UserController {
 		}
 		return null;
 	}
-
+	
 	
 	// 탈퇴하기
 	@RequestMapping("/userdelete")
