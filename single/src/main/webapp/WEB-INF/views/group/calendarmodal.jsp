@@ -147,8 +147,11 @@ $(".deletebtn").click(function() {
 	return false;
 });
 
-var success = function(result) {
-	console.log(result)
+var success = function(result, status, xhr) {
+	 var ct = xhr.getResponseHeader("content-type") || "";
+	 if (ct.indexOf('html') > -1) {
+	    location.href="${root}/member/login";
+	} 
 	if(result.resultCode == 1){
 		showSuccessAlertModal("일정등록 성공", "일정이 등록되었습니다.");
 		drawSchedule(result.resultData);
@@ -159,10 +162,14 @@ var success = function(result) {
 		showSuccessAlertModal("일정수정 삭제", "일정이 삭제되었습니다.");
 		deleteSchedule(result.resultData);
 	}else{
-		showAlertModal("일정등록 실패", "등록 실패하였습니다. 관리자에게 문의하세요");
+		showAlertModal("일정등록 실패", result.resultData);
+		$("#alert").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+			 $("#calendarModal").modal("hide");
+			 location.href = "${root}/member/login";
+		});
 	}
 	
-	$("#alertSuccess").on("hidden.bs.modal", function() {
+	$("#alertSuccess").off("hidden.bs.modal").on("hidden.bs.modal", function() {
 		 $("#calendarModal").modal("hide");
 	});
 }

@@ -16,11 +16,8 @@
 <script type="text/javascript">
 var groupNum = "${group.groupNum}";
 var userId = "${groupMember.userId}";
-//var nickName = "${user.nickname}";
-//var serverUrl = "ws://192.168.14.53:80/plzdaengs/chatserver?groupid="+groupId;
-var serverUrl = "wss://localhost:8443/single/chat/websocket?groupNum="+groupNum;
-//?groupNum="+groupNum;
-//var serverUrl = "${chatserver}" + "?groupid="+groupId;
+var serverIP = "${serverIP}";
+var serverUrl = serverIP + "${root}" + "/chat/websocket?groupNum=" + groupNum;
 var websocket; 
 chatInit();
 function chatInit() {
@@ -71,32 +68,31 @@ function webSocketError(message) {
 
 function webSocketMessage(message) {
 	//console.log("메시지 옴 :" + message.data);
-	//JSON으로 변환	
-	//console.log(msgJSON.length);
-	var msgJSON = JSON.parse(message.data);
-	
-	var length = msgJSON.length;
-	if(msgJSON == null){
-		return;
-	}
-	//console.log(length);
-	if(length == null || length == 0){
-		appendMsg(msgJSON);
-		return;
-	}
-	for(var i = 0 ; i<msgJSON.length ; i++){
-		appendMsg(msgJSON[i]);
-	}
-	
+	var msg = JSON.parse(message.data);
+	if(msg.resultCode == 1){
+		appendMsg(msg.resultData);
+	}else if(msg.resultCode == 2){
+		appendMsgList(msg.resultData);
+	}	
 }
-function appendMsg(msgJSON){
-	var userid = msgJSON.user_id;
+
+function appendMsgList(chatDtoList){
+
+	for(var i=0 ; i<chatDtoList.length ; i++){
+		appendMsg(chatDtoList[i]);
+	}
+}
+
+function appendMsg(chatDto){
+	var result = "\n" + chatDto.userNickname + " " + chatDto.chatTime + " : \n" + chatDto.chatContent + "\n";
+	
+	/* var userid = msgJSON.user_id;
 	var groupid = msgJSON.group_id;
 	var nickname = msgJSON.nickname;
 	var chatContents = msgJSON.chat_contents;
 	var chatDate = msgJSON.chat_date;
 	chatDate = chatDate.substr(11, 8);
-	var result = "\n" + nickname + "(" + userid + ") " + chatDate + " : \n" + chatContents + "\n";
+	var result = "\n" + nickname + "(" + userid + ") " + chatDate + " : \n" + chatContents + "\n"; */
 	//console.log(chatDate);
 	var chatTextArea = $("#chat .chatMsgArea");
 	chatTextArea.append(result);
@@ -128,29 +124,9 @@ function makeMsg(type, groupNum, text) {
 	var msg = {
 		"type" : type
 		, "groupNum" : groupNum
-		, "chatContents" : text
+		, "chatContent" : text
 	};
 	return msg;
 }
 
-function nowDate(){
-	var date = new Date();
-	var year = date.getFullYear();
-	var month = date.getMonth()+1;
-	var day = date.getDay();
-	var hour = date.getHours();
-	var minute = date.getMinutes();
-	var second = date.getSeconds();
-	var miliSecond = date.getMilliseconds();
-	
-	//변환
-	month = (month < 10 ? "0" + month : month);
-	day = (day < 10 ? "0" + day : day);
-	hour = (hour < 10 ? "0" + hour : hour);
-	minute = (minute < 10 ? "0" + minute : minute);
-	second = (second < 10 ? "0" + second : second);
-	
-	return year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second + ":" + miliSecond;
-	
-}
 </script>
