@@ -36,11 +36,12 @@ import com.kitri.single.group.model.GroupDto;
 import com.kitri.single.group.model.GroupMemberDto;
 import com.kitri.single.group.service.GroupService;
 import com.kitri.single.user.model.UserDto;
+import com.kitri.single.util.SiteConstance;
 import com.kitri.single.util.Utill;
 
 @Controller
 @RequestMapping("/group")
-@SessionAttributes("userInfo")
+@SessionAttributes(names = {"userInfo"})
 public class GroupController {
 	
 	//서비스 부분
@@ -90,7 +91,7 @@ public class GroupController {
 		}
 		
 		//System.out.println(parameter);
-		
+		logger.info(parameter.toString());
 		
 		List<GroupDto> groupList = groupService.getGroupList(parameter);
 		model.addAttribute("groupList", groupList);
@@ -115,14 +116,14 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public void groupCreate(@SessionAttribute("userInfo") UserDto userInfo) {
+	public void groupCreate(@ModelAttribute("userInfo") UserDto userInfo) {
 		
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody String groupCreate(
 			GroupDto groupDto
-			, @SessionAttribute("userInfo") UserDto userInfo
+			, @ModelAttribute("userInfo") UserDto userInfo
 			, @RequestParam("imgdata") MultipartFile multipartFile
 			, @RequestParam("groupHashtag") String groupHashtag) {
 		
@@ -143,6 +144,9 @@ public class GroupController {
 			}
 			
 			groupDto.setGroupImgSrc(src);
+		}else {
+			int groupCategoryNum = groupDto.getGroupCategoryNum();
+			groupDto.setGroupImgSrc(servletContext.getContextPath() + SiteConstance.GROUP_DEFAULT_IMG_PATH +  groupCategoryNum + "_default.jpg");
 		}
 		groupDto.setGroupMemberCount(1);
 		//서비스 시작...
@@ -155,7 +159,7 @@ public class GroupController {
 	}
 	
 	@RequestMapping("/{groupNum}")
-	public String groupMain(@SessionAttribute("userInfo") UserDto userInfo
+	public String groupMain(@ModelAttribute("userInfo") UserDto userInfo
 			, @PathVariable(name = "groupNum") int groupNum
 			, Model model) {
 		
@@ -201,7 +205,7 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/groupmodify" , method = RequestMethod.POST)
-	public String groupmodify(@SessionAttribute("userInfo") UserDto userInfo
+	public String groupmodify(@ModelAttribute("userInfo") UserDto userInfo
 			, GroupDto groupDto
 			, @RequestParam("imgdata") MultipartFile multipartFile
 			, @RequestParam("groupHashtag") String groupHashtag) {
@@ -235,7 +239,7 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping("/groupstamp")
-	public String groupStamp(@SessionAttribute("userInfo") UserDto userInfo
+	public String groupStamp(@ModelAttribute("userInfo") UserDto userInfo
 				, @RequestParam("groupNum") int groupNum) {
 		//logger.info("groupNum : " + groupNum);
 		String json = makeJSON(0, "찜하기 실패하였습니다. 관리자에게 문의하세요");
@@ -248,7 +252,7 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping("/memberstate")
-	public String getMemberStatecode(@SessionAttribute("userInfo") UserDto userInfo
+	public String getMemberStatecode(@ModelAttribute("userInfo") UserDto userInfo
 			, @RequestParam("groupNum") int groupNum) {
 		String json = makeJSON(0, "시스템 에러");
 		
@@ -277,14 +281,56 @@ public class GroupController {
 			json = makeJSON(99, "로그인이 필요한 기능입니다");
 		}else {
 			parameter.put("userId", userDto.getUserId());
-			json = groupService.groupMember(parameter);
+			String type = parameter.get("type");
+			
+			if(type != null) {
+				GroupMemberDto groupMemberDto = new GroupMemberDto();
+				groupMemberDto.setGroupNum(Integer.parseInt(parameter.get("groupNum")));
+				if(type.equals("apply")) {
+					//가입요청
+					groupMemberDto.setGroupMemberStatecode("W");
+					groupMemberDto.setUserId(parameter.get("userId"));
+					groupService.insertGroupMember(groupMemberDto);
+
+					json = makeJSON(1, "모임에 가입신청 되었습니다. 모임장이 승인해야 가입이 완료됩니다.");
+				}else if(type.equals("leader")) {
+					
+					groupService.changeGroupLeader(parameter);
+					
+					json = makeJSON(2, parameter.get("userNickname") + " 님으로 모임장이 변경되었습니다");
+					
+				}else if(type.equals("fire")) {
+					//퇴출
+					groupMemberDto.setGroupMemberStatecode("D");
+					groupMemberDto.setUserId(parameter.get("targetId"));				
+					
+					groupService.fireGroupMember(groupMemberDto);
+					
+					json = makeJSON(3, parameter.get("userNickname") + " 님을 모임에서 퇴출하였습니다");
+					
+				}else if(type.equals("applyok")) {
+					//그룹 멤버 숫자 확인하기
+					int result = groupService.applyokGroupMember(parameter);
+					if(result == 0) {
+						json = makeJSON(0, "모임의 인원수가 가득 찼습니다. 인원제한을 변경하세요");
+					}else {
+						json = makeJSON(4, parameter.get("userNickname") + " 님을 가입승인 하였습니다");
+					}
+				}else if(type.equals("applyno")) {
+					//가입 승인 거절
+					groupMemberDto.setUserId(parameter.get("targetId"));	
+					groupService.applynoGroupMember(groupMemberDto);
+					
+					json = makeJSON(5, parameter.get("userNickname") + " 님의 가입승인을 거절하였습니다");
+				}
+			}
 		}
 		return json;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/groupdelete")
-	public String groupDelete(@SessionAttribute("userInfo") UserDto userInfo
+	public String groupDelete(@ModelAttribute("userInfo") UserDto userInfo
 			, @RequestParam("groupNum") int groupNum) {
 		String json = makeJSON(99, "시스템 에러입니다");
 		String memberStatecode = getGroupMemberStatecode(userInfo.getUserId(), groupNum);
@@ -301,7 +347,7 @@ public class GroupController {
 	//그룹 내 nav바 이동 관련
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/grouppage", method = RequestMethod.GET)
-	public ModelAndView groupModify(@SessionAttribute("userInfo") UserDto userInfo
+	public ModelAndView groupModify(@ModelAttribute("userInfo") UserDto userInfo
 			, @RequestParam Map<String, String> parameter
 			, ModelAndView model) {
 		

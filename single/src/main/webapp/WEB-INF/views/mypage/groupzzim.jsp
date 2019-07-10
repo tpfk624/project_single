@@ -3,6 +3,8 @@
 <%@ include file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <link rel="stylesheet" href="${root}/resources/css/user/groupzzim.css">
+<%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
+<%@ include file="/WEB-INF/views/commons/alert_success.jsp"%>
 
 
 <%
@@ -39,7 +41,6 @@ function getMyGroup(sel) {
 			'option' : sel
 		},
 		success : function(data) {
-			/* alert("성공 / 응답 값: " + data); */
 			$(".jumbotronBottom").html(data);
 			$(".groupcard").click(groupcardClick);
 		}
@@ -48,7 +49,7 @@ function getMyGroup(sel) {
 
 function groupcardClick() {
 	var groupNum = $(this).attr("data-num");
-
+	alert(groupNum);
 	$.ajax({
 		url : "${root}/mypage/groupdetail",
 		method : "get",
@@ -67,7 +68,7 @@ function groupcardClick() {
 
 </script>
 
-<%@ include file="groupdetailmodal2.jsp"%>
+<%@ include file="groupzzimmodal.jsp"%>
 
 
 <section class="contents">

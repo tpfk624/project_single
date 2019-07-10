@@ -5,7 +5,7 @@
      
 <mapper namespace="com.kitri.single.board.dao.ReplyDao">
 	
-	<select id = "answerview" parameterType="boardDto" resultType="replyDto">
+	<select id = "answerView" parameterType="boardDto" resultType="replyDto">
 		select reply_num replyNum, board_num boardNum, user_id userId, user_nickname userNickname,
 		 reply_content replyContent, reply_createdate replyCreatedate 
 		from single_reply 
@@ -13,10 +13,15 @@
 		order by reply_createdate desc
 	</select>
 	
-	<insert id="" >
+	<insert id="answerInsert" >
 	insert into 
 	single_reply(reply_num, board_num, user_id, user_nickname, reply_content, reply_createdate)
-	values(reply_num_seq.nextval, 153, 'calubang@naver.com', '카루뱅', '답글입니다.', sysdate)
+	values(reply_num_seq.nextval, #{boardNum}, #{userId}, #{userNickname}, #{replyContent}, sysdate)
+	</insert>
+
+	<insert id="answerDelete" parameterType="int" >
+	delete single_reply 
+	where reply_num = #{replyNum}
 	</insert>
 	
 </mapper>

@@ -7,12 +7,14 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.board.model.BoardPageDto;
@@ -35,9 +37,6 @@ public class BoardController {
 	private BoardService boardService;
 
 	@Autowired
-	private ReplyService reService ;
-	
-	@Autowired
 	private ReplyService replyService;
 	
 	@Autowired
@@ -52,14 +51,12 @@ public class BoardController {
 	
 	@RequestMapping("singlemain")
 	public String singleMain(Model model){
-		//System.out.println("main으로 가는중");
 		//select를 3번해와야뎀.
 		
 		//이달의 자취왕
 		
 		//이주의 추천순
 		List<BoardDto> boardDtoList = boardService.weekList();
-		//System.out.println(boardDtoList.toString());
 		model.addAttribute("weekList", boardDtoList);
 		
 		String path = "board/singlemain";
@@ -152,7 +149,6 @@ public class BoardController {
 		if (userdto != null) {
 			// 2번 적용됨?? - 오라클에 있는 유저랑 인클루드해서 넣어둔 유저랑 겹처서 그런가?
 
-			//System.out.println(" seq : 1 = "+seq);
 			//int boardNum = commonService.getNextSeq();
 			
 			//boardDto.setBoardNum(boardNum);
@@ -164,10 +160,6 @@ public class BoardController {
 			boardDto.setBoardViews(0);
 			boardDto.setBoardLike(0);
 			
-			//System.out.println("boardDto = " + boardDto);
-			//System.out.println(" seq : 2 = "+seq);
-
-			
 			// 해시태그 dto에 넣어주기.
 			String[] hashtags = tags.split("#");
 			List<String> hashtagList = new ArrayList<>();
@@ -175,7 +167,6 @@ public class BoardController {
 			for(int i=0 ; i<hashtags.length ; i++) {
 				
 				hashtagList.add(hashtags[i]);
-				//System.out.println(hashtags[i]);
 				
 			}
 
@@ -216,9 +207,6 @@ public class BoardController {
 		if (userDto != null) {
 			BoardDto boardDto = boardService.viewArticle(boardNum);
 			
-//			System.out.println("boardDto ==== " + boardDto);
-//			System.out.println("parameter ==== " + parameter);
-			
 			model.addAttribute("article", boardDto);
 			
 			// ????
@@ -241,7 +229,6 @@ public class BoardController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String boardList(@RequestParam Map<String, Object> params, Model model) {
 		
-		//System.out.println("컨트롤");
 		int currentPage = Integer.parseInt((String)params.get("page"));
 		// boardListNum로 나눔.
 		int boardListNum = Integer.parseInt((String)params.get("boardListNum"));
@@ -270,14 +257,20 @@ public class BoardController {
 	
 	// 답변 글들 보여주기.
 	@RequestMapping("/answerview")
-	public String answerview(@RequestParam("boardNum") int boardNum, Model model ) {
+	public String answerView(@RequestParam("boardNum") int boardNum, Model model,
+			HttpSession session) {
 		
 		List<ReplyDto> answerList = new ArrayList<ReplyDto>();
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		
+		if (userDto != null) {
+			model.addAttribute("userInfo", userDto);
+		}
 		
 		BoardDto boardDto = new BoardDto();
 		boardDto.setBoardNum(boardNum);
 		
-		answerList = reService.answerview(boardDto);
+		answerList = replyService.answerView(boardDto);
 		
 		model.addAttribute("answerList", answerList);
 		
@@ -288,22 +281,62 @@ public class BoardController {
 	
 	// 답변 쓰기.
 	@RequestMapping("/answerwrite")
-	public String answerwrite(@RequestParam Map<String, Object> params
+	public @ResponseBody String answerwrite(@RequestParam Map<String, Object> params
 			, Model model, HttpSession session) {
 		
 		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		ReplyDto replyDto = new ReplyDto();
+		
+		String userId = userDto.getUserId();
+		String userNickname = userDto.getUserNickname();
 		String replyContent = (String)params.get("replyContent");
 		int boardNum = Integer.parseInt((String)params.get("boardNum"));
 		
-		System.out.println("여기로 안왔나??");
-		System.out.println("replyContent" + replyContent);
-		System.out.println("boardNum" + boardNum);
+		replyDto.setUserId(userId);
+		replyDto.setUserNickname(userNickname);
+		replyDto.setReplyContent(replyContent);
+		replyDto.setBoardNum(boardNum);
 		
-		String path = "board/singleview";
+		//List<ReplyDto> list = replyService.answerview(replyDto);
 		
-		return path;
+		//model.addAttribute("list", list);
+		int seq = replyService.answerInsert(replyDto);
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		if (seq == 0) {
+			jsonObject.put("resultCode", 0);
+			//jsonObject.put("resultData", "시스템 에러");
+		}else {
+			jsonObject.put("resultCode", 1);
+			//jsonObject.put("resultData", "성공");
+			//path = "board/answerview";
+		}
+		
+		
+		return jsonObject.toString();
 	}
 	
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	public @ResponseBody String answerDelete(@RequestParam("replyNum") int replyNum
+			, Model model, HttpSession session) {
+		
+		System.out.println(replyNum);
+		
+		int seq = replyService.answerDelete(replyNum);
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		if (seq == 0) {
+			jsonObject.put("resultCode", 0);
+		}else {
+			jsonObject.put("resultCode", 1);
+		}
+		
+		return jsonObject.toString();
+		
+	}
 	
 
 }

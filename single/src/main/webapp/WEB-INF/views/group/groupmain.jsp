@@ -70,10 +70,10 @@ $(function() {
 			<!-- Slide One - Set the background image for this slide in the line below -->
 			<div class="carousel-item active"
 				style="background-image: url('${group.groupImgSrc}')">
-				<div class="carousel-caption d-none d-md-block">
+				<%-- <div class="carousel-caption d-none d-md-block">
 					<h3>${group.groupName}</h3>
 					<p>${group.groupCategoryName}</p>
-				</div>
+				</div> --%>
 			</div>
 		</div>
 		<a class="carousel-control-prev" href="#carouselExampleIndicators"
@@ -94,7 +94,6 @@ $(function() {
 	<div id="navbar" class="group-navbar">
 	  	<a class="group-navbar-item active grouppage" data-page="main">모임메인</a>
 	  	<a class="group-navbar-item">모임과제</a>
-	  	<a class="group-navbar-item">모임원 중심점 찾기</a>
 	  	<c:if test="${groupMember.groupMemberStatecode == 'L'}">
 	  	<a class="group-navbar-item grouppage" data-page="modify">모임설정변경</a>
 	  	<a class="group-navbar-item grouppage" data-page="member">모임원관리</a>

@@ -142,7 +142,7 @@ $(document).ready(function(){
 <%-- 		    </c:if> --%>
                 <li><a href="${root }/mypage/mypage">마이 페이지</a></li>
                 <li><a href="${root }/board/singlemain">혼자놀래요</a></li>
-                <li><a href="generic.html">같이놀래요</a></li>
+                <li><a href="${root}/group">같이놀래요</a></li>
             </ul>
             
          </nav>
