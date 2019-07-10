@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <style>
 .map{
 	width: 100%;
@@ -147,11 +145,7 @@ $(".deletebtn").click(function() {
 	return false;
 });
 
-var success = function(result, status, xhr) {
-	 var ct = xhr.getResponseHeader("content-type") || "";
-	 if (ct.indexOf('html') > -1) {
-	    location.href="${root}/member/login";
-	} 
+var success = function(result) {
 	if(result.resultCode == 1){
 		showSuccessAlertModal("일정등록 성공", "일정이 등록되었습니다.");
 		drawSchedule(result.resultData);
@@ -272,10 +266,10 @@ function showCalendarModal(type, json, day) {
 					calendarModal.find("input[name=calendarNum]").val(json.calendarNum);
 					calendarModal.find("input[name=groupNum]").val(json.groupNum);
 					calendarModal.find("input[name=type]").val("view");
-					calendarModal.find("input[name=calendarSubject]").val(json.calendarSubject);
+					calendarModal.find("input[name=calendarSubject]").val(json.calendarSubject).attr("readonly", "readonly");
 					calendarModal.find("input[name=calendarDate]").css("disabled", "disabled").val(json.calendarDate);
 					calendarModal.find("textarea[name=calendarContent]").text(json.calendarContent);
-					calendarModal.find("textarea[name=calendarContent]").val(json.calendarContent);
+					calendarModal.find("textarea[name=calendarContent]").val(json.calendarContent).attr("readonly", "readonly");
 					calendarModal.find("input[name=calendarXLoc]").val(json.calendarXLoc);
 					calendarModal.find("input[name=calendarYLoc]").val(json.calendarYLoc);
 					

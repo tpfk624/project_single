@@ -55,15 +55,15 @@ function chatToggle(){
 }
 
 function webSocketOpen(message){
-	console.log("서버와 연결 : " + message.data);
+	//console.log("서버와 연결 : " + message.data);
 };
 
 function webSocketClose(message){
-	console.log("서버와 연결 끊김 : " + message.data);
+	//console.log("서버와 연결 끊김 : " + message.data);
 };
 
 function webSocketError(message) {
-	console.log("에러남 : " + message.data);
+	//console.log("에러남 : " + message.data);
 }
 
 function webSocketMessage(message) {
@@ -77,7 +77,6 @@ function webSocketMessage(message) {
 }
 
 function appendMsgList(chatDtoList){
-
 	for(var i=0 ; i<chatDtoList.length ; i++){
 		appendMsg(chatDtoList[i]);
 	}
@@ -86,14 +85,6 @@ function appendMsgList(chatDtoList){
 function appendMsg(chatDto){
 	var result = "\n" + chatDto.userNickname + " " + chatDto.chatTime + " : \n" + chatDto.chatContent + "\n";
 	
-	/* var userid = msgJSON.user_id;
-	var groupid = msgJSON.group_id;
-	var nickname = msgJSON.nickname;
-	var chatContents = msgJSON.chat_contents;
-	var chatDate = msgJSON.chat_date;
-	chatDate = chatDate.substr(11, 8);
-	var result = "\n" + nickname + "(" + userid + ") " + chatDate + " : \n" + chatContents + "\n"; */
-	//console.log(chatDate);
 	var chatTextArea = $("#chat .chatMsgArea");
 	chatTextArea.append(result);
 	chatTextArea.scrollTop(chatTextArea.prop("scrollHeight"));
@@ -110,8 +101,6 @@ function msgSend(){
 	
 	//JSON 형태로 변형
 	var type = "message";
-	//var userid = userId;
-	//var nickname = nickName;
 	var msg = makeMsg(type, groupNum, input);
 	
 	websocket.send(JSON.stringify(msg));

@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:if test="${empty sessionScope.userInfo}">99</c:if>
+<c:if test="${!empty sessionScope.userInfo}">
 <div class="groupmain" id="groupmain">		
 	<!-- 모임 이름 뿌져지는 곳 -->
 	<section class="groupsection groupheader">
@@ -106,23 +108,14 @@ $(function() {
 		var success = function (result) {
 			if(result.resultCode == 1){
 				showSuccessAlertModal("모임정보 수정", "성공적으로 수정되었습니다");
-				$("#alertSuccess").on("hidden.bs.modal", function(){
-					$("#navbar a[data-page=main]").trigger("click");
+				$("#alertSuccess").off("hidden.bs.modal").on("hidden.bs.modal", function(){
+					location.reload();
 				});
 			}else{
 				showAlertModal("모임정보 수정", "수정 실패하였습니다.");
 			}
 		}
-		//ajaxFunc(data, url, "file", success);
-		$.ajax({
-			url : url
-			, method : "post"
-			, processData : false
-			, contentType : false
-			, data : data
-			, dataType : "json"
-			, success : success
-		});	
+		ajaxFunc(data, url, "post", success);
 	});
 	//dropbox 관련
 	$("#groupModifyForm .dropdown").on("show.bs.dropdown", function(){
@@ -160,3 +153,4 @@ function dataValidate(){
 }
 </script>
 </div>
+</c:if>

@@ -94,6 +94,7 @@ public class GroupController {
 		logger.info(parameter.toString());
 		
 		List<GroupDto> groupList = groupService.getGroupList(parameter);
+		model.addAttribute("parameter", parameter);
 		model.addAttribute("groupList", groupList);
 		//System.out.println(json);
 		
@@ -406,12 +407,47 @@ public class GroupController {
 				model = modifyPage(userInfo, groupNum, model);
 			}else if("member".equals(type)) {
 				model = memberPage(userInfo, groupNum, model);
+			}else if("homework".equals(type)) {
+				model = homeworkPage(userInfo, groupNum, model);
+			}else if("homeworkcreate".equals(type)){
+				model = homeworkCreatePage(userInfo, groupNum, model);
+			}else {
+				model.setViewName("group/main");
 			}
 		}
 		model.addObject("root", servletContext.getContextPath());
 		return model;
 	}
 	
+	private ModelAndView homeworkCreatePage(UserDto userInfo, int groupNum, ModelAndView model) {
+		String path = "group/homeworkcreate";
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userInfo.getUserId());
+		parameter.put("groupNum", groupNum);
+		GroupMemberDto groupMemberDto = groupService.getGroupMember(parameter);
+		
+		if(groupMemberDto.getGroupMemberStatecode().equals("L")) {
+			model.addObject("groupNum", groupNum);
+			model.setViewName(path);
+		}
+		
+		return model;
+	}
+
+	private ModelAndView homeworkPage(UserDto userInfo, int groupNum, ModelAndView model) {
+		String path = "group/grouphomework";
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userInfo.getUserId());
+		parameter.put("groupNum", groupNum);
+		GroupMemberDto groupMemberDto = groupService.getGroupMember(parameter);
+		
+		model.addObject("groupNum", groupNum);
+		model.addObject("groupMember", groupMemberDto);
+		model.setViewName(path);
+		
+		return model;
+	}
+
 	private ModelAndView memberPage(UserDto userInfo, int groupNum, ModelAndView model) {
 		String path = "group/groupmember";
 		Map<String, Object> parameter = new HashMap<String, Object>();
@@ -425,7 +461,7 @@ public class GroupController {
 			
 			System.out.println(list);
 			
-			model.addObject("groupNum", list.get(0).getGroupNum());
+			model.addObject("groupNum", groupNum);
 			model.addObject("memberlist", list);
 			model.setViewName(path);
 		}
