@@ -6,30 +6,40 @@
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <script type="text/javascript">
 $(function() {
-	$(".okbtn").click(function() {
-		defaultSetting("${root}/resources/img/group/group_default.png");
+	defaultSetting("");
+	
+	$(".dropdown").on("hidden.bs.dropdown", function(){
+		var groupCategoryNum = $("#groupCreateForm input[name=groupCategoryNum]").val();
+		if($("#ex_file")[0].files == null || $("#ex_file")[0].files.value == null ||  $("#ex_file")[0].files.value == "" ){
+			defaultSetting(GROUP_RESOURCES_IMG + groupCategoryNum + "_default.jpg");
+		}
+	});
+	
+	$(".okbtn").click(function() {	
 		var groupName = $("#groupCreateForm input[name=groupName]").val();
 		var groupCategoryNum = $("#groupCreateForm input[name=groupCategoryNum]").val();
 		
 		if(groupName == null || groupName == ''){
-			showAlertModal("필수값이 누락", "그룹명을 입력해주세요");
+			showAlertModal("필수값이 누락", "모임명을 입력해주세요");
 
-			$("#alert").on('hide.bs.modal', function () {
-				$("#groupCreateForm input[name=groupName]").focus();
+			$("#alert").on('hidden.bs.modal', function () {
+				$("#groupCreateForm input[name=groupName]").focus().get(0).scrollIntoView(true);
+				
 			  });
 			return;
 		}
 		
 		if(groupCategoryNum == null || groupCategoryNum == ''){
-			showAlertModal("필수값이 누락", "그룹 종류를 결정해주세요");
+			showAlertModal("필수값이 누락", "모임분류를 결정해주세요");
 			
-			$("#alert").on('hide.bs.modal', function () {
-				$("#groupCreateForm input[name=groupCategoryNum]").next().focus();
+			$("#alert").on('hidden.bs.modal', function () {
+				$("#groupCreateForm input[name=groupCategoryNum]").next().focus().get(0).scrollIntoView(true);
 			  });
 			
 			
 			return;
 		}
+		makeTagList();
 		
 		$.ajax({
 			url : "${root}/group/create"
@@ -41,7 +51,7 @@ $(function() {
 			, success : function(result) {
 				console.log(result);
 				showSuccessAlertModal("모임 만들기", "성공적으로 모임이 만들어졌습니다");
-				$("#alertSuccess").on("hide.bs.modal", function() {
+				$("#alertSuccess").on("hidden.bs.modal", function() {
 					$(location).attr("href", "${root}/group/" + result.groupNum);
 				});
 			}
@@ -51,8 +61,8 @@ $(function() {
 </script>
 
 <section class="contents">
-	<div class="container col-lg-5 col-md-5 col-sm-5 mb-4">
-		<div class="row">
+	<div class="container col-lg-7 col-md-7 col-sm-7 mb-4" style="background-color: white; padding: 1rem 3rem;">
+		<div class="row" >
 			<h1 class="center">모임 만들기</h1>
 		</div>
 		<!-- Marketing Icons Section -->
@@ -89,8 +99,9 @@ $(function() {
 				<div class="control-group form-group">
 					<div class="controls">
 						<label>모임 태그 : </label> 
-						<input type="text" name="groupHashtag"
-							class="form-control" id="text" placeholder="모임을 표현할 수 있는 태그를 입력해주세요">
+						<div class="row" style="padding-left: 1rem;">
+						<%@ include file="/WEB-INF/views/commons/taginput.jsp"%>
+						</div>
 					</div>
 				</div>
 				<div class="control-group form-group">

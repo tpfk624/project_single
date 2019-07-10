@@ -19,9 +19,10 @@ function viewKakaoMap(container){
 	$("#kakaomapSearch").hide();
 	$("#kakaomapSearchLabel").hide();
 	
-	if(lat == null || lat == '' ){
-		lat = 37.4849681;
-		lng = 126.8981268;
+	if(lat == null || lat == '' || lat == '0'){
+		$("#map").empty();
+		$("#map").html($("<div>약속장소가 없습니다</div>"));
+		return false;
 	}else{
 		lat = parseFloat(lat);
 		lng = parseFloat(lng);
@@ -46,11 +47,21 @@ function viewKakaoMap(container){
 	marker.setMap(map);
 }
 
-function createKakaoMap(container) {
+function modifyKakaoMap(container){
 	
+	var lat = $("#calendarModal input[name=calendarXLoc]").val();
+	var lng = $("#calendarModal input[name=calendarYLoc]").val();
 	
-	var latLng = new kakao.maps.LatLng(37.4849681, 126.8981268);
-
+	if(lat == null || lat == '' || lat == '0'){
+		lat = 37.4849681;
+		lng = 126.8981268;
+	}else{
+		lat = parseFloat(lat);
+		lng = parseFloat(lng);
+	}
+	
+	var latLng = new kakao.maps.LatLng(lat, lng);
+	
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 			center: latLng, //지도의 중심좌표.
 			level: 3 //지도의 레벨(확대, 축소 정도)
@@ -68,6 +79,66 @@ function createKakaoMap(container) {
 	marker.setMap(map);  
 	// 마커가 드래그 가능하도록 설정합니다 
 	marker.setDraggable(true); 
+	
+	// 출발 마커에 dragend 이벤트를 등록합니다
+	kakao.maps.event.addListener(marker, 'dragend', function(mouseEvent) {
+	     // 출발 마커의 드래그가 종료될 때 마커 이미지를 원래 이미지로 변경합니다
+		var latLng = marker.getPosition();
+		setMarker(marker, latLng);
+	});
+	
+		
+	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+	    
+	    // 클릭한 위도, 경도 정보를 가져옵니다 
+	    var latLng = mouseEvent.latLng;
+		//marker.setPosition(latLng);
+	    setMarker(marker, latLng);
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);  
+		
+	});
+}
+
+function createKakaoMap(container) {
+	
+	var latLng = new kakao.maps.LatLng(37.4849681, 126.8981268);
+	
+	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+	if (navigator.geolocation) {    
+	    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+		navigator.geolocation.getCurrentPosition(function(position) {
+	        var lat = position.coords.latitude, // 위도
+	            lon = position.coords.longitude; // 경도
+	        latLng = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+	      });
+	} 
+	
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+			center: latLng, //지도의 중심좌표.
+			level: 3 //지도의 레벨(확대, 축소 정도)
+		};
+
+	map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+ 
+	marker = new kakao.maps.Marker({
+	    position: latLng, 
+	    image: markerImage // 마커이미지 설정 
+	});
+	
+	marker.setMap(map);  
+	// 마커가 드래그 가능하도록 설정합니다 
+	marker.setDraggable(true); 
+	
+	// 출발 마커에 dragend 이벤트를 등록합니다
+	kakao.maps.event.addListener(marker, 'dragend', function(mouseEvent) {
+	     // 출발 마커의 드래그가 종료될 때 마커 이미지를 원래 이미지로 변경합니다
+		var latLng = marker.getPosition();
+		setMarker(marker, latLng);
+	});
+	
 		
 	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
 	    

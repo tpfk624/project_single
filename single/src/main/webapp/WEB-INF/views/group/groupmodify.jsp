@@ -140,19 +140,19 @@ function dataValidate(){
 	var groupCategoryNum = $("#groupModifyForm input[name=groupCategoryNum]").val();
 	
 	if(groupName == null || groupName == ''){
-		showAlertModal("필수값이 누락", "그룹명을 입력해주세요");
+		showAlertModal("필수값이 누락", "모임명을 입력해주세요");
 
-		$("#alert").on('hide.bs.modal', function () {
-			$("#groupCreateForm input[name=groupName]").focus();
+		$("#alert").on('hidden.bs.modal', function () {
+			$("#groupCreateForm input[name=groupName]").focus().get(0).scrollIntoView(true);;
 		  });
 		return;
 	}
 	
 	if(groupCategoryNum == null || groupCategoryNum == ''){
-		showAlertModal("필수값이 누락", "그룹 종류를 결정해주세요");
+		showAlertModal("필수값이 누락", "모임 종류를 결정해주세요");
 		
-		$("#alert").on('hide.bs.modal', function () {
-			$("#groupCreateForm input[name=groupCategoryNum]").next().focus();
+		$("#alert").on('hidden.bs.modal', function () {
+			$("#groupCreateForm input[name=groupCategoryNum]").next().focus().get(0).scrollIntoView(true);;
 		  });
 
 		return;

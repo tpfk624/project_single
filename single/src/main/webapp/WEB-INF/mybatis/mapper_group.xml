@@ -40,11 +40,13 @@
 			                        and gm.user_id = #{userId}
 			                        )
 			</if>
-			<if test="isMyGroup == 'yes' ">
+			<if test="isMyGroup eq 'yes'.toString ">
 			and g.group_num in (
 			                        select group_num
 			                        from single_group_member gm
-			                        where gm.user_id = #{userId}
+			                        where upper(gm.group_member_statecode) != 'D' 
+			                        and upper(gm.group_member_statecode) != 'W'
+			                        and gm.user_id = #{userId}
 			                        )
 			</if>
 	        order by g.group_num
@@ -152,21 +154,6 @@
 	from single_group
 	where 
 	    group_statecode = '1'
-	    <if test="groupCategoryNum != 0 ">
-	    and group_category_num = ${groupCategoryNum}
-	    </if>
-   	    <if test="isMyGroup eq 'yes'.toString ">
-	    and group_num in ( select group_num 
-	    						    from single_group_member
-	    							where upper(group_member_statecode) != 'D'
-	    							and user_id = #{userId} )
-	    </if>
-	    <if test="isMyGroup == null || isMyGroup == '' ">
-	    and group_num not in ( select group_num 
-	    						    from single_group_member
-	    							where upper(group_member_statecode) != 'D'
-	    							and user_id = #{userId} )
-	    </if>
 	</select>
 	
 	<select id="selectCalendarSeq" resultType="int">
@@ -225,8 +212,7 @@
 	<update id="updateCalendar" parameterType="calendarDto">
 	update single_calendar
 	set
-		group_num = #{groupNum}
-		, calendar_subject = #{calendarSubject}
+		calendar_subject = #{calendarSubject}
 	    , calendar_content = #{calendarContent}
 	    , calendar_date = to_date(#{calendarDate}, 'mm/dd/yyyy')
 	    , calendar_x_loc = #{calendarXLoc}

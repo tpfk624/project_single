@@ -8,8 +8,7 @@
 <!-- 모임 출력 시작 -->
 <c:forEach items="${groupList}" var="group">
 	<!-- 카드 사진 위버전 -->
-	<div class="col-lg-4 col-sm-6 portfolio-item groupcard"
-		data-num="${group.groupNum}">
+	<div class="col-lg-4 col-sm-6 portfolio-item groupcard" data-num="${group.groupNum}">
 		<div class="card h-100">
 			<img class="card-img-top" src="${group.groupImgSrc}" alt="">
 			<h4 class="card-title">${group.groupName}</h4>

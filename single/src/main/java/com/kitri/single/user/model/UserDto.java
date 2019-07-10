@@ -18,6 +18,8 @@ public class UserDto {
 	private String userJoindate;
 	private String userOutdate;
 	private String userStatecode;
+	
+	private String newpass; // 새 비밀번호 (수정)
 
 	// 인증키
 	private String authKey;
@@ -164,16 +166,24 @@ public class UserDto {
 		this.authState = authState;
 	}
 
+	public String getNewpass() {
+		return newpass;
+	}
+
+	public void setNewpass(String newpass) {
+		this.newpass = newpass;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDto [userId=" + userId + ", userPassword=" + userPassword + ", userNickname=" + userNickname
 				+ ", userProfile=" + userProfile + ", userName=" + userName + ", userBirthday=" + userBirthday
 				+ ", userGender=" + userGender + ", userPhone=" + userPhone + ", userZipcode=" + userZipcode
 				+ ", userAddress=" + userAddress + ", userAddressDetail=" + userAddressDetail + ", userJoindate="
-				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + ", authKey="
-				+ authKey + ", authState=" + authState + ", snsDto=" + snsDto + "]";
+				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + ", newpass="
+				+ newpass + ", authKey=" + authKey + ", authState=" + authState + ", snsDto=" + snsDto + "]";
 	}
 
-
+	
 	
 }

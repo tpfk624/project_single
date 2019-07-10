@@ -17,21 +17,6 @@ httpSession.setAttribute("userInfo", userInfo);
 <script>
 
 
-
-//이걸 넣으면 오류가 남!근데 안넣어도 모임상세페이지는 잘뜬다
-
-// $(function() {
-// 	//$(".groupcard").on("click", groupcardClick);
-	
-// 	var page = "${parameter.page}";
-// 	var key = "${parameter.key}";
-// 	var word = "${parameter.word}";
-// 	var isMyGroup = "${parameter.isMyGroup}";
-// 	var groupCategoryNum = "${parameter.groupCategoryNum}";
-// 	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
-	
-// });
-
 	
 	
 /* 셀렉트 박스 클릭 시  */
@@ -65,6 +50,9 @@ function getMyGroup(sel) {
 }
 
 
+
+
+
 //그룹 클릭 시 상세페이지 모달뜨는 부분
 function groupcardClick() {
 	var groupNum = $(this).attr("data-num");
@@ -85,6 +73,23 @@ function groupcardClick() {
 }
 
 
+function groupcardClick() {
+	var groupNum = $(this).attr("data-num");
+
+	$.ajax({
+		url : "${root}/mypage/groupdetail",
+		method : "get",
+		dataType : "json",
+		data : {
+			"groupNum" : groupNum
+		},
+		success : function(result) {
+			//console.log(result);
+			groupDetailModalSetting(result);
+			$("#groupDetailModal").modal("show");
+		}
+	});
+}
 
 
 
