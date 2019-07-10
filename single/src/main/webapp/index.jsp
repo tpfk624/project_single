@@ -3,7 +3,6 @@
 <%@ include file = "/WEB-INF/views/commons/template/roadtrip_top.jsp" %>
 
 
-
 <script src="${root}/resources/template/roadtrip/assets/js/jquery.min.js"></script>
 <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrolly.min.js"></script>
 <script src="${root}/resources/template/roadtrip/assets/js/jquery.scrollex.min.js"></script>

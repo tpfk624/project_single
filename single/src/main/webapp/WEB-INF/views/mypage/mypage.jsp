@@ -3,7 +3,6 @@
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <link rel="stylesheet" href="${root}/resources/css/user/user.css">
 
-
 <%
 HttpSession httpSession = request.getSession();
 UserDto userInfo = new UserDto();
@@ -11,7 +10,6 @@ userInfo.setUserId("tpfk1001@naver.com");
 userInfo.setUserPassword("123");
 httpSession.setAttribute("userInfo", userInfo);
 %>
-
 
 <style>
 .modal-body{

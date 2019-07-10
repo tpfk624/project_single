@@ -6,15 +6,6 @@
 <%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
 <%@ include file="/WEB-INF/views/commons/alert_success.jsp"%>
 
-
-<%
-HttpSession httpSession = request.getSession();
-UserDto userInfo = new UserDto();
-userInfo.setUserId("calubang1@naver.com");
-httpSession.setAttribute("userInfo", userInfo);
-%>
-
-
 <script>
 
 /* 셀렉트 박스 클릭 시  */

@@ -139,10 +139,10 @@ var GROUP_RESOURCES_JS = "/single/resources/js/group/";
               	마이페이지
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-              <a class="dropdown-item" href="${root}/user_mypage/myPage.jsp">내 프로필</a>
-              <a class="dropdown-item" href="${root}/user_mypage/myPageGroup.jsp">나의 모임관리</a>
-              <a class="dropdown-item" href="${root}/user_mypage/myPageGroupZzim.jsp">찜한 모임</a>
-              <a class="dropdown-item" href="${root}/user_mypage/myPageWrite.jsp">게시물 관리</a>
+              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -154,11 +154,8 @@ var GROUP_RESOURCES_JS = "/single/resources/js/group/";
               <a class="dropdown-item" href="${root}/group/calubang2.jsp">calubang2로그인</a>
               <a class="dropdown-item" href="${root}/group">모임 목록보기</a>
               <a class="dropdown-item" href="${root}/group/create">모임 만들기</a>
-              <a class="dropdown-item" href="${root}/group/groupmain.jsp">모임 안으로 들어가기</a>
               <a class="dropdown-item" href="${root}/group/grouphomework.jsp">모임 과제 목록보기</a>
               <a class="dropdown-item" href="${root}/group/grouphprogress.jsp">모임 과제 진행률 보기</a>
-              <a class="dropdown-item" href="${root}/group/groupmodify.jsp">모임 변경</a>
-              <a class="dropdown-item" href="${root}/group/groupmember.jsp">모임원 관리</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -166,11 +163,9 @@ var GROUP_RESOURCES_JS = "/single/resources/js/group/";
              	혼자놀아요
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-              <a class="dropdown-item" href="${root}/board/singlemain.jsp">혼자 놀아요 메인</a>
-              <a class="dropdown-item" href="${root}/board/index_modern_business_alone.jsp">혼자 놀아요 메인</a>
-              <a class="dropdown-item" href="${root}/board/index_modern_business_cook.jsp">요리게시판</a>
-              <a class="dropdown-item" href="${root}/board/index_modern_business_writing.jsp">글쓰기 페이지</a>
-              <a class="dropdown-item" href="${root}/board/index_modern_business_writeboard.jsp">유저 클릭시 페이지</a>
+              <a class="dropdown-item" href="${root}/board/singlemain">혼자 놀아요 메인</a>
+              <a class="dropdown-item" href="${root}/board/singlelifeboard">자취생활 게시판</a>
+              <a class="dropdown-item" href="${root}/board/singlecookboard">요리게시판</a>
             </div>
           </li>
         </ul>
