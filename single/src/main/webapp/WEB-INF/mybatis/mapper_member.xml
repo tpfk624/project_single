@@ -5,50 +5,55 @@
 
 <mapper namespace="com.kitri.single.member.dao.MemberDao">
 
-<!-- 네아로로 로그인할때 이메일 인증이 필요없다. -->
-	<insert id="regist" parameterType="userDto">
+	<!-- Sns로 가입할때는 이메일 인증이 자동 확인. -->
+	<insert id="registSns" parameterType="userDto">
 	INSERT ALL
 		INTO single_user (user_id, user_password, user_nickname, user_name, user_profile, user_birthday 
                          ,user_gender, user_phone, user_zipcode,user_address, user_addressdetail, user_joindate, user_outdate, user_statecode 
                          ,auth_key, auth_state)
                          VALUES
                          (#{userId}, #{userPassword}, #{userNickname}, #{userName}, #{userProfile}, #{userBirthday}
-                         ,#{userGender},#{userPhone},#{userZipcode},#{userAddress},#{userAddressDetail},#{userJoindate},#{userOutdate},#{userStatecode}
-                         ,'confirm', '1') 
+                         , #{userGender}, #{userPhone}, #{userZipcode}, #{userAddress}, #{userAddressDetail}, #{userJoindate}, #{userOutdate},#{userStatecode}
+                          ,#{authKey}, #{authState}) 
 		INTO sns_login (sns_id, sns_type, user_id, sns_token, sns_connect_date)
 								VALUES 
 								(#{snsDto.snsId}, #{snsDto.snsType}, #{userId}, #{snsDto.snsToken}, #{snsDto.snsConnectDate})
 	select * from dual
 	</insert>
 
-
-<!-- 	<update id="regist" parameterType="userDto"> -->
-<!-- 아래주석 -->
-<!-- 	insert into single_user (user_id, user_password, user_nickname, user_name, user_profile, user_birthday -->
+<!-- 	<update id= "registCommon" parameterType="userDto">  -->
+<!-- 	INSERT INTO single_user (user_id, user_password, user_nickname, user_name, user_profile, user_birthday  -->
+<!--                          ,user_gender, user_phone, user_zipcode,user_address, user_addressdetail, user_joindate, user_outdate, user_statecode  -->
+<!--                          ,auth_key, auth_state) -->
+<!--                          VALUES -->
+<!--                          (#{userId}, #{userPassword}, #{userNickname}, #{userName}, #{userProfile}, #{userBirthday} -->
+<!--                          , #{userGender}, #{userPhone}, #{userZipcode}, #{userAddress}, #{userAddressDetail}, #{userJoindate}, #{userOutdate},#{userStatecode} -->
+<!--                          ,#{authKey}, #{authState}) -->
+<!-- 	</update> -->
+	<!-- 일반 회원가입  할때는 이메일 인증이 존재 . -->
+	<update id="registCommon" parameterType="userDto">
+	update single_user 
+	set user_password = #{userPassword}, 
+		user_nickname = #{userNickname},
+		user_profile = #{userProfile},
+		user_name = #{userName},
+		user_birthday = to_date(#{userBirthday},'MMDDYYYY'),
+		user_gender = #{userGender},
+		user_phone = #{userPhone},
+		user_zipcode = #{userZipcode},
+		user_address = #{userAddress},
+		user_addressdetail = #{userAddressDetail},
+		user_joindate = #{userJoindate},
+		user_outdate = #{userOutdate},
+		user_statecode = #{userStatecode}
+	where user_id = #{userId}	
+	</update>
+<!-- 		insert into single_user (user_id, user_password, user_nickname, user_name, user_profile, user_birthday -->
 <!--                         ,user_gender, user_phone, user_zipcode,user_address, user_addressdetail, user_joindate, user_outdate, user_statecode -->
 <!--                         ,auth_key, auth_state) -->
 <!-- 	values(#{userId}, #{userPassword},#{userNickname},#{userName},#{userProfile},to_date(#{userBirthday},'MMDDYYYY') -->
 <!--                         ,#{userGender},#{userPhone},#{userZipcode},#{userAddress},#{userAddressDetail},#{userJoindate},#{userOutdate},#{userStatecode} -->
 <!--                         ,#{authKey}, #{authState}) -->
-
-
-<!-- 	update single_user  -->
-<!-- 	set user_password = #{userPassword},  -->
-<!-- 		user_nickname = #{userNickname}, -->
-<!-- 		user_profile = #{userProfile}, -->
-<!-- 		user_name = #{userName}, -->
-<!-- 		user_birthday = to_date(#{userBirthday},'MMDDYYYY'), -->
-<!-- 		user_gender = #{userGender}, -->
-<!-- 		user_phone = #{userPhone}, -->
-<!-- 		user_zipcode = #{userZipcode}, -->
-<!-- 		user_address = #{userAddress}, -->
-<!-- 		user_addressdetail = #{userAddressDetail}, -->
-<!-- 		user_joindate = #{userJoindate}, -->
-<!-- 		user_outdate = #{userOutdate}, -->
-<!-- 		user_statecode = #{userStatecode} -->
-<!-- 	where user_id = #{userId}	 -->
-<!-- 	</update> -->
-	
 	
 
 	<select id="createAuthkey" parameterType="userDto">
@@ -72,13 +77,13 @@
 	where user_id = #{userId}
 	</update>
 	
-	<select id="getUser" parameterType="string" resultType="userDto">
+	<select id="getUser" parameterType="userDto" resultType="userDto">
 	select user_id userId, user_password userPassword, user_nickname userNickname, user_profile userProfile, user_name userName, user_birthday userBirthday
                        , user_gender userGender, user_phone userPhone, user_zipcode userZipcode, user_address userAddress, user_addressdetail userAddressDetail
                        , user_joindate userJoindate, user_outdate userOutdate, user_statecode userStatecode
                        , auth_key authKey, auth_state authState
 	from single_user
-	where user_id = #{email}
+	where user_id = #{userId}
 	</select>
 	
 	<select id="login" parameterType="userDto" resultType="userDto">
