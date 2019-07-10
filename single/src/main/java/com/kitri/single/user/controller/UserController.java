@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -67,10 +67,10 @@ public class UserController {
 	
 	//회원 상세 정보 조회
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public String home(String userId, Model model, HttpSession session) {
+	public String home(@ModelAttribute("userInfo") UserDto userInfo ,String userId, Model model, HttpSession session) {
 		System.out.println("home 들어옴");
 	
-		UserDto userInfo = (UserDto) session.getAttribute("userInfo");// 여기에다가 서비스통해서 userdto를 db에담고 그걸 모델에 담아서 select 홈안에 모델메개변수 잡아주기
+		//UserDto userInfo = (UserDto) session.getAttribute("userInfo");// 여기에다가 서비스통해서 userdto를 db에담고 그걸 모델에 담아서 select 홈안에 모델메개변수 잡아주기
 		System.out.println(userInfo);
 		
 		String id = userInfo.getUserId();
@@ -84,8 +84,7 @@ public class UserController {
 	
 	//회원 정보 수정
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modify(UserDto userDto, Model model,
-			@SessionAttribute("userInfo") UserDto userInfo,
+	public String modify(@ModelAttribute("userInfo") UserDto userInfo, UserDto userDto, Model model,
 			@RequestParam("imgdata") MultipartFile multipartFile ) { //사진정보 파일을 얻음 
 		
 		System.out.println(userDto);
@@ -113,10 +112,13 @@ public class UserController {
 	
 	// 탈퇴하기
 	@RequestMapping("/userdelete")
-	public String userdelete(String userId, Model model, HttpSession session, SessionStatus sessionStatus) {
+	public String userdelete(@ModelAttribute("userInfo") UserDto userInfo
+			, String userId, Model model
+			, HttpSession session
+			, SessionStatus sessionStatus) {
 		System.out.println("탈퇴하기 컨트롤러 들어옴");
 		
-		UserDto userInfo = (UserDto) session.getAttribute("userInfo");// 여기에다가 서비스통해서 userdto를 db에담고 그걸 모델에 담아서 select 홈안에 모델메개변수 잡아주기
+		//UserDto userInfo = (UserDto) session.getAttribute("userInfo");// 여기에다가 서비스통해서 userdto를 db에담고 그걸 모델에 담아서 select 홈안에 모델메개변수 잡아주기
 		System.out.println(userInfo);
 		
 		String id = userInfo.getUserId();
@@ -135,11 +137,10 @@ public class UserController {
 
 	//모임불러오기(모든모임 첫페이지용) 
 	@RequestMapping(value = "/groupall", method = RequestMethod.GET)
-	public String groupall(Model model, HttpSession session) {
+	public String groupall(@ModelAttribute("userInfo") UserDto userInfo, Model model, HttpSession session) {
 		
 		System.out.println("모임 첫페이지옴");
 		
-		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
 		Map<String, String> parameter = new HashMap<String, String>();
 		
 		if (userInfo != null) {
@@ -161,7 +162,7 @@ public class UserController {
 	
 	//모임불러오기(모임장/모임원)
 	@RequestMapping("/select")
-	public String groupSelect(@SessionAttribute("userInfo") UserDto user, 
+	public String groupSelect(@ModelAttribute("userInfo") UserDto user, 
 			@RequestParam(name = "option") String option, Model model) {
 		System.out.println("option : " + option);
 		
@@ -177,7 +178,8 @@ public class UserController {
 
 	//그룹디테일
 	@RequestMapping(value = "/groupdetail", method = RequestMethod.GET)
-	public @ResponseBody String getGroup(@RequestParam(name = "groupNum") int groupNum){
+	public @ResponseBody String getGroup(@ModelAttribute("userInfo") UserDto user
+			, @RequestParam(name = "groupNum") int groupNum){
 		//String json = groupService.getGrou(parameter);
 		//System.out.println(groupNum);
 		System.out.println("여기는 옴??");
@@ -196,7 +198,7 @@ public class UserController {
 	
 	//찜모임불러오기(찜 모든모임 첫페이지용) 
 	@RequestMapping(value = "/stampgroup", method = RequestMethod.GET)
-	public String stampgroup(Model model, HttpSession session) {
+	public String stampgroup(@ModelAttribute("userInfo") UserDto user, Model model, HttpSession session) {
 		System.out.println("찜모임첫페이지");
 		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
 		
@@ -221,7 +223,7 @@ public class UserController {
 	
 	//모임불러오기(카테고리)
 	@RequestMapping("/zselect")
-	public String zselect(@SessionAttribute("userInfo") UserDto user, 
+	public String zselect(@ModelAttribute("userInfo") UserDto user, 
 			@RequestParam(name = "option") String option, Model model) {
 		System.out.println("option : " + option);
 		
@@ -238,7 +240,7 @@ public class UserController {
 	
 	//찜한 모임 취소
 	@RequestMapping("/stampdelete")
-	public void stampdelete (HttpSession session) {
+	public void stampdelete (@ModelAttribute("userInfo") UserDto user, HttpSession session) {
 		System.out.println("찜한 모임 취소 컨트롤러");
 		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
 		

@@ -3,13 +3,7 @@
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <link rel="stylesheet" href="${root}/resources/css/user/user.css">
 
-<%
-HttpSession httpSession = request.getSession();
-UserDto userInfo = new UserDto();
-userInfo.setUserId("tpfk1001@naver.com");
-userInfo.setUserPassword("123");
-httpSession.setAttribute("userInfo", userInfo);
-%>
+
 
 <style>
 .modal-body{
@@ -357,7 +351,7 @@ $(function(){
 								<!--이름-->핸드폰 :
 							</th>
 							<td>
-							<input type="number" name="userPhone" id="userPhone" class="t_input" value="${userInfos.userPhone}">
+							<input type="tel" name="userPhone" id="userPhone" class="t_input" value="${userInfos.userPhone}">
 							</td>
 						</tr>
 						<tr>

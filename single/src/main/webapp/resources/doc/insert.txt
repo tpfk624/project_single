@@ -70,9 +70,9 @@ create sequence board_type_num_seq increment by 1 start with 0 minvalue 0;
 -- 게시판 리스트
 create sequence board_list_num_seq increment by 1 start with 0 minvalue 0;
 -- 게시판
-create sequence board_num_seq increment by 1 start with 0 minvalue 0;
+create sequence board_num_seq increment by 1 start with 1 minvalue 0;
 -- 댓글
-create sequence reply_num_seq increment by 1 start with 0 minvalue 0;
+create sequence reply_num_seq increment by 1 start with 1 minvalue 0;
 
 -- 해시태그 타입 insert
 insert into single_hashtag_type

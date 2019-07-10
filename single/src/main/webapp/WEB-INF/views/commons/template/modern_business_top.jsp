@@ -119,25 +119,25 @@ var GROUP_RESOURCES_JS = "/single/resources/js/group/";
   <!-- Navigation -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark background-blue fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="${root}/index.jsp">우리 혼자 산다</a>
+      <a class="navbar-brand" href="${root}/home">우리 혼자 산다</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+          <c:if test="${empty userInfo}">
           <li class="nav-item">
-            <a class="nav-link" href="about.html">나의 정보</a>
+            <a class="nav-link" href="${root}/member/login">로그인</a>
           </li>
+          </c:if>
+          <c:if test="${!empty userInfo}">
           <li class="nav-item">
-            <a class="nav-link" href="services.html">혼자 놀아요</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">같이 놀아요</a>
+            <a class="nav-link" href="${root}/member/logout">로그아웃</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               	마이페이지
-            </a>
+            </a>   
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
               <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
               <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
@@ -145,6 +145,7 @@ var GROUP_RESOURCES_JS = "/single/resources/js/group/";
               <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
             </div>
           </li>
+          </c:if>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               	같이놀아요

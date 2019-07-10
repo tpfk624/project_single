@@ -135,11 +135,12 @@ $(document).ready(function(){
 		    </c:if>
 		    <c:if test="${userInfo != null}">
 		    	<li><a id="logoutBtn" href="#">로그아웃</a></li><!-- href = "${root}/member/login" -->
+		    	<li><a href="${root }/mypage/mypage">마이 페이지</a></li>
 		    </c:if>
  <%-- 		    <c:if test="${userInfo != null}"> --%>
 <%-- 		    	<li><a href="${root}/home/dusttest">로그아웃</a></li> --%>
 <%-- 		    </c:if> --%>
-                <li><a href="${root }/mypage/mypage">마이 페이지</a></li>
+                
                 <li><a href="${root }/board/singlemain">혼자놀래요</a></li>
                 <li><a href="${root}/group">같이놀래요</a></li>
             </ul>

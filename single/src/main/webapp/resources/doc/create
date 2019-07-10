@@ -158,10 +158,6 @@ ALTER TABLE single_search_log
 ALTER TABLE single_stamp
 	DROP CONSTRAINT PK_single_stamp; -- 찜한모임 기본키
 
--- 네아로유저
-ALTER TABLE users
-	DROP CONSTRAINT PK_users; -- 네아로유저 기본키
-
 -- 소셜로그인
 ALTER TABLE sns_login
 	DROP CONSTRAINT PK_sns_login; -- 소셜로그인 기본키
@@ -219,9 +215,6 @@ DROP TABLE single_search_log;
 
 -- 찜한모임
 DROP TABLE single_stamp;
-
--- 네아로유저
-DROP TABLE users;
 
 -- 소셜로그인
 DROP TABLE sns_login;
@@ -552,41 +545,20 @@ ALTER TABLE single_stamp
 			group_num  -- 모임번호
 		);
 
--- 네아로유저
-CREATE TABLE users (
-	id               number      NOT NULL, -- 유저아이디
-	username         VARCHAR(45) NULL,     -- 이름
-	password         VARCHAR(45) NULL,     -- 비밀번호
-	email            VARCHAR(45) NULL,     -- 이메일
-	nickname         VARCHAR(45) NULL,     -- 닉네임
-	create_date      VARCHAR(45) NULL,     -- 생성일
-	modify_date      VARCHAR(45) NULL,     -- 변경일
-	sns_type         VARCHAR(45) NULL,     -- 소셜타입
-	sns_connect_date VARCHAR(45) NULL      -- 소셜연결날짜
-);
-
--- 네아로유저
-ALTER TABLE users
-	ADD
-		CONSTRAINT PK_users -- 네아로유저 기본키
-		PRIMARY KEY (
-			id -- 유저아이디
-		);
-
 -- 소셜로그인
 CREATE TABLE sns_login (
-	sns_id           VARCHAR2(45) NOT NULL, -- 소셜아이디
-	sns_type         VARCHAR(32)  NOT NULL, -- 소셜타입
-	user_id          varchar2(64) NOT NULL, -- 유저아이디
-	sns_token        VARCHAR2(45) NOT NULL, -- 갱신토큰
-	sns_connect_date VARCHAR2(45) NULL,     -- 소셜접속일
-	sns_email        VARCHAR2(45) NULL,     -- 소셜이메일
-	sns_nickname     VARCHAR2(45) NULL,     -- 소셜닉네임
-	sns_profile      VARCHAR2(45) NULL,     -- 소셜이미지
-	sns_age          VARCHAR2(45) NULL,     -- 소셜나이
-	sns_birthday     VARCHAR2(45) NULL,     -- 소셜생일
-	sns_name         VARCHAR2(45) NULL,     -- 소셜이름
-	sns_gender       VARCHAR2(45) NULL      -- 소셜성별
+	sns_id           VARCHAR2(45)  NOT NULL, -- 소셜아이디
+	sns_type         VARCHAR(32)   NOT NULL, -- 소셜타입
+	user_id          varchar2(64)  NOT NULL, -- 유저아이디
+	sns_token        VARCHAR2(128) NOT NULL, -- 갱신토큰
+	sns_connect_date VARCHAR2(45)  NULL,     -- 소셜접속일
+	sns_email        VARCHAR2(45)  NULL,     -- 소셜이메일
+	sns_nickname     VARCHAR2(45)  NULL,     -- 소셜닉네임
+	sns_profile      VARCHAR2(45)  NULL,     -- 소셜이미지
+	sns_age          VARCHAR2(45)  NULL,     -- 소셜나이
+	sns_birthday     VARCHAR2(45)  NULL,     -- 소셜생일
+	sns_name         VARCHAR2(45)  NULL,     -- 소셜이름
+	sns_gender       VARCHAR2(45)  NULL      -- 소셜성별
 );
 
 -- 소셜로그인
