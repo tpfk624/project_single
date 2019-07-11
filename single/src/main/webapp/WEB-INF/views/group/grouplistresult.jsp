@@ -21,7 +21,7 @@
 		</div>
 
 		<div class="overlay">
-			<div class="text">상세보기</div>
+			<div class="text"><c:if test="${parameter.isMyGroup == 'yes'}">입장하기</c:if><c:if test="${parameter.isMyGroup != 'yes'}">상세보기</c:if></div>
 		</div>
 	</div>
 </div>

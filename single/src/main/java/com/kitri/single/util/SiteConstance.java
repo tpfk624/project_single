@@ -12,5 +12,9 @@ public class SiteConstance {
 	public static final int GROUP_SIZE = 15;
 	
 	public static final String GROUP_DEFAULT_IMG_PATH = "/resources/img/group/";
+
 	public static final String USER_DEFAULT_IMG_PATH = "/resources/img/user/";
+
+	public static final String CHAT_SERVER_IP = "wss://localhost:8443";
+
 }

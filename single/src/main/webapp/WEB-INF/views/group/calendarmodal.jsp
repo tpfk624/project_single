@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <style>
 .map{
 	width: 100%;
@@ -148,7 +146,6 @@ $(".deletebtn").click(function() {
 });
 
 var success = function(result) {
-	console.log(result)
 	if(result.resultCode == 1){
 		showSuccessAlertModal("일정등록 성공", "일정이 등록되었습니다.");
 		drawSchedule(result.resultData);
@@ -159,10 +156,14 @@ var success = function(result) {
 		showSuccessAlertModal("일정수정 삭제", "일정이 삭제되었습니다.");
 		deleteSchedule(result.resultData);
 	}else{
-		showAlertModal("일정등록 실패", "등록 실패하였습니다. 관리자에게 문의하세요");
+		showAlertModal("일정등록 실패", result.resultData);
+		$("#alert").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+			 $("#calendarModal").modal("hide");
+			 location.href = "${root}/member/login";
+		});
 	}
 	
-	$("#alertSuccess").on("hidden.bs.modal", function() {
+	$("#alertSuccess").off("hidden.bs.modal").on("hidden.bs.modal", function() {
 		 $("#calendarModal").modal("hide");
 	});
 }
@@ -265,10 +266,10 @@ function showCalendarModal(type, json, day) {
 					calendarModal.find("input[name=calendarNum]").val(json.calendarNum);
 					calendarModal.find("input[name=groupNum]").val(json.groupNum);
 					calendarModal.find("input[name=type]").val("view");
-					calendarModal.find("input[name=calendarSubject]").val(json.calendarSubject);
+					calendarModal.find("input[name=calendarSubject]").val(json.calendarSubject).attr("readonly", "readonly");
 					calendarModal.find("input[name=calendarDate]").css("disabled", "disabled").val(json.calendarDate);
 					calendarModal.find("textarea[name=calendarContent]").text(json.calendarContent);
-					calendarModal.find("textarea[name=calendarContent]").val(json.calendarContent);
+					calendarModal.find("textarea[name=calendarContent]").val(json.calendarContent).attr("readonly", "readonly");
 					calendarModal.find("input[name=calendarXLoc]").val(json.calendarXLoc);
 					calendarModal.find("input[name=calendarYLoc]").val(json.calendarYLoc);
 					

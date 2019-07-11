@@ -51,27 +51,30 @@ function getGroupList(page, key, word, isMyGroup, groupCategoryNum){
 		groupCategoryNum = "";
 	}
 	
+	var url = "${root}/group/grouplist";
+	var data = {
+		"page" : page
+		, "key" : key
+		, "word" : word
+		, "isMyGroup" : isMyGroup
+		, "groupCategoryNum" : groupCategoryNum
+	};
+	var success = function(result) {
+		if(isMyGroup == 'yes'){
+			//console.log(result);
+			$(".group-list").html(result);
+			$(".groupcard").click(groupenter);
+		}else{
+			//console.log(result);
+			$(".group-list").html(result);
+			$(".groupcard").click(groupcardClick);
+		}
+	}
 	$.ajax({
-		url : "${root}/group/grouplist"
+		url : url
+		, data : data
 		, method : "get"
-		, data : {
-			"page" : page
-			, "key" : key
-			, "word" : word
-			, "isMyGroup" : isMyGroup
-			, "groupCategoryNum" : groupCategoryNum
-		}
-		, success : function(result) {
-			if(isMyGroup == 'yes'){
-				//console.log(result);
-				$(".group-list").html(result);
-				$(".groupcard").click(groupenter);
-			}else{
-				//console.log(result);
-				$(".group-list").html(result);
-				$(".groupcard").click(groupcardClick);
-			}
-		}
+		, success : success
 	});
 }
 function groupenter(e){
@@ -81,19 +84,16 @@ function groupenter(e){
 
 function groupcardClick(){
 	var groupNum = $(this).attr("data-num");
-	$.ajax({
-		url : "${root}/group/groupdetail"
-		, method : "get"
-		, dataType : "json"
-		, data : {
-			"groupNum" : groupNum
-		}
-		, success : function(result) {
-			//console.log(result);
-			groupDetailModalSetting(result);
-			$("#groupDetailModal").modal("show");
-		}
-	});
+	var url = "${root}/group/groupdetail";
+	var data = {
+		"groupNum" : groupNum	
+	};
+	var success = function (result) {
+		groupDetailModalSetting(result);
+		$("#groupDetailModal").modal("show");
+	}
+	
+	ajaxFunc(data, url, "get", success);
 	
 } 
 

@@ -94,6 +94,7 @@ public class GroupController {
 		logger.info(parameter.toString());
 		
 		List<GroupDto> groupList = groupService.getGroupList(parameter);
+		model.addAttribute("parameter", parameter);
 		model.addAttribute("groupList", groupList);
 		//System.out.println(json);
 		
@@ -123,13 +124,21 @@ public class GroupController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody String groupCreate(
 			GroupDto groupDto
-			, @ModelAttribute("userInfo") UserDto userInfo
+			, HttpSession session
 			, @RequestParam("imgdata") MultipartFile multipartFile
 			, @RequestParam("groupHashtag") String groupHashtag) {
 		
 		//System.out.println(groupDto);
 		//System.out.println(multipartFile);
 		//System.out.println(multipartFile.isEmpty());
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
+		}
+		
 		if(multipartFile != null && !multipartFile.isEmpty()) {
 			
 			String realPath = servletContext.getRealPath("");
@@ -188,6 +197,7 @@ public class GroupController {
 			}else {
 				model.addAttribute("group", groupDto);
 				model.addAttribute("groupMember", groupMemberDto);
+				model.addAttribute("serverIP", SiteConstance.CHAT_SERVER_IP);
 				path = "group/groupmain";
 				
 				//logger.info(groupMemberDto.toString());
@@ -205,12 +215,18 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/groupmodify" , method = RequestMethod.POST)
-	public String groupmodify(@ModelAttribute("userInfo") UserDto userInfo
+	public String groupmodify(HttpSession session
 			, GroupDto groupDto
 			, @RequestParam("imgdata") MultipartFile multipartFile
 			, @RequestParam("groupHashtag") String groupHashtag) {
-		//logger.info(groupDto.toString());
-		//logger.info(groupHashtag.toString());
+		
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
+		}
 		
 		String json = makeJSON(0, "권한이 없습니다");
 		
@@ -239,9 +255,17 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping("/groupstamp")
-	public String groupStamp(@ModelAttribute("userInfo") UserDto userInfo
+	public String groupStamp(HttpSession session
 				, @RequestParam("groupNum") int groupNum) {
 		//logger.info("groupNum : " + groupNum);
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
+		}
+		
 		String json = makeJSON(0, "찜하기 실패하였습니다. 관리자에게 문의하세요");
 		if(groupNum != 0) {
 			json = groupService.groupStamp(userInfo.getUserId(), groupNum);
@@ -252,9 +276,17 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping("/memberstate")
-	public String getMemberStatecode(@ModelAttribute("userInfo") UserDto userInfo
+	public String getMemberStatecode(HttpSession session
 			, @RequestParam("groupNum") int groupNum) {
 		String json = makeJSON(0, "시스템 에러");
+		
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
+		}
 		
 		String memberStatecode = getGroupMemberStatecode(userInfo.getUserId(), groupNum);
 		
@@ -272,9 +304,7 @@ public class GroupController {
 	@ResponseBody
 	@RequestMapping("/groupmember")
 	public String groupMember(HttpSession session, @RequestParam Map<String, String> parameter) {
-		
-		//logger.info(parameter.toString());
-		
+			
 		UserDto userDto = (UserDto)session.getAttribute("userInfo");
 		String json = makeJSON(0, "시스템 에러입니다");
 		if(userDto == null) {
@@ -330,9 +360,17 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping("/groupdelete")
-	public String groupDelete(@ModelAttribute("userInfo") UserDto userInfo
+	public String groupDelete(HttpSession session
 			, @RequestParam("groupNum") int groupNum) {
-		String json = makeJSON(99, "시스템 에러입니다");
+		String json = makeJSON(0, "시스템 에러입니다");
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
+		}
+		
 		String memberStatecode = getGroupMemberStatecode(userInfo.getUserId(), groupNum);
 
 		if(memberStatecode != null && memberStatecode.equals("L")) {
@@ -347,10 +385,18 @@ public class GroupController {
 	//그룹 내 nav바 이동 관련
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/grouppage", method = RequestMethod.GET)
-	public ModelAndView groupModify(@ModelAttribute("userInfo") UserDto userInfo
+	public ModelAndView groupModify(HttpSession session
 			, @RequestParam Map<String, String> parameter
 			, ModelAndView model) {
 		
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			model.setViewName("member/login");
+			return model;
+		}
 		logger.info(parameter.toString());
 		if(parameter.get("groupNum") != null) {
 			int groupNum = Integer.parseInt(parameter.get("groupNum"));
@@ -361,12 +407,47 @@ public class GroupController {
 				model = modifyPage(userInfo, groupNum, model);
 			}else if("member".equals(type)) {
 				model = memberPage(userInfo, groupNum, model);
+			}else if("homework".equals(type)) {
+				model = homeworkPage(userInfo, groupNum, model);
+			}else if("homeworkcreate".equals(type)){
+				model = homeworkCreatePage(userInfo, groupNum, model);
+			}else {
+				model.setViewName("group/main");
 			}
 		}
 		model.addObject("root", servletContext.getContextPath());
 		return model;
 	}
 	
+	private ModelAndView homeworkCreatePage(UserDto userInfo, int groupNum, ModelAndView model) {
+		String path = "group/homeworkcreate";
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userInfo.getUserId());
+		parameter.put("groupNum", groupNum);
+		GroupMemberDto groupMemberDto = groupService.getGroupMember(parameter);
+		
+		if(groupMemberDto.getGroupMemberStatecode().equals("L")) {
+			model.addObject("groupNum", groupNum);
+			model.setViewName(path);
+		}
+		
+		return model;
+	}
+
+	private ModelAndView homeworkPage(UserDto userInfo, int groupNum, ModelAndView model) {
+		String path = "group/grouphomework";
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userInfo.getUserId());
+		parameter.put("groupNum", groupNum);
+		GroupMemberDto groupMemberDto = groupService.getGroupMember(parameter);
+		
+		model.addObject("groupNum", groupNum);
+		model.addObject("groupMember", groupMemberDto);
+		model.setViewName(path);
+		
+		return model;
+	}
+
 	private ModelAndView memberPage(UserDto userInfo, int groupNum, ModelAndView model) {
 		String path = "group/groupmember";
 		Map<String, Object> parameter = new HashMap<String, Object>();
@@ -380,7 +461,7 @@ public class GroupController {
 			
 			System.out.println(list);
 			
-			model.addObject("groupNum", list.get(0).getGroupNum());
+			model.addObject("groupNum", groupNum);
 			model.addObject("memberlist", list);
 			model.setViewName(path);
 		}

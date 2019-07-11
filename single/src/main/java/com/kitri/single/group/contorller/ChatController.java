@@ -15,6 +15,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.kitri.single.group.model.ChatDto;
 import com.kitri.single.group.service.ChatService;
 import com.kitri.single.user.model.UserDto;
 
@@ -57,21 +58,37 @@ public class ChatController extends TextWebSocketHandler{
 		}
 		list.add(session);
 		
+		String json = chatService.selectChatList(Integer.parseInt(groupNum));
+		TextMessage message = new TextMessage(json);
+		session.sendMessage(message);
+		
 		//super.afterConnectionEstablished(session);
 	}
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		logger.info("message : " + message.toString());
-		logger.info("payload : " + message.getPayload());
-		
+
 		JSONObject jsonObject = new JSONObject(message.getPayload());
-		String groupNum = jsonObject.getString("groupNum");
+		int groupNum = Integer.parseInt(jsonObject.getString("groupNum"));
 		String msgType = jsonObject.getString("type");
 		String chatContent = jsonObject.getString("chatContent");
-		logger.info(jsonObject.toString());
+
+		UserDto userDto = (UserDto)session.getAttributes().get("userInfo");
+		ChatDto chatDto = new ChatDto();
+		chatDto.setChatContent(chatContent);
+		chatDto.setGroupNum(groupNum);
+		chatDto.setUserId(userDto.getUserId());
 		
-		//
+		logger.info("chatdto : " + chatDto);
+		String json = chatService.insertChat(chatDto, userDto.getUserNickname());
+		chatDto.setUserNickname(userDto.getUserNickname());
+		TextMessage textMessage = new TextMessage(json);
+		
+		List<WebSocketSession> list = chatMap.get(jsonObject.getString("groupNum"));
+		for(WebSocketSession webSocketSession : list) {
+			webSocketSession.sendMessage(textMessage);
+		}
+		
 	}
 
 }
