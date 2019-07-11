@@ -131,7 +131,7 @@ $(document).ready(function(){
 				<hr>
            	</li>
 			<c:if test="${userInfo == null}">
-                <li><a class="loginModalBtn" href="#">로그인</a></li> <!-- href = "${root}/member/loginmodal/loginmodal.jsp-->
+                <li><a class="loginModalBtn" href="#">로그인 / 회원가입</a></li> <!-- href = "${root}/member/loginmodal/loginmodal.jsp-->
 		    </c:if>
 		    <c:if test="${userInfo != null}">
 		    	<li><a class="logoutBtn" href="#">로그아웃</a></li><!-- href = "${root}/member/login" -->

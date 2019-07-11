@@ -112,7 +112,7 @@ tag>input[type=button]:hover{
 
 <!-- 로그인 -->
 <!-- 사용법:파일 안의 로그인 로그아웃 버튼 선택자: loginModalBtn 등록해주세요. -->
-<%@ include file = "/WEB-INF/views/member/login/loginmodal.jsp"%> 
+<%-- <%@ include file = "/WEB-INF/views/member/login/loginmodal.jsp"%>  --%>
 <!--end 로그인  -->	
 
 <script>
@@ -121,9 +121,12 @@ var GROUP_RESOURCES_CSS = "/single/resources/css/group/";
 var GROUP_RESOURCES_JS = "/single/resources/js/group/";
 
 $(document).ready(function(){
-	
+	//모달버튼으로 만들면 안됨 (하나의 페이지에서 네아로 버튼을 중복으로 생성 불가(id로 버튼을 만들기 때문에))
+	$('#mvlogin').click(function(){
+		location.href = "${root}/member/login";
+	});
 	//로그아웃기능 추가
-	$('.logoutBtn').click(function(){
+	$('#logoutBtn').click(function(){
 		$.ajax({
 			url:"${root}/member/logout",
 			method: "GET",
@@ -156,13 +159,13 @@ $(document).ready(function(){
         <ul class="navbar-nav ml-auto">
           <c:if test="${empty sessionScope.userInfo}" >
           <li class="nav-item">
-            <a class="nav-link loginModalBtn"  href="#">로그인</a>
+            <a class="nav-link" id="mvlogin"  href="#">로그인</a>
 <%--             <a class="nav-link" href="${root}/member/loginmodal">로그인</a> --%>
           </li>
           </c:if>
           <c:if test="${!empty sessionScope.userInfo}">
 	          <li class="nav-item">
-	            <a class="nav-link logoutBtn"  href="#">로그아웃</a>
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
 	          </li>
 	          <li class="nav-item dropdown">
 	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

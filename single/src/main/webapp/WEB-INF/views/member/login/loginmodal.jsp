@@ -43,7 +43,7 @@ $(document).ready(function(){
 	})
 	  
 	//로그인
-	$('#btnLogin').click(function() {
+	$('.btnLogin').click(function() {
 //		$('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
 
 // 	 	var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
@@ -97,12 +97,12 @@ $(document).ready(function(){
       <input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" required style="font-family:돋움">
       
       <!-- 로그인 -->  
-      <button id= "btnLogin" type="button">Login</button>
+      <button class= "btnLogin" type="button">Login</button>
       <!-- 네이버로그인 -->
       <div id="naver_id_login"></div>
       
       <span class="other"> <a href="#" class = "registerBtn">회원가입</a>  <a href="#" >비밀번호변경</a> <a href="#">비밀번호 찾기</a></span>
-      <input type="checkbox"  name="remember" id="remember"/> <label for="remember">아이디 기억하기</label>
+      <input type="checkbox"  name="remember"/> <label for="remember">아이디 기억하기</label>
       
     </div>
 

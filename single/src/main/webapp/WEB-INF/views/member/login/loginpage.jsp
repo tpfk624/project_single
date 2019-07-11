@@ -3,16 +3,15 @@
 
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
-  <!-- 네이버 로그인 실행-->
 <script type="text/javascript">
   $(document).ready(function(){
     //로그인
 	  $('#btnLogin').click(function() {
-//	 	  $('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
+//	 	$('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
 
-//	 		var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
-//			contentType: false, //서버에 전달하는 형식
-//			processData: false,
+//	 	var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
+//		contentType: false, //서버에 전달하는 형식
+//		processData: false,
 		var formdata = $('#loginForm').serialize(); //-> contentType:"application/x-www-form-urlencoded; charset=UTF-8", //default
 		console.log(formdata);
 		$.ajax({
@@ -21,9 +20,10 @@
 			data: formdata,
 			dataType : "json", //서버에서 반환되는 형식
 			success :function(data){
-				console.log('datareceive :'+ data);
+				console.log('-----loginpage');
+				console.log(data);
 				console.log('datareceive :'+ data.msg);
-				
+				console.log(document.referrer);
 // 				location.href= "${root}/index.jsp"
 // 				location.reload();
 				history.back();
@@ -33,6 +33,11 @@
 				console.log('error')
 			}
 		});
+	})
+	
+	//회원가입 버튼
+	$('.registerBtn').click(function(){
+		$(location).attr("href","${root}/member/emailauth");
 	})
   });
 
@@ -67,7 +72,7 @@ min-height: 95%;
 <link rel="stylesheet" href="${root}/resources/css/member/loginmodal.css" type="text/css">
 
 <div class="container mt-4 mb-3" >
-	  <form id="loginForm"  >
+	  <form id="loginForm" >
 		<h3 >우리 혼자 살아요</h3>
 		<div class= "row">
 			 <div class="col-2">
@@ -87,12 +92,12 @@ min-height: 95%;
 		</div>
 		<div class= "row mt-3">
 			<div class="col-5">
-				<button id="btnLogin" type="button" class = "btn btn-primary ">Login</button>
+				<button  type="button" class = "btn btn-primary" id="btnLogin">Login</button>
 				<div id="naver_id_login" style= "display:inline-block;"></div>
 			</div>
 		</div>
 		  
-		<div class ="mt-3"> <input type="checkbox"  name="remember" id="remember"/> <label for="remember">아이디 기억하기</label> </div>	
+		<div class ="mt-3"> <input type="checkbox"  name="remember" /> <label for="remember">아이디 기억하기</label> </div>	
 				
 		<div class ="mt-3">
 			<a href="#" class = "registerBtn">회원가입</a>  <a href="#" >비밀번호변경</a> <a href="#">비밀번호 찾기</a>
