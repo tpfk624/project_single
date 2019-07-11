@@ -276,13 +276,13 @@ ALTER TABLE single_group_member
 
 -- 모임과제
 CREATE TABLE single_homework (
-	homework_num       number        NOT NULL, -- 모임과제번호
-	group_num          number        NULL,     -- 모임번호
-	homework_subject   varchar2(256) NULL,     -- 과제제목
-	homework_content   CLOB          NULL,     -- 과제내용
-	homework_startdate DATE          NULL,     -- 과제시작일
-	homework_enddate   DATE          NULL,     -- 과제종료일
-	homework_statecode varchar2(1)   NULL      -- 모임과제상태코드
+	homework_num       number         NOT NULL, -- 모임과제번호
+	group_num          number         NULL,     -- 모임번호
+	homework_subject   varchar2(256)  NULL,     -- 과제제목
+	homework_content   varchar2(1024) NULL,     -- 과제내용
+	homework_startdate DATE           NULL,     -- 과제시작일
+	homework_enddate   DATE           NULL,     -- 과제종료일
+	homework_statecode varchar2(1)    NULL      -- 모임과제상태코드
 );
 
 -- 모임과제
@@ -313,15 +313,15 @@ ALTER TABLE single_chat
 
 -- 모임과제진행
 CREATE TABLE single_hprogress (
-	group_hprogress_num  number        NOT NULL, -- 모임과제번호
-	group_num            number        NOT NULL, -- 모임번호
-	user_id              varchar2(64)  NOT NULL, -- 유저아이디
-	hprogress_subject    varchar2(256) NULL,     -- 과제진행제목
-	hprogress_content    CLOB          NULL,     -- 과제진행내용
-	hprogress_success    varchar2(1)   NULL,     -- 과제성공여부
-	hprogress_file       varchar2(256) NULL,     -- 파일경로
-	hprogress_createdate DATE          NULL,     -- 등록일
-	hprogress_updatedate DATE          NULL      -- 수정일
+	group_hprogress_num  number         NOT NULL, -- 모임과제번호
+	group_num            number         NOT NULL, -- 모임번호
+	user_id              varchar2(64)   NOT NULL, -- 유저아이디
+	hprogress_subject    varchar2(256)  NULL,     -- 과제진행제목
+	hprogress_content    varchar2(4000) NULL,     -- 과제진행내용
+	hprogress_success    varchar2(1)    NULL,     -- 과제성공여부
+	hprogress_file       varchar2(256)  NULL,     -- 파일경로
+	hprogress_createdate DATE           NULL,     -- 등록일
+	hprogress_updatedate DATE           NULL      -- 수정일
 );
 
 -- 모임과제진행
@@ -435,13 +435,13 @@ ALTER TABLE single_reply
 
 -- 모임일정
 CREATE TABLE single_calendar (
-	calendar_num     number        NOT NULL, -- 모임일정번호
-	group_num        number        NULL,     -- 모임번호
-	calendar_subject varchar2(256) NULL,     -- 모임일정제목
-	calendar_content CLOB          NULL,     -- 모임일정내용
-	calendar_date    DATE          NULL,     -- 일정날짜
-	calendar_x_loc   float         NULL,     -- 일정장소X좌표
-	calendar_y_loc   float         NULL      -- 일정장소Y좌표
+	calendar_num     number         NOT NULL, -- 모임일정번호
+	group_num        number         NULL,     -- 모임번호
+	calendar_subject varchar2(256)  NULL,     -- 모임일정제목
+	calendar_content varchar2(1024) NULL,     -- 모임일정내용
+	calendar_date    DATE           NULL,     -- 일정날짜
+	calendar_x_loc   float          NULL,     -- 일정장소X좌표
+	calendar_y_loc   float          NULL      -- 일정장소Y좌표
 );
 
 -- 모임일정

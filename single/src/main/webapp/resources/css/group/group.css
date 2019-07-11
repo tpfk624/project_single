@@ -120,7 +120,7 @@
 	
 }
 .groupsection{
-	border-top: 1px solid #e6e6e6;
+	border-top: 1px solid #9E9E9E;
 	padding-top: 3%;
 	overflow: hidden;
 	padding-bottom: 3%;
@@ -350,3 +350,6 @@
 #chat>.chat-toggle{
 }
 
+.btngroup>button{
+	margin-right: 0.5rem;
+}

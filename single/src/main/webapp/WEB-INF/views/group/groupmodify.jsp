@@ -135,7 +135,7 @@ function dataValidate(){
 	if(groupName == null || groupName == ''){
 		showAlertModal("필수값이 누락", "모임명을 입력해주세요");
 
-		$("#alert").on('hidden.bs.modal', function () {
+		$("#alert").off("hidden.bs.modal").on('hidden.bs.modal', function () {
 			$("#groupCreateForm input[name=groupName]").focus().get(0).scrollIntoView(true);;
 		  });
 		return;
@@ -144,7 +144,7 @@ function dataValidate(){
 	if(groupCategoryNum == null || groupCategoryNum == ''){
 		showAlertModal("필수값이 누락", "모임 종류를 결정해주세요");
 		
-		$("#alert").on('hidden.bs.modal', function () {
+		$("#alert").off("hidden.bs.modal").on('hidden.bs.modal', function () {
 			$("#groupCreateForm input[name=groupCategoryNum]").next().focus().get(0).scrollIntoView(true);;
 		  });
 

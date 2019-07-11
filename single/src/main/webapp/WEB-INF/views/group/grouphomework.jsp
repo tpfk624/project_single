@@ -47,7 +47,24 @@ $(function() {
 		
 		return false;
 	});
+	
+	//1페이지 호출
+	getHomeworkList(1);
 });
+
+function getHomeworkList(page){
+	var url = "${root}/homework";
+	var data = {
+		groupNum : "${groupNum}"
+		, page : page
+	}
+	var success = function(result) {
+		$("#groupmain .homework-group").empty();
+		$("#groupmain .homework-group").append(result);
+	}
+	
+	ajaxPage(data, url, success);
+}
 
 </script>
 		
@@ -62,6 +79,7 @@ $(function() {
 		class="btn btn-primary col-sm-4 col-lg-3 col-md-3 right grouppage" data-page="homeworkcreate">과제생성</button></c:if>
 </section>
 
+<div class="homework-group">
 <!-- 과제 시작 -->
 <section class="groupsection homework">
 	<div class="homework-item">
@@ -129,6 +147,7 @@ $(function() {
 			style="background-image: url('${root}/resources/img/group/checked_green.png')"></div>
 	</div>
 </section>	
+</div>
 <%@ include file="/WEB-INF/views/commons/pagination.jsp"%>	
 </div>
 </c:if>
