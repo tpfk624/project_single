@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
 <!-- 
 ----설명---- 
 네이버 로그인 모달창 입니다.
@@ -11,13 +11,10 @@ id: loginmodal의 display를 block으로 변경해주세요.
 <!-- 네아로 설정값-->
 <!-- <c:set var= "callbackUrl" value="http://localhost/single/member/callback.jsp"/> -->
 <!-- <c:set var="serviceUrl" value= "http://localhost/single"/> -->
-
 <%-- <c:set var = "callbackUrl" value = "http://${url}/single/member/callback.jsp"/> --%>
 <c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
-
 <%-- <c:set var = "serviceUrl" value = "http://${url}/single"/> --%>
 <c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
-
 <c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 
 
@@ -57,12 +54,19 @@ $(document).ready(function(){
 			data: formdata,
 			dataType : "json", //서버에서 반환되는 형식
 			success :function(data){
-				console.log('datareceive :'+ data);
-				console.log('datareceive :'+ data.msg);
-				location.reload();
-//	 				history.back();
-//	 				history.go();
-//	 				history.forward();
+				if(data.msg == '1'){
+					console.log('로그인에 성공하였습니다.');
+					console.log('datareceive :'+ data);
+					console.log('datareceive :'+ data.msg);
+					location.reload();
+//		 				history.back();
+//		 				history.go();
+//		 				history.forward();
+				}
+				if(data.msg == '0'){
+					showAlertModal('로그인 실패', '아이디와 비밀번호를 확인해주세요.')
+				}
+			
 			},error: function (){
 				console.log('error')
 			}

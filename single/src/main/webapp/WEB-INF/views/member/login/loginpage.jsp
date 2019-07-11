@@ -2,6 +2,15 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
+<%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
+<!-- 네아로 설정값-->
+<!-- <c:set var= "callbackUrl" value="http://localhost/single/member/callback.jsp"/> -->
+<!-- <c:set var="serviceUrl" value= "http://localhost/single"/> -->
+<%-- <c:set var = "callbackUrl" value = "http://${url}/single/member/callback.jsp"/> --%>
+<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
+<%-- <c:set var = "serviceUrl" value = "http://${url}/single"/> --%>
+<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
+<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -20,15 +29,23 @@
 			data: formdata,
 			dataType : "json", //서버에서 반환되는 형식
 			success :function(data){
-				console.log('-----loginpage');
-				console.log(data);
-				console.log('datareceive :'+ data.msg);
-				console.log(document.referrer);
-// 				location.href= "${root}/index.jsp"
-// 				location.reload();
-				history.back();
-// 				history.go();
-// 				history.forward();
+				if(data.msg == '1'){
+					console.log('로그인에 성공하였습니다.');
+					console.log('-----loginpage');
+					console.log(data);
+					console.log('datareceive :'+ data.msg);
+					console.log(document.referrer);
+//	 				location.href= "${root}/index.jsp"
+//	 				location.reload();
+					history.back();
+//	 				history.go();
+//	 				history.forward();
+				}
+				if(data.msg == '0'){
+					showAlertModal('로그인 실패', '아이디와 비밀번호를 확인해주세요.')
+				}
+				
+
 			},error: function (){
 				console.log('error')
 			}
@@ -62,10 +79,7 @@ min-height: 95%;
 }
 </style>
 
-<c:set var="url" value = "localhost" />
-<c:set var = "callbackUrl" value = "http://${url}/single/member/callback.jsp"/>
-<c:set var = "serviceUrl" value = "http://${url}/single"/>
-<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
+
 <!-- 네아로 자바스크립트-->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <!-- 모달 css (이미지 참고 사이트 :  https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_login_form_modal -->

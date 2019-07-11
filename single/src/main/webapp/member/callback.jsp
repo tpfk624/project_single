@@ -4,11 +4,14 @@
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
 <c:set var="root" value="${pageContext.request.contextPath}" />
+<!-- 네아로 설정값-->
+<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
+<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
+<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 
-
-
+<!-- 네아로 자바스크립트-->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
 
 <form id="naverProfileForm">
 	<input type ="hidden" name ="email" id="email" >
@@ -59,7 +62,7 @@
   var naver_id_login = new naver_id_login("${clientId}", "${callbackUrl}");
   // 접근 토큰 값 출력
   var accessToken =naver_id_login.oauthParams.access_token;
-  
+  console.log('accessToken'+ accessToken);
   // 네이버 사용자 프로필 조회
   naver_id_login.get_naver_userprofile("naverSignInCallback()");
   
