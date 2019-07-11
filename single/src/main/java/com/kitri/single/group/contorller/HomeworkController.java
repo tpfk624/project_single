@@ -1,6 +1,7 @@
 package com.kitri.single.group.contorller;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kitri.single.group.model.HomeworkDto;
 import com.kitri.single.group.service.HomeworkService;
 import com.kitri.single.user.model.UserDto;
+import com.kitri.single.util.Pagination;
+import com.kitri.single.util.SiteConstance;
 
 @RestController
 @RequestMapping("/homework")
@@ -71,17 +74,18 @@ public class HomeworkController {
 			return model;
 		}
 		
-		parameter.put("userId", userInfo.getUserId());
-		
 		logger.info(parameter.toString());
 		
-		List<HomeworkDto> list = homeworkService.getHomeworkList(parameter);
-		model.addObject("homeworkList", list);
+		Pagination<HomeworkDto> pagination = homeworkService.getHomeworkList(parameter);
+		pagination.setUrl(servletContext.getContextPath() + "/homework" );
+		
+		//model.addObject("homeworkList", list);
+		model.addObject("pagination", pagination);
 		model.addObject("root", servletContext.getContextPath());
 		model.addObject("parameter", parameter);
 		model.setViewName("/group/homeworkresult");
 		
-		logger.info(list.toString());
+		logger.info(pagination.toString());
 		
 		return model;
 	}

@@ -31,8 +31,8 @@
 	    , groupNum
 	    , homeworkSubject
 	    , homeworkContent
-	    , homeworkStartdate
-	    , homeworkEnddate
+	    , to_char(homeworkStartdate, 'yyyy/mm/dd') homeworkStartdate
+	    , to_char(homeworkEnddate, 'yyyy/mm/dd') homeworkEnddate
 	    , homeworkStatecode
 	    , round(sum(successcode) / memberCount * 100, 0) progressBar
 	    , case 
@@ -62,8 +62,8 @@
 	                    , homework_statecode homeworkStatecode
 	                from single_homework 
 	                where homework_statecode = 1
-	                and group_num = 1
-	                and homework_enddate >= sysdate
+	                and group_num = #{groupNum}
+	                and to_char(homework_enddate, 'yyyymmdd') >= to_char(sysdate, 'yyyymmdd')
 	                order by homework_startdate, single_homework.homework_enddate)
 	            union all
 	            select *
@@ -73,13 +73,13 @@
 	                    , group_num groupNum
 	                    , homework_subject homeworkSubject
 	                    , homework_content homeworkContent
-	                    , homework_startdate homeworkStartdate
-	                    , homework_enddate homeworkEnddate
+	                    ,  homework_startdate homeworkStartdate
+	                    ,  homework_enddate homeworkEnddate
 	                    , homework_statecode homeworkStatecode
 	                from single_homework 
 	                where homework_statecode = 1
-	                and group_num = 1
-	                and homework_enddate &lt; sysdate
+	                and group_num = #{groupNum}
+	                and to_char(homework_enddate, 'yyyymmdd') &lt; to_char(sysdate, 'yyyymmdd')
 	                order by single_homework.homework_startdate, single_homework.homework_enddate)
 	            ) hw
 	        where rownum &lt;= #{endRow}
@@ -101,6 +101,13 @@
 	    , homeworkStatecode
 	    , memberCount
 	order by rn
+	</select>
+	
+	<select id="selectListCount" parameterType="int" resultType="int">
+	select count(*)
+	from single_homework
+	where homework_statecode = '1'
+	and group_num = #{groupNum}
 	</select>
 	
 </mapper>

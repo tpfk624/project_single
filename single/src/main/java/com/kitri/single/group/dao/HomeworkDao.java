@@ -11,6 +11,8 @@ public interface HomeworkDao {
 	
 	public HomeworkDto selectHomework(int homeworkNum);
 	
-	public List<HomeworkDto> selectHomeworkList(Map<String, String> parameter);
+	public List<HomeworkDto> selectHomeworkList(Map<String, Integer> parameter);
+
+	public int selectListCount(int groupNum);
 
 }

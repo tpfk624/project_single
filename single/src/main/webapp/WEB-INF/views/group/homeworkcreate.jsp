@@ -96,7 +96,7 @@ $(function() {
 		var success = function(result) {
 			if(result.resultCode == 1){
 				showSuccessAlertModal("과제등록 성공", result.resultData);
-				$("#succesAlert").off("hidden.bs.modal").on('hidden.bs.modal', function () {
+				$("#alertSuccess").off("hidden.bs.modal").on('hidden.bs.modal', function () {
 					$("#navbar a[data-page=homework]").trigger("click");
 					return false
 				});

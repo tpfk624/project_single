@@ -159,20 +159,19 @@
 .homework-status{
 	float: right;
 	font-weight: bold;
-	background-image: url("/single/resources/img/group/checked.png");
 	height: 5rem;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     text-align: center;
     font-size: 2rem;
+    padding-top: 1rem;
 }
 
 .homework-body{
 	float: left;
 	margin-left: 10px;
 	width: 80%;
-	height: 5rem;
 }
 
 /*진행률바*/

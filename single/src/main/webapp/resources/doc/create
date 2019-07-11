@@ -20,11 +20,11 @@ ALTER TABLE single_chat
 
 -- 모임과제진행
 ALTER TABLE single_hprogress
-	DROP CONSTRAINT FK_homework_TO_hprogress; -- 모임과제 -> 모임과제진행
+	DROP CONSTRAINT FK_group_member_TO_hprogress; -- 모임구성원 -> 모임과제진행
 
 -- 모임과제진행
 ALTER TABLE single_hprogress
-	DROP CONSTRAINT FK_group_member_TO_hprogress; -- 모임구성원 -> 모임과제진행
+	DROP CONSTRAINT FK_hw_TO_hprogress; -- 모임과제 -> 모임과제진행
 
 -- 게시판
 ALTER TABLE single_board
@@ -313,9 +313,9 @@ ALTER TABLE single_chat
 
 -- 모임과제진행
 CREATE TABLE single_hprogress (
-	group_hprogress_num  number         NOT NULL, -- 모임과제번호
-	group_num            number         NOT NULL, -- 모임번호
+	homework_num         number         NOT NULL, -- 모임과제번호
 	user_id              varchar2(64)   NOT NULL, -- 유저아이디
+	group_num            number         NOT NULL, -- 모임번호
 	hprogress_subject    varchar2(256)  NULL,     -- 과제진행제목
 	hprogress_content    varchar2(4000) NULL,     -- 과제진행내용
 	hprogress_success    varchar2(1)    NULL,     -- 과제성공여부
@@ -329,9 +329,8 @@ ALTER TABLE single_hprogress
 	ADD
 		CONSTRAINT PK_single_hprogress -- 모임과제진행 기본키
 		PRIMARY KEY (
-			group_hprogress_num, -- 모임과제번호
-			group_num,           -- 모임번호
-			user_id              -- 유저아이디
+			homework_num, -- 모임과제번호
+			user_id       -- 유저아이디
 		);
 
 -- 유저
@@ -630,17 +629,6 @@ ALTER TABLE single_chat
 -- 모임과제진행
 ALTER TABLE single_hprogress
 	ADD
-		CONSTRAINT FK_homework_TO_hprogress -- 모임과제 -> 모임과제진행
-		FOREIGN KEY (
-			group_hprogress_num -- 모임과제번호
-		)
-		REFERENCES single_homework ( -- 모임과제
-			homework_num -- 모임과제번호
-		);
-
--- 모임과제진행
-ALTER TABLE single_hprogress
-	ADD
 		CONSTRAINT FK_group_member_TO_hprogress -- 모임구성원 -> 모임과제진행
 		FOREIGN KEY (
 			group_num, -- 모임번호
@@ -649,6 +637,17 @@ ALTER TABLE single_hprogress
 		REFERENCES single_group_member ( -- 모임구성원
 			group_num, -- 모임번호
 			user_id    -- 유저아이디
+		);
+
+-- 모임과제진행
+ALTER TABLE single_hprogress
+	ADD
+		CONSTRAINT FK_hw_TO_hprogress -- 모임과제 -> 모임과제진행
+		FOREIGN KEY (
+			homework_num -- 모임과제번호
+		)
+		REFERENCES single_homework ( -- 모임과제
+			homework_num -- 모임과제번호
 		);
 
 -- 게시판

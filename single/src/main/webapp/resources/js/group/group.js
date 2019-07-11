@@ -201,3 +201,29 @@ function groupMemberUpdate(data, url){
 	
 	ajaxFunc(data, url, "get", success);
 }
+
+function progressBarMove(){
+	var width = 1;
+	var interval = setInterval(frame, 10);
+	
+	function frame() {
+		var progress = $(".ing");
+		var progressBar = $(".progressBar");
+		if(progress.length == 0){
+			clearInterval(interval);
+		}
+		
+		$.each(progress, function(index, item) {
+			var progressBar = $(item).children(".progress-bar");
+			var width = parseInt(progressBar.attr("data-prog"));
+			var maxWidth = parseInt($(item).attr("data-prog"));
+			//console.log("width : " + width + "//" + "maxWidth : " + maxWidth);
+			if(width >= maxWidth){
+				$(item).removeClass("ing");
+			}else{
+				progressBar.attr("data-prog" , width + 1);
+				progressBar.css("width", width + 1 + "%");
+			}
+		});
+	}
+}
