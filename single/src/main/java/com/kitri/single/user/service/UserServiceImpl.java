@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.group.dao.GroupDao;
 
 import com.kitri.single.group.model.GroupDto;
@@ -60,25 +61,20 @@ public class UserServiceImpl implements UserService {
 	//회원 정보 수정
 	@Override
 	public void userModify(UserDto userDto) {
-		// TODO Auto-generated method stub
+		
+		System.out.println("정보수정 서비스임플 옴");
+		
+		if(!userDto.getNewpass().isEmpty()) {
+			System.out.println("비번 변경 + 정보 수정!");
+			sqlSession.getMapper(UserDao.class).userModifynew(userDto); //비밀번호 변경 + 정보 수정
+		}else {
+			System.out.println("비번 변경안함 + 정보 수정!");			
+			sqlSession.getMapper(UserDao.class).userModify(userDto);	//비밀번호 유지 + 정보 수정
+		}
 		
 	}
 	
-//	@Override
-//	public void modify(MemberDto memberDto) {
-//		System.out.println("member_s_Impl : 정보수정 메소드 실행");
-//		
-//		if(!memberDto.getNewpass().isEmpty()) {
-//			System.out.println("비번 변경 + 정보 수정!");
-//			sqlSession.getMapper(MemberDao.class).modifynew(memberDto); //비밀번호 변경 + 정보 수정
-//		}else {
-//			System.out.println("비번 변경안함 + 정보 수정!");			
-//			sqlSession.getMapper(MemberDao.class).modify(memberDto);	//비밀번호 유지 + 정보 수정
-//		}
-//	}
-	
-	
-	
+
 	//회원 탈퇴
 	@Override
 	public void userDelete(String id) {
@@ -93,6 +89,13 @@ public class UserServiceImpl implements UserService {
 		return sqlSession.getMapper(UserDao.class).getGroupAll(parameter);
 	}
 
+	
+	@Override
+	public List<GroupDto> getMyGroup(Map<String, String> parameter) {
+		List<GroupDto> list = sqlSession.getMapper(UserDao.class).getMyGroup(parameter);
+		return list;
+	}
+	
 	@Override
 	@Transactional
 	public GroupDto getGroup(int groupNum) {
@@ -112,12 +115,6 @@ public class UserServiceImpl implements UserService {
 		return groupDto;
 	}
 	
-	
-	@Override
-	public List<GroupDto> getMyGroup(Map<String, String> parameter) {
-		List<GroupDto> list = sqlSession.getMapper(UserDao.class).getMyGroup(parameter);
-		return list;
-	}
 
 	@Override
 	public void leaveGroup(Map<String, String> parameter) {
@@ -152,24 +149,33 @@ public class UserServiceImpl implements UserService {
 	return null;
 	}
 
-
-
-//	@Override
-//	@Transactional
-//	public String groupStamp(String userId, int groupNum) {
-//		Map<String, Object> parameter = new HashMap<String, Object>();
-//		parameter.put("userId", userId);
-//		parameter.put("groupNum", groupNum);
-//		GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
-//		if(groupDao.countGroupStamp(parameter) == 0) {
-//			groupDao.insertGroupStamp(parameter);
-//		}else {
-//			return makeJSON(2, "이미 찜한 모임입니다");
-//		}
-//		
-//		return makeJSON(1, "모임을 찜했습니다. 나의 찜목록 페이지에서 확인하세요");
-//	}
 	
+	
+	
+	//////////////////////////////////게시물 관리 페이지////////////////////////////////////////////////
+	
+	@Override
+	public List<BoardDto> getBoardAll(Map<String, String> parameter) {
+		return sqlSession.getMapper(UserDao.class).getBoardAll(parameter);
+	}
+
+	@Override
+	public List<BoardDto> getBoardOther(Map<String, String> parameter, String option) {
+		
+		if(option.equals("selected")) {
+			System.out.println("내가 쓴 글 서비스임플옴");
+			List<BoardDto> list = sqlSession.getMapper(UserDao.class).getBoardAll(parameter);
+			return list;
+		}else if(option.equals("reply")){
+			System.out.println("나의 댓글 서비스임플옴");			
+			List<BoardDto> list = sqlSession.getMapper(UserDao.class).getBoardOther(parameter);
+			return list;
+		}else {
+			System.out.println("찜한 글 서비스임플옴");			
+			List<BoardDto> list = sqlSession.getMapper(UserDao.class).getBoardHeart(parameter);
+			return list;
+		}
+	}
 	
 
 

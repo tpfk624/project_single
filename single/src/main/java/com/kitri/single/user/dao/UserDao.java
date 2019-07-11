@@ -4,6 +4,7 @@ import java.util.List;
 
 import java.util.Map;
 
+import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.group.model.GroupDto;
 
 import com.kitri.single.user.model.UserDto;
@@ -27,6 +28,11 @@ public interface UserDao {
 	public List<GroupDto> getStampGroup(Map<String, String> parameter);	//찜한 그룹 전체조회
 	public List<GroupDto> getMyStamp(Map<String, String> parameter); //찜한 그룹 카테고리별
 	public void stampDelete(Map<String, String> parameter);//찜한 그룹 삭제
+	
+	//게시물관리
+	public List<BoardDto> getBoardAll(Map<String, String> parameter);//내가 쓴 글 가져오기
+	public List<BoardDto> getBoardOther(Map<String, String> parameter);
+	public List<BoardDto> getBoardHeart(Map<String, String> parameter);
 
 	
 

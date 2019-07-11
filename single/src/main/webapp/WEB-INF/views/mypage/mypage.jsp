@@ -60,7 +60,7 @@ $(function(){
 	
 	var curpassright = 1;
 	// 현재 비번 일치 여부 체크
-	$("#pass").keyup(function(){
+	$("#userPassword").keyup(function(){
 		var curpass = $(this).attr("data-num");
 		var inputpass = $(this).val();
 		if(curpass != inputpass) {
@@ -124,7 +124,7 @@ $(function(){
 	
 	// 수정 요청
 	$(".userinfoBtn").click(function(){
-		if($("#pass").val().trim().length == 0){
+		if($("#userPassword").val().trim().length == 0){
 			alert("현재 비밀번호를 입력해주세요.");
 		} else if(curpassright != 0){
 			alert("현재 비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
@@ -145,7 +145,6 @@ $(function(){
 	 /* 변경사항 저장 버튼 클릭 시  */
 	 $(".userinfoBtn").click(function() {
 		 console.log("버튼클릭됨");
-		//나중에 입력하라고 경고문구띄우기
 		$.ajax({
 			url: "${root}/mypage/modify",
 			type: "POST",
@@ -154,9 +153,18 @@ $(function(){
 			data: new FormData($("#userinfoform")[0]), //사진업로드때문에 함
 			dataType: "json", //응답
 			success: function(result) {
-				console.log(result);
+				alert(result.result);
+				if (result.code == 99) {
+					location.href = "${root}/member/login";
+					return false;
+				}else if (result.code == 1) {
+					location.reload();
+				}
+				return false;
+				
 			}
 		});	
+		return false;
 	});
 	 	 
 	 
@@ -190,14 +198,24 @@ $(function(){
 <div id="my-page-wrap">
 	<div id="my-page-header">
 		<div id="header-content" class="my-page-content">
-			<div class="user-photo" style="display: inline-block; background-image: url(&quot;https://cdn.studysearch.co.kr/images/users/199883/profile/1561443247&quot;); background-size: cover; background-position: 50% 50%;"></div>
+		
+			<!-- 프로필사진 -->
+			<div class="user-photo" style="display: inline-block;">
+				<c:if test="${userInfo.userProfile != null}">
+	            	<img src="${userInfo.userProfile}" class="rounded-circle" width="90" height="90">             			
+				</c:if>
+				<c:if test="${userInfo.userProfile == null}">
+            		<img id = "userpic" src='${root}/resources/img/seonimg/kakaopic.png'  class="rounded-circle" width="90" height="90">  			
+				</c:if>
+			</div>
+			<!-- 프로필사진 -->
 			<div id="tabs">
-				<div id="user-name">${userInfos.userName}</div>
+				<div id="user-name">${userInfos.userName} (${userInfos.userNickname})</div>
 				<div id="tab-box">
-					<a class="tab selected" href="${root }/mypage/mypage">내 프로필</a> 
+					<a class="tab selected" href="${root}/mypage/mypage">내 프로필</a> 
 					<a class="tab" href="${root }/mypage/groupall">나의 모임관리</a> 
 					<a class="tab" href="${root}/mypage/stampgroup">찜한 모임</a> 
-					<a class="tab" href="${root}/user_mypage/myPageWrite.jsp">게시물관리</a>
+					<a class="tab" href="${root}/mypage/writelist">게시물관리</a>
 				</div>
 			</div>
 		</div>
@@ -262,7 +280,7 @@ $(function(){
 								<!--이메일 주소-->아이디 :
 							</th>
 							<td>
-								<input type="text" name="userId" class="t_input" value="${userInfos.userId}" disabled="">
+								<input type="text" name="userId" id="userId" class="t_input" value="${userInfos.userId}" readonly/>
 							</td>
 						</tr>
 						<tr>
@@ -276,7 +294,7 @@ $(function(){
 								<!--이메일 주소-->이   름 :
 							</th>
 							<td>
-								<input type="text" name="userName" class="t_input" value="${userInfos.userName}" disabled="">
+								<input type="text" name="userName" id="userName" class="t_input" value="${userInfos.userName}" readonly/>
 							</td>
 						</tr>
 						<tr>
@@ -302,7 +320,7 @@ $(function(){
 								<!--이름-->현재 비밀번호 :
 							</th>
 							<td rowspan = 2>
-								<input data-num="${userInfo.userPassword}" type="password" name="pass" id="pass" class="pw_input old_pw"  value=""  placeholder="현재 비밀번호를 입력해주세요.">
+								<input data-num="${userInfo.userPassword}" type="password" name="userPassword" id="userPassword" class="pw_input old_pw"  value=""  placeholder="현재 비밀번호를 입력해주세요.">
 								<!-- ******* 비밀번호 부합 여부 확인 메세지 ******* -->
 	                			<div style="margin-bottom:0px; color:tomato; font-size:12px" id="passrightcheck">*현재 비밀번호를 입력해주세요.</div>
 							</td>
@@ -370,7 +388,7 @@ $(function(){
 			<div class="config_foot">
 				<a href="#" class="leavelink" data-toggle="modal" data-target="#deleteModal">회원탈퇴</a> 
 				<!-- <button type="button" class="btn btn-primary">변경사항 저장</button> -->
-				<a href="#" class="btn_submit userinfoBtn" > 변경사항 저장</a>
+				<a class="btn_submit userinfoBtn" > 변경사항 저장</a>
 				<div class="clear"></div>
 			</div>
 		</div>
