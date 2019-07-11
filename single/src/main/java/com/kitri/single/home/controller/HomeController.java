@@ -38,7 +38,7 @@ public class HomeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String home(HttpSession session, HttpServletRequest request) {
 		UserDto userDto =(UserDto) session.getAttribute("userInfo");
-		logger.debug("userDto>>>>>>>" +userDto.toString());
+//		logger.debug("userDto>>>>>>>" +userDto.toString());
 		WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
 		return "redirect:/index.jsp";
 	}

@@ -52,23 +52,44 @@ public class MemberController {
 		return "member/register/register";
 	}
 	
+	// 소셜정보와함께 회원가입페이지로이동
+	@RequestMapping(value = "/registersns", method = RequestMethod.POST)
+	public String registersns(UserDto userDto, Model model 
+			, String snsId, String snsType, String snsToken, String snsConnectDate
+			, HttpServletRequest request){
+		logger.debug(">>>>>>registersns"+ userDto.toString());
+		
+		SnsDto snsDto = new SnsDto();
+		
+		snsDto.setSnsId(snsId);
+		snsDto.setSnsType(snsType);
+		snsDto.setSnsToken(snsToken);
+		snsDto.setSnsConnectDate(snsConnectDate);
+		userDto.setSnsDto(snsDto);
+		
+		request.setAttribute("userInfo", userDto);
+		
+		
+		return "member/register/register";
+	}
+	
+	
+	
 	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(UserDto userDto, Model model 
 			, String snsId, String snsType, String snsToken, String snsConnectDate
 			, HttpServletRequest request) {
 		logger.info(">>>>>register UserDto >>>" +userDto.toString());
-		logger.info(">>>>>register UserDto.userId >>>" +userDto.getUserId());
-		
-		
+
 		UserDto oldUser = memberService.getUser(userDto); //이메일 인증당시 이메일을 생성한상태
 		
-		logger.info(">>>>>register oldUser >>>" +oldUser.toString());
-		if(snsId != null && !"".equals(snsId)) { 
+		if(snsId != null && !"".equals(snsId)) {  //sns계정으로 가입
 			logger.info(">>>>>sns계정으로 가입");
 			logger.info(">>>>>register>>>>: snsid:" +snsId+"snsType: " +snsType+"snsToken: "+snsToken+"snsConnectDate: "+snsConnectDate);
 			logger.info(userDto.toString());
 			logger.info(">>>>>>>>>>>>>>>>>");
+			
 			userDto.setAuthKey("confirmed");
 			userDto.setAuthState("1");
 			
@@ -77,6 +98,7 @@ public class MemberController {
 			snsDto.setSnsType(snsType);
 			snsDto.setSnsToken(snsToken);
 			snsDto.setSnsConnectDate(snsConnectDate); // 월 일 년
+			snsDto.setUserId(userDto.getUserId());
 			
 			userDto.setSnsDto(snsDto);
 			userDto.setUserStatecode("1");			
@@ -85,7 +107,8 @@ public class MemberController {
 //			model.addAttribute("userInfo", userDto);
 			WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
 			
-		}else if(oldUser.getAuthState().equals("1")){ //이메일 인증이되어 있을경우 =>일반회원가입 ()
+		}
+		else if(oldUser.getAuthState().equals("1")){ //이메일 인증이되어 있을경우 =>일반회원가입 ()
 			logger.info(">>>>>일반회원가입");
 			logger.info(userDto.toString());
 			logger.info(">>>>>>>>>>>>>>>>>");
