@@ -12,6 +12,14 @@
 <c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
 <c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 
+
+<c:if test="${sessionScope.userInfo != null }">
+	<script>
+// 		location.href = "/single/home";
+		history.back();
+	</script>
+</c:if>    
+
 <script type="text/javascript">
   $(document).ready(function(){
     //로그인
