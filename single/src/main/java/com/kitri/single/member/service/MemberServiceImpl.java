@@ -66,7 +66,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		// mail 작성 생성
 		MailUtils sendMail = new MailUtils(mailSender);
-		sendMail.setSubject("[Hoon's Board v2.0] 회원가입 이메일 인증");
+		sendMail.setSubject("[우리 혼자 살아요] 회원가입 이메일 인증");
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
 				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
 				.append("<a href='http://localhost/single/member/authconfirm?email=")
