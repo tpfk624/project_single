@@ -24,7 +24,10 @@ function ajaxFunc(data, url, method, successFunc) {
 		, contentType : contentType
 		, dataType : "json"
 		, data : data
-		, success : successFunc
+		, success : function(result) {
+			jsonLoginCheck(result.resultCode);
+			successFunc(result);
+		}
 	});	
 }
 
@@ -33,9 +36,34 @@ function ajaxPage(data, url, successFunc) {
 		url : url
 		, data : data
 		, method : "get"
-		, success : successFunc
+		, success : function(result) {
+			htmlLoginCheck(result.trim());
+			successFunc(result);
+		}
 		, async: true
 	});
+}
+function htmlLoginCheck(resultCode){
+	if(resultCode == "99"){
+		showAlertModal("로그인 문제", "로그인이 필요합니다.");
+		$("#alert").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+			location.href = "/single/member/login";
+			return false;
+		})
+		return false;
+	}
+}
+
+
+function jsonLoginCheck(resultCode) {
+	if(resultCode == 99){
+		showAlertModal("로그인 문제", "로그인이 필요합니다.");
+		$("#alert").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+			location.href = "/single/member/login";
+			return false;
+		})
+		return false;
+	}
 }
 
 

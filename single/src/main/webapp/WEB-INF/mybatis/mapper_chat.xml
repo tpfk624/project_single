@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+     
+<mapper namespace="com.kitri.single.group.dao.ChatDao">
+	<insert id="insertChat" parameterType="chatDto">
+	insert into single_chat(
+		group_num
+		, user_id
+		, chat_time
+		, chat_content
+	)values(
+		#{groupNum}
+		, #{userId}
+		, to_timestamp(#{chatTime}, 'yyyy/mm/dd hh24:mi:ss:ff')
+		, #{chatContent}
+	)
+	</insert>
+	
+	<select id="selectChat" resultType="chatDto" parameterType="chatDto">
+	select 
+	    group_num groupNum
+	    , user_id userId
+	    , decode(to_char(chat_Time, 'yyyymmdd')
+	            , to_char(sysdate, 'yyyymmdd'), to_char(chat_Time, 'hh24:mi:ss')
+	            , to_char(chat_Time, 'yy/mm/dd')) chatTime 
+	    , chat_content chatContent
+	from
+	    single_chat
+	where
+	    group_num = #{groupNum}
+	    and user_id = #{userId}
+	    and chat_time = to_timestamp(#{chatTime}, 'yyyy/mm/dd hh24:mi:ss:ff')
+	</select>
+	
+	<select id="getTimstamp" resultType="string">
+	select to_char(systimestamp, 'YYYY/MM/DD HH24:MI:SS:FF')
+	from dual
+	</select>
+	
+	<select id="selectChatList" parameterType="int" resultType="chatDto">
+	select 
+	    sc.group_num groupNum
+	    , sc.user_id userId
+	    , decode(to_char(sc.chat_Time, 'yyyymmdd')
+	            , to_char(sysdate, 'yyyymmdd'), to_char(sc.chat_Time, 'hh24:mi:ss')
+	            , to_char(sc.chat_Time, 'yy/mm/dd')) chatTime 
+	    , sc.chat_content chatContent
+	    , su.user_nickname userNickname
+	from single_chat sc
+	    left outer join single_user su
+	        on sc.user_id = su.user_id
+	where sc.group_num = #{groupNum}
+	</select>
+	
+</mapper>
