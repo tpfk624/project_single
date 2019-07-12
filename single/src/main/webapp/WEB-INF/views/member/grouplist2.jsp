@@ -9,6 +9,12 @@
 <c:set var="parameter" value="${requestScope.parameter}"></c:set>
 <script>
 $(function() {
+	
+	$('#recomandBtn').on("click",function(){
+			
+	});
+	
+	
 	//$(".groupcard").on("click", groupcardClick);
 	
 	var page = "${parameter.page}";
@@ -99,9 +105,9 @@ function groupcardClick(){
 
 </script>
 
-<%@ include file="groupdetailmodal.jsp"%>
-<%@ include file="groupheader.jsp"%>
-<%@ include file="groupsearch.jsp" %>
+<%-- <%@ include file="groupdetailmodal.jsp"%> --%>
+<%-- <%@ include file="groupheader.jsp"%> --%>
+<%-- <%@ include file="groupsearch.jsp" %> --%>
 
 <!-- 여기서부터 실제 데이터 영역 -->
 <section class="contents">
@@ -118,7 +124,7 @@ function groupcardClick(){
 					<button type="button" class="btn btn-primary pagebtn" data-page="create">모임 만들기</button>
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
-					<button type="button" class="btn btn-info">추천 받기</button>
+					<button type="button" id="recomandBtn" class="btn btn-info">추천 받기</button>
 				</div>
 				<div class="dropdown col-lg-2 col-md-2 col-sm-3 my-4 category">
 					<button type="button" class="btn btn-primary dropdown-toggle"

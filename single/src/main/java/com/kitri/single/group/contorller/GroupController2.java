@@ -40,7 +40,7 @@ import com.kitri.single.util.SiteConstance;
 import com.kitri.single.util.Utill;
 
 @Controller
-@RequestMapping("/group2")
+//@RequestMapping("/group2")
 @SessionAttributes(names = {"userInfo"})
 public class GroupController2 {
 	
@@ -80,7 +80,7 @@ public class GroupController2 {
 		
 		return "group/grouplist2";
 	}
-	@RequestMapping(value = "/grouprecomandlist", method = RequestMethod.GET)
+//	@RequestMapping(value = "/grouprecomandlist", method = RequestMethod.GET)
 	public String getGroupList(@RequestParam Map<String, String> parameter, HttpSession session, Model model) {
 		UserDto user = (UserDto)session.getAttribute("userInfo");
 		if(user != null) {
