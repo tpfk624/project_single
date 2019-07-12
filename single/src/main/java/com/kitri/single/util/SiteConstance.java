@@ -12,6 +12,9 @@ public class SiteConstance {
 	public static final int GROUP_SIZE = 15;
 	
 	public static final String GROUP_DEFAULT_IMG_PATH = "/resources/img/group/";
+
+	public static final String USER_DEFAULT_IMG_PATH = "/resources/img/user/";
+
 	public static final String CHAT_SERVER_IP = "wss://192.168.14.22:8443";
 	
 	//모임과제에서 한번에 불러오는 과제의 개수

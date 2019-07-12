@@ -37,7 +37,7 @@ $(function() {
 			<div class="modal-body text-center">
 				<img class="card-img-top"
 					src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
-					alt="">
+						alt="">
 				<h4 class="card-title">영어단어 스터디</h4>
 				<div class="card-body">
 					<p class="card-text groupDescription">모임설명</p>
@@ -50,7 +50,9 @@ $(function() {
 			
 			<!-- Modal footer -->
 	        <div class="modal-footer">
-	        	<button type="button" class="btn btn-primary" data-num="">모임 탈퇴</button>
+	        	<button type="button" id="deleteBtn" class="btn btn-primary btn-delete" data-num="">모임 탈퇴</button>
+	        	
+	        	<button type="button" id="moimIn" class="btn btn-primary" data-num="${group.groupNum}">모임 들어가기</button>
 	          	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 	        </div>
 		</div>

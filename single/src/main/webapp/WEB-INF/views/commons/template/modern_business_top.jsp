@@ -179,7 +179,7 @@ $(document).ready(function(){
 	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
 	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
 	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
-	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/writelist">게시물 관리</a>
 	            </div>
 	          </li>
           </c:if>
