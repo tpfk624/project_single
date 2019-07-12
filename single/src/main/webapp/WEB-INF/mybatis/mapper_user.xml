@@ -68,6 +68,8 @@
 		from single_group g, single_group_member m
 		where g.group_num = m.group_num
 			and g.group_statecode = '1'
+			and m.group_member_statecode != 'D'
+    		and m.group_member_statecode != 'W'
 			and m.user_id = #{userId}
 	</select>
 
@@ -87,6 +89,8 @@
 		from single_group g, single_group_member m
 		where g.group_num = m.group_num
 			and g.group_statecode = '1'
+			and m.group_member_statecode != 'D'
+    		and m.group_member_statecode != 'W'
 			and m.user_id = #{userId}
 			<if test="option == 'groupleader' " >
 			and m.group_member_statecode = 'L'

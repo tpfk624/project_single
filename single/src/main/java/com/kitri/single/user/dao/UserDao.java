@@ -27,7 +27,7 @@ public interface UserDao {
 	//찜모임관리
 	public List<GroupDto> getStampGroup(Map<String, String> parameter);	//찜한 그룹 전체조회
 	public List<GroupDto> getMyStamp(Map<String, String> parameter); //찜한 그룹 카테고리별
-	public void stampDelete(Map<String, String> parameter);//찜한 그룹 삭제
+	public void stampDelete(Map<String, Object> parameter);//찜한 그룹 삭제
 	
 	//게시물관리
 	public List<BoardDto> getBoardAll(Map<String, String> parameter);//내가 쓴 글 가져오기

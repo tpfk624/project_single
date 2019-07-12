@@ -11,11 +11,54 @@
 /* 셀렉트 박스 클릭 시  */
 $(function() {
 	getMyGroup("selected");
+	
 	//  셀렉트 박스 클릭 이벤트
 	$(".moimOption").change(function() {
 		var sel = $(this).val();
 		getMyGroup(sel);
 	});
+	
+	/* 모임 가입하기  */
+	 $("#moimApply").click(function() {
+		 var groupNum = $(this).attr("data-num");
+		 console.log("모임 가입하기 버튼클릭됨 , 그룹넘버: " + groupNum);
+		$.ajax({
+			type : 'GET',
+			url : '${root}/group/groupmember',
+			dataType: "json",
+			data : {
+				'type' : "apply",
+				'groupNum' : groupNum
+			},
+			success : function(result) {
+				if(result.resultCode == 1) {
+					alert(result.resultData);
+				}
+			}
+		});	
+		return false;
+	});
+	
+	 /* 찜하기 취소  */
+	 $("#zzimDelete").click(function() {
+		 var groupNum = $("#moimApply").attr("data-num");
+		 console.log("찜 취소하기 버튼클릭됨 , 그룹넘버: " + groupNum);
+		$.ajax({
+			type : 'GET',
+			url : '${root}/mypage/stampdelete',
+			dataType: "json",
+			data : {
+				'groupNum' : groupNum
+			},
+			success : function(result) {
+				if(result.resultCode == 1) {
+					alert(result.resultData);
+				}
+			}
+		});	
+		return false;
+	});
+	 
 });
 
 
@@ -40,7 +83,6 @@ function getMyGroup(sel) {
 
 function groupcardClick() {
 	var groupNum = $(this).attr("data-num");
-	alert(groupNum);
 	$.ajax({
 		url : "${root}/mypage/groupdetail",
 		method : "get",

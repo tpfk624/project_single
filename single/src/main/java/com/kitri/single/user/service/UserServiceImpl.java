@@ -1,5 +1,6 @@
 package com.kitri.single.user.service;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.slf4j.Logger;
@@ -143,13 +144,17 @@ public class UserServiceImpl implements UserService {
 			
 	}
 	
-	@Override
-	public String groupStamp(String userId, int groupNum) {
-	// TODO Auto-generated method stub
-	return null;
-	}
 
-	
+	@Override
+	@Transactional
+	public String stampDelete(String userId, int groupNum) {
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userId);
+		parameter.put("groupNum", groupNum);
+		 UserDao userDao = sqlSession.getMapper(UserDao.class);
+		userDao.stampDelete(parameter);
+		return makeJSON(1, "찜 모임을 취소했습니다. 나의 찜목록 페이지에서 확인하세요");
+	}
 	
 	
 	//////////////////////////////////게시물 관리 페이지////////////////////////////////////////////////
@@ -176,7 +181,22 @@ public class UserServiceImpl implements UserService {
 			return list;
 		}
 	}
-	
+
+	public String makeJSON(int resultCode, Object resultData) {
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("resultCode", resultCode);
+		if(resultData instanceof Collection) {
+			jsonObject.put("resultData", new JSONArray(resultData));
+		}else if(resultData instanceof String) {
+			jsonObject.put("resultData", resultData.toString());
+		}else {
+			jsonObject.put("resultData", new JSONObject(resultData));
+		}
+		
+		return jsonObject.toString();
+		
+	}
 
 
 

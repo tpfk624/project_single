@@ -269,23 +269,46 @@ public class UserController {
 		return "/mypage/groupresult" ;
 	}
 
+//	
+//	//찜한 모임 취소
+//	@RequestMapping("/stampdelete")
+//	public void stampdelete (@ModelAttribute("userInfo") UserDto user, HttpSession session) {
+//		System.out.println("찜한 모임 취소 컨트롤러");
+//		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
+//		
+//		Map<String, String> parameter = new HashMap<String, String>();
+//		if (userInfo != null) {
+//			parameter.put("userId", userInfo.getUserId());
+//		}
+//		
+//		parameter.put("groupNum", null);
+//
+//		List<GroupDto> list = userService.getStampGroup(parameter);
+//
+//	}
 	
 	//찜한 모임 취소
+	@ResponseBody
 	@RequestMapping("/stampdelete")
-	public void stampdelete (@ModelAttribute("userInfo") UserDto user, HttpSession session) {
-		System.out.println("찜한 모임 취소 컨트롤러");
-		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
+	public String stampdelete(HttpSession session, @RequestParam("groupNum") int groupNum) {
 		
-		Map<String, String> parameter = new HashMap<String, String>();
-		if (userInfo != null) {
-			parameter.put("userId", userInfo.getUserId());
+		System.out.println("찜한 모임 취소 컨트롤러 들어옴");
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
 		}
 		
-		parameter.put("groupNum", null);
-
-		List<GroupDto> list = userService.getStampGroup(parameter);
-
+		String json = makeJSON(0, "찜하기 취소 실패하였습니다. 관리자에게 문의하세요");
+		if(groupNum != 0) {
+			json = userService.stampDelete(userInfo.getUserId(), groupNum);
+		}
+		//logger.info(json);
+		return json;
 	}
+	
 	
 	
 	//////////////////////////////////게시물 관리 페이지////////////////////////////////////////////////
@@ -334,6 +357,23 @@ public class UserController {
 	}
 		
 
+	//json데이터 생성
+	public String makeJSON(int resultCode, Object resultData) {
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("resultCode", resultCode);
+		if(resultData instanceof Collection) {
+			jsonObject.put("resultData", new JSONArray(resultData));
+		}else if(resultData instanceof String){
+			jsonObject.put("resultData", resultData.toString());
+		}else {
+			jsonObject.put("resultData", new JSONObject(resultData));
+		}
+		
+		return jsonObject.toString();
+		
+	}
+	
 }
 
 

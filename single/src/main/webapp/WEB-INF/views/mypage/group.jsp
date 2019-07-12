@@ -4,19 +4,25 @@
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <link rel="stylesheet" href="${root}/resources/css/user/group.css">
 
-
 <script>
 
-
-	
-	
 /* 셀렉트 박스 클릭 시  */
 $(function() {
+	
 	getMyGroup("selected");
 	//  셀렉트 박스 클릭 이벤트
 	$(".moimOption").change(function() {
 		var sel = $(this).val();
 		getMyGroup(sel);
+	});
+	
+	/* 모임 페이지 들어가기  */
+	 $("#moimIn").click(function() {
+		 var groupNum = $(this).attr("data-num");
+		 console.log("모임 들어가기 버튼클릭됨 , 그룹넘버: " + groupNum);
+		 
+		 location.href = '${root}/group/' + groupNum;
+		return false;
 	});
 });
 
@@ -83,6 +89,13 @@ function groupcardClick() {
 }
 
 
+// 	$.ajax({
+// 	type : 'GET',
+// 	url : '${root}/group/' + groupNum,
+// 	success : function(result) {
+// 		alert("모임 들어가기 성공");
+// 	}
+// });	
 
 </script>
 

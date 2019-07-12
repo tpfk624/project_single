@@ -3,8 +3,6 @@
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
 <link rel="stylesheet" href="${root}/resources/css/user/user.css">
 
-
-
 <style>
 .modal-body{
 	 font-family : '돋움'
@@ -31,7 +29,6 @@ label {
     width: 421px;
     font-family: '돋움';
 }
-
 </style>
 	
 

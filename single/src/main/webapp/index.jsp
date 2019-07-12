@@ -168,9 +168,8 @@ $(document).ready(function(){
             <a href="#menu" class="more">menu</a>
          </section>
 
-
          <!-- 날씨 popover -->
-         
+                  
          <div class="popover fade bs-popover-bottom" role="tooltip" id="popover" style="float : right; top: 60px; left: 1560px;  will-change: transform;" x-placement="bottom">  <!-- transform: translate3d(1248px, 79px, 0px); -->
 	         <div class="arrow" style="left: 25px;">
 	         </div>
