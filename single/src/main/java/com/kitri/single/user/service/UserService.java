@@ -15,7 +15,7 @@ public interface UserService {
 
 	//<내 정보부분>
 	public UserDto userInfom(String id);//내 정보 가져오기
-	public void userModify(UserDto userDto); //내정보 수정 >> 아마도 제이슨으로 보내니까 
+	public UserDto userModify(UserDto userDto); //내정보 수정 >> 아마도 제이슨으로 보내니까 
 	public void userDelete(String id); //내정보 삭제 >> 얘를 삭제하면 모임에서 상태도 바뀜
 	
 	
