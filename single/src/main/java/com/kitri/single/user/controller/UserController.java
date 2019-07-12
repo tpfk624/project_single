@@ -129,8 +129,7 @@ public class UserController {
 			System.out.println(userDto);
 		}
 		
-		userService.userModify(userDto);
-		
+		UserDto userdto = userService.userModify(userDto);
 		
 		model.addAttribute("userInfo", userDto);
 		
