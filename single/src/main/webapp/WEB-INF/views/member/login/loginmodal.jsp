@@ -15,11 +15,11 @@ id: loginmodal의 display를 block으로 변경해주세요.
 <c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
 
 <!-- ip설정용 -->
-<!-- <c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/> -->
-<!-- <c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/> -->
+<%-- <c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/> --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/>  --%>
 
-<!-- <c:set var = "serviceUrl" value = "https://192.168.14.14:8443/single"/> -->
-<!-- <c:set var = "callbackUrl" value = "https://192.168.14.14:8443/single/member/callback.jsp"/> -->
+<%--<c:set var = "serviceUrl" value = "https://192.168.14.14:8443/single"/>  --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.14.14:8443/single/member/callback.jsp"/>  --%>
 
 <%-- <c:set var = "serviceUrl" value = "https://192.168.14.22:8443/single"/> --%>
 <%-- <c:set var = "callbackUrl" value = "https://192.168.14.22:8443/single/member/callback.jsp"/> --%>

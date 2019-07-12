@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> --%>
 
 <!-- 네이버로부터 정보를 받는 페이지입니다. -->
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
@@ -9,7 +9,7 @@
 <!-- 네아로 설정값-->
 <c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 <!-- 로컬용 -->
-<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
+<c:set var = "serviceUrl" value = "http://localhost:8443/single"/>
 <c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
 
 
@@ -17,15 +17,16 @@
 
 
 <!-- 네아로 자바스크립트-->
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"/>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
-<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+<%-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script> --%>
+
 <!-- ip설정용 -->
-<%--  <c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/> --%>
-<%-- <c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/> --%>
+<%-- <c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/> --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/>  --%>
 
-<%-- <c:set var = "serviceUrl" value = "https://192.168.14.14:8443/single"/> --%>
-<%-- <c:set var = "callbackUrl" value = "https://192.168.14.14:8443/single/member/callback.jsp"/> --%>
+<%--<c:set var = "serviceUrl" value = "https://192.168.14.14:8443/single"/>  --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.14.14:8443/single/member/callback.jsp"/>  --%>
 
 <%-- <c:set var = "serviceUrl" value = "https://192.168.14.22:8443/single"/> --%>
 <%-- <c:set var = "callbackUrl" value = "https://192.168.14.22:8443/single/member/callback.jsp"/> --%>
@@ -47,30 +48,7 @@
 	<input type="hidden" name="snsToken" id="snsToken">
 	<input type="hidden" name="snsConnectDate" id="snsConnectDate">
 </form>
-<!-- <!-- 2019-07-10backup --> 
-<!-- <form id="naverProfileForm"  > -->
-<!-- 	<input type ="hidden" name ="email" id="email" > -->
-<!-- 	<input type ="hidden" name ="accessToken" id="accessToken" > -->
-<!-- 	<input type ="hidden" name ="id" id="id" > -->
-<!-- 	<input type ="hidden" name ="nickname" id="nickname" > -->
-<!-- 	<input type ="hidden" name ="age" id="age" > -->
-<!-- 	<input type ="hidden" name ="gender" id="gender" > -->
-<!-- 	<input type ="hidden" name ="birthday" id="birthday" > -->
-<!-- 	<input type ="hidden" name ="profile_image" id="profile_image" > -->
-<!-- </form> -->
 
-<!--     var id = naver_id_login.getProfileData('id'); -->
-<!--     var nickname = naver_id_login.getProfileData('nickname'); -->
-<!--     var age= naver_id_login.getProfileData('age'); -->
-<!--     var gender= naver_id_login.getProfileData('gender'); -->
-<!--     var birthday= naver_id_login.getProfileData('birthday'); -->
-<!--     var profile_image= naver_id_login.getProfileData('profile_image'); -->
-<!--     	$('#id').val(accessToken); -->
-<!-- 	$('#nickname').val(nickname); -->
-<!-- 	$('#age').val(age); -->
-<!-- 	$('#gender').val(gender); -->
-<!-- 	$('#birthday').val(birthday); -->
-<!-- 	$('#profile_image').val(profile_image); -->
 
 <%-- javascript에서 c태그 씀녀 에러난다 주석이라도 .. <c: if test exsist memberout/> --%>
 	
@@ -158,5 +136,28 @@
 </script>
 네아로 콜백 사이트
 <button type ="button" class = "backBtn">뒤로가기</button>
+<!-- <!-- 2019-07-10backup --> 
+<!-- <form id="naverProfileForm"  > -->
+<!-- 	<input type ="hidden" name ="email" id="email" > -->
+<!-- 	<input type ="hidden" name ="accessToken" id="accessToken" > -->
+<!-- 	<input type ="hidden" name ="id" id="id" > -->
+<!-- 	<input type ="hidden" name ="nickname" id="nickname" > -->
+<!-- 	<input type ="hidden" name ="age" id="age" > -->
+<!-- 	<input type ="hidden" name ="gender" id="gender" > -->
+<!-- 	<input type ="hidden" name ="birthday" id="birthday" > -->
+<!-- 	<input type ="hidden" name ="profile_image" id="profile_image" > -->
+<!-- </form> -->
 
+<!--     var id = naver_id_login.getProfileData('id'); -->
+<!--     var nickname = naver_id_login.getProfileData('nickname'); -->
+<!--     var age= naver_id_login.getProfileData('age'); -->
+<!--     var gender= naver_id_login.getProfileData('gender'); -->
+<!--     var birthday= naver_id_login.getProfileData('birthday'); -->
+<!--     var profile_image= naver_id_login.getProfileData('profile_image'); -->
+<!--     	$('#id').val(accessToken); -->
+<!-- 	$('#nickname').val(nickname); -->
+<!-- 	$('#age').val(age); -->
+<!-- 	$('#gender').val(gender); -->
+<!-- 	$('#birthday').val(birthday); -->
+<!-- 	$('#profile_image').val(profile_image); -->
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_bottom.jsp" %>

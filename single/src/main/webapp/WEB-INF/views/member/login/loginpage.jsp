@@ -3,6 +3,9 @@
 
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 <%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
+
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
 <!-- 네아로 설정값-->
 <!-- 로컬용 -->
 <c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
@@ -45,22 +48,26 @@
 			data: formdata,
 			dataType : "json", //서버에서 반환되는 형식
 			success :function(data){
+				
+				console.log('datareceive :'+ data.msg);
 				if(data.msg == '1'){
 					console.log('로그인에 성공하였습니다.');
-					console.log('-----loginpage');
-					console.log(data);
+					console.log('datareceive :'+ data);
 					console.log('datareceive :'+ data.msg);
-					console.log(document.referrer);
-//	 				location.href= "${root}/index.jsp"
-//	 				location.reload();
-					history.back();
-//	 				history.go();
-//	 				history.forward();
+// 					location.reload();
+		 				history.back();
+//		 				history.go();
+//		 				history.forward();
 				}
-				if(data.msg == '0'){
-					showAlertModal('로그인 실패', '아이디와 비밀번호를 확인해주세요.')
+				else if(data.msg == '11'){
+					showAlertModal('로그인 실패', '존재하지 않는 아이디입니다.')
 				}
-				
+				else if(data.msg == '12'){
+					showAlertModal('로그인 실패', '비밀번호가 틀렸습니다.')
+				}
+				else if(data.msg == '13'){
+					showAlertModal('로그인 실패', '탈퇴한 회원입니다.')
+				}	
 
 			},error: function (){
 				console.log('error')
