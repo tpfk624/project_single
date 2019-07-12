@@ -149,6 +149,22 @@ public class BoardController {
 	public String list(@RequestParam Map<String, String> parameter, 
 			Model model){
 		
+		List<BoardDto> boardDtoL = new ArrayList<BoardDto>();
+		
+		//이달의 자취왕
+		List<UserDto> userList = boardService.rankingUser();
+		
+		Map<String, List<BoardDto>> map = new HashMap<String, List<BoardDto>>();
+		
+		for (int i = 0; i < userList.size(); i++) {
+			String userId = userList.get(i).getUserId();
+			boardDtoL = boardService.rankingboard(userId);
+			map.put(userId, boardDtoL);
+		}
+
+		model.addAttribute("userList", userList);
+		model.addAttribute("map", map);
+		
 		int boardListNum = Integer.parseInt(parameter.get("boardListNum")); 
 		
 		String path = "";
