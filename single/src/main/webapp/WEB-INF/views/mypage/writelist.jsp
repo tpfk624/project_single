@@ -26,9 +26,8 @@ img {
 		});
 		
 		// 글 상세보기.
-		$(document).on("click",".boardDetail", function () {
-			var boardNum = $(this).find(".boardNum").val();
-			
+		$(document).on("click",".cardWrite", function () {
+			var boardNum = $(this).attr("data-num");
 			if (boardNum == null || boardNum == "" || boardNum == 0) {
 				alert("오류로 인해 접근이 불가능 합니다.");
 			} else {
