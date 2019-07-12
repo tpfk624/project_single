@@ -2,9 +2,13 @@ package com.kitri.single.group.contorller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,12 +36,18 @@ public class CalendarController {
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String calendarCreate(@SessionAttribute("userInfo") UserDto userInfo
-			, CalendarDto calendarDto
-			, @RequestParam(name = "type") String type) {
+	public String calendarCreate(CalendarDto calendarDto
+			, @RequestParam(name = "type") String type
+			, HttpSession session) {
 		
-		//System.out.println("POST : " + calendarDto);
 		String json = "";
+		if(session.getAttribute("userInfo") == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
+		}
+		
 		if("create".equals(type)) {
 			json = groupService.createCalendar(calendarDto);
 		}else if("modify".equals(type)) {
@@ -50,10 +60,16 @@ public class CalendarController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public String deleteCreate(@SessionAttribute("userInfo") UserDto userInfo
+	public String deleteCreate(HttpSession session
 			, @RequestBody CalendarDto calendarDtol) {
 		
-		//System.out.println("DELETE : " + calendarDtol);
+		if(session.getAttribute("userInfo") == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
+		}
+
 		String json = groupService.deleteCalendar(calendarDtol);
 		logger.info(json.toString());
 		
@@ -61,11 +77,18 @@ public class CalendarController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String getCalendar(@SessionAttribute("userInfo") UserDto userInfo
+	public String getCalendar(HttpSession session
 			, @RequestParam Map<String, String> parameter) {
 		
-		//System.out.println(parameter);
+		if(session.getAttribute("userInfo") == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
+		}
+		
 		String json = "";
+		
 		if(parameter != null) {
 			String tyep = parameter.get("type");
 			
@@ -79,6 +102,4 @@ public class CalendarController {
 		//System.out.println(json);
 		return json;
 	}
-	
-	
 }

@@ -18,6 +18,9 @@
 .search{
 	margin-top: 1.5rem;
 }
+.groupcard{
+	cursor: pointer;
+}
 
 .groupcard .card-img-top{
 	min-height: 15rem;

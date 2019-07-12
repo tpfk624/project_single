@@ -4,10 +4,10 @@
 <%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
 <%@ include file="/WEB-INF/views/commons/alert_success.jsp"%>
 <link rel="stylesheet" href="${root}/resources/css/group/group.css">
+<script src="${root}/resources/js/group/group.js"></script>
 <script type="text/javascript">
 $(function() {
 	defaultSetting("");
-	
 	$(".dropdown").on("hidden.bs.dropdown", function(){
 		var groupCategoryNum = $("#groupCreateForm input[name=groupCategoryNum]").val();
 		if($("#ex_file")[0].files == null || $("#ex_file")[0].files.value == null ||  $("#ex_file")[0].files.value == "" ){
@@ -41,21 +41,18 @@ $(function() {
 		}
 		makeTagList();
 		
-		$.ajax({
-			url : "${root}/group/create"
-			, method : "post"
-			, processData : false
-			, contentType : false
-			, data : new FormData($("#groupCreateForm")[0])
-			, dataType : "json"
-			, success : function(result) {
-				console.log(result);
-				showSuccessAlertModal("모임 만들기", "성공적으로 모임이 만들어졌습니다");
-				$("#alertSuccess").on("hidden.bs.modal", function() {
-					$(location).attr("href", "${root}/group/" + result.groupNum);
-				});
-			}
-		});	
+		var url = "${root}/group/create";
+		var data = new FormData($("#groupCreateForm")[0]);
+		var success = function(result) {
+			jsonLoginCheck(result.resultCode);
+			showSuccessAlertModal("모임 만들기", "성공적으로 모임이 만들어졌습니다");
+			$("#alertSuccess").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+				$(location).attr("href", "${root}/group/" + result.groupNum);
+			});
+		}
+		
+		ajaxFunc(data, url, "post", success);
+		
 	});
 })
 </script>

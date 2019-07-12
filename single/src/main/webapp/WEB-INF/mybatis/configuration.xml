@@ -33,6 +33,8 @@
 		<typeAlias alias="groupMemberDto" type="com.kitri.single.group.model.GroupMemberDto"/>
 		<typeAlias alias="calendarDto" type="com.kitri.single.group.model.CalendarDto"/>
 		
+		<typeAlias alias="chatDto" type="com.kitri.single.group.model.ChatDto"/>
+		
 	</typeAliases>
 	
 </configuration>

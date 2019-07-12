@@ -51,7 +51,7 @@
 			</if>
 	        order by g.group_num
 	        ) ordergroup
-	    where rownum &lt; #{endRow}
+	    where rownum &lt;= #{endRow}
 	    ) rowgroup
 	where rowgroup.rn > #{startRow}
 	</select>
@@ -298,8 +298,10 @@
 		, group_joindate = sysdate
 		, group_requestdate = null
 		</if>
-	where group_num = upper(#{groupNum})
-	and user_id = #{userId}
+	where user_id = #{userId}
+	<if test="groupNum != 0">
+	and group_num = #{groupNum}
+	</if>
 	</update>
 	
 	<delete id="deleteGroupMember" parameterType="groupMemberDto">
