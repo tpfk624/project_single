@@ -21,8 +21,12 @@ $(function() {
 			url : '${root}/board/answerwritepage',
 			type : 'GET',
 			success : function(response) {
-				$(".answer").html(response.trim());
-				$(".answer").show();
+				if(response.trim() == "99"){
+					alert("로그인을 해주세요");
+				} else {
+					$(".answer").html(response.trim());
+					$(".answer").show();
+				}
 			}
 		});
 	});
@@ -75,8 +79,11 @@ $(function() {
 				if(response.resultCode == 1){
 					alert("삭제 성공");
 					selectanswer(boardNum);
-				} else {
+				} else if(response.resultCode == 0){
 					alert("삭제가 실패하였습니다. 다시 시도해주세요.");
+				} else {
+					alert("다시 로그인을 해주세요.");
+					location.reload();
 				}
 			}
 		});

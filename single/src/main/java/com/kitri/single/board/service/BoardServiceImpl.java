@@ -17,6 +17,7 @@ import com.kitri.single.board.model.BoardPageDto;
 import com.kitri.single.common.dao.CommonDao;
 import com.kitri.single.hashtag.dao.HashtagDao;
 import com.kitri.single.hashtag.model.HashtagDto;
+import com.kitri.single.user.model.UserDto;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -129,13 +130,35 @@ public class BoardServiceImpl implements BoardService {
 	
 	
 	// 메인 이주의 추천순 ----------------------------------------------------------------
-	public List<BoardDto> weekList() {
+	public List<BoardDto> monthList() {
 		
-		List<BoardDto> boardDtoList = sqlSession.getMapper(BoardDao.class).weekList();
+		List<BoardDto> boardDtoList = sqlSession.getMapper(BoardDao.class).monthList();
 		
 		return boardDtoList;
 	}
+
 	
+	
+	@Override
+	public List<UserDto> rankingUser() {
+
+		List<UserDto> rankignuser = sqlSession.getMapper(BoardDao.class).rankingUsers();
+
+		return rankignuser;
+	}
+
+	
+	
+	// 랭킹 유저 3명의 글 리스트 ----------------------------------------------------------------
+	@Override
+	public List<BoardDto> rankingboard(String userId) {
+
+		List<BoardDto> rankingboards = sqlSession.getMapper(BoardDao.class).rankingBoards(userId);
+		
+		return rankingboards;
+	}
+
+
 	
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -28,10 +29,11 @@ import com.kitri.single.board.service.BoardService;
 import com.kitri.single.board.service.ReplyService;
 import com.kitri.single.common.service.CommonService;
 import com.kitri.single.user.model.UserDto;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 
 @Controller
 @RequestMapping("/board")
-@SessionAttributes("userInfo") // @ModelAttribute("userInfo") UserDto userDto 빼올때 session것을 가져오라는 뜻.
+@SessionAttributes("userInfo")
 public class BoardController {
 	
 	//로그
@@ -48,14 +50,40 @@ public class BoardController {
 	@Autowired
 	private CommonService commonService;
 
+	
+	// 로그인 페이지로 가라.
+	public String loginCheck(HttpSession session, String path) {
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		System.out.println(userDto);
+		if (userDto == null) {
+			path = "board/arror/gologin";
+		}
+		return path;
+	}
+	// 싱글 메인
 	@RequestMapping("singlemain")
 	public String singleMain(Model model){
 		//select를 3번해와야뎀.
 		
+		List<BoardDto> boardDtoL = new ArrayList<BoardDto>();
+		
 		//이달의 자취왕
+		List<UserDto> userList = boardService.rankingUser();
+		
+		Map<String, List<BoardDto>> map = new HashMap<String, List<BoardDto>>();
+		
+		for (int i = 0; i < userList.size(); i++) {
+			String userId = userList.get(i).getUserId();
+			boardDtoL = boardService.rankingboard(userId);
+			map.put(userId, boardDtoL);
+		}
+
+		model.addAttribute("userList", userList);
+		model.addAttribute("map", map);
+		
 		
 		//이주의 추천순
-		List<BoardDto> boardDtoList = boardService.weekList();
+		List<BoardDto> boardDtoList = boardService.monthList();
 		model.addAttribute("weekList", boardDtoList);
 		
 		String path = "board/singlemain";
@@ -64,46 +92,57 @@ public class BoardController {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 단순 글쓰기 ajax
 	@RequestMapping(value="/answerwritepage")
-	public String answerok(){
-		return "board/write/answerwrite";
+	public String answerok(HttpSession session){
+		
+		String path = "board/write/answerwrite";
+		
+		path = loginCheck(session, path);
+		
+		return path;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 자취생활 페이지로 이동
 	@RequestMapping(value="/singlelifeboard")
-	public void singlelifeboard(){
+	public String singlelifeboard(Model model){
+		List<BoardDto> boardDtoL = new ArrayList<BoardDto>();
+		
+		//이달의 자취왕
+		List<UserDto> userList = boardService.rankingUser();
+		
+		Map<String, List<BoardDto>> map = new HashMap<String, List<BoardDto>>();
+		
+		for (int i = 0; i < userList.size(); i++) {
+			String userId = userList.get(i).getUserId();
+			boardDtoL = boardService.rankingboard(userId);
+			map.put(userId, boardDtoL);
+		}
+
+		model.addAttribute("userList", userList);
+		model.addAttribute("map", map);
+		
+		return "board/singlelifeboard";
 	}
 	// 요리 레시피 페이지로 이동
 	@RequestMapping(value="/singlecookboard")
-	public void singlecookboard(){
+	public String singlecookboard(Model model){
+		List<BoardDto> boardDtoL = new ArrayList<BoardDto>();
+		
+		//이달의 자취왕
+		List<UserDto> userList = boardService.rankingUser();
+		
+		Map<String, List<BoardDto>> map = new HashMap<String, List<BoardDto>>();
+		
+		for (int i = 0; i < userList.size(); i++) {
+			String userId = userList.get(i).getUserId();
+			boardDtoL = boardService.rankingboard(userId);
+			map.put(userId, boardDtoL);
+		}
+
+		model.addAttribute("userList", userList);
+		model.addAttribute("map", map);
+		
+		return "board/singlecookboard";
 	}
 	// 글 작성후 자취 or 요리 페이지로 이동
 	@RequestMapping(value="/list")
@@ -134,10 +173,9 @@ public class BoardController {
 	
 	// write 페이지 이동
 	@RequestMapping(value="/write",method = RequestMethod.GET)
-	public String write(@RequestParam("boardListNum") int boardListNum, Model model
-			, @ModelAttribute("userInfo") UserDto userDto){
+	public String write(@ModelAttribute("userInfo") UserDto userInfo, 
+			@RequestParam("boardListNum") int boardListNum, Model model){
 
-			
 		BoardPageDto bp = new BoardPageDto();
 		bp.setBoardListNum(boardListNum);
 		
@@ -145,7 +183,6 @@ public class BoardController {
 		
 		String path = "board/write";
 
-			
 		return path;
 	}
 	
@@ -155,16 +192,12 @@ public class BoardController {
 	@RequestMapping(value="/write",method = RequestMethod.POST)
 	public String write(@RequestParam("tags") String tags,
 			@RequestParam Map<String, String> parameter,
-			Model model, @ModelAttribute("userInfo") UserDto userDto){
+			Model model, HttpSession session){
 		
 		String path = "";
 		
-		// 오라클이랑 인덱스에 인클루드한것중 유저인포 넣어둔것 있음. 당연히 null아님? 근데도 들어가짐.
-		// 혹시 new도 생성이기는 하니깐?
-		//UserDto userdto = new UserDto();
-		
-		
 		BoardDto boardDto = new BoardDto();
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
 		
 		if (userDto != null) {
 			// 2번 적용됨?? - 오라클에 있는 유저랑 인클루드해서 넣어둔 유저랑 겹처서 그런가?
@@ -204,6 +237,8 @@ public class BoardController {
 				path = "board/write/writefail";
 			}
 			
+		}else {
+			path = "board/write/writefail";
 		}
 		
 		model.addAttribute("parameter",parameter);
@@ -227,7 +262,7 @@ public class BoardController {
 		
 		// if문으로 로그인 했는지 안했는지 체크하기
 		BoardDto boardDto = boardService.viewArticle(boardNum);
-		System.out.println(boardDto);
+		//System.out.println(boardDto);
 		
 		model.addAttribute("article", boardDto);
 		
@@ -301,9 +336,10 @@ public class BoardController {
 	// 답변 쓰기.
 	@RequestMapping("/answerwrite")
 	public @ResponseBody String answerwrite(@RequestParam Map<String, Object> params
-			, Model model, @ModelAttribute("userInfo") UserDto userDto) {
+			, Model model, HttpSession session) {
 		
 		ReplyDto replyDto = new ReplyDto();
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
 		
 		String userId = userDto.getUserId();
 		String userNickname = userDto.getUserNickname();
@@ -337,18 +373,23 @@ public class BoardController {
 	// 답변 삭제
 	@RequestMapping(value ="/delete")//, method = RequestMethod.DELETE
 	public @ResponseBody String answerDelete(@RequestParam("replyNum") int replyNum
-			, Model model, @ModelAttribute("userInfo") UserDto userDto) {
+			, Model model, HttpSession session) {
 		
-		
-		int seq = replyService.answerDelete(replyNum);
-		
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
 		JSONObject jsonObject = new JSONObject();
 		
-		if (seq == 0) {
-			jsonObject.put("resultCode", 0);
-		}else {
-			jsonObject.put("resultCode", 1);
+		if (userDto != null) {
+			int seq = replyService.answerDelete(replyNum);
+			
+			if (seq == 0) {
+				jsonObject.put("resultCode", 0);
+			}else {
+				jsonObject.put("resultCode", 1);
+			}
+		} else {
+			jsonObject.put("resultCode", 2);
 		}
+		
 		
 		return jsonObject.toString();
 		
@@ -395,7 +436,6 @@ public class BoardController {
 		
 		return jsonObject.toString();
 	}
-	
 	
 	
 	

@@ -32,10 +32,10 @@ $(function() {
   $("#writeBtn").click(function () {
 	  console.log("클릭");
 		if($("#boardSubject").val() == ""){ // 정규표현식 사용하기.
-			alert("제목 입력!!!");
+			alert("제목 입력!");
 			return;
-		} else if ($("#boardContent").val == "") {
-			alert("내용 입력!!!");
+		} else if ($("#boardContent").val() == "") {    
+			alert("내용 입력!"); 
 			return;
 		} else {
 			$("#writeForm").attr("action","${root}/board/write").submit();
@@ -79,7 +79,6 @@ $(function() {
 			
 			
 			<div class="form-group">
-				<label for="content" class="col-sm-2 control-label"><p3>내용입력</p3></label>
 				
 				<!-- 제목 -->
 				<div class="input-group mb-3">
@@ -88,6 +87,8 @@ $(function() {
 					</div>
 					<input type="text" class="form-control" id=boardSubject name="boardSubject">
 				</div>
+
+				<label for="content" class="col-sm-2 control-label"><p3>내용입력</p3></label>
 				
 				<!-- 내용 -->
 				<div class="col-sm-10">
