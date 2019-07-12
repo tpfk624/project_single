@@ -24,6 +24,19 @@ img {
 			var sel = $(this).val();
 			getMyList(sel);
 		});
+		
+		// 글 상세보기.
+		$(document).on("click",".boardDetail", function () {
+			var boardNum = $(this).find(".boardNum").val();
+			
+			if (boardNum == null || boardNum == "" || boardNum == 0) {
+				alert("오류로 인해 접근이 불가능 합니다.");
+			} else {
+				location.href="${root}/board/view?boardNum=" + boardNum;
+			}
+			
+		});
+		
 	});
 
 	function getMyList(sel) {

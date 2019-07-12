@@ -4,13 +4,21 @@
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 <%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
 <!-- 네아로 설정값-->
-<!-- <c:set var= "callbackUrl" value="http://localhost/single/member/callback.jsp"/> -->
-<!-- <c:set var="serviceUrl" value= "http://localhost/single"/> -->
-<%-- <c:set var = "callbackUrl" value = "http://${url}/single/member/callback.jsp"/> --%>
-<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
-<%-- <c:set var = "serviceUrl" value = "http://${url}/single"/> --%>
-<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
+<!-- 로컬용 -->
+<%-- <c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/> --%>
+<%-- <c:set var = "serviceUrl" value = "https://localhost:8443/single"/> --%>
+<!-- ip설정용 -->
+<c:set var = "callbackUrl" value = "https://192.168.14.22:8443/single/member/callback.jsp"/>
+<c:set var = "serviceUrl" value = "https://192.168.14.22:8443/single"/>
 <c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
+
+
+<c:if test="${sessionScope.userInfo != null }">
+	<script>
+// 		location.href = "/single/home";
+		history.back();
+	</script>
+</c:if>    
 
 <script type="text/javascript">
   $(document).ready(function(){

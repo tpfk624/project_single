@@ -25,7 +25,9 @@ function ajaxFunc(data, url, method, successFunc) {
 		, dataType : "json"
 		, data : data
 		, success : function(result) {
-			jsonLoginCheck(result.resultCode);
+			if(jsonLoginCheck(result.resultCode) == 0){
+				return false;
+			}
 			successFunc(result);
 		}
 	});	
@@ -37,7 +39,9 @@ function ajaxPage(data, url, successFunc) {
 		, data : data
 		, method : "get"
 		, success : function(result) {
-			htmlLoginCheck(result.trim());
+			if(htmlLoginCheck(result.trim()) == 0){
+				return false;
+			};
 			successFunc(result);
 		}
 		, async: true
@@ -48,10 +52,11 @@ function htmlLoginCheck(resultCode){
 		showAlertModal("로그인 문제", "로그인이 필요합니다.");
 		$("#alert").off("hidden.bs.modal").on("hidden.bs.modal", function() {
 			location.href = "/single/member/login";
-			return false;
+			return 0;
 		})
-		return false;
+		return 0;
 	}
+	return 1;
 }
 
 
@@ -60,10 +65,11 @@ function jsonLoginCheck(resultCode) {
 		showAlertModal("로그인 문제", "로그인이 필요합니다.");
 		$("#alert").off("hidden.bs.modal").on("hidden.bs.modal", function() {
 			location.href = "/single/member/login";
-			return false;
+			return 0;
 		})
-		return false;
+		return 0;
 	}
+	return 1;
 }
 
 
@@ -194,4 +200,30 @@ function groupMemberUpdate(data, url){
 	}
 	
 	ajaxFunc(data, url, "get", success);
+}
+
+function progressBarMove(){
+	var width = 1;
+	var interval = setInterval(frame, 10);
+	
+	function frame() {
+		var progress = $(".ing");
+		var progressBar = $(".progressBar");
+		if(progress.length == 0){
+			clearInterval(interval);
+		}
+		
+		$.each(progress, function(index, item) {
+			var progressBar = $(item).children(".progress-bar");
+			var width = parseInt(progressBar.attr("data-prog"));
+			var maxWidth = parseInt($(item).attr("data-prog"));
+			//console.log("width : " + width + "//" + "maxWidth : " + maxWidth);
+			if(width >= maxWidth){
+				$(item).removeClass("ing");
+			}else{
+				progressBar.attr("data-prog" , width + 1);
+				progressBar.css("width", width + 1 + "%");
+			}
+		});
+	}
 }

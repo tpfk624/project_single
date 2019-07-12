@@ -17,6 +17,33 @@ $(function() {
 	var isMyGroup = "${parameter.isMyGroup}";
 	var groupCategoryNum = "${parameter.groupCategoryNum}";
 	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
+
+	//2019-07-12 형태희 추천받기 버튼
+	$(".recomandBtn").on("click", function () {
+		$.ajax({
+			url : "${root}/group2/grouprecomandlist"
+				, method : "get"
+				, data : {
+					"page" : page
+					, "key" : key
+					, "word" : word
+					, "isMyGroup" : isMyGroup
+					, "groupCategoryNum" : groupCategoryNum
+				}
+				, success : function(result) {
+					if(isMyGroup == 'yes'){
+// 						console.log(result);
+						$(".group-list").html(result);
+						$(".groupcard").click(groupenter);
+					}else{
+// 						console.log(result);
+						$(".group-list").html(result);
+						$(".groupcard").click(groupcardClick);
+					}
+				}
+		});
+	});
+	
 	
 	//페이지 이동류 버튼
 	$(".pagebtn").on("click", function () {
@@ -51,30 +78,27 @@ function getGroupList(page, key, word, isMyGroup, groupCategoryNum){
 		groupCategoryNum = "";
 	}
 	
-	var url = "${root}/group/grouplist";
-	var data = {
-		"page" : page
-		, "key" : key
-		, "word" : word
-		, "isMyGroup" : isMyGroup
-		, "groupCategoryNum" : groupCategoryNum
-	};
-	var success = function(result) {
-		if(isMyGroup == 'yes'){
-			//console.log(result);
-			$(".group-list").html(result);
-			$(".groupcard").click(groupenter);
-		}else{
-			//console.log(result);
-			$(".group-list").html(result);
-			$(".groupcard").click(groupcardClick);
-		}
-	}
 	$.ajax({
-		url : url
-		, data : data
+		url : "${root}/group/grouplist"
 		, method : "get"
-		, success : success
+		, data : {
+			"page" : page
+			, "key" : key
+			, "word" : word
+			, "isMyGroup" : isMyGroup
+			, "groupCategoryNum" : groupCategoryNum
+		}
+		, success : function(result) {
+			if(isMyGroup == 'yes'){
+				console.log(result);
+				$(".group-list").html(result);
+				$(".groupcard").click(groupenter);
+			}else{
+				console.log(result);
+				$(".group-list").html(result);
+				$(".groupcard").click(groupcardClick);
+			}
+		}
 	});
 }
 function groupenter(e){
@@ -84,24 +108,27 @@ function groupenter(e){
 
 function groupcardClick(){
 	var groupNum = $(this).attr("data-num");
-	var url = "${root}/group/groupdetail";
-	var data = {
-		"groupNum" : groupNum	
-	};
-	var success = function (result) {
-		groupDetailModalSetting(result);
-		$("#groupDetailModal").modal("show");
-	}
-	
-	ajaxFunc(data, url, "get", success);
+	$.ajax({
+		url : "${root}/group/groupdetail"
+		, method : "get"
+		, dataType : "json"
+		, data : {
+			"groupNum" : groupNum
+		}
+		, success : function(result) {
+			//console.log(result);
+			groupDetailModalSetting(result);
+			$("#groupDetailModal").modal("show");
+		}
+	});
 	
 } 
 
 </script>
 
-<%@ include file="groupdetailmodal.jsp"%>
-<%@ include file="groupheader.jsp"%>
-<%@ include file="groupsearch.jsp" %>
+<%-- <%@ include file="groupdetailmodal.jsp"%> --%>
+<%-- <%@ include file="groupheader.jsp"%> --%>
+<%-- <%@ include file="groupsearch.jsp" %> --%>
 
 <!-- 여기서부터 실제 데이터 영역 -->
 <section class="contents">
@@ -114,15 +141,18 @@ function groupcardClick(){
 					<button type="button" class="btn btn-success mygrouplist">내 모임 보기</button>
 				</div>
 				</c:if>
+				
 				<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
 					<button type="button" class="btn btn-primary pagebtn" data-page="create">모임 만들기</button>
 				</div>
-				<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
-					<button type="button" class="btn btn-info pagebtn" data-page="grouprecommend">추천 받기</button>
-				</div>
+				
+				<c:if test="${!empty sessionScope.userInfo}">
+					<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
+						<button type="button"  class="btn btn-info recomandBtn">추천 받기</button>
+					</div>
+				</c:if>
 				<div class="dropdown col-lg-2 col-md-2 col-sm-3 my-4 category">
-					<button type="button" class="btn btn-primary dropdown-toggle"
-						data-toggle="dropdown">카테고리</button>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">카테고리</button>
 					<div class="dropdown-menu">
 						<a class="dropdown-item">스터디</a> 
 						<a class="dropdown-item">취미</a> 

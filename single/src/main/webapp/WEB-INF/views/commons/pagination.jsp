@@ -18,6 +18,7 @@
   padding: 8px 16px;
   text-decoration: none;
   transition: background-color .3s;
+  cursor: pointer;
 }
 
 /* Style the active/current link */
@@ -29,22 +30,39 @@
 /* Add a grey background color on mouse-over */
 .pagination a:hover:not(.active) {background-color: #ddd;}
 </style>
-
 <section class="row page">
 	<div class="pagination">
-		  <a href="#">&laquo;</a>
-		  <a class="active" href="#">1</a>
-		  <a href="#">2</a>
-		  <a href="#">3</a>
-		  <a href="#">4</a>
-		  <a href="#">5</a>
-		  <a href="#">6</a>
-		  <a href="#">&raquo;</a>
+		  <c:if test="${pagination.nowFirst}">
+		  <a>&laquo;</a>
+		  </c:if>
+		  <c:if test="${!pagination.nowFirst}">
+		  <a class="page-pre">&laquo;</a>
+		  </c:if>
+		  <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" step="1" varStatus="stat">
+		  <c:if test="${pagination.currentPage == stat.current}">
+		  <a class="page-move active">${stat.current}</a>
+		  </c:if>
+		  <c:if test="${pagination.currentPage != stat.current}">
+		  <a class="page-move">${stat.current}</a>
+		  </c:if>
+		  </c:forEach>
+		  <c:if test="${pagination.nowEnd}">
+		  <a>&raquo;</a>
+		  </c:if>
+		  <c:if test="${!pagination.nowEnd}">
+		  <a class="page-next">&raquo;</a>
+		  </c:if>
 	</div>
 </section>
 <script>
-$(".page>.pagination>a").click(function() {
-	$(this).addClass("active");
-	$(this).siblings().removeClass("active");
-});
+function clickFunctionSetting(func){
+	$(".page>.pagination>.page-move").click(function() {
+		func($(this).text());
+	});
+	
+	/* $(".page>.pagination>.page-pre").click(function () {
+		var 
+	}); */
+}
+
 </script>

@@ -3,11 +3,11 @@
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
 
-<c:if test="${userInfo != null }">
-<script>
-	location.href = "/single/home";
-// 	history.back();
-</script>
+<c:if test="${sessionScope.userInfo != null }">
+	<script>
+		location.href = "/single/home";
+	// 	history.back();
+	</script>
 </c:if>    
 
 

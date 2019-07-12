@@ -9,14 +9,16 @@
 <c:set var="parameter" value="${requestScope.parameter}"></c:set>
 <script>
 $(function() {
-	//$(".groupcard").on("click", groupcardClick);
+// 	$(".groupcard").on("click", groupcardClick);
+	$(".")
 	
 	var page = "${parameter.page}";
 	var key = "${parameter.key}";
 	var word = "${parameter.word}";
 	var isMyGroup = "${parameter.isMyGroup}";
 	var groupCategoryNum = "${parameter.groupCategoryNum}";
-	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
+	
+// 	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
 	
 	//페이지 이동류 버튼
 	$(".pagebtn").on("click", function () {

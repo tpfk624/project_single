@@ -19,9 +19,31 @@
 	values(reply_num_seq.nextval, #{boardNum}, #{userId}, #{userNickname}, #{replyContent}, sysdate)
 	</insert>
 
-	<insert id="answerDelete" parameterType="int" >
+	<insert id="answerDelete" parameterType="int">
 	delete single_reply 
 	where reply_num = #{replyNum}
 	</insert>
 	
+	<select id="likeS" parameterType="map" resultType="int">
+	select count(*)
+	from single_like
+	where board_num = #{boardNum}
+	and user_id = #{userId}	
+	</select>
+	
+	<update id="likeU" parameterType="int">
+	update single_board 
+	set board_like = board_like + 1 
+	where board_num = #{boardNum}
+	</update>
+
+	<insert id="likeI" parameterType="map">
+	insert into single_like(board_num, user_id) 
+	values(#{boardNum}, #{userId})
+	</insert>
+	
+	
+	
 </mapper>
+
+

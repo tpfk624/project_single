@@ -21,6 +21,7 @@
 		</div>
 		<div class="cardWriteBottom">
 			<h8 class="card-date">${board.boardCreatedate}</h8>
+			
 <%-- 			<img id="like-img" src="${root}/resources/img/user/heart.png" alt="좋아요" width="20" height="20" align="right"> --%>
 <%-- 			<h8 class="card-date" id="card-like">${board.boardLike}</h8> --%>
 			<%-- <img src="${root}/resources/img/user/chat.png" alt="좋아요" width="20" height="20" align="right"> --%>
