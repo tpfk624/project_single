@@ -5,7 +5,8 @@ import java.util.Map;
 
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.board.model.BoardPageDto;
-import com.kitri.single.hashtag.dao.HashtagDao;;
+import com.kitri.single.hashtag.dao.HashtagDao;
+import com.kitri.single.user.model.UserDto;;
 
 
 public interface BoardDao extends HashtagDao{
@@ -23,10 +24,16 @@ public interface BoardDao extends HashtagDao{
 	List<BoardDto> findByRows(BoardPageDto boardPageDto);
 	
 	// 메인 이주의 추천순
-	List<BoardDto> weekList();
+	List<BoardDto> monthList();
 	
 	// 검색
 	List<BoardDto> search(String search);
+	
+	// 랭킹 유저 3명 검색
+	List<UserDto> rankingUsers();
+	
+	// 랭킹 유저 3명의 글 리스트
+	List<BoardDto> rankingBoards(String userId);
 	
 	
 }

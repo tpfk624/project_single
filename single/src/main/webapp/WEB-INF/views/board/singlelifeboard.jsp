@@ -108,49 +108,30 @@ function selectPage(page, key, word, boardListNum ) {
       
 	<!-- 이달의 자취왕 -->
 	<div class="container" style="background-color: #007bff21;">
-	
+		<br>
 	    <h2 class="my-4" align="center">이달의 최고 자취왕</h2>
 		
 		<div class="container">
 			<div class="row" align="center">
-				<div class="col-lg-4">
-					<div class="container">
-						<h3>1등</h3>
-						<img src="${root}/resources/img/bimg/king.PNG" class="rounded-circle" alt="1등" width="100" height="100">
+				<c:forEach var="userdto" items="${userList}" varStatus="stat">
+					<div class="col-lg-4">
+						<div class="container">
+							<h3>${stat.count}등</h3>
+							<h4>${userdto.userNickname }</h4>
+							<img src="${userdto.userProfile}" class="rounded-circle" alt="1등" width="130" height="130">
+						</div>
+						<!-- 글 제목 좋아요 높은순으로 for문 돌리기 -->
+						<div>
+						<c:set var="userId" value="${userdto.userId}"></c:set>
+						<c:forEach var="board" items="${map[userId]}" varStatus="boardStat">
+							<div><a href="${root}/board/view?boardNum=${board.boardNum}">${boardStat.count}.&nbsp;${board.boardSubject}</a></div>
+						</c:forEach>
+						</div>
 					</div>
-					<!-- 글 제목 좋아요 높은순으로 for문 돌리기 -->
-					<div>
-						<div><a href="#">1.라면이 좋아요</a></div>
-						<div><a href="#">2.이게 좋아요가 1등이라니</a></div>
-						<div><a href="#">3.공부는 싫어요</a></div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="container">
-						<h3>2등</h3>
-						<img src="${root}/resources/img/bimg/king.PNG" class="rounded-circle" alt="2등" width="100" height="100">
-					</div>
-					<!-- 글 제목 좋아요 높은순으로 for문 돌리기 -->
-					<div>
-						<div><a href="#">1.라면이 좋아요</a></div>
-						<div><a href="#">2.안뇽하세요 에베베베베베베베</a></div>
-						<div><a href="#">3.공부는 싫어요</a></div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="container">
-						<h3>3등</h3>
-						<img src="${root}/resources/img/bimg/king.PNG" class="rounded-circle" alt="3등" width="100" height="100">
-					</div>
-					<!-- 글 제목 좋아요 높은순으로 for문 돌리기 -->
-					<div>
-						<div><a href="#">1.라면이 좋아요</a></div>
-						<div><a href="#">2.띠요오오오옹오오오오오옹띠</a></div>
-						<div><a href="#">3.공부는 싫어요</a></div>
-					</div>
-				</div>
-			</div><br>
+				</c:forEach>
+			</div>
 		</div>
+		<br><br> 
 	</div>
 	<br><br><br>	
 	
