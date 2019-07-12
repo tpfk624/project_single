@@ -89,7 +89,7 @@
 	        left outer join single_hprogress hp
 	            on hwrow.groupNum = hp.group_num
 	            and hwrow.homeworkNum = hp.homework_num
-	    where rn >= #{startRow} )
+	    where rn > #{startRow} )
 	group by 
 	    rn
 	    , homeworkNum

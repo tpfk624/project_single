@@ -32,10 +32,10 @@ public class HomeworkServiceImpl implements HomeworkService{
 		//logger.info(parameter.get("page").getClass().toString());
 		HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
 		int page = Integer.parseInt(parameter.get("page"));
-		int homeworkSize = SiteConstance.GROUP_HOMEWORK_SIZE;
+		int homeworkListSize = SiteConstance.GROUP_HOMEWORK_SIZE;
 				
-		int endRow = page * homeworkSize;
-		int startRow = endRow - homeworkSize;
+		int endRow = page * homeworkListSize;
+		int startRow = endRow - homeworkListSize;
 			
 		logger.info(parameter.toString());
 		
