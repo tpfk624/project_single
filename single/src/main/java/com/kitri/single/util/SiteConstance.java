@@ -13,4 +13,9 @@ public class SiteConstance {
 	
 	public static final String GROUP_DEFAULT_IMG_PATH = "/resources/img/group/";
 	public static final String CHAT_SERVER_IP = "wss://localhost:8443";
+	
+	//모임과제에서 한번에 불러오는 과제의 개수
+	public static final int GROUP_HOMEWORK_SIZE = 4;
+	//그룹 과제 페이지에서의 페이징그룹의 사이즈
+	public static final int GROUP_HOMEWORK_PAGE_SIZE = 5;
 }

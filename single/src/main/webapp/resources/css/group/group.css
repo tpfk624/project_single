@@ -120,7 +120,7 @@
 	
 }
 .groupsection{
-	border-top: 1px solid #e6e6e6;
+	border-top: 1px solid #9E9E9E;
 	padding-top: 3%;
 	overflow: hidden;
 	padding-bottom: 3%;
@@ -159,20 +159,19 @@
 .homework-status{
 	float: right;
 	font-weight: bold;
-	background-image: url("/single/resources/img/group/checked.png");
 	height: 5rem;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     text-align: center;
     font-size: 2rem;
+    padding-top: 1rem;
 }
 
 .homework-body{
 	float: left;
 	margin-left: 10px;
 	width: 80%;
-	height: 5rem;
 }
 
 /*진행률바*/
@@ -350,3 +349,6 @@
 #chat>.chat-toggle{
 }
 
+.btngroup>button{
+	margin-right: 0.5rem;
+}

@@ -34,7 +34,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kitri.single.group.model.CalendarDto;
 import com.kitri.single.group.model.GroupDto;
 import com.kitri.single.group.model.GroupMemberDto;
+import com.kitri.single.group.model.HomeworkDto;
 import com.kitri.single.group.service.GroupService;
+import com.kitri.single.group.service.HomeworkService;
 import com.kitri.single.user.model.UserDto;
 import com.kitri.single.util.SiteConstance;
 import com.kitri.single.util.Utill;
@@ -47,6 +49,9 @@ public class GroupController {
 	//서비스 부분
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private HomeworkService homeworkService;
 	
 	@Autowired
 	private ServletContext servletContext;
@@ -382,6 +387,21 @@ public class GroupController {
 		return json;
 	}
 	
+	//추천용 테스트 jsp
+	@RequestMapping(value = "/grouprecommend", method = RequestMethod.GET)
+	public String groupRecommend(HttpSession session) {
+		
+		String path = "group/grouprecommend";
+		
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			path = "group";
+		}
+		
+		return path;
+	}
+	
+	
 	//그룹 내 nav바 이동 관련
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/grouppage", method = RequestMethod.GET)
@@ -443,6 +463,16 @@ public class GroupController {
 		
 		model.addObject("groupNum", groupNum);
 		model.addObject("groupMember", groupMemberDto);
+		
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("groupNum", groupNum + "");
+		param.put("userId", userInfo.getUserId());
+		param.put("page", "1");
+		
+		//List<HomeworkDto> list = homeworkService.getHomeworkList(param);
+		//model.addObject("homeworkList", list);
+		//model.addObject("parameter", param);
+		
 		model.setViewName(path);
 		
 		return model;

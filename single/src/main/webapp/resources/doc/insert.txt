@@ -419,6 +419,57 @@ insert into single_hashtag
 (hashtag_num, hashtag_content, hashtag_type_num, group_num)
 values( hashtag_num_seq.nextval, '떡튀순', 2, 4 );
 
+-- 과제 1번 그룹에 넣어둠
+insert into single_homework
+(homework_num, group_num, homework_subject, homework_content, homework_startdate, homework_enddate, homework_statecode)
+values(
+    homework_num_seq.nextval
+    , 1
+    , '과제제목'
+    , '과제내용'
+    , to_date('20190705', 'yyyymmdd')
+    , to_date('20190707', 'yyyymmdd')
+    , 1
+);
+insert into single_homework
+(homework_num, group_num, homework_subject, homework_content, homework_startdate, homework_enddate, homework_statecode)
+values(
+    homework_num_seq.nextval
+    , 1
+    , '과제제목2'
+    , '과제내용2'
+    , to_date('20190706', 'yyyymmdd')
+    , to_date('20190708', 'yyyymmdd')
+    , 1
+);
+insert into single_homework
+(homework_num, group_num, homework_subject, homework_content, homework_startdate, homework_enddate, homework_statecode)
+values(
+    homework_num_seq.nextval
+    , 1
+    , '과제제목3'
+    , '과제내용3'
+    , to_date('20190707', 'yyyymmdd')
+    , to_date('20190710', 'yyyymmdd')
+    , 1
+);
+insert into single_homework
+(homework_num, group_num, homework_subject, homework_content, homework_startdate, homework_enddate, homework_statecode)
+values(
+    homework_num_seq.nextval
+    , 1
+    , '과제제목4'
+    , '과제내용4'
+    , to_date('20190709', 'yyyymmdd')
+    , to_date('20190712', 'yyyymmdd')
+    , 1
+);
+insert into single_hprogress(
+homework_num, user_id, group_num, hprogress_success)
+values(
+    4, 'calubang2@naver.com', 1, 'S'
+);
+
 commit;
 
 		

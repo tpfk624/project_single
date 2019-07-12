@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+     
+<mapper namespace="com.kitri.single.group.dao.HomeworkDao">
+	<insert id="insertHomework" parameterType="homeworkDto">
+	insert into single_homework(
+		homework_num
+		, group_num
+		, homework_subject
+		, homework_content
+		, homework_startdate
+		, homework_enddate
+		, homework_statecode
+	)values(
+		homework_num_seq.nextval
+		, #{groupNum}
+		, #{homeworkSubject}
+		, #{homeworkContent}
+		, to_date(#{homeworkStartdate}, 'yyyy-mm-dd')
+		, to_date(#{homeworkEnddate}, 'yyyy-mm-dd')
+		, 1
+	)
+	</insert>
+		
+	<select id="selectHomeworkList" parameterType="map" resultType="homeworkDto">
+	select 
+	    rn
+	    , homeworkNum
+	    , groupNum
+	    , homeworkSubject
+	    , homeworkContent
+	    , to_char(homeworkStartdate, 'yyyy/mm/dd') homeworkStartdate
+	    , to_char(homeworkEnddate, 'yyyy/mm/dd') homeworkEnddate
+	    , homeworkStatecode
+	    , round(sum(successcode) / memberCount * 100, 0) progressBar
+	    , case 
+	        when to_char(homeworkEnddate, 'yyyymmdd') >= to_char(sysdate, 'yyyymmdd')
+	            then '진행중'
+	        else '종료'
+	    end status
+	from (
+	    select 
+	        hwrow.*
+	        , sg.group_member_count memberCount
+	        , decode(hp.hprogress_success, 'S', 1, 0) successcode
+	    from (
+	        select 
+	            rownum rn
+	            , hw.*
+	        from (
+	            select *
+	            from (
+	                select 
+	                    homework_num homeworkNum
+	                    , group_num groupNum
+	                    , homework_subject homeworkSubject
+	                    , homework_content homeworkContent
+	                    , homework_startdate homeworkStartdate
+	                    , homework_enddate homeworkEnddate
+	                    , homework_statecode homeworkStatecode
+	                from single_homework 
+	                where homework_statecode = 1
+	                and group_num = #{groupNum}
+	                and to_char(homework_enddate, 'yyyymmdd') >= to_char(sysdate, 'yyyymmdd')
+	                order by homework_startdate, single_homework.homework_enddate)
+	            union all
+	            select *
+	            from (
+	                select 
+	                    homework_num homeworkNum
+	                    , group_num groupNum
+	                    , homework_subject homeworkSubject
+	                    , homework_content homeworkContent
+	                    ,  homework_startdate homeworkStartdate
+	                    ,  homework_enddate homeworkEnddate
+	                    , homework_statecode homeworkStatecode
+	                from single_homework 
+	                where homework_statecode = 1
+	                and group_num = #{groupNum}
+	                and to_char(homework_enddate, 'yyyymmdd') &lt; to_char(sysdate, 'yyyymmdd')
+	                order by single_homework.homework_startdate, single_homework.homework_enddate)
+	            ) hw
+	        where rownum &lt;= #{endRow}
+	        ) hwrow
+	        inner join single_group sg
+            	on hwrow.groupNum = sg.group_num 
+	        left outer join single_hprogress hp
+	            on hwrow.groupNum = hp.group_num
+	            and hwrow.homeworkNum = hp.homework_num
+	    where rn >= #{startRow} )
+	group by 
+	    rn
+	    , homeworkNum
+	    , groupNum
+	    , homeworkSubject
+	    , homeworkContent
+	    , homeworkStartdate
+	    , homeworkEnddate
+	    , homeworkStatecode
+	    , memberCount
+	order by rn
+	</select>
+	
+	<select id="selectListCount" parameterType="int" resultType="int">
+	select count(*)
+	from single_homework
+	where homework_statecode = '1'
+	and group_num = #{groupNum}
+	</select>
+	
+</mapper>
