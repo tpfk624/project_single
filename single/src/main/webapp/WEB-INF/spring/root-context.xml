@@ -30,6 +30,8 @@
 				<value>/WEB-INF/mybatis/mapper_sns.xml</value>
 				<value>/WEB-INF/mybatis/mapper_reply.xml</value>
 				<value>/WEB-INF/mybatis/mapper_hashtag.xml</value>
+				<value>/WEB-INF/mybatis/mapper_chat.xml</value>
+				<value>/WEB-INF/mybatis/mapper_homework.xml</value>
 			</list>
 		</property>
 	</bean>

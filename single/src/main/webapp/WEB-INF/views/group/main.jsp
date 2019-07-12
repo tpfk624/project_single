@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:if test="${empty sessionScope.userInfo}">99</c:if>
+<c:if test="${!empty sessionScope.userInfo}">
 <div class="groupmain" id="groupmain">	
 <!-- 모임 이름 뿌져지는 곳 -->
 <section class="groupsection groupheader">
@@ -40,3 +42,4 @@
 	</div>
 </section>
 </div>
+</c:if>

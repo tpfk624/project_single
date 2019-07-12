@@ -1,36 +1,68 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
+
 <c:set var="root" value="${pageContext.request.contextPath}" />
-<c:set var="redirectUrl" value= "${root}/navermember/callback"/>
+<!-- 네아로 설정값-->
+<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
+<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
+<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 
-
-<!doctype html>
-<html lang="ko">
-<head>
+<!-- 네아로 자바스크립트-->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-</head>
-<body>
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
 
-
-<form id="naverProfileForm"  >
+<form id="naverProfileForm">
 	<input type ="hidden" name ="email" id="email" >
 	<input type ="hidden" name ="accessToken" id="accessToken" >
-	<input type ="hidden" name ="id" id="id" >
-	<input type ="hidden" name ="nickname" id="nickname" >
-	<input type ="hidden" name ="age" id="age" >
-	<input type ="hidden" name ="gender" id="gender" >
-	<input type ="hidden" name ="birthday" id="birthday" >
-	<input type ="hidden" name ="profile_image" id="profile_image" >
+
+	<input type="hidden" name="userId" id="userId">
+	<input type="hidden" name="userName" id="userName">
+	<input type="hidden" name="userNickname" id="userNickname">
+	<input type="hidden" name="userGender" id="userGender">
+	<input type="hidden" name="userBirthday" id="userBirthday">
+	<input type="hidden" name="userProfile_image" id="userProfile_image">
+
+	<input type="hidden" name="snsId" id="snsId">
+	<input type="hidden" name="snsType"  id="snsType">
+<%--    <input type="hidden" name="snsemail" value="${userInfo.snsDto.snsEmail }"> 한페이지에서 두개의 값을 전달하면 배열로 전달된다. --%>
+	<input type="hidden" name="snsToken" id="snsToken">
+	<input type="hidden" name="snsConnectDate" id="snsConnectDate">
 </form>
+<!-- <!-- 2019-07-10backup --> 
+<!-- <form id="naverProfileForm"  > -->
+<!-- 	<input type ="hidden" name ="email" id="email" > -->
+<!-- 	<input type ="hidden" name ="accessToken" id="accessToken" > -->
+<!-- 	<input type ="hidden" name ="id" id="id" > -->
+<!-- 	<input type ="hidden" name ="nickname" id="nickname" > -->
+<!-- 	<input type ="hidden" name ="age" id="age" > -->
+<!-- 	<input type ="hidden" name ="gender" id="gender" > -->
+<!-- 	<input type ="hidden" name ="birthday" id="birthday" > -->
+<!-- 	<input type ="hidden" name ="profile_image" id="profile_image" > -->
+<!-- </form> -->
+
+<!--     var id = naver_id_login.getProfileData('id'); -->
+<!--     var nickname = naver_id_login.getProfileData('nickname'); -->
+<!--     var age= naver_id_login.getProfileData('age'); -->
+<!--     var gender= naver_id_login.getProfileData('gender'); -->
+<!--     var birthday= naver_id_login.getProfileData('birthday'); -->
+<!--     var profile_image= naver_id_login.getProfileData('profile_image'); -->
+<!--     	$('#id').val(accessToken); -->
+<!-- 	$('#nickname').val(nickname); -->
+<!-- 	$('#age').val(age); -->
+<!-- 	$('#gender').val(gender); -->
+<!-- 	$('#birthday').val(birthday); -->
+<!-- 	$('#profile_image').val(profile_image); -->
 
 
+	
 </body>
 <script type="text/javascript">
   var naver_id_login = new naver_id_login("${clientId}", "${callbackUrl}");
   // 접근 토큰 값 출력
   var accessToken =naver_id_login.oauthParams.access_token;
-  
+  console.log('accessToken'+ accessToken);
   // 네이버 사용자 프로필 조회
   naver_id_login.get_naver_userprofile("naverSignInCallback()");
   
@@ -40,28 +72,58 @@
    
     $('#email').val(email);
 	$('#accessToken').val(accessToken);
+	
 	console.log('email'+ email);
 	console.log('accessToken'+ accessToken);
-	$("#naverProfileForm").attr("method", "POST").attr("action", "${redirectUrl}").submit();
-
-//     var id = naver_id_login.getProfileData('id');
-//     var nickname = naver_id_login.getProfileData('nickname');
-//     var age= naver_id_login.getProfileData('age');
-//     var gender= naver_id_login.getProfileData('gender');
-//     var birthday= naver_id_login.getProfileData('birthday');
-//     var profile_image= naver_id_login.getProfileData('profile_image');
-    
+// 	2019-07-10backup
+// 	$("#naverProfileForm").attr("method", "POST").attr("action", "${root}/navermember/callback").submit();
+// 기존 코드 
 	
-// 	$('#id').val(accessToken);
-// 	$('#nickname').val(nickname);
-// 	$('#age').val(age);
-// 	$('#gender').val(gender);
-// 	$('#birthday').val(birthday);
-// 	$('#profile_image').val(profile_image);
+// 	$(document).ready(function(){
+		var formdata = $('#naverProfileForm').serialize(); //-> contentType:"application/x-www-form-urlencoded; charset=UTF-8", //default
+		console.log(formdata);
+		$.ajax({
+			method:"POST",
+			url: "${root}/navermember/callback",
+			data: formdata,
+			dataType : "json", //서버에서 반환되는 형식
+			success :function(data){
+				console.log(data);
+				if(data.msg =='register'){
+// 					console.log('페이지이동');
+// 					console.log(data);
+// 					console.log('=======');
+// 					console.log(data.userInfo.userId);
+					$('#userId').val(data.userInfo.userId);
+					$('#userName').val(data.userInfo.userName);
+					$('#userGender').val(data.userInfo.userGender);
+					$('#userBirthday').val(data.userInfo.userBirthday);
+					$('#userProfile_image').val(data.userInfo.userProfile_image);
+					
+					$('#snsId').val(data.userInfo.userId);
+					$('#snsType').val(data.userInfo.snsDto.snsType);
+					$('#snsToken').val(data.userInfo.snsDto.snsToken);
+					$('#snsConnectDate').val(data.userInfo.snsDto.snsConnectDate);
+					
+					//registerpage로 전달 되야함
+					$('#naverProfileForm').attr("method","post");
+					$('#naverProfileForm').attr("action","${root}/member/registersns").submit();
+					//회원가입폼으로 값 전달.
+				}else if (data.msg =='refresh'){
+					history.back();
+				}		
+			},beforeSend: function () {
+				
+			},error: function(erorrdata){
+				console.log(erorrdata);
+			}
+	  	});
+// 	});
 	
-	
-
   }
 </script>
-</html>
+
+
+<%@ include file = "/WEB-INF/views/commons/template/modern_business_bottom.jsp" %>
+
 

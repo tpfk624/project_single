@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="${root}/resources/css/group/kakaomap.css">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd79caa5868b0543c6672702825597f8&libraries=services,clusterer,drawing"></script>
 <script type="text/javascript" src="${root}/resources/js/group/kakaomap.js"></script>
+<!-- 데이트 피커 -->
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <style>
 /* 페이지에 유지할 부분*/
 </style>
@@ -93,7 +96,7 @@ $(function() {
 	
 	<div id="navbar" class="group-navbar">
 	  	<a class="group-navbar-item active grouppage" data-page="main">모임메인</a>
-	  	<a class="group-navbar-item">모임과제</a>
+	  	<a class="group-navbar-item grouppage" data-page="homework">모임과제</a>
 	  	<c:if test="${groupMember.groupMemberStatecode == 'L'}">
 	  	<a class="group-navbar-item grouppage" data-page="modify">모임설정변경</a>
 	  	<a class="group-navbar-item grouppage" data-page="member">모임원관리</a>

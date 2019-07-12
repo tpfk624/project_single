@@ -17,11 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.kitri.single.member.service.MemberService;
 import com.kitri.single.sns.model.SnsDto;
 import com.kitri.single.sns.service.NaverLoginService;
 import com.kitri.single.sns.service.NaverLoginServiceImpl;
@@ -29,18 +31,21 @@ import com.kitri.single.user.model.UserDto;
 import com.kitri.single.util.Utill;
 
 @Controller
-@SessionAttributes("userInfo")
 @RequestMapping(value = "/navermember")
 public class NaverMemberController {
 	Logger logger = LoggerFactory.getLogger(NaverMemberController.class);
 
 	@Autowired
 	NaverLoginService naverLoginService;
+	
+	@Autowired
+	MemberService memberService;
 
 	APIMemberProfile apiMemberProfile = new APIMemberProfile();
 
 	//네아로 로그인 눌렀을시 callback.jsp를 통해 호출되는 메소드
 	@RequestMapping(value = "/callback", method = RequestMethod.POST)
+	@ResponseBody
 	public String callback(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest request) {
 		// TODO sns에 따라 회원가입할지 기존아이디와 연동할지 테스트 필요
 		// 소셜 로그인 아이디 수신
@@ -50,8 +55,7 @@ public class NaverMemberController {
 		// -> 해당 아이디로 로그인 진행
 		String snsEmail = parameter.get("email");// 인증시 필수입력값
 		String accessToken = parameter.get("accessToken");
-		
-		
+		JSONObject jsonObject= new JSONObject();
 		// 회원정보 얻기
 		String userProfile = apiMemberProfile.getMemberProfile(accessToken);
 
@@ -79,10 +83,10 @@ public class NaverMemberController {
 		
 		logger.debug("callback>>>userDto: "+userDto);
 		logger.debug("callback>>>oldSnsDto: "+oldSnsDto);
-	
+		
 		if(userDto!= null && oldSnsDto == null) {
 			logger.debug("callback>>>userDto exists oldSns null");
-			//이 아이디로 회원가입한 적이 있습니다, 소셜로는 첫 로그인 
+			//이 아이디로 회원가입한 적이 있습니다, 소셜로는 첫 로그인  소셜을 회원정보에 연동시켜줌..
 			//1. snsDto 생성 및 연결
 			//2. 세션 생성 
 			//3. 메인페이지 이동
@@ -95,11 +99,11 @@ public class NaverMemberController {
 			snsDto.setSnsConnectDate(Calendar.getInstance().getTime().toString());
 			naverLoginService.registSnsLogin(snsDto);
 			
-			WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
 			userDto.setSnsDto(snsDto);
-			model.addAttribute("userInfo",userDto);
-			return "redirect:/index.jsp";
-			
+			WebUtils.setSessionAttribute(request, "userInfo", userDto); //리다이렉트시 세션은 이렇게 담아준다.
+//			return "redirect:/index.jsp";
+			jsonObject.put("msg", "refresh");
+			return jsonObject.toString();
 		}
 		else if(userDto != null && oldSnsDto != null) {
 			logger.debug("callback>>>userDto exists oldSns exists");
@@ -110,11 +114,13 @@ public class NaverMemberController {
 //			model.addAttribute("userInfo",userDto);
 			
 			WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
-			return "redirect:/index.jsp";
+//			return "redirect:/index.jsp";
+			jsonObject.put("msg", "refresh");
+			return jsonObject.toString();
 		}
-		else if (oldSnsDto == null) {
+		else if (userDto== null && oldSnsDto == null) {
 			logger.debug("callback>>>oldSns null");
-			//이소셜로는 처음 로그인 합니다. 
+			//이소셜로는 처음 로그인 합니다. 동일한 아이디로 가입한 정보도 없습니다.
 			userDto = new UserDto();
 			userDto.setUserId(snsEmail);
 			userDto.setUserName(userName);
@@ -123,7 +129,6 @@ public class NaverMemberController {
 			userDto.setUserBirthday(userBirthday);
 			userDto.setUserProfile(userProfile_image);
 			
-			
 			snsDto = new SnsDto();
 			snsDto.setSnsId(snsId);
 			snsDto.setUserId(snsEmail);
@@ -131,16 +136,22 @@ public class NaverMemberController {
 			snsDto.setSnsType("naver");
 			snsDto.setSnsToken(accessToken);
 			snsDto.setSnsConnectDate(Calendar.getInstance().getTime().toString());
-			
 			userDto.setSnsDto(snsDto);
+//			memberService.registSns(userDto);
+			
+			model.addAttribute("userInfo", userDto);
 
-			model.addAttribute("userInfo", userDto);		
+			jsonObject.put("userInfo", new JSONObject(userDto));
+			
+			jsonObject.put("msg", "register");
+			jsonObject.put("url", "${root}/register/register");
+			return jsonObject.toString();
 //			return "member/register/register";
 		}
-		logger.debug(">>>>> oldSnsDto.toString"+oldSnsDto.toString());
-		logger.debug(">>>>> userDto.toString"+userDto.toString());
-		logger.debug(">>>callback>>>else");
-		return "index";
+//		logger.debug(">>>>> oldSnsDto.toString"+oldSnsDto.toString());
+//		logger.debug(">>>>> userDto.toString"+userDto.toString());
+//		logger.debug(">>>callback>>>else");
+		return jsonObject.toString();
 	} //callback
 
 //	@RequestMapping(value = "/mvcallback", method = RequestMethod.GET)

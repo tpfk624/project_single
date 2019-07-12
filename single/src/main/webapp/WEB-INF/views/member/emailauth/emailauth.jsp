@@ -6,6 +6,7 @@
 <c:if test="${userInfo != null }">
 <script>
 	location.href = "/single/home";
+// 	history.back();
 </script>
 </c:if>    
 
