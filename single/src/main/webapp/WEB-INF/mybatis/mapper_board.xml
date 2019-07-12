@@ -85,8 +85,8 @@
 	</select>
 
 
-	<!-- 메인 이주의 추천수 -->
-	<select id="weekList" resultType="boardDto">
+	<!-- 메인 이달의 추천수 -->
+	<select id="monthList" resultType="boardDto">
 	<![CDATA[
 	select rownum, board.*
 	from (select board_num boardNum, board_list_num boardListNum, user_id userId, 
@@ -97,6 +97,7 @@
 	                board_statecode boardStatecode
 	    from single_board
 	    where board_statecode = '1'
+	    and to_char(board_createdate, 'yyyymm') = to_char(sysdate, 'yyyymm')
 	    order by board_like desc, boardCreatedate desc) board
 	where rownum <= 5
 	]]>
@@ -104,7 +105,66 @@
 	
 	
 	
+	<select id="rankingUsers" resultType="userDto">
+	select 
+	    rownum rn
+	    , rankinguser.user_id userID
+	    , rankinguser.user_profile userProfile
+	    , rankinguser.user_nickname userNickname
+	    , rankinguser.totallike totalLike
+	    , rankinguser.currentdate currentDate
+	from (
+	    select 
+	        sb.user_id    
+	        , su.user_profile
+	        , sb.user_nickname
+	        , sum(sb.board_like) totallike
+	        , max(sb.board_createdate) currentdate
+	    from single_board sb
+	    	inner join single_user su
+	    		on sb.user_id = su.user_id
+	    where 
+	        sb.board_statecode = '1'
+	        and to_char(sb.board_createdate, 'yyyymm') = to_char(sysdate, 'yyyymm')
+	    group by 
+	    	sb.user_id
+	    	, su.user_profile
+	        , sb.user_nickname
+	    order by totallike desc, currentdate desc ) rankinguser
+	<![CDATA[ where rownum <= 3 ]]>
+	</select>
+	
+	
+	<select id="rankingBoards" parameterType="String" resultType="boardDto">
+	select rownum
+	    , rankingboard.board_num boardNum
+	    , rankingboard.board_list_num boardListNum
+	    , rankingboard.user_id userId
+	    , rankingboard.user_nickname userNickname
+	    , rankingboard.board_subject boardSubject
+	    , rankingboard.board_content boardContent
+	    , rankingboard.board_views boardViews
+	    , rankingboard.board_like boardLike
+	    , rankingboard.board_createDate boardCreatedate
+	    , rankingboard.board_updatedate boardUpdatedate
+	    , rankingboard.board_deletedate boardDeletedate
+	    , rankingboard.board_statecode boardStatecode
+	from (
+	    select *
+	    from single_board
+	    where user_id = #{userId}
+	    order by board_like desc
+	    ) rankingboard
+	<![CDATA[ where rownum <= 3 ]]>
+	</select>
+	
+	
+	
 	
 </mapper>
+   
+   
+   
+   
    
    
