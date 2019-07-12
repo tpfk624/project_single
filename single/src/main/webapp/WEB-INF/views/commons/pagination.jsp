@@ -36,7 +36,7 @@
 		  <a>&laquo;</a>
 		  </c:if>
 		  <c:if test="${!pagination.nowFirst}">
-		  <a class="page-move">&laquo;</a>
+		  <a class="page-pre">&laquo;</a>
 		  </c:if>
 		  <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" step="1" varStatus="stat">
 		  <c:if test="${pagination.currentPage == stat.current}">
@@ -50,7 +50,7 @@
 		  <a>&raquo;</a>
 		  </c:if>
 		  <c:if test="${!pagination.nowEnd}">
-		  <a class="page-move">&raquo;</a>
+		  <a class="page-next">&raquo;</a>
 		  </c:if>
 	</div>
 </section>
@@ -59,6 +59,10 @@ function clickFunctionSetting(func){
 	$(".page>.pagination>.page-move").click(function() {
 		func($(this).text());
 	});
+	
+	/* $(".page>.pagination>.page-pre").click(function () {
+		var 
+	}); */
 }
 
 </script>

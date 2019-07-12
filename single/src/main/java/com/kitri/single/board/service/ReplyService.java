@@ -19,4 +19,7 @@ public interface ReplyService {
 	// 답변 Delete하기
 	public int answerDelete(int replyNum);
 	
+	// 좋아요
+	public int like(Map<String, Object> map);
+	
 }

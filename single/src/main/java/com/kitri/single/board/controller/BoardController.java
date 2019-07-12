@@ -1,6 +1,7 @@
 package com.kitri.single.board.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +12,14 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.board.model.BoardPageDto;
@@ -26,6 +31,7 @@ import com.kitri.single.user.model.UserDto;
 
 @Controller
 @RequestMapping("/board")
+@SessionAttributes("userInfo") // @ModelAttribute("userInfo") UserDto userDto 빼올때 session것을 가져오라는 뜻.
 public class BoardController {
 	
 	//로그
@@ -41,14 +47,7 @@ public class BoardController {
 	
 	@Autowired
 	private CommonService commonService;
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@RequestMapping("singlemain")
 	public String singleMain(Model model){
 		//select를 3번해와야뎀.
@@ -66,11 +65,38 @@ public class BoardController {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 단순 글쓰기 ajax
 	@RequestMapping(value="/answerwritepage")
 	public String answerok(){
 		return "board/write/answerwrite";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 자취생활 페이지로 이동
 	@RequestMapping(value="/singlelifeboard")
 	public void singlelifeboard(){
@@ -109,23 +135,17 @@ public class BoardController {
 	// write 페이지 이동
 	@RequestMapping(value="/write",method = RequestMethod.GET)
 	public String write(@RequestParam("boardListNum") int boardListNum, Model model
-			, HttpSession session){
+			, @ModelAttribute("userInfo") UserDto userDto){
 
-		UserDto userdto = (UserDto)session.getAttribute("userInfo");
-		String path = "";
+			
+		BoardPageDto bp = new BoardPageDto();
+		bp.setBoardListNum(boardListNum);
 		
-		if (userdto != null) {
-			
-			BoardPageDto bp = new BoardPageDto();
-			bp.setBoardListNum(boardListNum);
-			
-			model.addAttribute("bp", bp);
-			
-			path = "board/write";
-		} else {
-			path = "redirect:/index.jsp";
-		}
+		model.addAttribute("bp", bp);
 		
+		String path = "board/write";
+
+			
 		return path;
 	}
 	
@@ -135,7 +155,7 @@ public class BoardController {
 	@RequestMapping(value="/write",method = RequestMethod.POST)
 	public String write(@RequestParam("tags") String tags,
 			@RequestParam Map<String, String> parameter,
-			Model model, HttpSession session){
+			Model model, @ModelAttribute("userInfo") UserDto userDto){
 		
 		String path = "";
 		
@@ -143,18 +163,18 @@ public class BoardController {
 		// 혹시 new도 생성이기는 하니깐?
 		//UserDto userdto = new UserDto();
 		
-		UserDto userdto = (UserDto)session.getAttribute("userInfo");
+		
 		BoardDto boardDto = new BoardDto();
 		
-		if (userdto != null) {
+		if (userDto != null) {
 			// 2번 적용됨?? - 오라클에 있는 유저랑 인클루드해서 넣어둔 유저랑 겹처서 그런가?
 
 			//int boardNum = commonService.getNextSeq();
 			
 			//boardDto.setBoardNum(boardNum);
 			boardDto.setBoardListNum(Integer.parseInt(parameter.get("boardListNum")));
-			boardDto.setUserId(userdto.getUserId());
-			boardDto.setUserNickname(userdto.getUserNickname());
+			boardDto.setUserId(userDto.getUserId());
+			boardDto.setUserNickname(userDto.getUserNickname());
 			boardDto.setBoardSubject(parameter.get("boardSubject"));
 			boardDto.setBoardContent(parameter.get("boardContent"));
 			boardDto.setBoardViews(0);
@@ -195,28 +215,27 @@ public class BoardController {
 	
 	
 	@RequestMapping(value="/view",method = RequestMethod.GET)
-	public String view(@RequestParam("boardNum") int boardNum, @RequestParam Map<String, String> parameter, 
-			Model model, HttpSession session) { 
+	public String view(@RequestParam Map<String, String> parameter, 
+			Model model) { 
 		
+		// 바로 접속하려 할때.
+		if(parameter == null || parameter.get("boardNum") == null) {
+			return "redirect:/index.jsp";
+		}
 		
-		UserDto userDto = (UserDto)session.getAttribute("userInfo");
-		String path = "";
-		
+		int boardNum = Integer.parseInt(parameter.get("boardNum"));
 		
 		// if문으로 로그인 했는지 안했는지 체크하기
-		if (userDto != null) {
-			BoardDto boardDto = boardService.viewArticle(boardNum);
-			
-			model.addAttribute("article", boardDto);
-			
-			// ????
-			model.addAttribute("parameter", parameter);
-			
-			path = "board/singleview";
+		BoardDto boardDto = boardService.viewArticle(boardNum);
+		System.out.println(boardDto);
 		
-		} else {
-			path = "redirect:/index.jsp";
-		}
+		model.addAttribute("article", boardDto);
+		
+		// ????
+		model.addAttribute("parameter", parameter);
+		
+		String path = "board/singleview";
+		
 		
 		return path;
 
@@ -282,9 +301,8 @@ public class BoardController {
 	// 답변 쓰기.
 	@RequestMapping("/answerwrite")
 	public @ResponseBody String answerwrite(@RequestParam Map<String, Object> params
-			, Model model, HttpSession session) {
+			, Model model, @ModelAttribute("userInfo") UserDto userDto) {
 		
-		UserDto userDto = (UserDto)session.getAttribute("userInfo");
 		ReplyDto replyDto = new ReplyDto();
 		
 		String userId = userDto.getUserId();
@@ -310,19 +328,17 @@ public class BoardController {
 		}else {
 			jsonObject.put("resultCode", 1);
 			//jsonObject.put("resultData", "성공");
-			//path = "board/answerview";
 		}
 		
 		
 		return jsonObject.toString();
 	}
 	
-	
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	// 답변 삭제
+	@RequestMapping(value ="/delete")//, method = RequestMethod.DELETE
 	public @ResponseBody String answerDelete(@RequestParam("replyNum") int replyNum
-			, Model model, HttpSession session) {
+			, Model model, @ModelAttribute("userInfo") UserDto userDto) {
 		
-		System.out.println(replyNum);
 		
 		int seq = replyService.answerDelete(replyNum);
 		
@@ -337,6 +353,51 @@ public class BoardController {
 		return jsonObject.toString();
 		
 	}
+	
+	
+	// 좋아요
+	@RequestMapping(value = "/like", method = RequestMethod.POST)
+	public @ResponseBody String like(@RequestBody Map<String, Integer> mapBN
+			, Model model, HttpSession session) {
+		
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		JSONObject jsonObject = new JSONObject();
+		
+		int boardNum = mapBN.get("boardNum");
+		System.out.println(boardNum);
+		
+		if (userDto != null) {
+			
+			String userId = userDto.getUserId();
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("userId", userId);
+			map.put("boardNum", boardNum);
+			
+			
+			int seq = replyService.like(map);
+			System.out.println("seq  ==  " + seq);
+			
+			if (seq == 0) {
+				// 서버 오류로 좋아요가 실패했습니다. 다시 시도해 주세요.
+				jsonObject.put("resultCode", 2);
+			} else {
+				jsonObject.put("resultCode", 1);
+			}
+			
+		} else {
+			
+			// 로그인 해달라고 모달창 띄워주기
+			jsonObject.put("resultCode", 0);
+			
+		}
+		
+		
+		return jsonObject.toString();
+	}
+	
+	
+	
 	
 
 }
