@@ -387,6 +387,21 @@ public class GroupController {
 		return json;
 	}
 	
+	//추천용 테스트 jsp
+	@RequestMapping(value = "/grouprecommend", method = RequestMethod.GET)
+	public String groupRecommend(HttpSession session) {
+		
+		String path = "group/grouprecommend";
+		
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			path = "group";
+		}
+		
+		return path;
+	}
+	
+	
 	//그룹 내 nav바 이동 관련
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/grouppage", method = RequestMethod.GET)
