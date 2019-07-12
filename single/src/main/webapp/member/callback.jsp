@@ -1,31 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<!-- 네이버로부터 정보를 받는 페이지입니다. -->
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
+<%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
 
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <!-- 네아로 설정값-->
+<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 <!-- 로컬용 -->
-<%-- <c:set var = "serviceUrl" value = "https://localhost:8443/single"/> --%>
-<%-- <c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/> --%>
+<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
+<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
 
+
+
+
+
+<!-- 네아로 자바스크립트-->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"/>
+
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
 <!-- ip설정용 -->
-<c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/>
-<c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/>
+<%--  <c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/> --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/> --%>
 
-<%-- <c:set var = "serviceUrl" value = "https://192.168.56.1:8443/single"/> --%>
-<%-- <c:set var = "callbackUrl" value = "https://192.168.56.1:8443/single/member/callback.jsp"/> --%>
+<%-- <c:set var = "serviceUrl" value = "https://192.168.14.14:8443/single"/> --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.14.14:8443/single/member/callback.jsp"/> --%>
 
 <%-- <c:set var = "serviceUrl" value = "https://192.168.14.22:8443/single"/> --%>
 <%-- <c:set var = "callbackUrl" value = "https://192.168.14.22:8443/single/member/callback.jsp"/> --%>
-
-
-<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
-<c:set var ="redirectURL" value ="${root}/member/registersns"/>
-
-<!-- 네아로 자바스크립트-->
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
 
 <form id="naverProfileForm">
 	<input type ="hidden" name ="email" id="email" >
@@ -69,9 +72,9 @@
 <!-- 	$('#birthday').val(birthday); -->
 <!-- 	$('#profile_image').val(profile_image); -->
 
-
+<%-- javascript에서 c태그 씀녀 에러난다 주석이라도 .. <c: if test exsist memberout/> --%>
 	
-</body>
+
 <script type="text/javascript">
   var naver_id_login = new naver_id_login("${clientId}", "${callbackUrl}");
   // 접근 토큰 값 출력
@@ -103,8 +106,25 @@
 			dataType : "json", //서버에서 반환되는 형식
 			success :function(data){
 				console.log(data);
-				if(data.msg =='register'){
-// 					console.log('페이지이동');
+				if(data.msg =='outmember'){
+// 					console.log('탈퇴한 회원');
+// 					window.location = document.referrer + '?msg=outmember';
+// 					history.back();
+// msg : memberout 
+// altert 1! 맴버없습니다..
+<%--  <c: if test exsist memberout/> --%>
+					$('.btn-danger').html('뒤로가기');
+					$(document).on('click', '.btn-danger', function(){
+						history.back();
+					});
+					showAlertModal('로그인 실패', '탈퇴한 회원입니다.');
+					$(document).on('click', '.backBtn', function(){
+	 					history.back();					
+					});
+					
+				}
+				else if(data.msg =='register'){
+// 					console.log('회원가입 페이지이동');
 // 					console.log(data);
 // 					console.log('=======');
 // 					console.log(data.userInfo.userId);
@@ -121,9 +141,10 @@
 					
 					//registerpage로 전달 되야함
 					$('#naverProfileForm').attr("method","post");
-					$('#naverProfileForm').attr("action","{redirectURL}").submit();
+					$('#naverProfileForm').attr("action","${root}/member/registersns").submit();
 					//회원가입폼으로 값 전달.
 				}else if (data.msg =='refresh'){
+// 					console.log('자동 로그인');
 					history.back();
 				}		
 			},beforeSend: function () {
@@ -133,11 +154,9 @@
 			}
 	  	});
 // 	});
-	
   }
 </script>
-
+네아로 콜백 사이트
+<button type ="button" class = "backBtn">뒤로가기</button>
 
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_bottom.jsp" %>
-
-

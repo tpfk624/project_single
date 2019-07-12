@@ -43,7 +43,7 @@ public class NaverMemberController {
 
 	APIMemberProfile apiMemberProfile = new APIMemberProfile();
 
-	//네아로 로그인 눌렀을시 callback.jsp를 통해 호출되는 메소드
+	//네아로 로그인 눌렀을시 webapp/member/callback.jsp를 통해 호출되는 메소드
 	@RequestMapping(value = "/callback", method = RequestMethod.POST)
 	@ResponseBody
 	public String callback(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest request) {
@@ -83,8 +83,12 @@ public class NaverMemberController {
 		
 		logger.debug("callback>>>userDto: "+userDto);
 		logger.debug("callback>>>oldSnsDto: "+oldSnsDto);
-		
-		if(userDto!= null && oldSnsDto == null) {
+		if(userDto != null  && userDto.getUserStatecode().equals("0")) {
+			//탈퇴한회원입니다.
+			jsonObject.put("msg", "outmember");
+			return jsonObject.toString();
+		}
+		else if(userDto!= null && oldSnsDto == null) {
 			logger.debug("callback>>>userDto exists oldSns null");
 			//이 아이디로 회원가입한 적이 있습니다, 소셜로는 첫 로그인  소셜을 회원정보에 연동시켜줌..
 			//1. snsDto 생성 및 연결
