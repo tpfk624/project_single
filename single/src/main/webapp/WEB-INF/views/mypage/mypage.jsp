@@ -317,7 +317,7 @@ $(function(){
 								<!--이름-->현재 비밀번호 :
 							</th>
 							<td rowspan = 2>
-								<input data-num="${userInfo.userPassword}" type="password" name="userPassword" id="userPassword" class="pw_input old_pw"  value=""  placeholder="현재 비밀번호를 입력해주세요.">
+								<input data-num="${userInfos.userPassword}" type="password" name="userPassword" id="userPassword" class="pw_input old_pw"  value=""  placeholder="현재 비밀번호를 입력해주세요.">
 								<!-- ******* 비밀번호 부합 여부 확인 메세지 ******* -->
 	                			<div style="margin-bottom:0px; color:tomato; font-size:12px" id="passrightcheck">*현재 비밀번호를 입력해주세요.</div>
 							</td>

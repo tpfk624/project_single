@@ -61,18 +61,21 @@ public class UserServiceImpl implements UserService {
 	
 	//회원 정보 수정
 	@Override
-	public void userModify(UserDto userDto) {
+	@Transactional //이 메소드가 전부 다 실행되어야지만 정상종료 하나라도 안되면 롤백
+	public UserDto userModify(UserDto userDto) {
 		
 		System.out.println("정보수정 서비스임플 옴");
 		
+		UserDao userdao = sqlSession.getMapper(UserDao.class);
 		if(!userDto.getNewpass().isEmpty()) {
 			System.out.println("비번 변경 + 정보 수정!");
-			sqlSession.getMapper(UserDao.class).userModifynew(userDto); //비밀번호 변경 + 정보 수정
+			userdao.userModifynew(userDto); //비밀번호 변경 + 정보 수정
 		}else {
 			System.out.println("비번 변경안함 + 정보 수정!");			
-			sqlSession.getMapper(UserDao.class).userModify(userDto);	//비밀번호 유지 + 정보 수정
+			userdao.userModify(userDto);	//비밀번호 유지 + 정보 수정
 		}
 		
+		return userdao.userInfom(userDto.getUserId());
 	}
 	
 

@@ -14,8 +14,12 @@
 	<select id="userInfom" parameterType="string" resultType="userDto">
 	select 
 	    user_id as userId,
-	    user_name as userName,
+	    user_password as userPassword,
 	    user_nickname as userNickname,
+	    user_profile as userProfile,
+	    user_name as userName,
+	    user_birthday as userBirthday,
+	    user_gender as userGender,
 	    user_phone as userPhone
 	from single_user
 	where user_id = #{id}
