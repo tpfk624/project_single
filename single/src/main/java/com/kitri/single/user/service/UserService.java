@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.group.model.GroupDto;
 
 import com.kitri.single.user.model.UserDto;
@@ -30,7 +31,13 @@ public interface UserService {
 	public List<GroupDto> getStampGroup(Map<String, String> parameter); //찜그룹(전체) >> userid랑 카테고리를 분류해야해서  
 	public List<GroupDto> getMyStamp(Map<String, String> parameter); //찜그룹(카테고리)
 	public void stampDelete(Map<String, String> parameter); //찜한 그룹 삭제하기 >> userid랑 groupnum이 들어가야함 세션과 화면클릭을 통해
-	public String groupStamp(String userId, int groupNum);
+	public  String stampDelete(String userId, int groupNum);//카루뱅 찜한 그룹 삭제하기 >> userid랑 groupnum이 들어가야함 세션과 화면클릭을 통해
+
+	
+	//<게시물 관리>
+	public List<BoardDto> getBoardAll(Map<String, String> parameter);//게시물 불러오기(전체보기)
+	public List<BoardDto> getBoardOther(Map<String, String> parameter, String option);
+	
 
 	
 	

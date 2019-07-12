@@ -11,11 +11,54 @@
 /* 셀렉트 박스 클릭 시  */
 $(function() {
 	getMyGroup("selected");
+	
 	//  셀렉트 박스 클릭 이벤트
 	$(".moimOption").change(function() {
 		var sel = $(this).val();
 		getMyGroup(sel);
 	});
+	
+	/* 모임 가입하기  */
+	 $("#moimApply").click(function() {
+		 var groupNum = $(this).attr("data-num");
+		 console.log("모임 가입하기 버튼클릭됨 , 그룹넘버: " + groupNum);
+		$.ajax({
+			type : 'GET',
+			url : '${root}/group/groupmember',
+			dataType: "json",
+			data : {
+				'type' : "apply",
+				'groupNum' : groupNum
+			},
+			success : function(result) {
+				if(result.resultCode == 1) {
+					alert(result.resultData);
+				}
+			}
+		});	
+		return false;
+	});
+	
+	 /* 찜하기 취소  */
+	 $("#zzimDelete").click(function() {
+		 var groupNum = $("#moimApply").attr("data-num");
+		 console.log("찜 취소하기 버튼클릭됨 , 그룹넘버: " + groupNum);
+		$.ajax({
+			type : 'GET',
+			url : '${root}/mypage/stampdelete',
+			dataType: "json",
+			data : {
+				'groupNum' : groupNum
+			},
+			success : function(result) {
+				if(result.resultCode == 1) {
+					alert(result.resultData);
+				}
+			}
+		});	
+		return false;
+	});
+	 
 });
 
 
@@ -40,7 +83,6 @@ function getMyGroup(sel) {
 
 function groupcardClick() {
 	var groupNum = $(this).attr("data-num");
-	alert(groupNum);
 	$.ajax({
 		url : "${root}/mypage/groupdetail",
 		method : "get",
@@ -66,15 +108,25 @@ function groupcardClick() {
 	<div id="my-page-wrap">
 		<div id="my-page-header">
 			<div id="header-content" class="my-page-content">
-				<div class="user-photo"
-					style="display: inline-block; background-image: url(&quot;https://cdn.studysearch.co.kr/images/users/199883/profile/1561443247&quot;); background-size: cover; background-position: 50% 50%;"></div>
+			
+				<!-- 프로필사진 -->
+				<div class="user-photo" style="display: inline-block;">
+					<c:if test="${userInfo.userProfile != null}">
+		            	<img src="${userInfo.userProfile}" class="rounded-circle" width="90" height="90">             			
+					</c:if>
+					<c:if test="${userInfo.userProfile == null}">
+	            		<img id = "userpic" src='${root}/resources/img/seonimg/kakaopic.png'  class="rounded-circle" width="90" height="90">  			
+					</c:if>
+				</div>
+				<!-- 프로필사진 -->
+				
 				<div id="tabs">
-					<div id="user-name">고세라</div>
+					<div id="user-name">${userInfo.userName} (${userInfo.userNickname})</div>
 					<div id="tab-box">
 						<a class="tab" href="${root}/mypage/mypage">내 프로필</a> 
 						<a class="tab" href="${root }/mypage/groupall">나의 모임관리</a> 
 						<a class="tab selected" href="${root}/mypage/stampgroup">찜한 모임</a> 
-						<a class="tab" href="${root}/user_mypage/myPageWrite.jsp">게시물관리</a>
+						<a class="tab" href="${root}/mypage/writelist">게시물관리</a>
 					</div>
 				</div>
 			</div>

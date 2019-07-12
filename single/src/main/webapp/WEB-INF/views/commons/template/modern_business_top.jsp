@@ -165,6 +165,174 @@ $(document).ready(function(){
           </c:if>
           <c:if test="${!empty sessionScope.userInfo}">
           
+          <li class="nav-item">
+            <a class="nav-link" href="${root}/member/logout">로그아웃</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              	마이페이지
+            </a>   
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+              <a class="dropdown-item" href="${root}/mypage/writelist">게시물 관리</a>
+            </div>
+          </li>
+
+	          <li class="nav-item">
+	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
+	          <li class="nav-item">
+	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
+	          <li class="nav-item">
+	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
+	          <li class="nav-item">
+	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
+	          <li class="nav-item">
+	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
+	          <li class="nav-item">
+	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
+	          <li class="nav-item">
+	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
+	          <li class="nav-item">
+	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
+	          <li class="nav-item">
+	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" id="logoutBtn"  href="#">로그아웃</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              	마이페이지
+	            </a>   
+	            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+	              <a class="dropdown-item" href="${root}/mypage/mypage">내 프로필</a>
+	              <a class="dropdown-item" href="${root}/mypage/groupall">나의 모임관리</a>
+	              <a class="dropdown-item" href="${root}/mypage/stampgroup">찜한 모임</a>
+	              <a class="dropdown-item" href="${root}/mypage/myPageWrite.jsp">게시물 관리</a>
+	            </div>
+	          </li>
 	          <li class="nav-item">
 	          	<a class="nav-link"href="#">${sessionScope.userInfo.userNickname} 님 환영합니다.</a>
 	          </li>

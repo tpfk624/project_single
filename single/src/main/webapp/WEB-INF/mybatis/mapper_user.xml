@@ -29,7 +29,25 @@
 	where user_id = #{userId}
  	</update>
 
-
+	<!-- 회원수정 비번변경x  -->
+	<update id="userModify" parameterType="userDto">
+	update single_user
+	set user_nickname = #{userNickname},
+	    user_password = #{userPassword},
+	    user_phone = #{userPhone},
+	    user_profile = #{userProfile}
+	where user_id = #{userId}
+ 	</update>
+ 	
+ 	<!-- 회원수정 비번변경  -->
+ 	<update id="userModifynew" parameterType="userDto">
+ 	update single_user
+	set user_nickname = #{userNickname},
+	    user_password = #{newpass},
+	    user_phone = #{userPhone},
+	     user_profile = #{userProfile}
+	where user_id = #{userId}
+ 	</update>
 
 
 	
@@ -50,6 +68,8 @@
 		from single_group g, single_group_member m
 		where g.group_num = m.group_num
 			and g.group_statecode = '1'
+			and m.group_member_statecode != 'D'
+    		and m.group_member_statecode != 'W'
 			and m.user_id = #{userId}
 	</select>
 
@@ -69,6 +89,8 @@
 		from single_group g, single_group_member m
 		where g.group_num = m.group_num
 			and g.group_statecode = '1'
+			and m.group_member_statecode != 'D'
+    		and m.group_member_statecode != 'W'
 			and m.user_id = #{userId}
 			<if test="option == 'groupleader' " >
 			and m.group_member_statecode = 'L'
@@ -157,26 +179,47 @@
     	and group_num = #{groupNum}
  	</delete>
 
-<!-- 	<update id="updateGroupMember" parameterType="groupMemberDto"> -->
-<!-- 	update single_group_member -->
-<!-- 	set -->
-<!-- 		group_member_statecode = #{groupMemberStatecode} -->
-<!-- 		<if test="groupMemberStatecode != null and (groupMemberStatecode eq 'M'.toString) "> -->
-<!-- 		, group_joindate = sysdate -->
-<!-- 		, group_requestdate = null -->
-<!-- 		</if> -->
-<!-- 	where group_num = upper(#{groupNum}) -->
-<!-- 	and user_id = #{userId} -->
-<!-- 	</update> -->
+	<!-- <<<<<<<<<<<<<<<<게시물관리 >>>>>>>>>>>>>>>>>>>>>> -->
+		
+	<!--내가 쓴 글 -->
+	<select id="getBoardAll" parameterType="string" resultType="BoardDto">
+	select board_subject as boardSubject,
+	    board_content as boardContent,
+	    board_createdate as boardCreatedate,
+	    board_like as boardLike
+	from single_board
+	where user_id = #{userId}		
+	</select>
+	
+	
+	<!--나의 댓글 -->
+	<select id="getBoardOther" parameterType="string" resultType="BoardDto">
+	select b.board_subject as boardSubject,
+	    r.reply_content as replyContent,
+	    b.board_content as boardContent,
+	    b.board_createdate as boardCreatedate,
+	    b.user_id as userId,
+	    b.board_like as boardLike
+	from single_board b, single_reply r
+	where b.board_num = r.board_num
+	and r.user_id =  #{userId}	
+	</select>
 
-<!-- <update id="groupMemberCountDown" parameterType="int"> -->
-<!-- 	update single_group -->
-<!-- 	set -->
-<!-- 	    group_member_count = group_member_count - 1 -->
-<!-- 	where  -->
-<!-- 		group_statecode = 1 -->
-<!-- 		and group_num = #{groupNum} -->
-<!-- 		and group_member_count > 1 -->
-<!-- 	</update> -->
+	<select id="getBoardHeart" parameterType="string" resultType="BoardDto">
+	select board_subject as boardSubject,
+	    board_content as boardContent,
+	    board_createdate as boardCreatedate,
+	    b.user_id as userId,
+	    b.board_like as boardLike
+	from single_board b, single_like l 
+	where b.board_num = l.board_num
+	and l.user_id = #{userId}	
+	</select>
+
+
+
+
+
+
 
 </mapper>

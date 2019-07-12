@@ -45,38 +45,10 @@ function groupDetailModalSetting(json) {
 			
 			<!-- Modal footer -->
 	        <div class="modal-footer" style="display: block;" data-num="">
-	        	<c:if test="${!empty userInfo}">
-	        	<button type="button" class="btn btn-info left btn-stamp" data-num="">찜하기</button>
-	        	</c:if>
-	          	<button type="button" class="btn btn-primary right btn-apply" data-num="">가입신청</button>
+	        	<button type="button" id="zzimDelete" class="btn btn-info left btn-stamp" data-num="${group.groupNum}">찜하기 취소</button>
+	          	<button type="button" id="moimApply" class="btn btn-primary right btn-apply" data-num="${group.groupNum}">가입신청</button>
 	        </div>
 		</div>
 	</div>
 </div>
-<script>
-$(".btn-apply").on("click", function(e){
-	groupMemberUpdate(e, $(this).parent().attr("data-num"), "apply");
-});
 
-
-
-$(".btn-stamp").on("click", function(){
-	var url = "${root}/group/groupstamp";
-	var data = {
-		groupNum : $(this).parent().attr("data-num")
-	}
-	console.log(data);
-	
-	var success = function(result) {
-		if(result.resultCode == 1){
-			showSuccessAlertModal("찜하기", "해당 모임을 찜했습니다");
-		}else{
-			showAlertModal("찜하기", result.resultData);
-		}
-		
-		return false;
-	}
-	ajaxFunc(data, url, "get", success);
-	
-});
-</script>

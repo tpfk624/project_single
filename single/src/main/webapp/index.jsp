@@ -21,7 +21,7 @@
 <!-- 로그인 -->
 <!-- 사용법:파일 안의 로그인 로그아웃 버튼 선택자를 등록해주세요. -->
 <%@ include file = "/WEB-INF/views/member/login/loginmodal.jsp"%> 
-<!--end 로그인  -->	
+<!-- 로그인  -->	
 
 
 <script>
@@ -116,9 +116,16 @@ $(document).ready(function(){
             
             <c:if test="${userInfo != null}">
             	<li id="profile">
-	            	<div class="profile-userpic">
-						<img id = "userpic" src='${root}/resources/img/seonimg/kakaopic.png'  height="100">
+		          <!-- 프로필사진 -->
+					<div class="user-photo" style="display: inline-block;">
+						<c:if test="${userInfo.userProfile != null}">
+			            	<img src="${userInfo.userProfile}" class="rounded-circle" width="90" height="90">             			
+						</c:if>
+						<c:if test="${userInfo.userProfile == null}">
+		            		<img id = "userpic" src='${root}/resources/img/seonimg/kakaopic.png'  class="rounded-circle" width="90" height="90">  			
+						</c:if>
 					</div>
+					<!-- 프로필사진 -->
 					<div class="profile-usertitle">
 						<div class="profile-usertitle-name">
 						<br>
@@ -161,9 +168,8 @@ $(document).ready(function(){
             <a href="#menu" class="more">menu</a>
          </section>
 
-
          <!-- 날씨 popover -->
-         
+                  
          <div class="popover fade bs-popover-bottom" role="tooltip" id="popover" style="float : right; top: 60px; left: 1560px;  will-change: transform;" x-placement="bottom">  <!-- transform: translate3d(1248px, 79px, 0px); -->
 	         <div class="arrow" style="left: 25px;">
 	         </div>
