@@ -9,12 +9,6 @@
 <c:set var="parameter" value="${requestScope.parameter}"></c:set>
 <script>
 $(function() {
-	
-	$('#recomandBtn').on("click",function(){
-			
-	});
-	
-	
 	//$(".groupcard").on("click", groupcardClick);
 	
 	var page = "${parameter.page}";
@@ -23,6 +17,33 @@ $(function() {
 	var isMyGroup = "${parameter.isMyGroup}";
 	var groupCategoryNum = "${parameter.groupCategoryNum}";
 	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
+
+	//2019-07-12 형태희 추천받기 버튼
+	$(".recomandBtn").on("click", function () {
+		$.ajax({
+			url : "${root}/group2/grouprecomandlist"
+				, method : "get"
+				, data : {
+					"page" : page
+					, "key" : key
+					, "word" : word
+					, "isMyGroup" : isMyGroup
+					, "groupCategoryNum" : groupCategoryNum
+				}
+				, success : function(result) {
+					if(isMyGroup == 'yes'){
+// 						console.log(result);
+						$(".group-list").html(result);
+						$(".groupcard").click(groupenter);
+					}else{
+// 						console.log(result);
+						$(".group-list").html(result);
+						$(".groupcard").click(groupcardClick);
+					}
+				}
+		});
+	});
+	
 	
 	//페이지 이동류 버튼
 	$(".pagebtn").on("click", function () {
@@ -69,11 +90,11 @@ function getGroupList(page, key, word, isMyGroup, groupCategoryNum){
 		}
 		, success : function(result) {
 			if(isMyGroup == 'yes'){
-				//console.log(result);
+				console.log(result);
 				$(".group-list").html(result);
 				$(".groupcard").click(groupenter);
 			}else{
-				//console.log(result);
+				console.log(result);
 				$(".group-list").html(result);
 				$(".groupcard").click(groupcardClick);
 			}
@@ -120,15 +141,18 @@ function groupcardClick(){
 					<button type="button" class="btn btn-success mygrouplist">내 모임 보기</button>
 				</div>
 				</c:if>
+				
 				<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
 					<button type="button" class="btn btn-primary pagebtn" data-page="create">모임 만들기</button>
 				</div>
-				<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
-					<button type="button" id="recomandBtn" class="btn btn-info">추천 받기</button>
-				</div>
+				
+				<c:if test="${!empty sessionScope.userInfo}">
+					<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
+						<button type="button"  class="btn btn-info recomandBtn">추천 받기</button>
+					</div>
+				</c:if>
 				<div class="dropdown col-lg-2 col-md-2 col-sm-3 my-4 category">
-					<button type="button" class="btn btn-primary dropdown-toggle"
-						data-toggle="dropdown">카테고리</button>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">카테고리</button>
 					<div class="dropdown-menu">
 						<a class="dropdown-item">스터디</a> 
 						<a class="dropdown-item">취미</a> 

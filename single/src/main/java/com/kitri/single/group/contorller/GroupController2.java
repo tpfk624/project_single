@@ -40,7 +40,7 @@ import com.kitri.single.util.SiteConstance;
 import com.kitri.single.util.Utill;
 
 @Controller
-//@RequestMapping("/group2")
+@RequestMapping("/group2")
 @SessionAttributes(names = {"userInfo"})
 public class GroupController2 {
 	
@@ -54,11 +54,12 @@ public class GroupController2 {
 	//로그
 	private static final Logger logger = LoggerFactory.getLogger(GroupController2.class);
 	
-	//첫페이지용
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public String group(Model model, HttpSession session) {
+	public String grouprecommend(Model model, HttpSession session) {
 		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
 		Map<String, String> parameter = new HashMap<String, String>();
+		
 		parameter.put("page", "1");
 		if(userInfo != null) {
 			parameter.put("userId", userInfo.getUserId());
@@ -80,7 +81,7 @@ public class GroupController2 {
 		
 		return "group/grouplist2";
 	}
-//	@RequestMapping(value = "/grouprecomandlist", method = RequestMethod.GET)
+	@RequestMapping(value = "/grouprecomandlist", method = RequestMethod.GET)
 	public String getGroupList(@RequestParam Map<String, String> parameter, HttpSession session, Model model) {
 		UserDto user = (UserDto)session.getAttribute("userInfo");
 		if(user != null) {
@@ -93,10 +94,12 @@ public class GroupController2 {
 		logger.info(parameter.toString());
 		
 		List<GroupDto> groupList = groupService.getGroupList(parameter);
+		model.addAttribute("parameter", parameter);
 		model.addAttribute("groupList", groupList);
 		//System.out.println(json);
 		
 		return "group/grouplistresult";
 	}
+
 	
 }

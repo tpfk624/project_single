@@ -194,7 +194,7 @@ $(document).ready(function(){
               <a class="dropdown-item" href="${root}/group/create">모임 만들기</a>
               <a class="dropdown-item" href="${root}/group/grouphomework.jsp">모임 과제 목록보기</a>
               <a class="dropdown-item" href="${root}/group/grouphprogress.jsp">모임 과제 진행률 보기</a>
-              <a class="dropdown-item" href="${root}/group2">모임 목록 추천</a>
+              <a class="dropdown-item" href="${root}/group2/">모임 목록 추천</a>
             </div>
           </li>
           <li class="nav-item dropdown">
