@@ -74,6 +74,7 @@ img {
 							class="rounded-circle" width="90" height="90">
 					</c:if>
 				</div>
+			
 				<!-- 프로필사진 -->
 				<div id="tabs">
 					<div id="user-name">${userInfo.userName}
