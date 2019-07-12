@@ -31,9 +31,11 @@
 	select count(*)
 	from single_board
 	where board_statecode = '1'
+	
 	<if test="boardListNum != 0">
 	and board_list_num = #{boardListNum}
 	</if>
+	
 	<if test="key=='제목'">
 	and board_subject like '%'||#{word}||'%'
 	</if>

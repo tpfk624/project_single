@@ -16,5 +16,12 @@ public interface ReplyDao {
 	
 	// 답변 Delete하기
 	public int answerDelete(int replyNum);
-
+	
+	// 좋아요
+	public int likeS(Map<String, Object> map);
+	// 좋아요 Update
+	public int likeU(int boardNum);
+	// 좋아요 Insert
+	public int likeI(Map<String, Object> map);
+	
 }

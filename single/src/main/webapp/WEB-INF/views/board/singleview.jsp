@@ -57,21 +57,20 @@ $(function() {
 	});
 	
 	
-	
+	// 답변 삭제하기.
 	$(document).on("click",".answerDelete",function (){
 		
 		var replyNum = $(".replyNum").val();
-		alert(replyNum);
-		//location.href="${root}/board/delete?replyNum=" + replyNum;
 		
 		$.ajax({
 			url : '${root}/board/delete',
 			contentType : "application/json",
-			dataType : "json",
-			type : 'delete',
+			//type : 'DELETE',
 			data : {
 				'replyNum': replyNum,
 			},
+			
+			dataType : "json",
 			success : function(response) {
 				if(response.resultCode == 1){
 					alert("삭제 성공");
@@ -85,7 +84,45 @@ $(function() {
 	});
 	
 	
+	// 답변 쓰기 취소.
+	$(document).on("click","#cancleBtn", function () {
+		$(".answer").hide();
+		$("#replyContent").val("");
+	});
+	
+	
+	// 좋아요 기능.
+	$(document).on("click","#like", function () {
+		$.ajax({
+			url : '${root}/board/like',
+			contentType : "application/json",
+			dataType : "json",
+			type : 'POST',
+			data : JSON.stringify({
+				'boardNum': boardNum
+			}),
+			dataType : "json",
+			success : function(response) {
+				if(response.resultCode == 1){
+					//alert("좋아요 성공");
+					location.reload();
+				} else {
+					alert("이미 좋아요를 누르셨습니다");
+				}
+			}
+		});
+	});
+	
+	
+	
+	
+	
 });
+
+
+
+
+
 
 
 function selectanswer(boardNum) {
@@ -170,14 +207,21 @@ function selectanswer(boardNum) {
 	   	<div class="row">
 			<div class="col-lg-2"></div>
 			<!-- 제목 -->
-			<div class="col-lg-5"><h5>${article.boardSubject }</h5><small>좋아요 : ${article.boardViews }</small></div>
-			<div class="col-lg-0"></div>
+			<div class="col-lg-5">
+				<h5 style="margin-top: 2rem">${article.boardSubject }</h5>
+			</div> 
 			<div class="col-lg-4">
+				<div>
+					<img src="${root}/resources/img/bimg/like.jpg" alt="좋아요" width="100" height="40" style="margin-bottom: 0.5rem">
+					${article.boardLike }
+				</div>
 				<small>작성자 : ${article.userId }</small>
 			</div>
-			
-			<div class="col-lg-1"><!-- 좋아요 그림 넣기 + 좋아요 수 나타내기 --></div>
+			<div class="col-lg-1"></div>
 		</div>
+		
+		
+		
 		<div class="row">
 			<div class="col-lg-1"></div>
 			<div class="col-lg-10"><hr style="background-color: #6c757d"></div>
@@ -188,7 +232,7 @@ function selectanswer(boardNum) {
 			<div class="col-lg-3"><small>작성일 : ${article.boardCreatedate }</small></div>
 			<div class="col-lg-4" style="padding-right: 0;"></div>
 			<div class="col-lg-2" style="padding-left: 0;">
-				<button class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">좋아요</button>
+				<button id="like" class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">좋아요</button>
 			</div>
 		</div>
 		
