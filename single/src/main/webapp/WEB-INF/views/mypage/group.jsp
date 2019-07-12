@@ -5,13 +5,7 @@
 <link rel="stylesheet" href="${root}/resources/css/user/group.css">
 
 
-<!-- 아이디 심어주기  -->
-<%
-HttpSession httpSession = request.getSession();
-UserDto userInfo = new UserDto();
-userInfo.setUserId("calubang1@naver.com");
-httpSession.setAttribute("userInfo", userInfo);
-%>
+
 
 
 <script>
