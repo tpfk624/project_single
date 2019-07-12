@@ -6,13 +6,22 @@
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <!-- 네아로 설정값-->
 <!-- 로컬용 -->
-<%-- <c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/> --%>
 <%-- <c:set var = "serviceUrl" value = "https://localhost:8443/single"/> --%>
-<!-- ip설정용 -->
-<c:set var = "callbackUrl" value = "https://192.168.14.22:8443/single/member/callback.jsp"/>
-<c:set var = "serviceUrl" value = "https://192.168.14.22:8443/single"/>
-<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
+<%-- <c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/> --%>
 
+<!-- ip설정용 -->
+<c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/>
+<c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/>
+
+<%-- <c:set var = "serviceUrl" value = "https://192.168.56.1:8443/single"/> --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.56.1:8443/single/member/callback.jsp"/> --%>
+
+<%-- <c:set var = "serviceUrl" value = "https://192.168.14.22:8443/single"/> --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.14.22:8443/single/member/callback.jsp"/> --%>
+
+
+<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
+<c:set var ="redirectURL" value ="${root}/member/registersns"/>
 
 <!-- 네아로 자바스크립트-->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
@@ -112,7 +121,7 @@
 					
 					//registerpage로 전달 되야함
 					$('#naverProfileForm').attr("method","post");
-					$('#naverProfileForm').attr("action","${root}/member/registersns").submit();
+					$('#naverProfileForm').attr("action","{redirectURL}").submit();
 					//회원가입폼으로 값 전달.
 				}else if (data.msg =='refresh'){
 					history.back();
