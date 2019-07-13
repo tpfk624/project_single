@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:if test="${empty sessionScope.userInfo}">99</c:if>
 <c:if test="${!empty sessionScope.userInfo}">
+<div class="groupmain" id="groupmain">
 <script>
 $(function() {
 	$("button.grouppage").click(function() {
@@ -26,6 +27,7 @@ $(function() {
 	
 	//1페이지 호출
 	getHomeworkList(1);
+	
 });
 
 function getHomeworkList(page){
@@ -39,14 +41,15 @@ function getHomeworkList(page){
 		$("#groupmain .homework-group").append(result);
 		progressBarMove();
 		clickFunctionSetting(getHomeworkList);
+		$("section.homework").off("click").on("click", function(){
+			homeworkdetail("${groupNum}", $(this).attr("data-num"));
+		});
 	}
 	
 	ajaxPage(data, url, success);
 }
-
 </script>
-		
-<div class="groupmain" id="groupmain">
+
 	<!-- 모임 이름 뿌져지는 곳 -->
 	<section class="groupsection groupheader">
 		<div class="row">

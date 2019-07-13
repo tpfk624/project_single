@@ -35,6 +35,7 @@
 		
 		<typeAlias alias="chatDto" type="com.kitri.single.group.model.ChatDto"/>
 		<typeAlias alias="homeworkDto" type="com.kitri.single.group.model.HomeworkDto"/>
+		<typeAlias alias="hprogressDto" type="com.kitri.single.group.model.HProgressDto"/>
 		
 	</typeAliases>
 	

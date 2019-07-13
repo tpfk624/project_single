@@ -227,3 +227,20 @@ function progressBarMove(){
 		});
 	}
 }
+function homeworkdetail(groupNum, homeworkNum){
+	var data = {
+		groupNum : groupNum
+		, homeworkNum : homeworkNum
+	}
+	var url = "/single/homework/homeworkdetail";
+	var viewChange = function(result){
+		$("#groupmain").remove();
+		$("div[role=calendar]").remove();
+		$("#contents>.container").append(result);
+		//$("#groupmain").html(result);
+	}
+	
+	ajaxPage(data, url, viewChange);
+	
+	return false
+}

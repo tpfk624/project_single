@@ -7,6 +7,8 @@ HttpSession httpSession = request.getSession();
 UserDto userInfo = new UserDto();
 userInfo.setUserId("calubang2@naver.com");
 httpSession.setAttribute("userInfo", userInfo);
+userInfo.setUserNickname("카루뱅2");
+userInfo.setUserName("안병욱2");
 System.out.println((UserDto)httpSession.getAttribute("userInfo"));
 %>
 <script>

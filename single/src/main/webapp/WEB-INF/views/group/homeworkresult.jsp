@@ -45,3 +45,5 @@
 </c:forEach>
 <%@ include file="/WEB-INF/views/commons/pagination.jsp"%>	
 </c:if>
+<script>
+</script>

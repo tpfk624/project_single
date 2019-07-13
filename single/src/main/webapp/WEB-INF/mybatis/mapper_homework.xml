@@ -110,4 +110,115 @@
 	and group_num = #{groupNum}
 	</select>
 	
+	
+	<select id="selectHomework" parameterType="int" resultMap="homework">
+	select 
+	    hw.homework_num homeworkNum
+	    , hw.group_num groupNum
+	    , hw.homework_subject homeworkSubject
+	    , hw.homework_content homeworkContent
+	    , to_char(hw.homework_startdate, 'yyyy/mm/dd') homeworkStartdate
+	    , to_char(hw.homework_enddate, 'yyyy/mm/dd') homeworkEnddate
+	    , case 
+	        when to_char(hw.homework_enddate, 'yyyymmdd') >= to_char(sysdate, 'yyyymmdd')
+	            then '진행중'
+	        else '종료'
+	    end status
+	    , hw.homework_statecode homeworkStatecode
+	    , sg.group_member_count groupMemberCount
+	    , hp.user_id userId
+	    , u.user_nickname userNickname
+	    , u.user_name userName
+	    , hp.hprogress_subject hprogressSubject
+	    , hp.hprogress_content hprogressContent
+	    , hp.hprogress_success hprogressSuccess
+	    , hp.hprogress_file hprogressFile
+	    , to_char(hp.hprogress_createdate, 'yyyy/mm/dd') hprogressCreatedate
+	    , to_char(hp.hprogress_updatedate, 'yyyy/mm/dd') hprogressUpdatedate
+	from single_homework hw
+		inner join single_group sg
+        	on hw.group_num = sg.group_num
+	    left outer join single_hprogress hp
+	        on hw.homework_num = hp.homework_num
+	    left outer join single_user u
+	        on hp.user_id = u.user_id
+	where
+	    hw.homework_statecode = '1'
+	    and hw.homework_num = #{homeworkNum}
+	order by hp.hprogress_updatedate desc, hp.hprogress_createdate desc
+	</select>
+	
+	<insert id="insertHProgress" parameterType="hprogressDto">
+	insert into single_hprogress(
+		homework_num
+		, user_id
+		, group_num
+		, hprogress_subject
+        , hprogress_content
+        , hprogress_success
+        , hprogress_file
+        , hprogress_createdate
+	)values(
+	    #{homeworkNum}
+	    , #{userId}
+	    , #{groupNum}
+	    , #{hprogressSubject}
+	    , #{hprogressContent}
+	    , #{hprogressSuccess}
+	    , #{hprogressFile}
+	    , sysdate
+	)
+	</insert>
+	
+	<select id="countHprogressByUserId" parameterType="hprogressDto" resultType="int">
+	select count(*)
+	from single_hprogress
+	where user_id = #{userId}
+	and homework_num = #{homeworkNum}
+	</select>
+	
+	<select id="selectHProgress" parameterType="hprogressDto" resultType="hprogressDto">
+	select 
+	    sh.homework_num homeworkNum
+	    , sh.user_id userId
+	    , su.user_nickname userNickname
+	    , sh.group_num groupNum
+	    , sh.hprogress_subject hprogressSubject
+	    , sh.hprogress_content hprogressContent
+	    , sh.hprogress_success hprogressSuccess
+	    , decode(sh.hprogress_success, 'S', '완료', 'P', '진행중', '') hprogressSuccessStr
+	    , sh.hprogress_file hprogressFile
+	    , sh.hprogress_createdate hprogressCreatedate
+	    , sh.hprogress_updatedate hprogressUpdatedate
+	from single_hprogress sh
+		inner join single_user su
+			on sh.user_id = su.user_id
+	where sh.homework_num = #{homeworkNum}
+	and sh.user_id = #{userId}
+	</select>
+	
+	<resultMap id="homework" type="homeworkDto">
+	  	<id property="homeworkNum" column="homeworkNum" />
+	  	<result property="groupNum" column="groupNum"/>
+	  	<result property="homeworkSubject" column="homeworkSubject"/>
+	  	<result property="homeworkContent" column="homeworkContent"/>
+	  	<result property="homeworkStartdate" column="homeworkStartdate"/>
+	  	<result property="homeworkEnddate" column="homeworkEnddate"/>
+	  	<result property="homeworkStatecode" column="homeworkStatecode"/>
+	  	<result property="groupMemberCount" column="groupMemberCount"/>
+	  	<result property="status" column="status"/>
+	  	<collection property="hProgressList" ofType="hprogressDto">
+	    	<id property="homeworkNum" column="homeworkNum"/>
+	    	<id property="userId" column="userId"/>
+	    	<result property="userName" column="userName"/>
+	    	<result property="userNickname" column="userNickname"/>
+	    	<result property="groupNum" column="groupNum"/>
+	    	<result property="hprogressSubject" column="hprogressSubject"/>
+	    	<result property="hprogressContent" column="hprogressContent"/>
+	    	<result property="hprogressSuccess" column="hprogressSuccess"/>
+	    	<result property="hprogressFile" column="hprogressFile"/>
+	    	<result property="hprogressCreatedate" column="hprogressCreatedate"/>
+	    	<result property="hprogressUpdatedate" column="hprogressUpdatedate"/>
+	  	</collection>
+	</resultMap>
 </mapper>
