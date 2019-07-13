@@ -34,11 +34,13 @@ $(function() {
 	});
 	
 	$("#navbar .group-navbar-item").click(function() {
-		$(this).addClass("active");
-		$(this).siblings().removeClass("active");
+		
 	});
 	
-	$("#navbar .grouppage").click(function() {
+	$("#navbar .grouppage").click(function() {	
+		$(this).addClass("active");
+		$(this).siblings().removeClass("active");
+		
 		var data = {
 			groupNum : "${group.groupNum}"
 			, type : $(this).attr("data-page")

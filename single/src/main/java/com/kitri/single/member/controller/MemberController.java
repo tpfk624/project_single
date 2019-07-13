@@ -133,19 +133,39 @@ public class MemberController {
 	@ResponseBody
 	public String login(UserDto userDto, Model model) {
 		logger.debug("login>>>" +userDto.toString());
+		String inputId= userDto.getUserId().trim();
+		String inputPass= userDto.getUserPassword().trim();
 //		System.out.println("login>>>" +userDto.toString());
 		userDto = memberService.login(userDto);
 
-		if(userDto != null) {
+		if(userDto != null 
+				&& userDto.getUserId().equals(inputId)
+				&& userDto.getUserPassword().equals(inputPass)
+				&& userDto.getUserStatecode().equals("1")) {
 			//로그인 성공
 			model.addAttribute("userInfo", userDto);
 			return "{\"msg\":\"1\"}";
-		}else {
-			//로그인 실패
+		}else if(userDto == null ) {
+			//아이디가 존재하지 않는 회원입니다.
 			model.addAttribute("userInfo", null);
-			return "{\"msg\":\"0\"}";
+			return "{\"msg\":\"11\"}";
 		}
-//		return HOME_REDIRECT_URL ;
+		else if(userDto != null 
+				&& userDto.getUserId().equals(inputId)
+				&& !userDto.getUserPassword().equals(inputPass)
+				&& userDto.getUserStatecode().equals("1")) {
+			//비밀번호가 틀렸습니다.
+			model.addAttribute("userInfo", userDto);
+			return "{\"msg\":\"12\"}";
+		}else if(userDto != null
+				&&userDto.getUserStatecode().equals("0")) {
+			//탈퇴한 회원입니다.
+			model.addAttribute("userInfo", userDto);
+			return "{\"msg\":\"13\"}";
+		}
+		
+		//알수 없는 에러입니다.
+		return "{\"msg\":\"99\"}";
 	}
 	
 	// 로그아웃

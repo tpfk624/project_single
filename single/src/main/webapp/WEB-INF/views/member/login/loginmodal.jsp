@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/commons/alert_danger.jsp"%>
+
 <!-- 
 ----설명---- 
 네이버 로그인 모달창 입니다.
@@ -10,15 +11,15 @@ id: loginmodal의 display를 block으로 변경해주세요.
  
 <!-- 네아로 설정값-->
 <!-- 로컬용 -->
-<!-- <c:set var = "serviceUrl" value = "https://localhost:8443/single"/> -->
-<!-- <c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/> -->
+<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
+<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
 
 <!-- ip설정용 -->
-<c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/>
-<c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/>
+<%-- <c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/> --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/>  --%>
 
-<!-- <c:set var = "serviceUrl" value = "https://192.168.56.1:8443/single"/> -->
-<!-- <c:set var = "callbackUrl" value = "https://192.168.56.1:8443/single/member/callback.jsp"/> -->
+<%--<c:set var = "serviceUrl" value = "https://192.168.14.14:8443/single"/>  --%>
+<%-- <c:set var = "callbackUrl" value = "https://192.168.14.14:8443/single/member/callback.jsp"/>  --%>
 
 <%-- <c:set var = "serviceUrl" value = "https://192.168.14.22:8443/single"/> --%>
 <%-- <c:set var = "callbackUrl" value = "https://192.168.14.22:8443/single/member/callback.jsp"/> --%>
@@ -63,6 +64,7 @@ $(document).ready(function(){
 			data: formdata,
 			dataType : "json", //서버에서 반환되는 형식
 			success :function(data){
+				console.log('datareceive :'+ data.msg);
 				if(data.msg == '1'){
 					console.log('로그인에 성공하였습니다.');
 					console.log('datareceive :'+ data);
@@ -72,8 +74,14 @@ $(document).ready(function(){
 //		 				history.go();
 //		 				history.forward();
 				}
-				if(data.msg == '0'){
-					showAlertModal('로그인 실패', '아이디와 비밀번호를 확인해주세요.')
+				else if(data.msg == '11'){
+					showAlertModal('로그인 실패', '존재하지 않는 아이디입니다.')
+				}
+				else if(data.msg == '12'){
+					showAlertModal('로그인 실패', '비밀번호가 틀렸습니다.')
+				}
+				else if(data.msg == '13'){
+					showAlertModal('로그인 실패', '탈퇴한 회원입니다.')
 				}
 			
 			},error: function (){

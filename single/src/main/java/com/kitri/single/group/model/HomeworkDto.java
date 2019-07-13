@@ -11,12 +11,14 @@ public class HomeworkDto {
 	private String homeworkStartdate;
 	private String homeworkEnddate;
 	private String homeworkStatecode;
+	private int groupMemberCount;
+	private int homeworkSuccessCount;
 	private int progressBar;
 	private String status;
 	private List<HProgressDto> hProgressList;
 	
 	public HomeworkDto(){
-		hProgressList = new ArrayList<HProgressDto>();
+		//hProgressList = new ArrayList<HProgressDto>();
 	}
 	
 	public int getHomeworkNum() {
@@ -69,30 +71,40 @@ public class HomeworkDto {
 	public void sethProgressList(List<HProgressDto> hProgressList) {
 		this.hProgressList = hProgressList;
 	}
-	
-
 	public int getProgressBar() {
 		return progressBar;
 	}
-
 	public void setProgressBar(int progressBar) {
 		this.progressBar = progressBar;
 	}
-
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public int getGroupMemberCount() {
+		return groupMemberCount;
+	}
+	public void setGroupMemberCount(int groupMemberCount) {
+		this.groupMemberCount = groupMemberCount;
+	}
+
+	public int getHomeworkSuccessCount() {
+		return homeworkSuccessCount;
+	}
+
+	public void setHomeworkSuccessCount(int homeworkSuccessCount) {
+		this.homeworkSuccessCount = homeworkSuccessCount;
 	}
 
 	@Override
 	public String toString() {
 		return "HomeworkDto [homeworkNum=" + homeworkNum + ", groupNum=" + groupNum + ", homeworkSubject="
 				+ homeworkSubject + ", homeworkContent=" + homeworkContent + ", homeworkStartdate=" + homeworkStartdate
-				+ ", homeworkEnddate=" + homeworkEnddate + ", homeworkStatecode=" + homeworkStatecode + ", progressBar="
-				+ progressBar + ", status=" + status + ", hProgressList=" + hProgressList + "]";
+				+ ", homeworkEnddate=" + homeworkEnddate + ", homeworkStatecode=" + homeworkStatecode
+				+ ", groupMemberCount=" + groupMemberCount + ", homeworkSuccessCount=" + homeworkSuccessCount
+				+ ", progressBar=" + progressBar + ", status=" + status + ", hProgressList=" + hProgressList + "]";
 	}
-
+	
 }

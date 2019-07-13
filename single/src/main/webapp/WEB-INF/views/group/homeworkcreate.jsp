@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:if test="${empty sessionScope.userInfo}">99</c:if>
 <c:if test="${!empty sessionScope.userInfo}">
+<div class="groupmain" id="groupmain">
 <script>
 $(function() {
 	$('#startdate').datepicker({
@@ -109,8 +110,7 @@ $(function() {
 	});
 })
 </script>
-		
-<div class="groupmain" id="groupmain">
+
 	<!-- 모임 이름 뿌져지는 곳 -->
 	<section class="groupsection groupheader">
 		<div class="row">
