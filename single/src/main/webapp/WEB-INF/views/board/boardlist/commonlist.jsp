@@ -130,7 +130,7 @@ $(function () {
 						</li>
 					</c:otherwise>
 
-				</c:choose>
+				</c:choose> 
 			</c:forEach>
 
 		</ul>

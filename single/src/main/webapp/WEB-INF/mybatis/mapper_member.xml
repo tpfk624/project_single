@@ -93,7 +93,7 @@
                        , auth_key authKey, auth_state authState
 	from single_user
 	where user_id = #{userId}
-		  and user_password = #{userPassword}
+<!-- 		  and user_password = #{userPassword} -->
 	</select>
 </mapper>
    

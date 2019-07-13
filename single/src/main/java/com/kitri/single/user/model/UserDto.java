@@ -18,6 +18,9 @@ public class UserDto {
 	private String userJoindate;
 	private String userOutdate;
 	private String userStatecode;
+	private int totallike;
+	private int rownum;
+	
 	
 	private String newpass; // 새 비밀번호 (수정)
 
@@ -30,6 +33,24 @@ public class UserDto {
 	private SnsDto snsDto;
 
 	
+	
+	
+	public int getTotallike() {
+		return totallike;
+	}
+
+	public void setTotallike(int totallike) {
+		this.totallike = totallike;
+	}
+
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+
 	public String getAuthState() {
 		return authState;
 	}

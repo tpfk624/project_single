@@ -149,8 +149,6 @@ $(document).ready(function(){
 <body>
 
 
-
-
   <!-- Navigation -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark background-blue fixed-top">
     <div class="container">

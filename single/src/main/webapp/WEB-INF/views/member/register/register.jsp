@@ -100,18 +100,18 @@ $(document).ready(function(){
 <!-- 				placeholder="1234"> _ <input type="text" -->
 <!-- 				class="form-control" id="tel3" name="tel3" placeholder="5678"> -->
 	</div>
-	<div class="form-group" align="left">
-		<label for="">주소</label><br>
-		<div id="addressdiv" class="custom-control-inline">
-			<input type="text" class="form-control" id="zipcode"
-				name="userZipcode" placeholder="우편번호" size="7" maxlength="5"
-				readonly="readonly">
-		</div>
-		<input type="text" class="form-control" id="userAddress" name="userAddress"
-			placeholder="" readonly="readonly"> <input type="text"
-			class="form-control" id="userAddressDetail" name="userAddressDetail"
-			placeholder="" readonly="readonly">
-	</div>
+<!-- 	<div class="form-group" align="left"> -->
+<!-- 		<label for="">주소</label><br> -->
+<!-- 		<div id="addressdiv" class="custom-control-inline"> -->
+<!-- 			<input type="text" class="form-control" id="zipcode" -->
+<!-- 				name="userZipcode" placeholder="우편번호" size="7" maxlength="5" -->
+<!-- 				readonly="readonly"> -->
+<!-- 		</div> -->
+<!-- 		<input type="text" class="form-control" id="userAddress" name="userAddress" -->
+<!-- 			placeholder="" readonly="readonly"> <input type="text" -->
+<!-- 			class="form-control" id="userAddressDetail" name="userAddressDetail" -->
+<!-- 			placeholder="" readonly="readonly"> -->
+<!-- 	</div> -->
     
     <div class="form-group" align="left">
     	<label for="">생일</label><br>

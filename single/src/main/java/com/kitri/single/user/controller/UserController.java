@@ -131,6 +131,7 @@ public class UserController {
 		
 		userService.userModify(userDto);
 		
+		
 		model.addAttribute("userInfo", userDto);
 		
 		JSONObject json = new JSONObject();
