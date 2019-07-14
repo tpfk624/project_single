@@ -234,6 +234,12 @@ CREATE TABLE single_group (
 	group_statecode    varchar2(1)    NULL      -- 모임상태코드
 );
 
+-- 모임 기본키
+CREATE UNIQUE INDEX PK_single_group
+	ON single_group ( -- 모임
+		group_num ASC -- 모임번호
+	);
+
 -- 모임
 ALTER TABLE single_group
 	ADD
@@ -247,6 +253,12 @@ CREATE TABLE single_group_category (
 	group_category_num  number        NOT NULL, -- 모임카테고리번호
 	group_category_name varchar2(128) NULL      -- 모임카테고리이름
 );
+
+-- 모임카테고리 기본키
+CREATE UNIQUE INDEX PK_single_group_category
+	ON single_group_category ( -- 모임카테고리
+		group_category_num ASC -- 모임카테고리번호
+	);
 
 -- 모임카테고리
 ALTER TABLE single_group_category
@@ -264,6 +276,13 @@ CREATE TABLE single_group_member (
 	group_joindate         DATE         NULL,     -- 모임가입일
 	group_requestdate      DATE         NULL      -- 모임요청일
 );
+
+-- 모임구성원 기본키
+CREATE UNIQUE INDEX PK_single_group_member
+	ON single_group_member ( -- 모임구성원
+		group_num ASC, -- 모임번호
+		user_id   ASC  -- 유저아이디
+	);
 
 -- 모임구성원
 ALTER TABLE single_group_member
@@ -285,6 +304,12 @@ CREATE TABLE single_homework (
 	homework_statecode varchar2(1)    NULL      -- 모임과제상태코드
 );
 
+-- 모임과제 기본키
+CREATE UNIQUE INDEX PK_single_homework
+	ON single_homework ( -- 모임과제
+		homework_num ASC -- 모임과제번호
+	);
+
 -- 모임과제
 ALTER TABLE single_homework
 	ADD
@@ -301,6 +326,14 @@ CREATE TABLE single_chat (
 	chat_content varchar2(1024) NULL      -- 채팅내용
 );
 
+-- 모임채팅 기본키
+CREATE UNIQUE INDEX PK_single_chat
+	ON single_chat ( -- 모임채팅
+		group_num ASC, -- 모임번호
+		user_id   ASC, -- 유저아이디
+		chat_time ASC  -- 채팅날짜
+	);
+
 -- 모임채팅
 ALTER TABLE single_chat
 	ADD
@@ -313,16 +346,24 @@ ALTER TABLE single_chat
 
 -- 모임과제진행
 CREATE TABLE single_hprogress (
-	homework_num         number         NOT NULL, -- 모임과제번호
-	user_id              varchar2(64)   NOT NULL, -- 유저아이디
-	group_num            number         NOT NULL, -- 모임번호
-	hprogress_subject    varchar2(256)  NULL,     -- 과제진행제목
-	hprogress_content    varchar2(4000) NULL,     -- 과제진행내용
-	hprogress_success    varchar2(1)    NULL,     -- 과제성공여부
-	hprogress_file       varchar2(256)  NULL,     -- 파일경로
-	hprogress_createdate DATE           NULL,     -- 등록일
-	hprogress_updatedate DATE           NULL      -- 수정일
+	homework_num          number         NOT NULL, -- 모임과제번호
+	user_id               varchar2(64)   NOT NULL, -- 유저아이디
+	group_num             number         NOT NULL, -- 모임번호
+	hprogress_subject     varchar2(256)  NULL,     -- 과제진행제목
+	hprogress_content     varchar2(4000) NULL,     -- 과제진행내용
+	hprogress_success     varchar2(1)    NULL,     -- 과제성공여부
+	hprogress_file        varchar2(256)  NULL,     -- 파일경로
+	hprogress_file_origin varchar2(256)  NULL,     -- 파일원본이름
+	hprogress_createdate  DATE           NULL,     -- 등록일
+	hprogress_updatedate  DATE           NULL      -- 수정일
 );
+
+-- 모임과제진행 기본키
+CREATE UNIQUE INDEX PK_single_hprogress
+	ON single_hprogress ( -- 모임과제진행
+		homework_num ASC, -- 모임과제번호
+		user_id      ASC  -- 유저아이디
+	);
 
 -- 모임과제진행
 ALTER TABLE single_hprogress
@@ -353,6 +394,12 @@ CREATE TABLE single_user (
 	auth_key           VARCHAR2(128) NULL      -- 인증키
 );
 
+-- 유저 기본키
+CREATE UNIQUE INDEX PK_single_user
+	ON single_user ( -- 유저
+		user_id ASC -- 유저아이디
+	);
+
 -- 유저
 ALTER TABLE single_user
 	ADD
@@ -377,6 +424,12 @@ CREATE TABLE single_board (
 	board_statecode  varchar2(1)   NULL      -- 글상태코드
 );
 
+-- 게시판 기본키
+CREATE UNIQUE INDEX PK_single_board
+	ON single_board ( -- 게시판
+		board_num ASC -- 글번호
+	);
+
 -- 게시판
 ALTER TABLE single_board
 	ADD
@@ -391,6 +444,12 @@ CREATE TABLE single_board_category (
 	category_name varchar2(128) NULL      -- 카테고리이름
 );
 
+-- 게시판카테고리 기본키
+CREATE UNIQUE INDEX PK_single_board_category
+	ON single_board_category ( -- 게시판카테고리
+		category_num ASC -- 게시판카테고리번호
+	);
+
 -- 게시판카테고리
 ALTER TABLE single_board_category
 	ADD
@@ -404,6 +463,13 @@ CREATE TABLE single_like (
 	board_num number       NOT NULL, -- 글번호
 	user_id   varchar2(64) NOT NULL  -- 유저아이디
 );
+
+-- 좋아요 기본키
+CREATE UNIQUE INDEX PK_single_like
+	ON single_like ( -- 좋아요
+		board_num ASC, -- 글번호
+		user_id   ASC  -- 유저아이디
+	);
 
 -- 좋아요
 ALTER TABLE single_like
@@ -424,6 +490,12 @@ CREATE TABLE single_reply (
 	reply_createdate DATE           NULL      -- 작성일
 );
 
+-- 댓글 기본키
+CREATE UNIQUE INDEX PK_single_reply
+	ON single_reply ( -- 댓글
+		reply_num ASC -- 댓글번호
+	);
+
 -- 댓글
 ALTER TABLE single_reply
 	ADD
@@ -443,6 +515,12 @@ CREATE TABLE single_calendar (
 	calendar_y_loc   float         NULL      -- 일정장소Y좌표
 );
 
+-- 모임일정 기본키
+CREATE UNIQUE INDEX PK_single_calendar
+	ON single_calendar ( -- 모임일정
+		calendar_num ASC -- 모임일정번호
+	);
+
 -- 모임일정
 ALTER TABLE single_calendar
 	ADD
@@ -460,6 +538,12 @@ CREATE TABLE single_hashtag (
 	group_num        number        NULL      -- 모임번호
 );
 
+-- 해시태그 기본키
+CREATE UNIQUE INDEX PK_single_hashtag
+	ON single_hashtag ( -- 해시태그
+		hashtag_num ASC -- 해시태그번호
+	);
+
 -- 해시태그
 ALTER TABLE single_hashtag
 	ADD
@@ -473,6 +557,12 @@ CREATE TABLE single_hashtag_type (
 	hashtag_type_num  number        NOT NULL, -- 해시태그타입번호
 	hasgtag_type_name varchar2(128) NULL      -- 해시태그타입이름
 );
+
+-- 해시태그타입 기본키
+CREATE UNIQUE INDEX PK_single_hashtag_type
+	ON single_hashtag_type ( -- 해시태그타입
+		hashtag_type_num ASC -- 해시태그타입번호
+	);
 
 -- 해시태그타입
 ALTER TABLE single_hashtag_type
@@ -490,6 +580,12 @@ CREATE TABLE single_board_list (
 	board_category_num number        NULL      -- 게시판카테고리번호
 );
 
+-- 게시판리스트 기본키
+CREATE UNIQUE INDEX PK_single_board_list
+	ON single_board_list ( -- 게시판리스트
+		board_list_num ASC -- 게시판번호
+	);
+
 -- 게시판리스트
 ALTER TABLE single_board_list
 	ADD
@@ -503,6 +599,12 @@ CREATE TABLE single_board_type (
 	board_type_num  number        NOT NULL, -- 게시판형식번호
 	board_type_name varchar2(128) NULL      -- 게시판형식이름
 );
+
+-- 게시판형식 기본키
+CREATE UNIQUE INDEX PK_single_board_type
+	ON single_board_type ( -- 게시판형식
+		board_type_num ASC -- 게시판형식번호
+	);
 
 -- 게시판형식
 ALTER TABLE single_board_type
@@ -521,6 +623,12 @@ CREATE TABLE single_search_log (
 	search_site    varchar2(256)  NULL      -- 검색사이트
 );
 
+-- 검색로그 기본키
+CREATE UNIQUE INDEX PK_single_search_log
+	ON single_search_log ( -- 검색로그
+		search_log_num ASC -- 검색로그번호
+	);
+
 -- 검색로그
 ALTER TABLE single_search_log
 	ADD
@@ -535,6 +643,13 @@ CREATE TABLE single_stamp (
 	group_num number       NOT NULL  -- 모임번호
 );
 
+-- 찜한모임 기본키
+CREATE UNIQUE INDEX PK_single_stamp
+	ON single_stamp ( -- 찜한모임
+		user_id   ASC, -- 유저아이디
+		group_num ASC  -- 모임번호
+	);
+
 -- 찜한모임
 ALTER TABLE single_stamp
 	ADD
@@ -546,11 +661,11 @@ ALTER TABLE single_stamp
 
 -- 소셜로그인
 CREATE TABLE sns_login (
-	sns_id           VARCHAR2(45)  NOT NULL, -- 소셜아이디
 	sns_type         VARCHAR(32)   NOT NULL, -- 소셜타입
-	user_id          varchar2(64)  NOT NULL, -- 유저아이디
-	sns_token        VARCHAR2(128) NOT NULL, -- 갱신토큰
 	sns_connect_date VARCHAR2(45)  NULL,     -- 소셜접속일
+	user_id          varchar2(64)  NOT NULL, -- 유저아이디
+	sns_id           VARCHAR2(45)  NOT NULL, -- 소셜아이디
+	sns_token        VARCHAR2(128) NOT NULL, -- 갱신토큰
 	sns_email        VARCHAR2(45)  NULL,     -- 소셜이메일
 	sns_nickname     VARCHAR2(45)  NULL,     -- 소셜닉네임
 	sns_profile      VARCHAR2(45)  NULL,     -- 소셜이미지
@@ -560,13 +675,20 @@ CREATE TABLE sns_login (
 	sns_gender       VARCHAR2(45)  NULL      -- 소셜성별
 );
 
+-- 소셜로그인 기본키
+CREATE UNIQUE INDEX PK_sns_login
+	ON sns_login ( -- 소셜로그인
+		sns_type ASC, -- 소셜타입
+		sns_id   ASC  -- 소셜아이디
+	);
+
 -- 소셜로그인
 ALTER TABLE sns_login
 	ADD
 		CONSTRAINT PK_sns_login -- 소셜로그인 기본키
 		PRIMARY KEY (
-			sns_id,   -- 소셜아이디
-			sns_type  -- 소셜타입
+			sns_type, -- 소셜타입
+			sns_id    -- 소셜아이디
 		);
 
 -- 모임

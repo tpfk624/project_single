@@ -8,30 +8,39 @@
 				class="active"></li>
 			<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
 			<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+			<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
 		</ol>
 		<div class="carousel-inner" role="listbox">
 			<!-- Slide One - Set the background image for this slide in the line below -->
 			<div class="carousel-item active"
-				style="background-image: url('https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145')">
+				style="background-image: url('${root}/resources/img/group/study.jpg')">
 				<div class="carousel-caption d-none d-md-block">
-					<h3>메인 1</h3>
-					<p>가장 최근에 생성된걸 보일까?</p>
+					<h3>스터디</h3>
+					<!-- <p>같이 공부하실분 모집해요</p> -->
 				</div>
 			</div>
 			<!-- Slide Two - Set the background image for this slide in the line below -->
 			<div class="carousel-item"
-				style="background-image: url('https://cdn.studysearch.co.kr/images/leader/1939/8739-1528697685.png?v=1528697686')">
+				style="background-image: url('${root}/resources/img/group/hobby1.jpg')">
 				<div class="carousel-caption d-none d-md-block">
-					<h3>메인 2</h3>
-					<p>가장 활동량이 많은거?</p>
+					<h3>취미</h3>
+					<!-- <p>너 내 동료가 되라</p> -->
 				</div>
 			</div>
 			<!-- Slide Three - Set the background image for this slide in the line below -->
 			<div class="carousel-item"
-				style="background-image: url('https://cdn.studysearch.co.kr/images/leader/1939/8740-1547710638.png?v=1547710638')">
+				style="background-image: url('${root}/resources/img/group/friends.jpg')">
 				<div class="carousel-caption d-none d-md-block">
-					<h3>메인 3</h3>
-					<p>혹은 다른방법</p>
+					<h3>친목도모</h3>
+					<!-- <p>이제 혼자는 싫어요...</p> -->
+				</div>
+			</div>
+			<!-- Slide Four - Set the background image for this slide in the line below -->
+			<div class="carousel-item"
+				style="background-image: url('${root}/resources/img/group/mealmeeting1.jpg')">
+				<div class="carousel-caption d-none d-md-block">
+					<h3>맛집탐방</h3>
+					<!-- <p>세상의 모든 음식을 다 먹을때까지!!</p> -->
 				</div>
 			</div>
 		</div>

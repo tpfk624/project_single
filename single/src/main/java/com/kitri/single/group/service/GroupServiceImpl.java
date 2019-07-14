@@ -24,6 +24,7 @@ import com.kitri.single.group.model.GroupMemberDto;
 import com.kitri.single.hashtag.dao.HashtagDao;
 import com.kitri.single.hashtag.model.HashtagDto;
 import com.kitri.single.user.model.UserDto;
+import com.kitri.single.util.Pagination;
 import com.kitri.single.util.SiteConstance;
 
 @Service
@@ -36,7 +37,9 @@ public class GroupServiceImpl implements GroupService {
 	private static final Logger logger = LoggerFactory.getLogger(GroupServiceImpl.class);
 	
 	@Override
-	public List<GroupDto> getGroupList(Map<String, String> parameter) {
+	public Pagination<GroupDto> getGroupList(Map<String, String> parameter) {
+		GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+		
 		int page = Integer.parseInt(parameter.get("page"));
 		int groupSize = SiteConstance.GROUP_SIZE;
 				
@@ -46,13 +49,32 @@ public class GroupServiceImpl implements GroupService {
 		parameter.put("endRow", endRow + "");
 		parameter.put("startRow", startRow + "");
 		
-		//System.out.println(parameter);
-		List<GroupDto> list = sqlSession.getMapper(GroupDao.class).getGroupList(parameter);
+		List<GroupDto> list = null;
+		int totalPageCount = 0;
+		int totalListCount = 0;
+		if("yes".equals(parameter.get("isMyGroup"))) {
+			list = groupDao.getMyGroupList(parameter);
+			totalPageCount = 1;
+			totalListCount = list.size();
+		}else {
+			list = groupDao.getGroupList(parameter);
+			totalListCount = groupDao.selectGroupCount(parameter);
+			totalPageCount = (totalListCount - 1) / groupSize + 1;
+		}
+		
+		Pagination<GroupDto> pagination = new Pagination<GroupDto>();
+		pagination.setCurrentPage(page);
+		pagination.setTotalPageCount(totalPageCount);
+		pagination.setTotalListCount(totalListCount);
+		pagination.setList(list);
+		
+		
 		//System.out.println(list);
-		JSONObject jsonObject = new JSONObject();
-		JSONArray jsonArray = new JSONArray(list);
-		jsonObject.put("groupList", jsonArray);
-		return list;
+		//JSONObject jsonObject = new JSONObject();
+		//JSONArray jsonArray = new JSONArray(list);
+		//jsonObject.put("groupList", jsonArray);
+		//jsonObject.put("pagination", new JSONObject(pagination));
+		return pagination;
 	}
 
 	@Override
@@ -69,7 +91,7 @@ public class GroupServiceImpl implements GroupService {
 			parameter.put("groupNum", groupNum);
 			List<String> tagList = sqlSession.getMapper(HashtagDao.class).getHashtagList(parameter);
 			groupDto.setHashtagList(tagList);
-			groupDto.getGroupDescription().replaceAll("\n", "<br>");
+			groupDto.setGroupDescription(groupDto.getGroupDescription().replace("\n", "<br>"));
 		}
 		
 		return groupDto;
@@ -81,6 +103,7 @@ public class GroupServiceImpl implements GroupService {
 		GroupDao groupDao = (GroupDao)sqlSession.getMapper(GroupDao.class);
 		int groupNum = groupDao.selectGroupNumSeq();
 		groupDto.setGroupNum(groupNum);
+		groupDto.setGroupDescription(groupDto.getGroupDescription().replace("\n", "<br>"));
 		groupNum = groupDao.insertGroup(groupDto);
 		
 		String[] hashtags = null;
@@ -281,6 +304,9 @@ public class GroupServiceImpl implements GroupService {
 			groupMemberDto.setGroupMemberStatecode("M");
 			groupMemberDto.setUserId(parameter.get("targetId"));		
 			groupDao.updateGroupMember(groupMemberDto);
+			
+			//승인시 찜목록에서 삭제
+			groupDao.deleteGroupStamp(groupMemberDto);
 		}
 		return result;
 	}
@@ -308,10 +334,19 @@ public class GroupServiceImpl implements GroupService {
 	
 	@Override
 	public String groupDelete(int groupNum) {
+		//그룹 삭제
 		GroupDto groupDto = new GroupDto();
 		groupDto.setGroupNum(groupNum);
 		groupDto.setGroupStatecode(99);
-		sqlSession.getMapper(GroupDao.class).updateGroup(groupDto);
+		groupDto.setGroupMemberCount(0);
+		GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+		
+		//그룹원 전체 D 상태로 변경
+		groupDao.updateGroup(groupDto);
+		GroupMemberDto groupMemberDto = new GroupMemberDto();
+		groupMemberDto.setGroupNum(groupNum);
+		groupMemberDto.setGroupMemberStatecode("D");
+		groupDao.updateGroupMember(groupMemberDto);
 		return makeJSON(1, "정상적으로 모임이 삭제되었습니다");
 	}
 	

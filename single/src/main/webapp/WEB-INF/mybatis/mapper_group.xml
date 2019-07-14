@@ -22,16 +22,14 @@
 	            , g.group_member_limit as groupMemberLimit	    
 	            , g.group_main_place as groupMainPlace
 	            , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+	        	, LISTAGG(tag.hashtag_content, ',') within group(order by tag.hashtag_num) hashtagContent
 	        from 
 	            single_group g
 	            left outer join single_group_category gc
 	                on g.group_category_num = gc.group_category_num
+	        	left outer join single_hashtag tag
+                	on g.group_num = tag.group_num
 	        where g.group_statecode = '1'
-	        
-	        <if test="groupCategoryNum != 0 ">
-	        and g.group_category_num = #{groupCategoryNum}
-	        </if>
-	        <if test="isMyGroup == null || isMyGroup == '' ">
 	        and g.group_member_count &lt; g.group_member_limit
 			and g.group_num not in (
 			                        select group_num
@@ -39,22 +37,101 @@
 			                        where upper(gm.group_member_statecode) != upper('D')
 			                        and gm.user_id = #{userId}
 			                        )
-			</if>
-			<if test="isMyGroup eq 'yes'.toString ">
-			and g.group_num in (
-			                        select group_num
-			                        from single_group_member gm
-			                        where upper(gm.group_member_statecode) != 'D' 
-			                        and upper(gm.group_member_statecode) != 'W'
-			                        and gm.user_id = #{userId}
-			                        )
-			</if>
+	        group by g.group_num
+            , g.group_category_num 
+            , gc.group_category_name 
+            , g.group_name
+            , g.group_description
+            , g.group_img_src
+            , g.group_member_count
+            , g.group_member_limit	    
+            , g.group_main_place
+            , g.group_createdate
 	        order by g.group_num
 	        ) ordergroup
 	    where rownum &lt;= #{endRow}
+	    <if test="word != null and word != '' and key != null and key != '' ">
+	    and ordergroup.${key} like '%'||#{word}||'%'
+	    </if>
 	    ) rowgroup
 	where rowgroup.rn > #{startRow}
 	</select>
+	
+	<select id="selectGroupCount" parameterType="map" resultType="int">
+	select 
+	    count(groupNum)
+	from (
+	    select 
+	        g.group_num groupNum
+	        , g.group_category_num groupCategoryNum
+	        , gc.group_category_name groupCategoryName
+	        , g.group_name as groupName
+	        , g.group_description as groupDescription
+	        , g.group_img_src as groupImgSrc
+	        , g.group_member_count as groupMemberCount
+	        , g.group_member_limit as groupMemberLimit	    
+	        , g.group_main_place as groupMainPlace
+	        , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+	        , LISTAGG(tag.hashtag_content, ',') within group(order by tag.hashtag_num) hashtagContent
+	    from 
+	        single_group g
+	        left outer join single_group_category gc
+	            on g.group_category_num = gc.group_category_num
+	        left outer join single_hashtag tag
+	            on g.group_num = tag.group_num
+	    where g.group_statecode = '1'
+	    and g.group_member_count &lt; g.group_member_limit
+	    and g.group_num not in (
+	                            select group_num
+	                            from single_group_member gm
+	                            where upper(gm.group_member_statecode) != upper('D')
+	                            and gm.user_id = #{userId}
+	                            )
+	    group by g.group_num
+	    , g.group_category_num 
+	    , gc.group_category_name 
+	    , g.group_name
+	    , g.group_description
+	    , g.group_img_src
+	    , g.group_member_count
+	    , g.group_member_limit	    
+	    , g.group_main_place
+	    , g.group_createdate
+	    order by g.group_num
+	    ) ordergroup
+	where 1=1
+	<if test="word != null and word != '' ">
+	and ordergroup.${key} like '%'||#{word}||'%'
+    </if>
+	</select>
+	
+	<select id="getMyGroupList" parameterType="map" resultType="groupDto">
+    select 
+        g.group_num groupNum
+        , g.group_category_num groupCategoryNum
+        , gc.group_category_name groupCategoryName
+        , g.group_name as groupName
+        , g.group_description as groupDescription
+        , g.group_img_src as groupImgSrc
+        , g.group_member_count as groupMemberCount
+        , g.group_member_limit as groupMemberLimit	    
+        , g.group_main_place as groupMainPlace
+        , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+    from 
+        single_group g
+        left outer join single_group_category gc
+            on g.group_category_num = gc.group_category_num
+    where g.group_statecode = '1'
+    and g.group_num in (
+                      select group_num
+                      from single_group_member gm
+                      where upper(gm.group_member_statecode) != 'D' 
+                      and upper(gm.group_member_statecode) != 'W'
+                      and gm.user_id = #{userId}
+                      )
+    order by g.group_num
+	</select>
+	
 	
 	<select id="getGroup" parameterType="int" resultType="groupDto">
 	select 
@@ -261,6 +338,12 @@
 	)
 	</insert>
 	
+	<delete id="deleteGroupStamp" parameterType="groupMemberDto">
+	delete single_stamp
+	where user_id = #{userId}
+	and group_num = #{groupNum}
+	</delete>
+	
 	<select id="countGroupStamp" parameterType="map" resultType="int">
 	select count(*)
 	from single_stamp
@@ -298,7 +381,10 @@
 		, group_joindate = sysdate
 		, group_requestdate = null
 		</if>
-	where user_id = #{userId}
+	where 1=1
+	<if test="userId != null and userId != '' ">
+	and user_id = #{userId}
+	</if>
 	<if test="groupNum != 0">
 	and group_num = #{groupNum}
 	</if>

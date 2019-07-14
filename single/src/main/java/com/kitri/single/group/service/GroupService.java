@@ -7,6 +7,7 @@ import com.kitri.single.group.model.CalendarDto;
 import com.kitri.single.group.model.GroupDto;
 import com.kitri.single.group.model.GroupMemberDto;
 import com.kitri.single.user.model.UserDto;
+import com.kitri.single.util.Pagination;
 
 public interface GroupService {
 	//그룹 전체 개수
@@ -14,7 +15,7 @@ public interface GroupService {
 	
 	//그룹관련
 	public GroupDto getGroup(int groupNum);
-	public List<GroupDto> getGroupList(Map<String, String> parameter);
+	public Pagination<GroupDto> getGroupList(Map<String, String> parameter);
 	public String groupModify(GroupDto groupDto, String groupHashtag);
 	public String createGroup(GroupDto groupDto, UserDto userInfo, String groupHashtag);
 	public String groupDelete(int groupNum);

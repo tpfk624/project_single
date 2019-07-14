@@ -132,7 +132,7 @@ $(function() {
 		<tbody>
 			<c:forEach items="${memberlist}" var="member" varStatus="status">
 			<tr data-userId="${member.userId}" >
-				<td>${status.index}</td>
+				<td>${status.count}</td>
 				<td class="userNickname">${member.userNickname}</td>
 				<td>${member.groupRequestdate}</td>
 				<td>${member.groupJoindate}</td>

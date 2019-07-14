@@ -8,6 +8,12 @@
 <script src="${root}/resources/js/group/group.js"></script>
 <c:set var="parameter" value="${requestScope.parameter}"></c:set>
 <script>
+//페이징 처리를 위한 부분
+var page = "";
+var key = "";
+var word = "";
+var totalPageCount = "";
+var totalListCount = "";
 $(function() {
 	//$(".groupcard").on("click", groupcardClick);
 	
@@ -25,17 +31,86 @@ $(function() {
 	
 	//내 모임보기 버튼
 	$("button.mygrouplist").on("click", function() {
-		getGroupList("1", "", "", "yes", "");
+		$("button.mygrouplist").toggle();
+		$()
+		$("#categoryFilter").val("0").siblings("button").text("카테고리");
+		if($(this).hasClass("my")){
+			getGroupList("1", "", "", "yes", "");
+		}else{
+			getGroupList("1", "", "", "", "");
+		}
+		
 	});
 	
 	//모두보기 버튼
-	$("section.search .dropdown").on("hidden.bs.dropdown", function(){
-		var role = $(this).find("input[type=hidden]").val();
-		if(role == 'all'){
+	/* $("section.search .dropdown").on("hidden.bs.dropdown", function(){
+		$("#categoryFilter").val("0").siblings("button").text("카테고리");
+		
+		//page, key, word, isMyGroup, groupCategoryNum
+		var key = $(this).find("input[type=hidden]").val();
+		var word = $("#word").val();
+		if(key == 'all'){
 			getGroupList("1", "", "", "", "");
+		}else{
+			getGroupList("1", key, word, "", "");
+		}
+	}); */
+	
+	//카테고리 이벤트
+	$(".container>.row>.dropdown").off("hidden.bs.dropdown").on("hidden.bs.dropdown", function() {
+		var categoryFilter = $("#categoryFilter").val();
+		if(categoryFilter == '0'){
+			$(".groupcard").show();
+		}else{
+			$(".groupcard").each(function(index, item) {
+				var categoryNum = $(item).attr("data-cate");
+				if(categoryNum == categoryFilter){
+					$(item).show();
+				}else{
+					$(item).hide();
+				}
+			})
 		}
 	});
+	
+	//스크롤 페이징..
+	$(window).off("scroll").on("scroll", scrollPage);
+	
+	//검색어 기능
+	$("#word").on("keyup", function(e) {
+		if(e.keyCode == 13){
+			$("#searchBtn").trigger("click");
+		}
+		return false
+	});
+	$("#searchBtn").on("click", function (){
+		word = $("#word").val();
+		if($("#key").val() == 'all'){
+			key = "";
+		}else{
+			key = $("#key").val();
+		}
+		getGroupList("1", key , word , "" , "");
+	});
 });
+
+
+function scrollPage(){
+	//top 버튼
+	if($("body").scrollTop() > 20 || $(document).scrollTop() > 20){
+		$("#topBtn").css("display", "block");
+	}else{
+		$("#topBtn").css("display", "none");
+	}
+	
+	if($(this).scrollTop() + $(this).height() > $("body").height()){
+		if(Number(page) < Number(totalPageCount)){
+			getGroupList(Number(page)+1, key, word, "", "");
+			$(window).off("scroll");
+		}
+	}
+	return false
+}
 
 function getGroupList(page, key, word, isMyGroup, groupCategoryNum){
 	if(page == null || (typeof page) == "undefined" || page == ""){
@@ -66,9 +141,30 @@ function getGroupList(page, key, word, isMyGroup, groupCategoryNum){
 			$(".groupcard").click(groupenter);
 		}else{
 			//console.log(result);
-			$(".group-list").html(result);
+			if(page ==  '1'){
+				$(".group-list").html(result);
+			}else{
+				$(".group-list").append(result);
+			}
 			$(".groupcard").click(groupcardClick);
 		}
+	
+		var categoryFilter = $("#categoryFilter").val();
+		if(categoryFilter == '0'){
+			$(".groupcard").show();
+		}else{
+			$(".groupcard").each(function(index, item) {
+				var categoryNum = $(item).attr("data-cate");
+				if(categoryNum == categoryFilter){
+					$(item).show();
+				}else{
+					$(item).hide();
+				}
+			})
+		}
+		$(window).off("scroll").on("scroll", scrollPage);
+		$("#listsize").text("모두 " + totalListCount + " 개의 모임");
+		
 	}
 	$.ajax({
 		url : url
@@ -96,7 +192,6 @@ function groupcardClick(){
 	ajaxFunc(data, url, "get", success);
 	
 } 
-
 </script>
 
 <%@ include file="groupdetailmodal.jsp"%>
@@ -107,29 +202,37 @@ function groupcardClick(){
 <section class="contents">
 	<div class="container">
 		<div class="row">
-			<h1 class="col-lg-4 col-md-4 col-sm-3 my-4">총 ${requestScope.size} 개의 모임</h1>
+			<h1 class="col-lg-4 col-md-4 col-sm-3 my-4" id="listsize"> 개의 모임</h1>
 			<!-- <div class="btn-group col-lg-8 col-md-8 col-sm-9 right" style="padding: 0px;"> -->
-				<c:if test="${!empty sessionScope.userInfo}">
-				<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
-					<button type="button" class="btn btn-success mygrouplist">내 모임 보기</button>
+			<c:if test="${empty sessionScope.userInfo}">
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
+				<button type="button" class="btn btn-success mygrouplist all" style="visibility: hidden;">모두보기</button>
+			</div>
+			</c:if>
+			<c:if test="${!empty sessionScope.userInfo}">
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
+				<button type="button" class="btn btn-success mygrouplist my">내 모임보기</button>
+				<button type="button" class="btn btn-success mygrouplist all" style="display: none;">모두보기</button>
+			</div>
+			</c:if>
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
+				<button type="button" class="btn btn-primary pagebtn" data-page="create">모임 만들기</button>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category" >
+				<button type="button" class="btn btn-info pagebtn" data-page="grouprecommend">추천 받기</button>
+			</div>
+			<div class="dropdown col-lg-2 col-md-2 col-sm-3 my-4 category" id="cateDropdown">
+				<input type="hidden" value="0" id="categoryFilter">
+				<button type="button" class="btn btn-primary dropdown-toggle"
+					data-toggle="dropdown">카테고리</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" role="0">전체</a> 
+					<a class="dropdown-item" role="1">스터디</a> 
+					<a class="dropdown-item" role="2">취미</a> 
+					<a class="dropdown-item" role="3">친목도모</a>
+					<a class="dropdown-item" role="4">맛집탐방</a>
 				</div>
-				</c:if>
-				<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
-					<button type="button" class="btn btn-primary pagebtn" data-page="create">모임 만들기</button>
-				</div>
-				<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
-					<button type="button" class="btn btn-info pagebtn" data-page="grouprecommend">추천 받기</button>
-				</div>
-				<div class="dropdown col-lg-2 col-md-2 col-sm-3 my-4 category">
-					<button type="button" class="btn btn-primary dropdown-toggle"
-						data-toggle="dropdown">카테고리</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item">스터디</a> 
-						<a class="dropdown-item">취미</a> 
-						<a class="dropdown-item">친목도모</a>
-						<a class="dropdown-item">맛집탐방</a>
-					</div>
-				</div>
+			</div>
 			<!-- </div> -->
 		</div>
 		<!-- Marketing Icons Section -->
