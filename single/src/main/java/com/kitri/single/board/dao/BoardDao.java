@@ -35,5 +35,16 @@ public interface BoardDao extends HashtagDao{
 	// 랭킹 유저 3명의 글 리스트
 	List<BoardDto> rankingBoards(String userId);
 	
+	// 글 삭제
+	int boardDelete(int boardNum);
+	
+	// 카테고리 최신글
+	BoardDto news();
+	
+	// 카테고리 유저 총 글 수
+	int totalCnt(String userId);
+	
+	// 카테고리 유저 총 글 수
+	int totalCntL(String userId);
 	
 }

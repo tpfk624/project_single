@@ -1,0 +1,64 @@
+
+-- 해시태그 타입 insert
+insert into single_hashtag_type
+values(
+    hashtag_type_num_seq.nextval
+    , '게시판'
+);
+insert into single_hashtag_type
+values(
+    hashtag_type_num_seq.nextval
+    , '모임'
+);
+
+
+-- 카테고리 insert
+insert into single_group_category
+values(
+    group_category_num_seq.nextval
+    , '스터디'
+);
+
+insert into single_group_category
+values(
+    group_category_num_seq.nextval
+    , '취미'
+);
+
+insert into single_group_category
+values(
+    group_category_num_seq.nextval
+    , '친목도모'
+);
+
+insert into single_group_category
+values(
+    group_category_num_seq.nextval
+    , '맛집탐방'
+);
+
+-- 게시판 카테고리
+insert into single_board_category(category_num,category_name) VALUES(category_num_seq.nextval,'혼자놀아요');
+insert into single_board_category(category_num,category_name) VALUES(category_num_seq.nextval,'같이놀아요');
+
+-- 게시판 형식 - 우리는 다 같음.
+insert into single_board_type(board_type_num,board_type_name) VALUES(board_type_num_seq.nextval,'기본게시판');
+-- 게시판 리스트 (자취생활팁, 요리레시피, 명예의전당)
+-- 자취
+insert into single_board_list(board_list_num,board_name,board_type_num,board_category_num) 
+VALUES(board_list_num_seq.nextval,'자취생활팁',101,101);
+-- 요리
+insert into single_board_list(board_list_num,board_name,board_type_num,board_category_num) 
+VALUES(board_list_num_seq.nextval,'요리레시피',101,101);
+-- 명예
+insert into single_board_list(board_list_num,board_name,board_type_num,board_category_num) 
+VALUES(board_list_num_seq.nextval,'명예의전당',101,101);
+
+commit;
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+

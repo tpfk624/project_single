@@ -17,7 +17,7 @@
       <small>- 자취생활 팁</small>
     </h2>
 
-    <ol class="breadcrumb" style="background-color: #004085!important;"></ol>
+    <!-- <ol class="breadcrumb" style="background-color: #004085!important;"></ol> -->
 
 
 

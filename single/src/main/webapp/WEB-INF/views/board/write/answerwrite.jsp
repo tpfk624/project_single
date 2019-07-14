@@ -6,7 +6,7 @@
 <%-- <input type="hidden" name="userId" value="${answerList.userId }">
 <input type="hidden" name="replyNum" value="${answerList.replyNum }"> --%>
 
-
+<br>
 <div class="row">
 	<div class="col-lg-2"></div>
 	<div class="col-lg-5"></div>
@@ -14,7 +14,7 @@
 </div>
 <div class="row">
 	<div class="col-lg-2"></div>
-	<div class="col-lg-8" style="border: 1px solid #444444;">
+	<div class="col-lg-8" style="border: 1px solid #444444; background-color: #fff;">
 		<br> <br>
 
 

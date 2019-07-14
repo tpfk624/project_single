@@ -152,12 +152,65 @@
 	from (
 	    select *
 	    from single_board
-	    where user_id = #{userId}
+	    where board_statecode = '1'
+	    and user_id = #{userId}
 	    order by board_like desc
 	    ) rankingboard
 	<![CDATA[ where rownum <= 3 ]]>
 	</select>
 	
+	
+	<update id="boardDelete" parameterType="int">
+	update single_board 
+	set board_statecode = 0
+	where board_num = #{boardNum}
+	</update>
+	
+	
+	<!-- 카테고리 최신글 -->
+	<select id="news" resultType="boardDto">
+	select 
+	    board_num boardNum, board_list_num boardListNum, user_id userId, 
+	    user_nickname userNickname, board_subject boardSubject, 
+	    board_content boardContent, board_views boardViews, board_like boardLike,
+	    board_createDate boardCreatedate, 
+	    board_updatedate boardUpdatedate, board_deletedate boardDeletedate, 
+	    board_statecode boardStatecode
+	from (
+	    select  rownum, sb.*
+	    from single_board sb
+	    where board_statecode = '1'
+	    order by board_createDate desc
+	    )
+	where rownum = 1 
+	</select>
+	
+	<!-- 카테고리 유저띄우기 -->
+	<select id="nowUser" resultType="userDto">
+	select *
+	from single_user
+	where user_statecode = '1'
+	</select>
+	
+	<!-- 카테고리 유저 글 총 수 -->
+	<select id="totalCnt" parameterType="String" resultType="int">
+	select count(*)
+	from single_board
+	where board_statecode = '1'
+	<if test="value != null">
+	and user_id = #{value}
+	</if>
+	</select>
+	
+	<!-- 카테고리 유저 좋아요 총 수 -->
+	<select id="totalCntL" parameterType="String" resultType="int">
+	select sum(board_like)
+	from single_board
+	where board_statecode = '1'
+	<if test="value != null">
+	and user_id = #{value}
+	</if>
+	</select>
 	
 	
 	

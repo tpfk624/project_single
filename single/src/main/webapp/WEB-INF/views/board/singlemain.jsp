@@ -2,13 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
-<% UserDto userDto = new UserDto();
-userDto.setUserId("qjawns0617@naver.com");
-userDto.setUserNickname("뿡뿡뿡뿡");
-userDto.setUserName("권범준");
-session.setAttribute("userInfo", userDto); %>
-
 <style>
 
 .table .thead-light th {
@@ -16,7 +9,6 @@ session.setAttribute("userInfo", userDto); %>
     background-color: #7cb3ef;
     border-color: #dee2e6;
 }
-
 
 </style>
 
@@ -92,61 +84,75 @@ function selectPage(page, key, word, boardListNum ) {
       <small>- 혼자놀아요</small>
     </h2>
 
-   <ol class="breadcrumb" style="background-color: #004085!important;"></ol>
-
-
-
 
     <div class="row">
     <!-- 메인 중앙 -->
-    <div class="col-lg-10 mb-4">
+    <div class="col-lg-10 mb-4"> 
       
-      
-	<!-- 이달의 자취왕 -->
-	<div class="container" style="background-color: #007bff21;">
-		<br>
-	    <h2 class="my-4" align="center">이달의 최고 자취왕</h2>
-		
-		<div class="container">
-			<div class="row" align="center">
+	<!-- 이달의 자취왕 --> 
+	<!-- id="background" -->
+	<div class="container">   
+	 
+		<br> 
+	    <h2 class="my-4" align="center" style="font: normal; font-weight: lighter; align-content: center;">이달의 최고 자취왕</h2>
+		 
+		<div class="container" >
+			<div class="row" align="center"> 
 				<c:forEach var="userdto" items="${userList}" varStatus="stat">
-					<div class="col-lg-4">
-						<div class="container">
+					<div class="col-lg-4">    
+					<div class="container"  style="border: 1px solid gold;" > 
+						<div class="container">    
+							<br>
 							<h3>${stat.count}등</h3>
-							<h4>${userdto.userNickname }</h4>
+							<h4>
+								<img alt="${stat.count}" src="${root}/resources/img/bimg/${stat.count}.png">
+								${userdto.userNickname}
+							</h4>
 							<img src="${userdto.userProfile}" class="rounded-circle" alt="1등" width="130" height="130">
 						</div>
+						<br>  
+					</div>
 						<!-- 글 제목 좋아요 높은순으로 for문 돌리기 -->
 						<div>
 						<c:set var="userId" value="${userdto.userId}"></c:set>
-						<c:forEach var="board" items="${map[userId]}" varStatus="boardStat">
-							<div><a href="${root}/board/view?boardNum=${board.boardNum}">${boardStat.count}.&nbsp;${board.boardSubject}</a></div>
-						</c:forEach>
+							<div class="card">
+								<div class="card-body"  style="background-color: #ffeb3b87">  
+								<c:forEach var="board" items="${map[userId]}" varStatus="boardStat">
+									<div><a href="${root}/board/view?boardNum=${board.boardNum}"><small>${boardStat.count}.&nbsp;${board.boardSubject}</small></a></div>
+								</c:forEach>
+								</div> 
+							</div>
 						</div>
 					</div>
 				</c:forEach>
 			</div>
 		</div>
 		<br><br> 
-	</div>
-	<br><br><br>	
+	</div><hr style="background-color: #b5b5b5;"> 
+	<br><br><br>
 	
 	
 	<!-- 이달의 추천글 테이블 -->
-	<div class="container">
 	
-		<table class="table" align="center">
-			<thead class="thead-light" align="center">
-				<tr style="background-color: #86c2ff">
-					<th colspan="3">이달의 추천순</th>
-				</tr>
-			</thead>
-			<tbody align="center">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12" align="left">
+			<h4 style="margin-bottom: 1rem;">이달의 추천글</h4> 
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+	    
+		<table class="table" align="center">     
+			<thead style="background-color: #dee4ea;" align="center">
 				<tr>
 					<th>카테고리</th>
 					<th>제목</th>
 					<th>닉네임</th>
 				</tr>
+			</thead>
+			<tbody align="center">
 				<!-- 처음부터 List로 가져왔기 때문에 weekList만 씀. -->
 				<!-- BoardDto로 가져온거면 weekList.list(Dto변수 이름)가져와야뎀. -->
 				<c:forEach var="weekList" items="${weekList }">
@@ -160,9 +166,8 @@ function selectPage(page, key, word, boardListNum ) {
 					<c:if test="${weekList.boardListNum == 3 }">
 						<td>명예의전당</td>
 					</c:if>
-					
 					<td>
-						<a class="boardDetail">
+						<a class="boardDetail"> 
 							<input class="boardNum" type="hidden" value="${weekList.boardNum }">
 							${weekList.boardSubject }
 						</a>
