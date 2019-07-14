@@ -10,6 +10,10 @@ $(function (){
 		location.href="${root}/board/view?boardNum=" + boardNum;
 	});
 	
+	$(document).on("click","#loginGo", function () {
+		location.href="${root}/member/login";
+	});
+	
 });    
 </script>
 
@@ -56,7 +60,7 @@ id="floating" */
 	</c:if>
 	<!-- 로그인 안됬을때 -->
 	<c:if test="${categoryU == null }">
-	<div class="container" style="border-top: 1px solid #696969; border-bottom: 1px solid #696969;">
+	<div id="loginGo" class="container" style="border-top: 1px solid #696969; border-bottom: 1px solid #696969;">
 		<div class="row">
 			<div class="row">
 				<div class="col-lg-12" align="center"><br>   

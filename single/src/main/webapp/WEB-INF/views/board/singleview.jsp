@@ -111,10 +111,12 @@ $(function() {
 			dataType : "json",
 			success : function(response) {
 				if(response.resultCode == 1){
-					//alert("좋아요 성공");
+					//성공
 					location.reload();
+				} else if(response.resultCode == 2){
+					alert("서버 오류로 실패!!");
 				} else {
-					alert("이미 좋아요를 누르셨습니다");
+					alert("로그인을 해주세요"); 
 				}
 			}
 		});
