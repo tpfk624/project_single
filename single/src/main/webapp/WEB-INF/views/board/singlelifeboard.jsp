@@ -126,7 +126,12 @@ function selectPage(page, key, word, boardListNum ) {
 								<img alt="${stat.count}" src="${root}/resources/img/bimg/${stat.count}.png">
 								${userdto.userNickname}
 							</h4>
-							<img src="${userdto.userProfile}" class="rounded-circle" alt="1등" width="130" height="130">
+							<c:if test="${userdto.userProfile != null}">
+								<img src="${userdto.userProfile}" class="rounded-circle" alt="${stat.count}등" width="130" height="130">
+							</c:if>
+							<c:if test="${userdto.userProfile == null}">
+								<img src='${root}/resources/img/seonimg/kakaopic.png' alt="${stat.count}등" class="rounded-circle" width="130" height="130">
+							</c:if>
 						</div>
 						<br>  
 					</div>

@@ -302,6 +302,9 @@ public class BoardController {
 		BoardDto boardDto = boardService.viewArticle(boardNum);
 		//System.out.println(boardDto);
 		
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		model.addAttribute("session", userDto );
+		
 		model.addAttribute("article", boardDto);
 		
 		// ????
@@ -496,7 +499,7 @@ public class BoardController {
 		if (userDto != null) { 
 			
 			int seq = boardService.boardDelete(boardNum);
-
+			
 			if (seq == 0) {
 				// 업데이트 실패
 				jsonObject.put("resultCode", 2);

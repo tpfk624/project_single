@@ -261,7 +261,9 @@ function selectanswer(boardNum) {
 			<div class="col-lg-3"><small>작성일 : ${article.boardCreatedate }</small></div>
 			<div class="col-lg-2" style="padding-right: 0;"></div>
 			<div class="col-lg-2" style="padding-right: 0.5; text-align: right;">
-				<button type="button" id="boardDelete" class="btn btn-outline-danger">글삭제</button>
+				<c:if test="${session.userId == article.userId}">
+					<button type="button" id="boardDelete" class="btn btn-outline-danger">글삭제</button>
+	  			</c:if>
 			</div>
 			<div class="col-lg-2" style="padding-left: 0;">
 				<button type="button" id="like" class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">좋아요</button>

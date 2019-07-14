@@ -204,7 +204,7 @@
 	
 	<!-- 카테고리 유저 좋아요 총 수 -->
 	<select id="totalCntL" parameterType="String" resultType="int">
-	select sum(board_like)
+	select nvl(sum(board_like) , 0)
 	from single_board
 	where board_statecode = '1'
 	<if test="value != null">

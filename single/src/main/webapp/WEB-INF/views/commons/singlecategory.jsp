@@ -37,8 +37,13 @@ id="floating" */
 	<c:if test="${categoryU != null }">
 	<div class="container" style="border-top: 1px solid #696969; border-bottom: 1px solid #696969;">
 		<div class="row">
-			<div class="col-lg-12"><br>   
-				<img src="${categoryU.userProfile }" class="rounded-circle" alt="이미지" width="100" height="100">
+			<div class="col-lg-12"><br>
+				<c:if test="${categoryU.userProfile != null}">
+					<img src="${categoryU.userProfile }" class="rounded-circle" alt="이미지" width="100" height="100">
+				</c:if>
+				<c:if test="${categoryU.userProfile == null}">
+					<img src='${root}/resources/img/seonimg/kakaopic.png' class="rounded-circle" alt="이미지" width="100" height="100">
+				</c:if>
 			</div>        
 			<div class="col-lg-12" align="center">
 				<div align="center"><br>     
