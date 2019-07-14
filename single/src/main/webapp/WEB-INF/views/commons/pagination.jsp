@@ -60,9 +60,13 @@ function clickFunctionSetting(func){
 		func($(this).text());
 	});
 	
-	/* $(".page>.pagination>.page-pre").click(function () {
-		var 
-	}); */
+	$(".page>.pagination>.page-pre").click(function () {
+		func("${pagination.startPage - 1}");
+	}); 
+	
+	$(".page>.pagination>.page-next").click(function () {
+		func("${pagination.endPage +1}");
+	});
 }
 
 </script>

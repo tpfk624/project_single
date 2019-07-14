@@ -47,13 +47,7 @@ select * from single_group_category;
 select * from single_group;
 
 
--- 스터디 :
 
--- 취미 :
-
--- 친목도모:
-
--- 맛집탐방
 
 select group_num, count(hashtag_num)
 from single_hashtag
@@ -79,7 +73,20 @@ from single_homework
 ;
 --* 1
 
+--select to_char(add_months(sysdate,-1),'yyyy-mm-dd')-- 한달전 오늘
+--to_char(add_months(sysdate,-12),'yyyy-mm-dd') -- 1년전 오늘
 
+
+
+select *
+		from (select board_num, board_createdate
+        		from single_board b JOIN single_like l using (board_num)
+        		where l.user_id = 'hth0893@naver.com'
+                and board_createdate>= TO_CHAR(SYSDATE-30,'YYYYMMDD')
+            ) 
+                JOIN single_hashtag using (board_num);
+
+                
 --hth0893@naver.com 가 좋아요한 게시글들
 select * from 
 single_board b JOIN single_like l using (board_num)
@@ -92,6 +99,11 @@ where l.user_id = 'hth0893@naver.com';
                     
 select LISTAGG(trim(hashtag_content), '|') WITHIN group(Order by hashtag_content) 
 from (select * 
+        from single_board b JOIN single_like l using (board_num)
+        where l.user_id = 'hth0893@naver.com') lt JOIN single_hashtag using (board_num);
+        
+select hashtag_content
+from (select board_num
         from single_board b JOIN single_like l using (board_num)
         where l.user_id = 'hth0893@naver.com') lt JOIN single_hashtag using (board_num);
 -- 힐링, 휴식이 필요해, 쉬어요 -> LISTAGG -> '힐링|힐링이필요해'
@@ -108,12 +120,12 @@ where UPPER(h.hashtag_content) like UPPER('%힐링%');
 select *
 from single_group JOIN single_hashtag h using (group_num)
 where REGEXP_LIKE(hashtag_content,
-                                                    (select LISTAGG(trim(hashtag_content), '|') WITHIN group(Order by hashtag_content)  
-                                                    from (select * 
-                                                            from single_board b JOIN single_like l using (board_num)
-                                                            where l.user_id = 'hth0893@naver.com') lt JOIN single_hashtag using (board_num)
-                                                    )
+                                (select LISTAGG(trim(hashtag_content), '|') WITHIN group(Order by hashtag_content)  
+                                from (select * 
+                                        from single_board b JOIN single_like l using (board_num)
+                                        where l.user_id = 'hth0893@naver.com') lt JOIN single_hashtag using (board_num)
                                 )
+                  )
 and group_statecode = 1;                                
                                 
 select LISTAGG(trim(hashtag_content), '|') WITHIN group(Order by hashtag_content)  

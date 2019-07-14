@@ -414,7 +414,7 @@ public class GroupController {
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("resultCode", 99);
 			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
-			model.setViewName("member/login");
+			model.setViewName("group/main");
 			return model;
 		}
 		logger.info(parameter.toString());

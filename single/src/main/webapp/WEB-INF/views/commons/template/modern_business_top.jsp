@@ -107,6 +107,9 @@ tag>input[type=button]:hover{
 	display: inline-block;
 	width: auto;
 }
+.table-hover tr{
+	cursor: pointer;
+}
 
 </style>
 

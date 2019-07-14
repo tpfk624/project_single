@@ -17,7 +17,7 @@
 			</c:if>
 		</div>
 		<div class="cardWriteCenter">
-			<h6 class="card-content">  </h6>
+			<h6 class="card-content">${board.boardContent}</h6>
 		</div>
 		<div class="cardWriteBottom">
 			<h8 class="card-date">${board.boardCreatedate}</h8>

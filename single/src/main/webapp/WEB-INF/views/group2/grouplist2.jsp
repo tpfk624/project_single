@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%@ include file="/WEB-INF/views/commons/template/modern_business_top.jsp"%>
 <link rel="stylesheet" href="${root}/resources/css/group/group.css" >
 <%@ include file="/WEB-INF/views/commons/movetop.jsp"%>
@@ -7,61 +8,58 @@
 <%@ include file="/WEB-INF/views/commons/alert_success.jsp"%>
 <script src="${root}/resources/js/group/group.js"></script>
 <c:set var="parameter" value="${requestScope.parameter}"></c:set>
+
+
 <script>
-$(function() {
-	//$(".groupcard").on("click", groupcardClick);
-	
+$(function(){
 	var page = "${parameter.page}";
 	var key = "${parameter.key}";
 	var word = "${parameter.word}";
 	var isMyGroup = "${parameter.isMyGroup}";
 	var groupCategoryNum = "${parameter.groupCategoryNum}";
-	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
-
+	
 	//2019-07-12 형태희 추천받기 버튼
 	$(".recomandBtn").on("click", function () {
 		$.ajax({
-			url : "${root}/group2/grouprecomandlist"
-				, method : "get"
-				, data : {
-					"page" : page
-					, "key" : key
-					, "word" : word
-					, "isMyGroup" : isMyGroup
-					, "groupCategoryNum" : groupCategoryNum
-				}
-				, success : function(result) {
-					if(isMyGroup == 'yes'){
-// 						console.log(result);
-						$(".group-list").html(result);
-						$(".groupcard").click(groupenter);
-					}else{
-// 						console.log(result);
-						$(".group-list").html(result);
-						$(".groupcard").click(groupcardClick);
-					}
+			url : "${root}/group2/grouplist2",
+				 method : "get",
+				 success : function(result) {
+					console.log(result);
+			
 				}
 		});
 	});
+});
+$(function() {
+	//$(".groupcard").on("click", groupcardClick);
+	
+// 	var page = "${parameter.page}";
+// 	var key = "${parameter.key}";
+// 	var word = "${parameter.word}";
+// 	var isMyGroup = "${parameter.isMyGroup}";
+// 	var groupCategoryNum = "${parameter.groupCategoryNum}";
+// 	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
+
+	
 	
 	
 	//페이지 이동류 버튼
-	$(".pagebtn").on("click", function () {
-		location.href = "${root}/group/" + $(this).attr("data-page");
-	});
+// 	$(".pagebtn").on("click", function () {
+// 		location.href = "${root}/group/" + $(this).attr("data-page");
+// 	});
 	
 	//내 모임보기 버튼
-	$("button.mygrouplist").on("click", function() {
-		getGroupList("1", "", "", "yes", "");
-	});
+// 	$("button.mygrouplist").on("click", function() {
+// 		getGroupList("1", "", "", "yes", "");
+// 	});
 	
 	//모두보기 버튼
-	$("section.search .dropdown").on("hidden.bs.dropdown", function(){
-		var role = $(this).find("input[type=hidden]").val();
-		if(role == 'all'){
-			getGroupList("1", "", "", "", "");
-		}
-	});
+// 	$("section.search .dropdown").on("hidden.bs.dropdown", function(){
+// 		var role = $(this).find("input[type=hidden]").val();
+// 		if(role == 'all'){
+// 			getGroupList("1", "", "", "", "");
+// 		}
+// 	});
 });
 
 function getGroupList(page, key, word, isMyGroup, groupCategoryNum){
@@ -164,11 +162,11 @@ function groupcardClick(){
 		</div>
 		<!-- Marketing Icons Section -->
 		<div class="row group-list">
-			
 			<!-- 모임 출력 시작 -->
 			
-			<!-- 모임 출력 종료 -->
 			
+			
+			<!-- 모임 출력 종료 -->
 		</div>
 	</div>
 </section>

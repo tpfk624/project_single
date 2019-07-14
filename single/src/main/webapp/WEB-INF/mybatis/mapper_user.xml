@@ -188,6 +188,7 @@
 	<!--내가 쓴 글 -->
 	<select id="getBoardAll" parameterType="string" resultType="BoardDto">
 	select board_subject as boardSubject,
+		board_num as boardNum,
 	    board_content as boardContent,
 	    board_createdate as boardCreatedate,
 	    board_like as boardLike
@@ -199,6 +200,7 @@
 	<!--나의 댓글 -->
 	<select id="getBoardOther" parameterType="string" resultType="BoardDto">
 	select b.board_subject as boardSubject,
+		b.board_num as boardNum,
 	    r.reply_content as replyContent,
 	    b.board_content as boardContent,
 	    b.board_createdate as boardCreatedate,
@@ -211,6 +213,7 @@
 
 	<select id="getBoardHeart" parameterType="string" resultType="BoardDto">
 	select board_subject as boardSubject,
+		board_num as boardNum,
 	    board_content as boardContent,
 	    board_createdate as boardCreatedate,
 	    b.user_id as userId,

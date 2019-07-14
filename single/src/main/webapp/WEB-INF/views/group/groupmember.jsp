@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:if test="${empty sessionScope.userInfo}">99</c:if>
 <c:if test="${!empty sessionScope.userInfo}">
+<div class="groupmain" id="groupmain">
 <script>
 $(function() {
 	$(".search-input").on("keyup", function (e) {
@@ -101,11 +102,9 @@ $(function() {
 	});
 });
 </script>
-<div class="groupmain" id="groupmain">
 
 <!-- confirm 창 -->
 <%@ include file="/WEB-INF/views/commons/alert_confirm.jsp"%>
-
 <!-- 모임 이름 뿌져지는 곳 -->
 <section class="groupsection groupheader">
 	<div class="row">

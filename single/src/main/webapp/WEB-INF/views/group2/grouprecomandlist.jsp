@@ -10,7 +10,7 @@
 <script>
 $(function() {
 // 	$(".groupcard").on("click", groupcardClick);
-	$(".")
+	
 	
 	var page = "${parameter.page}";
 	var key = "${parameter.key}";
@@ -101,9 +101,9 @@ function groupcardClick(){
 
 </script>
 
-<%@ include file="groupdetailmodal.jsp"%>
-<%@ include file="groupheader.jsp"%>
-<%@ include file="groupsearch.jsp" %>
+<%@ include file="../group/groupdetailmodal.jsp"%>
+<%@ include file="../group/groupheader.jsp"%>
+<%@ include file="../group/groupsearch.jsp" %>
 
 <!-- 여기서부터 실제 데이터 영역 -->
 <section class="contents">

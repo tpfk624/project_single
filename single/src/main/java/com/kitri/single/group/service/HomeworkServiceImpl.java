@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kitri.single.group.contorller.GroupController;
 import com.kitri.single.group.dao.HomeworkDao;
+import com.kitri.single.group.model.HProgressDto;
 import com.kitri.single.group.model.HomeworkDto;
 import com.kitri.single.util.Pagination;
 import com.kitri.single.util.SiteConstance;
@@ -32,10 +33,10 @@ public class HomeworkServiceImpl implements HomeworkService{
 		//logger.info(parameter.get("page").getClass().toString());
 		HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
 		int page = Integer.parseInt(parameter.get("page"));
-		int homeworkSize = SiteConstance.GROUP_HOMEWORK_SIZE;
+		int homeworkListSize = SiteConstance.GROUP_HOMEWORK_SIZE;
 				
-		int endRow = page * homeworkSize;
-		int startRow = endRow - homeworkSize;
+		int endRow = page * homeworkListSize;
+		int startRow = endRow - homeworkListSize;
 			
 		logger.info(parameter.toString());
 		
@@ -66,7 +67,39 @@ public class HomeworkServiceImpl implements HomeworkService{
 		homeworkDto.setHomeworkContent(homeworkDto.getHomeworkContent().replace("\n", "<br>"));
 		return sqlSession.getMapper(HomeworkDao.class).insertHomework(homeworkDto);
 	}
+
+	@Override
+	public HomeworkDto getHomeworkDetail(int homeworkNum) {
+		HomeworkDto homeworkDto = sqlSession.getMapper(HomeworkDao.class).selectHomework(homeworkNum);
+		int count = 0;
+		//logger.info(homeworkDto.toString());
+		if(homeworkDto.gethProgressList().get(0).getUserId() != null) {
+			for(HProgressDto hProgressDto : homeworkDto.gethProgressList()) {
+				if("S".equals(hProgressDto.getHprogressSuccess())) {
+					count++;
+				}
+			}
+			homeworkDto.setHomeworkSuccessCount(count);
+		}
+		
+		return homeworkDto;
+	}
 	
+	@Override
+	@Transactional
+	public int hpCreate(HProgressDto hProgressDto) {
+		HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+		int result = homeworkDao.countHprogressByUserId(hProgressDto);
+		if(result == 0) {
+			return homeworkDao.insertHProgress(hProgressDto);
+		}else {
+			return 0;
+		}
+		
+	}
 	
-	
+	@Override
+	public HProgressDto getHp(HProgressDto hProgressDto) {
+		return sqlSession.getMapper(HomeworkDao.class).selectHProgress(hProgressDto);
+	}
 }

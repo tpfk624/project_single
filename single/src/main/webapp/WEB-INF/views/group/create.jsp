@@ -8,7 +8,7 @@
 <script type="text/javascript">
 $(function() {
 	defaultSetting("");
-	$(".dropdown").on("hidden.bs.dropdown", function(){
+	$(".groupCategory .dropdown").on("hidden.bs.dropdown", function(){
 		var groupCategoryNum = $("#groupCreateForm input[name=groupCategoryNum]").val();
 		if($("#ex_file")[0].files == null || $("#ex_file")[0].files.value == null ||  $("#ex_file")[0].files.value == "" ){
 			defaultSetting(GROUP_RESOURCES_IMG + groupCategoryNum + "_default.jpg");
@@ -74,7 +74,7 @@ $(function() {
 						<p class="help-block"></p>
 					</div>
 				</div>
-				<div class="control-group form-group">
+				<div class="control-group form-group groupCategory">
 					<div class="controls">
 						<label>모임분류(*) :</label> 
 						<div class="dropdown col-lg-4 col-md-4 col-sm-4">

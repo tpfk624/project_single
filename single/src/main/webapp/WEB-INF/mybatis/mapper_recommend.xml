@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kitri.single.group.dao.RecomendDao">
+
+	<!-- 유저가 좋아요한 해시태그 리스트 뽑기 -->
+	<select id="getRecommendTagList" parameterType="userDto" resultType="string">
+	--select to_char(add_months(sysdate,-1),'yyyy-mm-dd')-- 한달전 오늘
+	
+		select trim(hashtag_content)
+		from (select board_num
+        		from single_board b JOIN single_like l using (board_num)
+        		where l.user_id = #{userId}
+        		and board_createdate>= TO_CHAR(add_months(sysdate,-1),'yy/mm/dd') 
+        	  ) 
+        JOIN single_hashtag using (board_num)
+        		 
+	</select>
+	
+	<select id="getResultList" parameterType="String" resultType="String">
+		--select *
+		select group_num
+		from single_hashtag h
+		    join
+		--grade function 
+		    (
+		    select sg.group_num groupNum
+		        , count(sc.calendar_num) as calPoint
+		        , count(chat.chat_content) chatPoint
+		        , count(sh.homework_subject) homeworkPoint
+		        , count(sc.calendar_num) + count(chat.chat_content) + count(sh.homework_subject) sumGrade --총합
+		     from single_group sg 
+		        left outer join single_calendar sc --일정이많은
+		            on sg.group_num =sc.group_num
+		        left outer join single_chat chat --채팅이 많음
+		            on sg.group_num = chat.group_num
+		        left outer join single_homework sh --과제가 많음
+		            on sg.group_num = sh.group_num
+		     where sg.group_statecode = '1'
+		     group by sg.group_num
+		    ) r
+		--grade function end
+		on (r.groupNum = h.group_num)
+		where REGEXP_LIKE(h.hashtag_content,#{parseTagStr}) 
+		group by group_num, group_num, hashtag_type_num,board_num, calpoint,chatpoint, homeworkpoint,sumGrade
+		order by sumGrade desc
+
+	</select>
+	<select id ="getGroupDtoList" parameterType="java.util.List" resultType="groupDto">
+	select g.group_num groupNum
+        , g.group_category_num groupCategoryNum
+        , gc.group_category_name groupCategoryName
+        , g.group_name as groupName
+        , g.group_description as groupDescription
+        , g.group_img_src as groupImgSrc
+        , g.group_member_count as groupMemberCount
+        , g.group_member_limit as groupMemberLimit	    
+        , g.group_main_place as groupMainPlace
+        , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+	  from 
+        single_group g
+        left outer join single_group_category gc
+            on g.group_category_num = gc.group_category_num
+    where g.group_statecode = '1'
+	and group_num in
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+	 		#{item}
+		</foreach>
+	</select>
+</mapper>
