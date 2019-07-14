@@ -81,7 +81,7 @@ $(document).ready(function(){
 					$(".txt").html("<strong>미세먼지도 없는데 산책 어떠세요?</strong>");
 				}else if(dt == "2"){
 					$("#here").html("<img src='${root}/resources/img/seonimg/soso.png' height='100'>");	
-					$(".txt").html("<strong>미세먼지 좋아요</strong>");
+					$(".txt").html("<strong>공기가 좋아요</strong>");
 				}else if(dt == "3"){
 					$("#here").html("<img src='${root}/resources/img/seonimg/bad.png' height='100'>");	
 					$(".txt").html("<strong>마스크 챙기세요!</strong>");

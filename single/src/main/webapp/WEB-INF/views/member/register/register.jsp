@@ -32,9 +32,9 @@ $(document).ready(function(){
 	});
 	
 	//이메일인증버튼
-	$('#emailAuthBtn').click(function() {
-	 	$('.emailAuthForm').attr("action", "${root}/member/joinpost").submit();
-	});
+// 	$('#emailAuthBtn').click(function() {
+// 	 	$('.emailAuthForm').attr("action", "${root}/member/joinpost").submit();
+// 	});
 });
 
 </script>
