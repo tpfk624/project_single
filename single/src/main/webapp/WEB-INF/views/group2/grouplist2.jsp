@@ -21,46 +21,26 @@ $(function(){
 	//2019-07-12 형태희 추천받기 버튼
 	$(".recomandBtn").on("click", function () {
 		$.ajax({
-			url : "${root}/group2/grouplist2",
-				 method : "get",
-				 success : function(result) {
-					console.log(result);
-			
+			 url : "${root}/group2/grouplist2",
+			 method : "get",
+			 success : function(result) {
+				console.log(result);
+				if(isMyGroup == 'yes'){
+					//console.log(result);
+					$(".group-list").html(result);
+					$(".groupcard").click(groupenter);
+				}else{
+					//console.log(result);
+					$(".group-list").html(result);
+					$(".groupcard").click(groupcardClick);
 				}
-		});
+			}
+			
+		});	
+	
 	});
 });
-$(function() {
-	//$(".groupcard").on("click", groupcardClick);
-	
-// 	var page = "${parameter.page}";
-// 	var key = "${parameter.key}";
-// 	var word = "${parameter.word}";
-// 	var isMyGroup = "${parameter.isMyGroup}";
-// 	var groupCategoryNum = "${parameter.groupCategoryNum}";
-// 	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
 
-	
-	
-	
-	//페이지 이동류 버튼
-// 	$(".pagebtn").on("click", function () {
-// 		location.href = "${root}/group/" + $(this).attr("data-page");
-// 	});
-	
-	//내 모임보기 버튼
-// 	$("button.mygrouplist").on("click", function() {
-// 		getGroupList("1", "", "", "yes", "");
-// 	});
-	
-	//모두보기 버튼
-// 	$("section.search .dropdown").on("hidden.bs.dropdown", function(){
-// 		var role = $(this).find("input[type=hidden]").val();
-// 		if(role == 'all'){
-// 			getGroupList("1", "", "", "", "");
-// 		}
-// 	});
-});
 
 function getGroupList(page, key, word, isMyGroup, groupCategoryNum){
 	if(page == null || (typeof page) == "undefined" || page == ""){
@@ -124,9 +104,9 @@ function groupcardClick(){
 
 </script>
 
-<%-- <%@ include file="groupdetailmodal.jsp"%> --%>
-<%-- <%@ include file="groupheader.jsp"%> --%>
-<%-- <%@ include file="groupsearch.jsp" %> --%>
+<%@ include file="groupdetailmodal.jsp"%>
+<%@ include file="groupheader.jsp"%>
+<%@ include file="groupsearch.jsp" %>
 
 <!-- 여기서부터 실제 데이터 영역 -->
 <section class="contents">

@@ -54,7 +54,6 @@ public class GroupController2 {
 	}
 	
 	@RequestMapping(value = "/grouplist2", method = RequestMethod.GET)
-	@ResponseBody
 	public String grouprecommend(Model model, HttpSession session) {
 //		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
 		UserDto userDto= new UserDto();
