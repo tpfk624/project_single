@@ -61,11 +61,20 @@ $(document).ready(function(){
 	$("#userId").keydown(function(key) {
 		if (key.keyCode == 13) {
 			emailsend();
+			return false;
 		}
 	});
 
 	function emailsend(){
 		var requestParam = JSON.stringify({"userId": $('#sendEamilForm #userId').val()});
+		var emailVal =$("#userId").val();
+		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		if (emailVal.match(regExp) != null) {
+			console.log("이메일정규식 통과")
+		}else{
+			$('#status').html("옳바른 이메일을 입력해주세요.");
+			return;
+		}
 		//이메일 인증완료msgTO
 	 	$.ajax({
 	 		method:"POST",
@@ -77,11 +86,9 @@ $(document).ready(function(){
 				var email = data.userDto.userId;
 				console.log(data);
 				if(data.msgcode ==3){
-					$('#status').html(email + "로 메일이 전송되었습니다. <br>메일을 확인해주세요.");
 					var beforeStr = email;
 					var afterStr = beforeStr.split('@');
-					
-					$('#status').html("<a href= http://"+afterStr[1]+">메일 확인하러 가기 ")
+					$('#status').html(email + "로 메일이 전송되었습니다. <br><a href='http://"+afterStr[1]+"' target='_blank'>메일 확인하러 가기 ");
 				}
 // 				else if (data.msgcode ==2){
 // 					$('#status').html(email + "의 메일은 이미 인증되었있습니다. <button type='button' class='btn btn-primary'> <a href ='${root}/member/register>회원가입하러가기 </a></button>");
