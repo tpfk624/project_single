@@ -133,7 +133,7 @@ $(document).ready(function(){
       <!-- 네이버로그인 -->
       <div id="naver_id_login"></div>
       
-      <span class="other"> <a href="#" class = "registerBtn">회원가입</a>  <a href="#" >비밀번호변경</a> <a href="#">비밀번호 찾기</a></span>
+      <span class="other"> <a href="#" class = "registerBtn">회원가입</a> <a href="#" class ="passfindBtn">비밀번호 찾기</a></span>
       <input type="checkbox"  name="remember"/> <label for="remember">아이디 기억하기</label>
       
     </div>

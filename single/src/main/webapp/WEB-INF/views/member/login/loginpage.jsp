@@ -32,7 +32,7 @@
 </c:if>    
 
 <script type="text/javascript">
-  $(document).ready(function(){
+$(document).ready(function(){
     //로그인
 	$('#btnLogin').click(function() {
 		login();	
@@ -43,6 +43,8 @@
 		}
 	});
     
+  
+  
     function login(){
 //	 	$('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
 
@@ -146,7 +148,7 @@ min-height: 95%;
 		<div class ="mt-3"> <input type="checkbox"  name="remember" /> <label for="remember">아이디 기억하기</label> </div>	
 				
 		<div class ="mt-3">
-			<a href="#" class = "registerBtn">회원가입</a>  <a href="#" >비밀번호변경</a> <a href="#">비밀번호 찾기</a>
+			<a href="#" class = "registerBtn">회원가입</a>   <a href="#">비밀번호 찾기</a>
 		</div>
 	</form>
 </div>
