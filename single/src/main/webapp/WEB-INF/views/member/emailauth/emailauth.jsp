@@ -46,6 +46,26 @@ $(document).ready(function(){
 	
 	//이메일인증버튼
 	$('#emailSendBtn').click(function() {
+		emailsend();
+	});
+	
+	$('#emailAuthBtn').click(function(){
+		if($('#registerForm .authKey').val().trim() == $('#userInfo .authKey').val().trim()){
+			console.log('인증키가 동일합니다.');
+		}else{
+			console.log('인증키가 다릅니다.');
+		}
+	});
+	
+	//엔터키
+	$("#sendEamilForm").keydown(function(key) {
+		if (key.keyCode == 13) {
+			emailsend();
+		}
+		return false;
+	});
+
+	function emailsend(){
 		var requestParam = JSON.stringify({"userId": $('#sendEamilForm #userId').val()});
 		//이메일 인증완료msgTO
 	 	$.ajax({
@@ -80,16 +100,7 @@ $(document).ready(function(){
 				$('#status').html("이메일 전송에 실패하였습니다.");
 			}
 		});
-	});
-	
-	$('#emailAuthBtn').click(function(){
-		if($('#registerForm .authKey').val().trim() == $('#userInfo .authKey').val().trim()){
-			console.log('인증키가 동일합니다.');
-		}else{
-			console.log('인증키가 다릅니다.');
-		}
-	});
-
+	}
 });
 </script>
 

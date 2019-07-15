@@ -49,8 +49,17 @@ $(document).ready(function(){
 		$(location).attr("href","${root}/member/emailauth");
 	})
 	  
-	//로그인
-	$('.btnLogin').click(function() {
+	
+	 //로그인
+	$('#btnLogin').click(function() {
+		login();	
+	})
+	$('#userpass').keydown(function(key) {
+		if (key.keyCode == 13) {
+			login();
+		}
+	});
+	function login(){
 //		$('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
 
 // 	 	var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
@@ -88,7 +97,9 @@ $(document).ready(function(){
 				console.log('error')
 			}
 		});
-	})
+	}
+	
+	
 		 
 	
 
@@ -115,10 +126,10 @@ $(document).ready(function(){
       <input type="email" placeholder="아이디를 입력해주세요" name="userId" required style="font-family:돋움">
 
       <label class="loginmodal-label" for="userPassword" ><b>비밀번호</b></label>
-      <input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" required style="font-family:돋움">
+      <input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" id="userpass" required style="font-family:돋움">
       
       <!-- 로그인 -->  
-      <button class= "btnLogin" type="button">Login</button>
+      <button id= "btnLogin" type="button">Login</button>
       <!-- 네이버로그인 -->
       <div id="naver_id_login"></div>
       
