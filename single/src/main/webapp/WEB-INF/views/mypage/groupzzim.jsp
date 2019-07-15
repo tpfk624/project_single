@@ -53,6 +53,7 @@ $(function() {
 			success : function(result) {
 				if(result.resultCode == 1) {
 					alert(result.resultData);
+					location.reload(); //자동으로 새로고침되는거
 				}
 			}
 		});	

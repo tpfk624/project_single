@@ -114,7 +114,9 @@ $(function() {
 					//성공
 					location.reload();
 				} else if(response.resultCode == 2){
-					alert("서버 오류로 실패!!");
+					//사실은 서버 오류도 포함된 내용
+					//좀더 세분화해야 함
+					alert("이미 좋아요 누른 글입니다");
 				} else {
 					alert("로그인을 해주세요"); 
 				}

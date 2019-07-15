@@ -172,14 +172,10 @@ $(function(){
 	 
 	/* 회원 탈퇴 */
 	 $("#DeletePressBtn").click(function(){
-	 	//alert("탈퇴 버튼 클릭됨");
-	 	
-	 	var pass = $(this).attr("data-num");
-	 	//alert(pass);
-	 	
+
+	 	var pass = $(this).attr("data-num");	 	
 	 	var pw_input = $("#pw_input").val();
-	 	//alert(pw_input);
-	 	
+ 	
 	 	if( pw_input != pass){
 	 		alert("비밀번호가 일치하지 않습니다.");
 	 	} else{
@@ -251,7 +247,7 @@ $(function(){
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" id="DeletePressBtn" class="btn btn-primary deletebtn" data-num="${userInfo.userPassword}">탈퇴</button>
+						<button type="button" id="DeletePressBtn" class="btn btn-primary deletebtn" data-num="${userInfos.userPassword}">탈퇴</button>
 	          			<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 					</div>
 				</form>

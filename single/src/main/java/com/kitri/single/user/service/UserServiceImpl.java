@@ -27,7 +27,7 @@ import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.group.dao.GroupDao;
 
 import com.kitri.single.group.model.GroupDto;
-
+import com.kitri.single.group.model.GroupMemberDto;
 import com.kitri.single.group.service.GroupServiceImpl;
 
 import com.kitri.single.hashtag.dao.HashtagDao;
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public GroupDto getGroup(int groupNum) {
 		//그룹 정보 가져오기
-		GroupDto groupDto = sqlSession.getMapper(GroupDao.class).getGroup(groupNum);	
+		GroupDto groupDto = sqlSession.getMapper(UserDao.class).getGroup(groupNum);	
 		
 		if(groupDto != null) {
 			//해시태그 정보
@@ -119,6 +119,34 @@ public class UserServiceImpl implements UserService {
 		return groupDto;
 	}
 	
+//	
+//	@Override
+//	@Transactional
+//	public void fireGroupMember(GroupMemberDto groupMemberDto, int groupNum) {
+//		
+//		GroupDto groupDto = sqlSession.getMapper(UserDao.class).updateGroupMember(,groupNum);	
+//		
+//		GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+//		
+//		System.out.println("유저 모임삭제 서비스임플까지는 들어옴");
+//		groupDao.updateGroupMember(groupMemberDto);
+//		//그룹 멤버 숫자 내리기
+//		groupDao.groupMemberCountDown(groupMemberDto.getGroupNum());
+//		
+//	}
+	
+	@Override
+	public String fireGroupMember(String userId, int groupNum) {
+		Map<String, Object> parameter = new HashMap<String, Object>();
+		parameter.put("userId", userId);
+		parameter.put("groupNum", groupNum);
+		 UserDao userDao = sqlSession.getMapper(UserDao.class);
+		userDao.updateGroupMember(parameter);
+		userDao.groupMemberCountDown(groupNum);		
+		return makeJSON(1, "모임을 탈퇴했습니다. 나의 모임 목록 페이지에서 확인하세요");
+	}
+	
+	
 
 	@Override
 	public void leaveGroup(Map<String, String> parameter) {
@@ -126,8 +154,6 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
-
-	
 	
 	//////////////////////////////////찜한 모임관리 페이지////////////////////////////////////////////////
 	
@@ -158,6 +184,9 @@ public class UserServiceImpl implements UserService {
 		userDao.stampDelete(parameter);
 		return makeJSON(1, "찜 모임을 취소했습니다. 나의 찜목록 페이지에서 확인하세요");
 	}
+	
+	
+
 	
 	
 	//////////////////////////////////게시물 관리 페이지////////////////////////////////////////////////
@@ -201,6 +230,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	
 
 
 }

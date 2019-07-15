@@ -47,7 +47,7 @@
             , g.group_member_limit	    
             , g.group_main_place
             , g.group_createdate
-	        order by g.group_num
+	        order by g.group_num desc
 	        ) ordergroup
 	    where rownum &lt;= #{endRow}
 	    <if test="word != null and word != '' and key != null and key != '' ">

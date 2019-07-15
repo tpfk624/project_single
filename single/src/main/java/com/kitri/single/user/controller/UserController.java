@@ -208,13 +208,13 @@ public class UserController {
 		return "/mypage/groupresult" ;
 	}
 
-	//그룹디테일
+	//모임 디테일
 	@RequestMapping(value = "/groupdetail", method = RequestMethod.GET)
 	public @ResponseBody String getGroup(@ModelAttribute("userInfo") UserDto user
 			, @RequestParam(name = "groupNum") int groupNum){
-		//String json = groupService.getGrou(parameter);
-		//System.out.println(groupNum);
-		System.out.println("여기는 옴??");
+
+		System.out.println("그룹디테일 컨트롤러 들어옴");
+		
 		GroupDto groupDto = userService.getGroup(groupNum);
 		
 		JSONObject jsonObject = new JSONObject();
@@ -223,8 +223,34 @@ public class UserController {
 		jsonObject.put("group", groupJson);
 		jsonObject.put("taglist", groupDto.getHashtagList());
 		
+		
 		return jsonObject.toString();
 	}
+	
+	
+	//모임 탈퇴
+	@ResponseBody
+	@RequestMapping("/moimdelete")
+	public String moimdelete(HttpSession session, @RequestParam("groupNum") int groupNum) {
+		
+		System.out.println("모임 탈퇴 컨트롤러 들어옴");
+		
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 99);
+			jsonObject.put("resultData", "로그인이 필요한 기능입니다.");
+			return jsonObject.toString();
+		}
+		
+		String json = makeJSON(0, "찜하기 취소 실패하였습니다. 관리자에게 문의하세요");
+		if(groupNum != 0) {
+			json = userService.fireGroupMember(userInfo.getUserId(), groupNum);
+		}
+		return json;
+	}
+	
+	
 	
 	//////////////////////////////////찜한 모임관리 페이지////////////////////////////////////////////////
 	
@@ -269,23 +295,6 @@ public class UserController {
 		return "/mypage/groupresult" ;
 	}
 
-//	
-//	//찜한 모임 취소
-//	@RequestMapping("/stampdelete")
-//	public void stampdelete (@ModelAttribute("userInfo") UserDto user, HttpSession session) {
-//		System.out.println("찜한 모임 취소 컨트롤러");
-//		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
-//		
-//		Map<String, String> parameter = new HashMap<String, String>();
-//		if (userInfo != null) {
-//			parameter.put("userId", userInfo.getUserId());
-//		}
-//		
-//		parameter.put("groupNum", null);
-//
-//		List<GroupDto> list = userService.getStampGroup(parameter);
-//
-//	}
 	
 	//찜한 모임 취소
 	@ResponseBody
@@ -305,7 +314,6 @@ public class UserController {
 		if(groupNum != 0) {
 			json = userService.stampDelete(userInfo.getUserId(), groupNum);
 		}
-		//logger.info(json);
 		return json;
 	}
 	
