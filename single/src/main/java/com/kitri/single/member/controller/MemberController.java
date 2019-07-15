@@ -49,7 +49,6 @@ public class MemberController {
 	// 회원가입페이지이동
 //	@RequestMapping(value = "/register", method = RequestMethod.GET)
 //	public String register() {
-//		
 //		return "member/register/register";
 //	}
 
