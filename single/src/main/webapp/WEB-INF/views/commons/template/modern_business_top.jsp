@@ -169,7 +169,7 @@ $(document).ready(function(){
         <ul class="navbar-nav ml-auto">
           <c:if test="${empty sessionScope.userInfo}" >
           <li class="nav-item">
-            <a class="nav-link" id="mvlogin"  href="#">로그인</a>
+            <a class="nav-link" id="mvlogin"  href="#">로그인/회원가입</a>
 <%--             <a class="nav-link" href="${root}/member/loginmodal">로그인</a> --%>
           </li>
           </c:if>

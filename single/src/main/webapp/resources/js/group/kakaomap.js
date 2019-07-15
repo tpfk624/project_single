@@ -176,6 +176,7 @@ function setMarker(marker, latLng){
 }
 
 function addressToMapMarker(text) {
+	geocoder = new kakao.maps.services.Geocoder();
 	geocoder.addressSearch(text, function(result, status) {
 
 	    // 정상적으로 검색이 완료됐으면 
