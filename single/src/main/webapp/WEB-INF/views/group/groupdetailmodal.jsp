@@ -4,7 +4,12 @@
 function groupDetailModalSetting(json) {
 	var group = json.group;
 	$("#groupDetailModal .card-title").text(group.groupName);
-	$("#groupDetailModal .card-body .groupDescription").html(group.groupDescription.replace("\n", "<br>"));
+	if(group.groupDescription == null || group.groupDescription == ''){
+		$("#groupDetailModal .card-body .groupDescription").html(group.groupDescription);
+	}else{
+		$("#groupDetailModal .card-body .groupDescription").html(group.groupDescription.replace("\n", "<br>"));
+	}
+	
 	$("#groupDetailModal .card-body .groupCategoryName").text("카테고리 : " + group.groupCategoryName);
 	$("#groupDetailModal .card-body .groupMember").text("인원 : " + group.groupMemberCount + " / " + group.groupMemberLimit);
 	$("#groupDetailModal .card-body .groupMainPlace").text("주요장소 : " + group.groupMainPlace);

@@ -53,9 +53,16 @@ public class NaverMemberController {
 		// -> 새로운페이지 오픈 -> 기존아이디와 연동? 새로 회원가입?
 		// 기존 소셜아이디 존재
 		// -> 해당 아이디로 로그인 진행
+		//2019-07-15 형태희 start
+//		String callbackUrl = parameter.get("callbackURL");
+//		logger.debug(callbackUrl);
+		//2019-07-15 형태희end 
 		String snsEmail = parameter.get("email");// 인증시 필수입력값
 		String accessToken = parameter.get("accessToken");
 		JSONObject jsonObject= new JSONObject();
+		//2019-07-15 형태희 start
+//		jsonObject.put("callbackUrl",callbackUrl);
+		//2019-07-15 형태희end 
 		// 회원정보 얻기
 		String userProfile = apiMemberProfile.getMemberProfile(accessToken);
 
@@ -146,7 +153,6 @@ public class NaverMemberController {
 			model.addAttribute("userInfo", userDto);
 
 			jsonObject.put("userInfo", new JSONObject(userDto));
-			
 			jsonObject.put("msg", "register");
 			jsonObject.put("url", "${root}/register/register");
 			return jsonObject.toString();

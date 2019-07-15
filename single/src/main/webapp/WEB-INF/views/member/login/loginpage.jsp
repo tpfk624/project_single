@@ -150,9 +150,15 @@ min-height: 95%;
 				<div id="naver_id_login" style= "display:inline-block;"></div> 
 			</div>
 			<div class="col-3" style="padding-top:0.5rem" >
-			<a href="#" class = "registerBtn" >회원가입</a>   <%--<a href="#" id= "passfindBtn">비밀번호 찾기</a> --%>
+			
 				
 			</div>
+		</div>
+		<div class= "row mt-3">
+			<div class="col-2">
+				<a href="#" class = "registerBtn" >회원가입</a>   <%--<a href="#" id= "passfindBtn">비밀번호 찾기</a> --%>
+			</div>
+			
 		</div>
 		  
 <!-- 		<div class ="mt-3"> <input type="checkbox"  name="remember" /> <label for="remember">아이디 기억하기</label> </div>	 -->
