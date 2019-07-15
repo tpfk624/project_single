@@ -3,13 +3,6 @@
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
 
-<c:if test="${sessionScope.userInfo != null }">
-	<script>
-		location.href = "/single/home";
-	// 	history.back();
-	</script>
-</c:if>    
-
 
 <style>
 html{
@@ -44,7 +37,7 @@ min-height: 95%;
 <script>
 $(document).ready(function(){	
 	
-	//이메일인증버튼
+	//이메일송신
 	$('#emailSendBtn').click(function() {
 		emailsend();
 	});
@@ -58,10 +51,11 @@ $(document).ready(function(){
 	});
 	
 	//엔터키
-	$("#userId").keydown(function(key) {
+	$("#sendEamilForm").keydown(function(key) {
 		if (key.keyCode == 13) {
 			emailsend();
 		}
+		return false;
 	});
 
 	function emailsend(){
@@ -78,10 +72,6 @@ $(document).ready(function(){
 				console.log(data);
 				if(data.msgcode ==3){
 					$('#status').html(email + "로 메일이 전송되었습니다. <br>메일을 확인해주세요.");
-					var beforeStr = email;
-					var afterStr = beforeStr.split('@');
-					
-					$('#status').html("<a href= http://"+afterStr[1]+">메일 확인하러 가기 ")
 				}
 // 				else if (data.msgcode ==2){
 // 					$('#status').html(email + "의 메일은 이미 인증되었있습니다. <button type='button' class='btn btn-primary'> <a href ='${root}/member/register>회원가입하러가기 </a></button>");
@@ -114,21 +104,14 @@ $(document).ready(function(){
 
 <!-- <div id="center"> -->
 <div class="container">
-<h1 class ="mt-4 mb-3" style="min-height: 100%;">이메일인증</h1>
+<h1 class ="mt-4 mb-3" style="min-height: 100%;">비밀번호를 메일로 보냅니다.</h1>
 <form id="sendEamilForm" method="post" action="">
 		<div class="form-group">
 		    <input type="email" class="form-control"  id="userId" name="userId"  placeholder="이메일 입력해주세요" required="required" 
 		    style="display:inline-block; width: 20rem;">
-		  	<button type="button" id="emailSendBtn" class="btn btn-primary" >이메일 인증하기</button>
+		  	<button type="button" id="emailSendBtn" class="btn btn-primary" >메일 전송 하기</button>
 		</div>
 </form>
-<!-- <form id="registerForm" method="post" action=""> -->
-<!-- 		<div class="form-group" id="from-mvRegister"> -->
-<!-- 			<input type="text" placeholder="인증번호를 입력해주세요" name="authKey" class="authKey"> -->
-<!-- 			<button id="emailAuthBtn" type="button">확인</button> -->
-<!-- 			<button id="emailAuthBtn" type="button">인증번호 재발송</button> -->
-<!-- 		</div> -->
-<!-- </form> -->
 <p id="status"></p>
 </div>
 

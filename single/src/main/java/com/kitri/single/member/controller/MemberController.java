@@ -52,7 +52,8 @@ public class MemberController {
 //		return "member/register/register";
 //	}
 
-	
+
+			
 	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(UserDto userDto, Model model 
@@ -190,6 +191,11 @@ public class MemberController {
 	@RequestMapping(value = "/emailauth", method = RequestMethod.GET)
 	public String emailauth() throws Exception {
 		return "member/emailauth/emailauth";
+	}
+	
+	@RequestMapping(value = "/emailpassfind", method = RequestMethod.GET)
+	public String emailpassfind(UserDto userDto, Model model) {
+		return "member/emailauth/emailpassfind";
 	}
 	
 	// 메일인증 
