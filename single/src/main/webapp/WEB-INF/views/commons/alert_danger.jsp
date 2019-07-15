@@ -18,17 +18,24 @@ $(function() {
 	$("#alert button[name=alertOK]").click(function () {
 		$("#alert").modal("hide");
 	});
+	$('#alert').on('shown.bs.modal', function () {
+		$("#alertOK").focus();
+	})  
 });
 function showAlertModal(title, body, footer) {
 	//아짓 footer는 고려안함..
 	$("#alert .modal-title").html(title);
 	$("#alert .modal-body>p").html(body);
-	$("#alert").modal("show");
+	$("#alert").modal("show");	
 }
+
 </script>
 <style>
 #alert .modal-dialog{
 	margin-top: 15%;
+}
+#alert .modal-title{
+	color: black;
 }
 </style>
 <!-- 경고창 -->
@@ -44,7 +51,7 @@ function showAlertModal(title, body, footer) {
 				<p></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" name="alertOK">확인</button>
+				<button type="button" class="btn btn-danger" name="alertOK" id="alertOK">확인</button>
 			</div>
 		</div>
 	</div>
