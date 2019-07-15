@@ -50,7 +50,7 @@ public class GroupServiceImpl2 implements GroupService2 {
 		parameter.put("endRow", endRow + "");
 		parameter.put("startRow", startRow + "");
 		
-		logger.debug(">>>>>"+userDto.toString());
+		//logger.debug(">>>>>"+userDto.toString());
 		List<String> list = (List<String>)sqlSession.getMapper(RecomendDao.class).getRecommendTagList(userDto);
 		
 		List<String> parseStrtag = new ArrayList<String>();
