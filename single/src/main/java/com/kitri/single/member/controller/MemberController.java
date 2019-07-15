@@ -47,10 +47,11 @@ public class MemberController {
 	MemberService memberService;	
 	
 	// 회원가입페이지이동
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register() {
-		return "member/register/register";
-	}
+//	@RequestMapping(value = "/register", method = RequestMethod.GET)
+//	public String register() {
+//		
+//		return "member/register/register";
+//	}
 
 	
 	// 회원가입
@@ -95,6 +96,8 @@ public class MemberController {
 //			SnsDto snsDto = new SnsDto();
 //			userDto.setSnsDto(snsDto);
 			memberService.registCommon(userDto);
+			logger.info(">>>>>>>>>>>>>>>>> 일반회원가입 세션에 넣어주는 userDto: "+userDto.toString());
+			
 			WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
 //			model.addAttribute("userInfo", userDto);
 		}
@@ -116,7 +119,9 @@ public class MemberController {
 		snsDto.setSnsConnectDate(snsConnectDate);
 		userDto.setSnsDto(snsDto);
 		
-		request.setAttribute("userInfo", userDto);
+//		request.setAttribute("userInfo", userDto);
+		request.setAttribute("paramUserDto", userDto);
+		
 		return "member/register/register";
 	}
 	
@@ -221,7 +226,6 @@ public class MemberController {
 		}
 		String json = mapper.writeValueAsString(map);
 		return json;
-		
 	}
 
 	// 인증키 확인
@@ -239,7 +243,8 @@ public class MemberController {
 		// 이메일 유효상태
 		memberService.updateAuthstatus(userDto);
 
-		model.addAttribute("userInfo", userDto);
+//		model.addAttribute("userInfo", userDto);
+		model.addAttribute("paramUserDto", userDto);
 		return "member/register/register";
 	}
 
