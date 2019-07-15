@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kitri.single.board.dao.BoardDao;
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.board.model.BoardPageDto;
 import com.kitri.single.board.model.ReplyDto;
@@ -43,7 +44,7 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
-
+	
 	@Autowired
 	private ReplyService replyService;
 	
@@ -54,7 +55,6 @@ public class BoardController {
 	// 로그인 페이지로 가라.
 	public String loginCheck(HttpSession session, String path) {
 		UserDto userDto = (UserDto)session.getAttribute("userInfo");
-		System.out.println(userDto);
 		if (userDto == null) {
 			path = "board/arror/gologin";
 		}
@@ -62,7 +62,7 @@ public class BoardController {
 	}
 	// 싱글 메인
 	@RequestMapping("singlemain")
-	public String singleMain(Model model){
+	public String singleMain(HttpSession session,Model model){
 		//select를 3번해와야뎀.
 		
 		List<BoardDto> boardDtoL = new ArrayList<BoardDto>();
@@ -88,6 +88,10 @@ public class BoardController {
 		
 		String path = "board/singlemain";
 		
+		//카테고리 최신글와 유저
+		categoryNU(model,session);
+		
+		
 		return path;
 		
 	}
@@ -104,7 +108,7 @@ public class BoardController {
 	}
 	// 자취생활 페이지로 이동
 	@RequestMapping(value="/singlelifeboard")
-	public String singlelifeboard(Model model){
+	public String singlelifeboard(Model model, HttpSession session){
 		List<BoardDto> boardDtoL = new ArrayList<BoardDto>();
 		
 		//이달의 자취왕
@@ -120,12 +124,15 @@ public class BoardController {
 
 		model.addAttribute("userList", userList);
 		model.addAttribute("map", map);
+		
+		//카테고리 최신글와 유저
+		categoryNU(model,session);
 		
 		return "board/singlelifeboard";
 	}
 	// 요리 레시피 페이지로 이동
 	@RequestMapping(value="/singlecookboard")
-	public String singlecookboard(Model model){
+	public String singlecookboard(Model model, HttpSession session){
 		List<BoardDto> boardDtoL = new ArrayList<BoardDto>();
 		
 		//이달의 자취왕
@@ -141,13 +148,16 @@ public class BoardController {
 
 		model.addAttribute("userList", userList);
 		model.addAttribute("map", map);
+		
+		//카테고리 최신글와 유저
+		categoryNU(model,session);
 		
 		return "board/singlecookboard";
 	}
 	// 글 작성후 자취 or 요리 페이지로 이동
 	@RequestMapping(value="/list")
 	public String list(@RequestParam Map<String, String> parameter, 
-			Model model){
+			Model model, HttpSession session){
 		
 		List<BoardDto> boardDtoL = new ArrayList<BoardDto>();
 		
@@ -179,7 +189,8 @@ public class BoardController {
 			path = "redirect:/index.jsp";
 		}
 		
-		
+		//카테고리 최신글와 유저
+		categoryNU(model,session);
 				
 		return path;
 	}
@@ -190,7 +201,8 @@ public class BoardController {
 	// write 페이지 이동
 	@RequestMapping(value="/write",method = RequestMethod.GET)
 	public String write(@ModelAttribute("userInfo") UserDto userInfo, 
-			@RequestParam("boardListNum") int boardListNum, Model model){
+			@RequestParam("boardListNum") int boardListNum, Model model,
+			HttpSession session){
 
 		BoardPageDto bp = new BoardPageDto();
 		bp.setBoardListNum(boardListNum);
@@ -198,6 +210,9 @@ public class BoardController {
 		model.addAttribute("bp", bp);
 		
 		String path = "board/write";
+		
+		//카테고리 최신글와 유저
+		categoryNU(model,session);
 
 		return path;
 	}
@@ -224,7 +239,14 @@ public class BoardController {
 			boardDto.setBoardListNum(Integer.parseInt(parameter.get("boardListNum")));
 			boardDto.setUserId(userDto.getUserId());
 			boardDto.setUserNickname(userDto.getUserNickname());
-			boardDto.setBoardSubject(parameter.get("boardSubject"));
+			
+			
+			//boardDto.setBoardSubject(parameter.get("boardSubject"));
+			//스크립트 방지해주기
+			String boardSubject = parameter.get("boardSubject");
+			boardSubject = boardSubject.replaceAll("<", "&lt;");
+			boardDto.setBoardSubject(boardSubject);
+			
 			boardDto.setBoardContent(parameter.get("boardContent"));
 			boardDto.setBoardViews(0);
 			boardDto.setBoardLike(0);
@@ -233,7 +255,7 @@ public class BoardController {
 			String[] hashtags = tags.split("#");
 			List<String> hashtagList = new ArrayList<>();
 			
-			for(int i=0 ; i<hashtags.length ; i++) {
+			for(int i=1 ; i<hashtags.length ; i++) {
 				
 				hashtagList.add(hashtags[i]);
 				
@@ -264,10 +286,10 @@ public class BoardController {
 	}
 	
 	
-	
+	// 글 세부
 	@RequestMapping(value="/view",method = RequestMethod.GET)
 	public String view(@RequestParam Map<String, String> parameter, 
-			Model model) { 
+			Model model, HttpSession session) { 
 		
 		// 바로 접속하려 할때.
 		if(parameter == null || parameter.get("boardNum") == null) {
@@ -280,12 +302,19 @@ public class BoardController {
 		BoardDto boardDto = boardService.viewArticle(boardNum);
 		//System.out.println(boardDto);
 		
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		model.addAttribute("session", userDto );
+		
 		model.addAttribute("article", boardDto);
 		
 		// ????
 		model.addAttribute("parameter", parameter);
 		
 		String path = "board/singleview";
+		
+		
+		//카테고리 최신글와 유저
+		categoryNU(model,session);
 		
 		
 		return path;
@@ -359,7 +388,12 @@ public class BoardController {
 		
 		String userId = userDto.getUserId();
 		String userNickname = userDto.getUserNickname();
+		
+		// 띄어쓰기, 스크립트 방지
 		String replyContent = (String)params.get("replyContent");
+		replyContent = replyContent.replaceAll("<", "&lt;");
+		replyContent = replyContent.replaceAll("\n", "<br>"); 
+		
 		int boardNum = Integer.parseInt((String)params.get("boardNum"));
 		
 		replyDto.setUserId(userId);
@@ -421,7 +455,6 @@ public class BoardController {
 		JSONObject jsonObject = new JSONObject();
 		
 		int boardNum = mapBN.get("boardNum");
-		System.out.println(boardNum);
 		
 		if (userDto != null) {
 			
@@ -433,7 +466,6 @@ public class BoardController {
 			
 			
 			int seq = replyService.like(map);
-			System.out.println("seq  ==  " + seq);
 			
 			if (seq == 0) {
 				// 서버 오류로 좋아요가 실패했습니다. 다시 시도해 주세요.
@@ -455,7 +487,68 @@ public class BoardController {
 	
 	
 	
+	// 글 삭제
+	@RequestMapping("boardDelete")
+	public @ResponseBody String boardDelete(@RequestParam("boardNum") int boardNum,
+			HttpSession session) {
+		
+		
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
+		JSONObject jsonObject = new JSONObject();
+		
+		if (userDto != null) { 
+			
+			int seq = boardService.boardDelete(boardNum);
+			
+			if (seq == 0) {
+				// 업데이트 실패
+				jsonObject.put("resultCode", 2);
+			} else {
+				// 업데이트 성공
+				jsonObject.put("resultCode", 1);
+			}
+		
+		} else {
+			// 로그인을 해주세요
+			jsonObject.put("resultCode", 3);
+		}
+		
+		
+		return jsonObject.toString();
+	};
+	
+	
+	// 카테고리 뉴스와 유저
+	public void categoryNU(Model model,HttpSession session){
+		
+		BoardDto boardDto = boardService.news();
+		
+		if (boardDto == null) {
+			System.out.println("오늘의 뉴스 에러");
+		} else {
+			model.addAttribute("categoryN", boardDto);
+		}
+		
+		UserDto userDto = (UserDto)session.getAttribute("userInfo");
 
+		if (userDto != null) {
+
+			model.addAttribute("categoryU", userDto);
+			
+			String userId = userDto.getUserId();
+			
+			int seq = boardService.totalCnt(userId);
+			model.addAttribute("totalCnt", seq);
+			
+			int seqL = boardService.totalCntL(userId);
+			model.addAttribute("totalCntL", seqL);
+			
+		}
+		
+		
+	}
+
+	
 }
 
 

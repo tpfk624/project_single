@@ -21,7 +21,7 @@
 
 $(function() {
   $('.summernote').summernote({
-    height: 300,          // 기본 높이값
+    height: 400,          // 기본 높이값
     minHeight: null,      // 최소 높이값(null은 제한 없음)
     maxHeight: null,      // 최대 높이값(null은 제한 없음)
     focus: true,          // 페이지가 열릴때 포커스를 지정함
@@ -33,6 +33,9 @@ $(function() {
 	  console.log("클릭");
 		if($("#boardSubject").val() == ""){ // 정규표현식 사용하기.
 			alert("제목 입력!");
+			return;
+		} else if($("#boardSubject").val().length > 15 ){ // 정규표현식 사용하기.
+			alert("제목을 15자 이하로 입력해주세요!"); 
 			return;
 		} else if ($("#boardContent").val() == "") {    
 			alert("내용 입력!"); 
@@ -55,7 +58,7 @@ $(function() {
       <small>- 글쓰기</small>
     </h2>
 
-    <ol class="breadcrumb" style="background-color: #004085!important;"></ol>
+    <!-- <ol class="breadcrumb" style="background-color: #004085!important;"></ol> -->
 
 
 

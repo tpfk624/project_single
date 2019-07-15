@@ -96,7 +96,7 @@ function selectPage(page, key, word, boardListNum ) {
       <small>- 자취생활 팁</small>
     </h2>
 
-    <ol class="breadcrumb" style="background-color: #004085!important;"></ol>
+    <!-- <ol class="breadcrumb" style="background-color: #004085!important;"></ol> -->
 
 
 
@@ -107,32 +107,51 @@ function selectPage(page, key, word, boardListNum ) {
       
       
 	<!-- 이달의 자취왕 -->
-	<div class="container" style="background-color: #007bff21;">
-		<br>
-	    <h2 class="my-4" align="center">이달의 최고 자취왕</h2>
-		
-		<div class="container">
-			<div class="row" align="center">
+	<!-- id="background" -->
+	<div class="container">   
+	<!-- style="background-image: url('/single/resources/img/bimg/15.jpg');" -->
+	 
+		<br> 
+	    <h2 class="my-4" align="center" style="font: normal; font-weight: lighter; align-content: center;">이달의 최고 자취왕</h2>
+		 
+		<div class="container" >
+			<div class="row" align="center"> 
 				<c:forEach var="userdto" items="${userList}" varStatus="stat">
-					<div class="col-lg-4">
-						<div class="container">
+					<div class="col-lg-4">    
+					<div class="container"  style="border: 1px solid gold;" > 
+						<div class="container">    
+							<br>
 							<h3>${stat.count}등</h3>
-							<h4>${userdto.userNickname }</h4>
-							<img src="${userdto.userProfile}" class="rounded-circle" alt="1등" width="130" height="130">
+							<h4>
+								<img alt="${stat.count}" src="${root}/resources/img/bimg/${stat.count}.png">
+								${userdto.userNickname}
+							</h4>
+							<c:if test="${userdto.userProfile != null}">
+								<img src="${userdto.userProfile}" class="rounded-circle" alt="${stat.count}등" width="130" height="130">
+							</c:if>
+							<c:if test="${userdto.userProfile == null}">
+								<img src='${root}/resources/img/seonimg/kakaopic.png' alt="${stat.count}등" class="rounded-circle" width="130" height="130">
+							</c:if>
 						</div>
+						<br>  
+					</div>
 						<!-- 글 제목 좋아요 높은순으로 for문 돌리기 -->
 						<div>
 						<c:set var="userId" value="${userdto.userId}"></c:set>
-						<c:forEach var="board" items="${map[userId]}" varStatus="boardStat">
-							<div><a href="${root}/board/view?boardNum=${board.boardNum}">${boardStat.count}.&nbsp;${board.boardSubject}</a></div>
-						</c:forEach>
+							<div class="card">
+								<div class="card-body"  style="background-color: #ffeb3b87">  
+								<c:forEach var="board" items="${map[userId]}" varStatus="boardStat">
+									<div><a href="${root}/board/view?boardNum=${board.boardNum}"><small>${boardStat.count}.&nbsp;${board.boardSubject}</small></a></div>
+								</c:forEach>
+								</div> 
+							</div>
 						</div>
 					</div>
 				</c:forEach>
 			</div>
 		</div>
 		<br><br> 
-	</div>
+	</div><hr style="background-color: #b5b5b5;"> 
 	<br><br><br>	
 	
 	
