@@ -17,7 +17,6 @@
 <link rel="stylesheet" href="${root}/resources/css/common.css" type="text/css">
 
 
-
 <!-- 로그인 -->
 <!-- 사용법:파일 안의 로그인 로그아웃 버튼 선택자를 등록해주세요. -->
 <%@ include file = "/WEB-INF/views/member/login/loginmodal.jsp"%> 

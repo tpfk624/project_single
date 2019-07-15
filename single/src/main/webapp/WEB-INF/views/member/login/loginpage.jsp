@@ -34,7 +34,16 @@
 <script type="text/javascript">
   $(document).ready(function(){
     //로그인
-	  $('#btnLogin').click(function() {
+	$('#btnLogin').click(function() {
+		login();	
+	})
+	$('#userpass').keydown(function(key) {
+		if (key.keyCode == 13) {
+			login();
+		}
+	});
+    
+    function login(){
 //	 	$('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
 
 //	 	var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
@@ -73,8 +82,8 @@
 				console.log('error')
 			}
 		});
-	})
-	
+    }
+    
 	//회원가입 버튼
 	$('.registerBtn').click(function(){
 		$(location).attr("href","${root}/member/emailauth");
@@ -121,10 +130,10 @@ min-height: 95%;
 		</div>
 		<div class= "row mt-3">
 		  	<div class="col-2">
-			 	<label class="loginmodal-label" for="userPassword"  ><b>비밀번호</b></label>
+			 	<label class="loginmodal-label" for="userPassword"   ><b>비밀번호</b></label>
 			</div>
 			<div class="col-5">
-				<input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" required style="font-family:돋움;" size="35"> 
+				<input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" id ="userpass" required style="font-family:돋움;" size="35"> 
 			</div>
 		</div>
 		<div class= "row mt-3">
