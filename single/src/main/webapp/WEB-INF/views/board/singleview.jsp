@@ -64,7 +64,8 @@ $(function() {
 	// 답변 삭제하기.
 	$(document).on("click",".answerDelete",function (){
 		
-		var replyNum = $(".replyNum").val();
+		//var replyNum = $(".replyNum").val();
+		var replyNum = $(this).children(".replyNum").val();
 		
 		$.ajax({
 			url : '${root}/board/delete',
@@ -87,7 +88,6 @@ $(function() {
 				}
 			}
 		});
-		
 	});
 	
 	
@@ -111,17 +111,39 @@ $(function() {
 			dataType : "json",
 			success : function(response) {
 				if(response.resultCode == 1){
-					//alert("좋아요 성공");
+					//성공
 					location.reload();
+				} else if(response.resultCode == 2){
+					alert("서버 오류로 실패!!");
 				} else {
-					alert("이미 좋아요를 누르셨습니다");
+					alert("로그인을 해주세요"); 
 				}
 			}
 		});
 	});
 	
 	
-	
+	// 글 삭제
+	$(document).on("click","#boardDelete",function (){
+		alert("버튼클릭");
+		$.ajax({
+			url : '${root}/board/boardDelete?boardNum=' + boardNum,
+			dataType : "json",
+			success : function(response) {
+				if(response.resultCode == 1){
+					alert("삭제 성공");
+					//selectanswer(boardNum);
+					location.href="${root}/board/singlemain";  
+				} else if(response.resultCode == 2){
+					alert("삭제가 실패하였습니다. 다시 시도해주세요.");
+				} else {
+					alert("다시 로그인을 해주세요.");
+					//location.reload();
+					location.href="${root}/member/login"; 
+				}
+			}
+		});
+	});
 	
 	
 });
@@ -175,7 +197,7 @@ function selectanswer(boardNum) {
 		</small>
     </h2>
 
-    <ol class="breadcrumb" style="background-color: #004085!important;"></ol>
+    <!-- <ol class="breadcrumb" style="background-color: #004085!important;"></ol> -->
 
 
 
@@ -203,9 +225,9 @@ function selectanswer(boardNum) {
 		</div>
 		
 		
-		
-		
-	    <div class="container" style=" border: 4px solid #444444;"><br><br>  
+		    
+		<!-- <div class="col-lg-10 mb-4" style="border: 2px solid; background-color: #fff"> -->
+	    <div class="container" style=" border: 2px solid #444444;"><br><br>  
       
       
       
@@ -237,9 +259,14 @@ function selectanswer(boardNum) {
 		<div class="row">
 			<div class="col-lg-2"></div>
 			<div class="col-lg-3"><small>작성일 : ${article.boardCreatedate }</small></div>
-			<div class="col-lg-4" style="padding-right: 0;"></div>
+			<div class="col-lg-2" style="padding-right: 0;"></div>
+			<div class="col-lg-2" style="padding-right: 0.5; text-align: right;">
+				<c:if test="${session.userId == article.userId}">
+					<button type="button" id="boardDelete" class="btn btn-outline-danger">글삭제</button>
+	  			</c:if>
+			</div>
 			<div class="col-lg-2" style="padding-left: 0;">
-				<button id="like" class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">좋아요</button>
+				<button type="button" id="like" class="btn btn-outline-secondary" style="color: #007bff; border-color: #007bff;">좋아요</button>
 			</div>
 		</div>
 		
@@ -277,26 +304,30 @@ function selectanswer(boardNum) {
 	   			</a>
 	   		</div>
 	   		<div class="col-lg-1"></div>
-	   	</div>
+	   	</div><br>
 	   	
 	   	
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-lg-1"></div>
 			<div class="col-lg-10"><hr style="background-color: #adb5bd"></div>
 			<div class="col-lg-1"></div>
+		</div> -->  
+
+
+
+
+		<div class="row"  style="background-color: #eee;">   
+		   	<!-- 답변글 쓰기 -->
+		   	<div class="col-lg-12">
+			<div class="answer"></div>    
+		   	</div>
+			 
+			<div class="col-lg-12">
+			<!-- 답별글 보기 -->
+	      	<div class="answerview"></div>
+			</div>			
+
 		</div>
-
-
-
-
-
-	   	<!-- 답변글 쓰기 -->
-		<div class="answer">	
-		</div>
-		
-		<!-- 답별글 보기 -->
-      	<div class="answerview">
-      	</div>
       	
       	
       	

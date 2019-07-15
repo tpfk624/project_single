@@ -66,6 +66,12 @@ body {
 	border-color: #004085cc;
 }
 
+.btn-primary.disabled, .btn-primary:disabled{
+	background-color: #004085;
+	border-color: #004085;
+}
+
+
 .btn-primary:active{
 	background-color: #004085cc;
 	border-color: #004085cc;
@@ -186,6 +192,16 @@ $(document).ready(function(){
           </c:if>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             	혼자놀아요
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+              <a class="dropdown-item" href="${root}/board/singlemain">혼자 놀아요 메인</a>
+              <a class="dropdown-item" href="${root}/board/singlelifeboard">자취생활 게시판</a>
+              <a class="dropdown-item" href="${root}/board/singlecookboard">요리게시판</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               	같이놀아요
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
@@ -193,19 +209,7 @@ $(document).ready(function(){
               <a class="dropdown-item" href="${root}/group/calubang2.jsp">calubang2로그인</a>
               <a class="dropdown-item" href="${root}/group">모임 목록보기</a>
               <a class="dropdown-item" href="${root}/group/create">모임 만들기</a>
-              <a class="dropdown-item" href="${root}/group/grouphomework.jsp">모임 과제 목록보기</a>
-              <a class="dropdown-item" href="${root}/group/grouphprogress.jsp">모임 과제 진행률 보기</a>
               <a class="dropdown-item" href="${root}/group2/">모임 목록 추천</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             	혼자놀아요
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-              <a class="dropdown-item" href="${root}/board/singlemain">혼자 놀아요 메인</a>
-              <a class="dropdown-item" href="${root}/board/singlelifeboard">자취생활 게시판</a>
-              <a class="dropdown-item" href="${root}/board/singlecookboard">요리게시판</a>
             </div>
           </li>
         </ul>

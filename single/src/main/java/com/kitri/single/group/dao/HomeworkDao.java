@@ -22,4 +22,8 @@ public interface HomeworkDao {
 
 	public HProgressDto selectHProgress(HProgressDto hProgressDto);
 
+	public int updateHProgress(HProgressDto hProgressDto);
+
+	public int deleteHProgress(HProgressDto hProgressDto);
+
 }

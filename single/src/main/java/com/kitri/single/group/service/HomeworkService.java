@@ -18,6 +18,10 @@ public interface HomeworkService {
 	public int hpCreate(HProgressDto hProgressDto);
 
 	public HProgressDto getHp(HProgressDto hProgressDto);
+
+	public int hpModify(HProgressDto hProgressDto);
+
+	public int deleteHProgress(HProgressDto hProgressDto);
 	
 	
 }

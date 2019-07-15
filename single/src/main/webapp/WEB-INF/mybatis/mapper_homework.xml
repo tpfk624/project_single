@@ -133,6 +133,7 @@
 	    , hp.hprogress_content hprogressContent
 	    , hp.hprogress_success hprogressSuccess
 	    , hp.hprogress_file hprogressFile
+	    , hp.hprogress_file_origin hprogressFileOrigin
 	    , to_char(hp.hprogress_createdate, 'yyyy/mm/dd') hprogressCreatedate
 	    , to_char(hp.hprogress_updatedate, 'yyyy/mm/dd') hprogressUpdatedate
 	from single_homework hw
@@ -157,6 +158,7 @@
         , hprogress_content
         , hprogress_success
         , hprogress_file
+        , hprogress_file_origin
         , hprogress_createdate
 	)values(
 	    #{homeworkNum}
@@ -166,6 +168,7 @@
 	    , #{hprogressContent}
 	    , #{hprogressSuccess}
 	    , #{hprogressFile}
+	    , #{hprogressFileOrigin}
 	    , sysdate
 	)
 	</insert>
@@ -188,6 +191,7 @@
 	    , sh.hprogress_success hprogressSuccess
 	    , decode(sh.hprogress_success, 'S', '완료', 'P', '진행중', '') hprogressSuccessStr
 	    , sh.hprogress_file hprogressFile
+	    , sh.hprogress_file_origin hprogressFileOrigin
 	    , sh.hprogress_createdate hprogressCreatedate
 	    , sh.hprogress_updatedate hprogressUpdatedate
 	from single_hprogress sh
@@ -196,6 +200,28 @@
 	where sh.homework_num = #{homeworkNum}
 	and sh.user_id = #{userId}
 	</select>
+	
+	<update id="updateHProgress" parameterType="hprogressDto">
+	update single_hprogress
+	set
+	    hprogress_subject = #{hprogressSubject}
+	    , hprogress_content = #{hprogressContent}
+	    , hprogress_success = #{hprogressSuccess}
+	    <if test="(hprogressFileOrigin != null and hprogressFile != null) or (hprogressFileOrigin == null and hprogressFile == null)">
+	    , hprogress_file = #{hprogressFile}
+	    , hprogress_file_origin = #{hprogressFileOrigin}
+	    </if>
+	    , hprogress_updatedate = sysdate
+	where
+	    homework_num = #{homeworkNum}
+	    and user_id = #{userId}
+	</update>
+	
+	<delete id="deleteHProgress" parameterType="hprogressDto">
+	delete single_hprogress
+	where homework_num = #{homeworkNum}
+	and user_id = #{userId}
+	</delete>
 	
 	<resultMap id="homework" type="homeworkDto">
 	  	<id property="homeworkNum" column="homeworkNum" />
@@ -217,6 +243,7 @@
 	    	<result property="hprogressContent" column="hprogressContent"/>
 	    	<result property="hprogressSuccess" column="hprogressSuccess"/>
 	    	<result property="hprogressFile" column="hprogressFile"/>
+	    	<result property="hprogressFileOrigin" column="hprogressFileOrigin"/>
 	    	<result property="hprogressCreatedate" column="hprogressCreatedate"/>
 	    	<result property="hprogressUpdatedate" column="hprogressUpdatedate"/>
 	  	</collection>

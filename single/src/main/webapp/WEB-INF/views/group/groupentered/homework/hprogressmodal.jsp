@@ -14,6 +14,7 @@
 				<form action="post" enctype="multipart/form-data" id="hpModifyForm">
 				<input type="hidden" value="${homework.groupNum}" name="groupNum">
 				<input type="hidden" value="${homework.homeworkNum}" name="homeworkNum">
+				<input type="hidden" value="modify" name="type">
 				<section class="groupsection group-info">
 					<label class="group-info-label col-sm-2">이름</label>
 					<div class="group-info-content col-sm-10">
@@ -52,12 +53,13 @@
 					<label class="group-info-label col-sm-2">파일업로드</label>
 					<div class="group-info-content col-sm-10">
 						<div class="input-group-prepend fileupload">
+							<input type="hidden" value="" name="fileurl">
 							<input type="file" class="form-control file-hidden" id="ex_file"
 								accept="" name="filedata" style="display: none;"> 
 							<input type="text" placeholder="파일을 등록해주세요" id="ex_file_input" class="form-control col-lg-4 col-md-4 col-sm-4"
 								name="hprogressFileOrigin" readonly> 	
 							<button type="button" class="file-cancel btn btn-secondary" style="margin-left: 0.5rem;">등록취소</button>
-							<button type="button" class="btn btn-info" id="filedownload">내려받기</button>
+							<a href="" id="fileurl" download=""><button type="button" class="btn btn-info" id="filedownload">내려받기</button></a>
 						</div>
 					</div>
 				</section>
@@ -73,6 +75,72 @@
 	</div>
 </div>
 <script>
+//다운로드 버튼
+/* $("#filedownload").on("click", function() {
+	console.log($(this).siblings("input[name=fileurl]").val());
+	window.open($(this).siblings("input[name=fileurl]").val(), "_blank");
+}); */
+
+//수정버튼
+$("#hprogressModal .modal-footer .btn-primary").on("click", function() {
+	if($("#hprogressModal input[name=hprogressSubject]").val() == ''){
+		showAlertModal("필수값이 누락", "제목을 입력해주세요");
+
+		$("#alert").on('hidden.bs.modal', function () {
+			$("#hprogressModal input[name=hprogressSubject]").focus().get(0).scrollIntoView(true);
+		});
+		return false
+	}
+	
+	if($("#hprogressModal textarea[name=hprogressContent]").val() == ''){
+		showAlertModal("필수값이 누락", "내용을 입력해주세요");
+
+		$("#alert").on('hidden.bs.modal', function () {
+			$("#hprogressModal textarea[name=hprogressContent]").focus().get(0).scrollIntoView(true);
+		});
+		return false
+	}
+	
+	var url = "${root}/homework/hprogress";
+	var data = new FormData($("#hpModifyForm")[0]);
+	var success = function(result) {
+		if(result.resultCode == 1){
+			showSuccessAlertModal("과제진행 수정 성공", result.resultData);
+			$("#alertSuccess").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+				$("#hprogressModal").modal("hide").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+					homeworkdetail("${homework.groupNum}", "${homework.homeworkNum}");
+				});
+			});
+		}else{
+			showAlertModal("과제진행 수정 실패", result.resultData);
+		}
+	}
+	
+	ajaxFunc(data, url, "post", success)
+});
+//삭제버튼
+$("#hprogressModal .modal-footer .btn-danger").on("click", function() {
+	var url = "${root}/homework/hprogress";
+	var data = {
+		homeworkNum : "${homework.homeworkNum}"
+		, userId : "${sessionScope.userInfo.userId}"
+	}
+	var success = function(result) {
+		if(result.resultCode == 1){
+			showSuccessAlertModal("과제진행 삭제 성공", result.resultData);
+			$("#alertSuccess").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+				$("#hprogressModal").modal("hide").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+					homeworkdetail("${homework.groupNum}", "${homework.homeworkNum}");
+				});
+			});
+		}else{
+			showAlertModal("과제진행 삭제 실패", result.resultData);
+		}
+	}
+	
+	ajaxFunc(JSON.stringify(data), url, "delete", success)
+});
+
 $("#hpModifyForm .dropdown").on("show.bs.dropdown", function(){
 	var height = $(this).css("height").substr(0, $(this).css("height").length-2);
 	$(this).parent().parent().css("height", height * ($(this).find(".dropdown-item").length+2));

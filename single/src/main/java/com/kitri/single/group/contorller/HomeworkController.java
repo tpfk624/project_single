@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,7 +73,7 @@ public class HomeworkController {
 			,@RequestParam Map<String, String> parameter
 			, ModelAndView model) {
 		
-		model.setViewName("/group/homeworkresult");
+		model.setViewName("/group/groupentered/homework/homeworkresult");
 		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
 		if(userInfo == null) {
 			return model;
@@ -99,13 +100,23 @@ public class HomeworkController {
 			, HomeworkDto homeworkDto
 			, ModelAndView model) {
 		
-		model.setViewName("group/grouphprogress");
+		model.setViewName("group/groupentered/homework/grouphprogress");
 		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
 		if(userInfo == null) {
 			return model;
 		}
 		
 		homeworkDto = homeworkService.getHomeworkDetail(homeworkDto.getHomeworkNum());
+		
+		if(homeworkDto.gethProgressList().get(0).getUserId() != null) {
+			for(HProgressDto hProgressDto : homeworkDto.gethProgressList()) {
+				if(userInfo.getUserId().equals(hProgressDto.getUserId())) {
+					model.addObject("alreadyHPCreate", true);
+				}
+			}
+		}
+		
+		
 		model.addObject("homework", homeworkDto);
 		model.addObject("root", servletContext.getContextPath());
 		model.addObject("userNickname", userInfo.getUserNickname());
@@ -117,7 +128,10 @@ public class HomeworkController {
 	@RequestMapping(value = "/hprogress", method = RequestMethod.POST )
 	public String hpCreate(HttpSession session
 			, HProgressDto hProgressDto
+			, @RequestParam(name = "type") String type
 			, @RequestParam(name = "filedata") MultipartFile multipartFile) {
+		
+		logger.info("type : " +type);
 		
 		String json = makeJSON(0, "시스템 에러입니다");
 		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
@@ -148,11 +162,20 @@ public class HomeworkController {
 		}
 		
 		logger.info(hProgressDto.toString());
-		int result = homeworkService.hpCreate(hProgressDto);
-		if(result == 0) {
-			json = makeJSON(2, "이미 등록한 글이 있습니다. 글을 수정해주세요");
-		}else if(result == 1){
-			json = makeJSON(1, "글이 등록되었습니다.");
+		if("create".equals(type)) {
+			int result = homeworkService.hpCreate(hProgressDto);
+			if(result == 0) {
+				json = makeJSON(2, "이미 등록한 글이 있습니다. 글을 수정해주세요");
+			}else if(result == 1){
+				json = makeJSON(1, "글이 등록되었습니다.");
+			}
+		}else {
+			int result = homeworkService.hpModify(hProgressDto);
+			if(result == 0) {
+				json = makeJSON(2, "잘못된 요청입니다. 다시 시도해주세요");
+			}else if(result == 1){
+				json = makeJSON(1, "글이 수정되었습니다");
+			}
 		}
 		
 		return json;
@@ -177,6 +200,23 @@ public class HomeworkController {
 		return json;
 	}
 	
+	@RequestMapping(value = "/hprogress", method = RequestMethod.DELETE)
+	public String deleteHP(HttpSession session
+			,@RequestBody HProgressDto hProgressDto) {
+		
+		String json = makeJSON(0, "시스템 에러입니다");
+		UserDto userInfo = (UserDto)session.getAttribute("userInfo");
+		if(userInfo == null) {
+			json = makeJSON(99, "로그인이 풀렸습니다. 다시 로그인해주세요");
+			return json;
+		}
+		
+		logger.info(hProgressDto.toString());
+		int result = homeworkService.deleteHProgress(hProgressDto);
+		json = makeJSON(1, "정상적으로 삭제되었습니다");
+		
+		return json;
+	}
 	//json데이터 생성
 	public String makeJSON(int resultCode, Object resultData) {
 		
@@ -193,4 +233,6 @@ public class HomeworkController {
 		return jsonObject.toString();
 		
 	}
+	
+	
 }

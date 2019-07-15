@@ -102,4 +102,14 @@ public class HomeworkServiceImpl implements HomeworkService{
 	public HProgressDto getHp(HProgressDto hProgressDto) {
 		return sqlSession.getMapper(HomeworkDao.class).selectHProgress(hProgressDto);
 	}
+	
+	@Override
+	public int hpModify(HProgressDto hProgressDto) {
+		return sqlSession.getMapper(HomeworkDao.class).updateHProgress(hProgressDto);
+	}
+	
+	@Override
+	public int deleteHProgress(HProgressDto hProgressDto) {
+		return sqlSession.getMapper(HomeworkDao.class).deleteHProgress(hProgressDto);
+	}
 }

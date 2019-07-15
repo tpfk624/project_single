@@ -38,7 +38,7 @@
 <section class="groupsection group-calendar">
 	<label class="group-info-label col-sm-2">모임일정</label>
 	<div class="group-info-content col-sm-10">
-	<%@ include file="calendar.jsp"%>
+	<%@ include file="calendar/calendar.jsp"%>
 	</div>
 </section>
 </div>

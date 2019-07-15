@@ -9,8 +9,8 @@
 <!-- 네아로 설정값-->
 <c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 <!-- 로컬용 -->
-<c:set var = "serviceUrl" value = "http://localhost:8443/single"/>
-<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
+<c:set var = "serviceUrl" value = "http://192.168.14.40:8443/single"/>
+<c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/>
 
 <!-- 네아로 자바스크립트-->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>

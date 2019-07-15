@@ -38,6 +38,7 @@ import com.kitri.single.group.model.HomeworkDto;
 import com.kitri.single.group.service.GroupService;
 import com.kitri.single.group.service.HomeworkService;
 import com.kitri.single.user.model.UserDto;
+import com.kitri.single.util.Pagination;
 import com.kitri.single.util.SiteConstance;
 import com.kitri.single.util.Utill;
 
@@ -98,9 +99,11 @@ public class GroupController {
 		//System.out.println(parameter);
 		logger.info(parameter.toString());
 		
-		List<GroupDto> groupList = groupService.getGroupList(parameter);
+		Pagination<GroupDto> pagination = groupService.getGroupList(parameter);
 		model.addAttribute("parameter", parameter);
-		model.addAttribute("groupList", groupList);
+		//model.addAttribute("groupList", pagination);
+		model.addAttribute("pagination", pagination);
+		
 		//System.out.println(json);
 		
 		return "group/grouplistresult";
@@ -203,7 +206,7 @@ public class GroupController {
 				model.addAttribute("group", groupDto);
 				model.addAttribute("groupMember", groupMemberDto);
 				model.addAttribute("serverIP", SiteConstance.CHAT_SERVER_IP);
-				path = "group/groupmain";
+				path = "group/groupentered/groupmain";
 				
 				//logger.info(groupMemberDto.toString());
 				//logger.info(groupDto.toString());
@@ -432,7 +435,7 @@ public class GroupController {
 			}else if("homeworkcreate".equals(type)){
 				model = homeworkCreatePage(userInfo, groupNum, model);
 			}else {
-				model.setViewName("group/main");
+				model.setViewName("group/groupentered/main");
 			}
 		}
 		model.addObject("root", servletContext.getContextPath());
@@ -440,7 +443,7 @@ public class GroupController {
 	}
 	
 	private ModelAndView homeworkCreatePage(UserDto userInfo, int groupNum, ModelAndView model) {
-		String path = "group/homeworkcreate";
+		String path = "group/groupentered/homework/homeworkcreate";
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("userId", userInfo.getUserId());
 		parameter.put("groupNum", groupNum);
@@ -455,7 +458,7 @@ public class GroupController {
 	}
 
 	private ModelAndView homeworkPage(UserDto userInfo, int groupNum, ModelAndView model) {
-		String path = "group/grouphomework";
+		String path = "group/groupentered/homework/grouphomework";
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("userId", userInfo.getUserId());
 		parameter.put("groupNum", groupNum);
@@ -479,7 +482,7 @@ public class GroupController {
 	}
 
 	private ModelAndView memberPage(UserDto userInfo, int groupNum, ModelAndView model) {
-		String path = "group/groupmember";
+		String path = "group/groupentered/groupmember";
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("userId", userInfo.getUserId());
 		parameter.put("groupNum", groupNum);
@@ -500,7 +503,7 @@ public class GroupController {
 	}
 
 	private ModelAndView modifyPage(UserDto userInfo, int groupNum, ModelAndView model) {
-		String path = "group/groupmodify";
+		String path = "group/groupentered/groupmodify";
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("userId", userInfo.getUserId());
 		parameter.put("groupNum", groupNum);
@@ -520,7 +523,7 @@ public class GroupController {
 
 	public ModelAndView mainPage(UserDto userInfo, int groupNum, ModelAndView model) {
 		//그룹 멤버인지 확인
-		String path = "group/main";
+		String path = "group/groupentered/main";
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("userId", userInfo.getUserId());
 		parameter.put("groupNum", groupNum);
@@ -537,7 +540,7 @@ public class GroupController {
 			model.addObject("groupMember", groupMemberDto);
 		}
 		
-		model.setViewName("group/main");
+		model.setViewName(path);
 		return model;
 	}
 	

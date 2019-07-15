@@ -5,7 +5,7 @@ import java.util.List;
 public class Pagination<T> {
 	private boolean nowFirst; // 현재 내 페이지가 앞인지
 	private boolean nowEnd;  // 현재 내 페이지가 뒤인지
-	private int totalPageCount;   //총 글수
+	private int totalPageCount;   //총 페이지수
 	private int pageGroupSize; 	// 페이지그룹에 보여줄 페이지
 	private String url;				//호출할 컨트롤러
 	private int currentPage; 		//현재페이지
