@@ -64,9 +64,34 @@
         left outer join single_group_category gc
             on g.group_category_num = gc.group_category_num
     where g.group_statecode = '1'
-	and group_num in
+    <if test="list.size !=0">
+    	and group_num in
 		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
 	 		#{item}
-		</foreach>
+		</foreach>	
+    </if>
+	</select>
+	
+	<select id="getSingleRecommendList" resultType = "groupDto">
+		select g.group_num groupNum
+        , g.group_category_num groupCategoryNum
+        , gc.group_category_name groupCategoryName
+        , g.group_name as groupName
+        , g.group_description as groupDescription
+        , g.group_img_src as groupImgSrc
+        , g.group_member_count as groupMemberCount
+        , g.group_member_limit as groupMemberLimit	    
+        , g.group_main_place as groupMainPlace
+        , to_char(g.group_createdate, 'yyyy/mm/dd') as groupCreatedate
+        ,recountG.c
+	  	from single_group g
+	        left outer join single_group_category gc
+	            on g.group_category_num = gc.group_category_num
+	        join (select group_num, count(user_id) c
+	                from single_group g join single_stamp s using (group_num)
+	                 where g.group_statecode = '1'
+	                 and group_createdate>= TO_CHAR(add_months(sysdate,-1),'yy/mm/dd') 
+	                group by group_num, group_name) recountG on(g.group_num =recountG.group_num )
+   		where g.group_statecode = '1'
 	</select>
 </mapper>

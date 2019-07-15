@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +43,7 @@ public class GroupServiceImpl2 implements GroupService2 {
 	@Override
 	public List<GroupDto> getRecommendGroupList(Map<String, Object> parameter) {
 		UserDto userDto = (UserDto)(parameter.get("userDto"));
+		
 		
 		int page = NumberCheck.NotNumberToOne((String)parameter.get("page"));
 		int groupSize = SiteConstance.GROUP_SIZE;
@@ -90,10 +94,21 @@ public class GroupServiceImpl2 implements GroupService2 {
 			}
 		}
 		
-		
 //		Map<String, List<String>> paramMap = new HashMap<String, List<String>>();
 //		paramMap.put("list", resultList);
-		List<GroupDto> groupRecommendList = (List<GroupDto>)sqlSession.getMapper(RecomendDao.class).getGroupDtoList(resultList);
+		List<GroupDto> groupRecommendList = new ArrayList<GroupDto>();
+		if(resultList.size()!=0) {
+			groupRecommendList = (List<GroupDto>)sqlSession.getMapper(RecomendDao.class).getGroupDtoList(resultList);	
+		}
+		
+		
+		if( groupRecommendList.size()==0 ) {
+			groupRecommendList = (List<GroupDto>)sqlSession.getMapper(RecomendDao.class).getSingleRecommendList();
+//			groupRecommendList =(List<GroupDto>)sqlSession.getMapper(RecomendDao.class).getGroupDtoList(resultList);
+		}
+		if(groupRecommendList.size()>=20) {
+			groupRecommendList= groupRecommendList.subList(0, 19);
+		}
 		JSONObject jsonObject = new JSONObject();
 		JSONArray jsonArray = new JSONArray(list);
 		jsonObject.put("groupList", jsonArray);
