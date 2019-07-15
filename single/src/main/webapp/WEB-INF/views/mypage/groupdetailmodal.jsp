@@ -40,7 +40,7 @@ $(function() {
 						alt="">
 				<h4 class="card-title">영어단어 스터디</h4>
 				<div class="card-body">
-					<p class="card-text groupDescription">모임설명</p>
+					<div class="card-text groupDescription">모임설명</div>
 					<p class="card-text groupCategoryName">카테고리 : </p>
 					<p class="card-text taglist"></p>
 					<p class="card-text groupMember">인원 : </p>

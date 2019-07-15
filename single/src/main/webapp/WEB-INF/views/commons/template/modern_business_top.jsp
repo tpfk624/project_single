@@ -120,7 +120,6 @@ tag>input[type=button]:hover{
 .fixed-top{
 	z-index: 1045;
 }
-
 </style>
 
 <!-- 로그인 -->

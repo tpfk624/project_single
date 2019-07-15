@@ -62,7 +62,6 @@ $(document).ready(function(){
 		if (key.keyCode == 13) {
 			emailsend();
 		}
-		return false;
 	});
 
 	function emailsend(){

@@ -121,27 +121,32 @@ $(function(){
 	
 	// 수정 요청
 	$(".userinfoBtn").click(function(){
-		if($("#userPassword").val().trim().length == 0){
-			alert("현재 비밀번호를 입력해주세요.");
-		} else if(curpassright != 0){
-			alert("현재 비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
-		} else if($("#userNickname").val().trim().length == 0){
-			alert("닉네임을 입력해주세요.");
-		} else if($("#userPhone").val().trim().length == 0){
-			alert("핸드폰 번호를 입력해주세요.");
-		} else if(passtypecnt != 0 && istherenewpass != 0) {
-			alert("사용할 수 없는 새 비밀번호입니다. 다시 확인해주세요.");
-		}else if(passsamecnt != 0 && istherenewpass != 0) {
-			alert("새 비밀번호 확인란이 일치하지 않습니다. 다시 확인해주세요.");
-		}else {
 		
-// 			$(".modifyForm").attr("action", "${root}/mypage/modify").submit();
-		}
 	}); 
 	
 	 /* 변경사항 저장 버튼 클릭 시  */
 	 $(".userinfoBtn").click(function() {
-		 console.log("버튼클릭됨");
+		 if($("#userPassword").val().trim().length == 0){
+				alert("현재 비밀번호를 입력해주세요.");
+				return false
+			} else if(curpassright != 0){
+				alert("현재 비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+				return false
+			} else if($("#userNickname").val().trim().length == 0){
+				alert("닉네임을 입력해주세요.");
+				return false
+			} else if(passtypecnt != 0 && istherenewpass != 0) {
+				alert("사용할 수 없는 새 비밀번호입니다. 다시 확인해주세요.");
+				return false
+			}else if(passsamecnt != 0 && istherenewpass != 0) {
+				alert("새 비밀번호 확인란이 일치하지 않습니다. 다시 확인해주세요.");
+				return false
+			}else {
+			
+//	 			$(".modifyForm").attr("action", "${root}/mypage/modify").submit();
+			}
+		 
+		 //console.log("버튼클릭됨");
 		$.ajax({
 			url: "${root}/mypage/modify",
 			type: "POST",
@@ -167,13 +172,13 @@ $(function(){
 	 
 	/* 회원 탈퇴 */
 	 $("#DeletePressBtn").click(function(){
-	 	alert("탈퇴 버튼 클릭됨");
+	 	//alert("탈퇴 버튼 클릭됨");
 	 	
 	 	var pass = $(this).attr("data-num");
-	 	alert(pass);
+	 	//alert(pass);
 	 	
 	 	var pw_input = $("#pw_input").val();
-	 	alert(pw_input);
+	 	//alert(pw_input);
 	 	
 	 	if( pw_input != pass){
 	 		alert("비밀번호가 일치하지 않습니다.");

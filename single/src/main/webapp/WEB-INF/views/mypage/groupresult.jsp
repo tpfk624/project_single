@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
-
 <div class="row">
 <!-- 모임 출력 시작 -->
 <c:forEach items="${groupList}" var="group">
@@ -15,7 +13,7 @@
 			<div class="card-body">
 				<p class="card-text">
 					<c:choose>
-						<c:when test="${fn:length(group.groupDescription) > 100}">${fn:substring(group.groupDescription, 0, 100)}...</c:when>
+						<c:when test="${fn:length(group.groupDescription) > 50}">${fn:substring(group.groupDescription, 0, 50)}...</c:when>
 						<c:otherwise>${group.groupDescription}</c:otherwise>
 					</c:choose>
 				</p>

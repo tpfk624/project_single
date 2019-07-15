@@ -511,7 +511,8 @@
 }
 
 .note-popover.popover {
-	max-width: none
+	max-width: none;
+	z-index: 900;
 }
 
 .note-popover.popover .popover-content a {
