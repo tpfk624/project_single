@@ -54,7 +54,7 @@ $(function() {
 <div class="container">
 
     <!-- Page Heading/Breadcrumbs -->
-    <h2 class="mt-4 mb-3">자취생활 팁
+    <h2 class="mt-4 mb-3">우리혼자 산다
       <small>- 글쓰기</small>
     </h2>
 
