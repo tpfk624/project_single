@@ -17,7 +17,6 @@
 <link rel="stylesheet" href="${root}/resources/css/common.css" type="text/css">
 
 
-
 <!-- 로그인 -->
 <!-- 사용법:파일 안의 로그인 로그아웃 버튼 선택자를 등록해주세요. -->
 <%@ include file = "/WEB-INF/views/member/login/loginmodal.jsp"%> 
@@ -55,49 +54,67 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	getDailyDust();
 	
-	$('#weatherimg').on("click", function(){
-		if($("#popover").hasClass("show")){
-			$("#popover").removeClass("show");
-			return;
+	//검색
+	$("#word").on("keyup", function(e) {
+		if(e.keyCode == 13){
+			$("#searchBtn").trigger("click");
 		}
-		
-		var form = {
-				'stationName' : $('#stationName').val(),
-				'dataTerm' : $('#dataTerm').val()
-		};
-		$.ajax({
-			url : "${root}/home/dusttest.do",
-			type : "POST",
-			data : JSON.stringify(form)	,
-			contentType:"application/json; charset=UTF-8;",
-			dataType : "json",
-			success : function(data){
-				var list = data.list;
-				var dt = list[0].pm25Grade;
-				console.log(dt);
-				if(dt == "1"){
-					$("#here").html("<img src='${root}/resources/img/seonimg/good.png' height='100'>");
-					$(".txt").html("<strong>미세먼지도 없는데 산책 어떠세요?</strong>");
-				}else if(dt == "2"){
-					$("#here").html("<img src='${root}/resources/img/seonimg/soso.png' height='100'>");	
-					$(".txt").html("<strong>미세먼지 좋아요</strong>");
-				}else if(dt == "3"){
-					$("#here").html("<img src='${root}/resources/img/seonimg/bad.png' height='100'>");	
-					$(".txt").html("<strong>마스크 챙기세요!</strong>");
-				}else if(dt == "4"){
-					$("#here").html("<img src='${root}/resources/img/seonimg/die.png' height='100'>");	
-					$(".txt").html("<strong>미세먼지가 심각해요! 마스크 꼭 챙기세요!</strong>");
-				}
-				
-				$("#popover").addClass("show"); 
-			},
-			error: function(){
-				alert("에러났어요!!!!!!");
-			}
-		});
 	});
+	$("#searchBtn").click(function() {
+		window.open("	https://www.google.co.uk/search?newwindow=1&q=" + $("#word").val());
+		//location.href = "https://www.google.co.uk/search?newwindow=1&q=" + $("#word").val();
+	});
+	
+	//$('#weatherimg').on("click", getDailyDust);
 });
+
+function getDailyDust(){
+	if($("#popover").hasClass("show")){
+		$("#popover").removeClass("show");
+		return;
+	}
+	
+	var form = {
+			'stationName' : $('#stationName').val(),
+			'dataTerm' : $('#dataTerm').val()
+	};
+	$.ajax({
+		url : "${root}/home/dusttest.do",
+		type : "POST",
+		data : JSON.stringify(form)	,
+		contentType:"application/json; charset=UTF-8;",
+		dataType : "json",
+		success : function(data){
+			var list = data.list;
+			var dt = list[0].pm25Grade;
+			console.log(dt);
+			if(dt == "1"){
+				$("#dustimg").attr("src", "${root}/resources/img/seonimg/good.png");
+				//$("#here").html("<img src='${root}/resources/img/seonimg/good.png' height='100'>");
+				$("#dustInfo").html("<strong>미세먼지 수치 너무 좋아요!<br>야외활동하기 딱 좋은 날이에요!</strong>");
+			}else if(dt == "2"){
+				$("#dustimg").attr("src", "${root}/resources/img/seonimg/soso.png");
+				//$("#here").html("<img src='${root}/resources/img/seonimg/soso.png' height='100'>");	
+				$("#dustInfo").html("<strong>미세먼지 수치 보통이에요<br>오늘은 집 근처 산책은 어떠세요?</strong>");
+			}else if(dt == "3"){
+				$("#dustimg").attr("src", "${root}/resources/img/seonimg/bad.png");
+				//$("#here").html("<img src='${root}/resources/img/seonimg/bad.png' height='100'>");	
+				$("#dustInfo").html("<strong>오늘은 미세먼지가 많네요<br>마스크 챙기세요!</strong>");
+			}else if(dt == "4"){
+				$("#dustimg").attr("src", "${root}/resources/img/seonimg/die.png");
+				//$("#here").html("<img src='${root}/resources/img/seonimg/die.png' height='100'>");	
+				$("#dustInfo").html("<strong>미세먼지가 심각해요! 오늘은 야외활동을 삼가해주세요!</strong>");
+			}
+			
+			$("#popover").toggle(); 
+		},
+		error: function(){
+			alert("에러났어요!!!!!!");
+		}
+	});
+}
 </script>
 
 <input id="stationName" name="stationName" value="구로구" hidden="">
@@ -106,14 +123,23 @@ $(document).ready(function(){
 
       <!-- Header -->
          <header id="header">
-            <div class="logo"><a href="index.jsp">우리 혼자 살아요 </a></div> <!-- <span>by TEMPLATED</span> -->
-            <img src="${root}/resources/img/seonimg/rain.png" id="weatherimg" height="100">
+            <div class="logo"><a href="${root}/home">우리 혼자 살아요 </a></div> <!-- <span>by TEMPLATED</span> -->
+            <div>
+            <img src="" id="dustimg" height="100">
+            </div>
+            <%-- <div class="popover fade bs-popover-bottom" role="tooltip" id="popover" style="will-change: transform;" x-placement="bottom">  transform: translate3d(1248px, 79px, 0px);
+	        	<div class="arrow" style="left: 25px;">
+	         	</div>
+	         	<h3 class="popover-header">날씨</h3>
+	         	<div class="popover-body">
+	         		<img src="${root}/resources/img/seonimg/rain.png" id="dustimg" height="100">
+	         	</div>
+         	</div> --%>
          </header>
 
       <!-- menu -->
          <nav id="menu">
             <ul class="links">
-            
             <c:if test="${userInfo != null}">
             	<li id="profile">
 		          <!-- 프로필사진 -->
@@ -148,8 +174,8 @@ $(document).ready(function(){
 <%-- 		    	<li><a href="${root}/home/dusttest">로그아웃</a></li> --%>
 <%-- 		    </c:if> --%>
                 
-                <li><a href="${root }/board/singlemain">혼자놀래요</a></li>
-                <li><a href="${root}/group">같이놀래요</a></li>
+                <li><a href="${root }/board/singlemain">혼자놀아요</a></li>
+                <li><a href="${root}/group">같이놀아요</a></li>
             </ul>
             
          </nav>
@@ -159,10 +185,12 @@ $(document).ready(function(){
               <!--  <header>
                   <h1>SingleTrace</h1>
                </header> -->
-               <label class="txt"></label>
+               <c:if test="${!empty userInfo}">
+               <label class="txt"><strong>${userInfo.userName} 님 어서오세요</strong></label><br></c:if>
+               <label class="txt" id="dustInfo"></label><br><br>
                 <div class="input-group mb-3">
-				  <input type="text" class="form-control" placeholder="Search" width="100">
-				    <button class="btn btn-success" type="submit">&#8981;</button> 
+				  <input type="text" class="form-control" placeholder="구글 검색" width="100" id="word">
+				  <button class="btn btn-success" type="submit" id="searchBtn">&#8981;</button> 
 				</div>
             </div>
             <a href="#menu" class="more">menu</a>
@@ -170,14 +198,6 @@ $(document).ready(function(){
 
          <!-- 날씨 popover -->
                   
-         <div class="popover fade bs-popover-bottom" role="tooltip" id="popover" style="float : right; top: 60px; left: 1560px;  will-change: transform;" x-placement="bottom">  <!-- transform: translate3d(1248px, 79px, 0px); -->
-	         <div class="arrow" style="left: 25px;">
-	         </div>
-	         <h3 class="popover-header">날씨</h3>
-	         <div class="popover-body">
-	         	<div id="here"></div>
-	         </div>
-         </div>
    </body>
 </html>
 

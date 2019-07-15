@@ -1,0 +1,50 @@
+ALTER SEQUENCE group_num_seq INCREMENT BY 1000;
+ALTER SEQUENCE group_category_num_seq INCREMENT BY 1000;
+ALTER SEQUENCE calendar_num_seq INCREMENT BY 1000;
+ALTER SEQUENCE homework_num_seq INCREMENT BY 1000;
+ALTER SEQUENCE group_hprogress_num_seq INCREMENT BY 1000;
+
+ALTER SEQUENCE hashtag_type_num_seq INCREMENT BY 1000;
+ALTER SEQUENCE hashtag_num_seq INCREMENT BY 1000;
+ALTER SEQUENCE category_num_seq INCREMENT BY 1000;
+ALTER SEQUENCE board_type_num_seq INCREMENT BY 1000;
+ALTER SEQUENCE board_list_num_seq INCREMENT BY 1000;
+
+ALTER SEQUENCE board_num_seq INCREMENT BY 1000;
+ALTER SEQUENCE reply_num_seq INCREMENT BY 1000;
+
+-- 시퀀스 증가
+
+select group_num_seq.nextval from dual;
+select group_category_num_seq.nextval from dual;
+select calendar_num_seq.nextval from dual;
+select homework_num_seq.nextval from dual;
+select group_hprogress_num_seq.nextval from dual;
+
+select hashtag_type_num_seq.nextval from dual;
+select hashtag_num_seq.nextval from dual;
+select category_num_seq.nextval from dual;
+select board_type_num_seq.nextval from dual;
+select board_list_num_seq.nextval from dual;
+
+select board_num_seq.nextval from dual;
+select reply_num_seq.nextval from dual;
+
+-- 시퀀스 한번당 증가
+
+ALTER SEQUENCE group_num_seq INCREMENT BY 1;
+ALTER SEQUENCE group_category_num_seq INCREMENT BY 1;
+ALTER SEQUENCE calendar_num_seq INCREMENT BY 1;
+ALTER SEQUENCE homework_num_seq INCREMENT BY 1;
+ALTER SEQUENCE group_hprogress_num_seq INCREMENT BY 1;
+
+ALTER SEQUENCE hashtag_type_num_seq INCREMENT BY 1;
+ALTER SEQUENCE hashtag_num_seq INCREMENT BY 1;
+ALTER SEQUENCE category_num_seq INCREMENT BY 1;
+ALTER SEQUENCE board_type_num_seq INCREMENT BY 1;
+ALTER SEQUENCE board_list_num_seq INCREMENT BY 1;
+
+ALTER SEQUENCE board_num_seq INCREMENT BY 1;
+ALTER SEQUENCE reply_num_seq INCREMENT BY 1;
+
+commit;

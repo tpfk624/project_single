@@ -54,14 +54,12 @@ public class GroupController2 {
 	}
 	
 	@RequestMapping(value = "/grouplist2", method = RequestMethod.GET)
-	@ResponseBody
 	public String grouprecommend(Model model, HttpSession session) {
-//		UserDto userInfo = (UserDto) session.getAttribute("userInfo");
-		UserDto userDto= new UserDto();
-		userDto.setUserId("hth0893@naver.com");
+		UserDto userDto = (UserDto) session.getAttribute("userInfo");
+//		UserDto userDto= new UserDto();
+//		userDto.setUserId("hth0893@naver.com");
 		
-		userDto = memberService.getUser(userDto);
-		session.setAttribute("userInfo", userDto);
+
 	
 		
 		Map<String, Object> parameter = new HashMap<String, Object>();
@@ -82,9 +80,10 @@ public class GroupController2 {
 		Map<String, Object> recommendParamMap = new HashMap<String, Object>();
 		recommendParamMap.put("page", "1");
 		recommendParamMap .put("userDto",userDto);
-		List<GroupDto> groupList = groupService.getRecommendGroupList(recommendParamMap );
+		List<GroupDto> groupList = groupService.getRecommendGroupList(recommendParamMap);
 		//System.out.println("size : " + size);
-		
+		//관련해시태그를 찾지 못하였습니다. -> 추천수 가 많은 순서대로 return ;
+
 		
 
 //		model.addAttribute("size", size);

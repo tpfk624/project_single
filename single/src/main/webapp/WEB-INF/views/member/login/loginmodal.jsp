@@ -11,8 +11,8 @@ id: loginmodal의 display를 block으로 변경해주세요.
  
 <!-- 네아로 설정값-->
 <!-- 로컬용 -->
-<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
-<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
+<c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/>
+<c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/>
 
 <!-- ip설정용 -->
 <%-- <c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/> --%>
@@ -49,8 +49,21 @@ $(document).ready(function(){
 		$(location).attr("href","${root}/member/emailauth");
 	})
 	  
-	//로그인
-	$('.btnLogin').click(function() {
+	//비밀번호 찾기
+	$('#passfindBtn').click(function(){
+		$(location).attr("href","${root}/member/emailpassfind");
+    });
+	
+	 //로그인
+	$('#btnLogin').click(function() {
+		login();	
+	})
+	$('#userpass').keydown(function(key) {
+		if (key.keyCode == 13) {
+			login();
+		}
+	});
+	function login(){
 //		$('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
 
 // 	 	var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
@@ -88,7 +101,9 @@ $(document).ready(function(){
 				console.log('error')
 			}
 		});
-	})
+	}
+	
+	
 		 
 	
 
@@ -115,16 +130,15 @@ $(document).ready(function(){
       <input type="email" placeholder="아이디를 입력해주세요" name="userId" required style="font-family:돋움">
 
       <label class="loginmodal-label" for="userPassword" ><b>비밀번호</b></label>
-      <input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" required style="font-family:돋움">
+      <input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" id="userpass" required style="font-family:돋움">
       
       <!-- 로그인 -->  
-      <button class= "btnLogin" type="button">Login</button>
+      <button id= "btnLogin" type="button">Login</button>
       <!-- 네이버로그인 -->
-      <div id="naver_id_login"></div>
-      
-      <span class="other"> <a href="#" class = "registerBtn">회원가입</a>  <a href="#" >비밀번호변경</a> <a href="#">비밀번호 찾기</a></span>
-      <input type="checkbox"  name="remember"/> <label for="remember">아이디 기억하기</label>
-      
+       <div id="naver_id_login" style="display:inline-block"></div>
+      <span class="other"><a href="#" class = "registerBtn">회원가입</a> <%--<a href="#" id= "passfindBtn">비밀번호 찾기</a> --%></span>
+      <%--<span class="other"> <a href="#" class = "registerBtn">회원가입</a> <a href="#" id= "passfindBtn">비밀번호 찾기</a> </span>--%>
+<!--       <input type="checkbox"  name="remember"/> <label for="remember">아이디 기억하기</label> -->
     </div>
 
     <div class="container" style="background-color:#f1f1f1">

@@ -47,34 +47,13 @@ public class MemberController {
 	MemberService memberService;	
 	
 	// 회원가입페이지이동
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register() {
-		return "member/register/register";
-	}
-	
-	// 소셜정보와함께 회원가입페이지로이동
-	@RequestMapping(value = "/registersns", method = RequestMethod.POST)
-	public String registersns(UserDto userDto, Model model 
-			, String snsId, String snsType, String snsToken, String snsConnectDate
-			, HttpServletRequest request){
-		logger.debug(">>>>>>registersns"+ userDto.toString());
-		
-		SnsDto snsDto = new SnsDto();
-		
-		snsDto.setSnsId(snsId);
-		snsDto.setSnsType(snsType);
-		snsDto.setSnsToken(snsToken);
-		snsDto.setSnsConnectDate(snsConnectDate);
-		userDto.setSnsDto(snsDto);
-		
-		request.setAttribute("userInfo", userDto);
-		
-		
-		return "member/register/register";
-	}
-	
-	
-	
+//	@RequestMapping(value = "/register", method = RequestMethod.GET)
+//	public String register() {
+//		return "member/register/register";
+//	}
+
+
+			
 	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(UserDto userDto, Model model 
@@ -117,14 +96,38 @@ public class MemberController {
 //			SnsDto snsDto = new SnsDto();
 //			userDto.setSnsDto(snsDto);
 			memberService.registCommon(userDto);
+			logger.info(">>>>>>>>>>>>>>>>> 일반회원가입 세션에 넣어주는 userDto: "+userDto.toString());
+			
 			WebUtils.setSessionAttribute(request, "userInfo", userDto ); //리다이렉트시 세션은 이렇게 담아준다.
 //			model.addAttribute("userInfo", userDto);
 		}
 		return "redirect:/index.jsp";
 	}
+	
+	// 소셜정보와함께 회원가입페이지로이동
+	@RequestMapping(value = "/registersns", method = RequestMethod.POST)
+	public String registersns(UserDto userDto, Model model 
+			, String snsId, String snsType, String snsToken, String snsConnectDate
+			, HttpServletRequest request){
+		logger.debug(">>>>>>registersns"+ userDto.toString());
+		
+		SnsDto snsDto = new SnsDto();
+		
+		snsDto.setSnsId(snsId);
+		snsDto.setSnsType(snsType);
+		snsDto.setSnsToken(snsToken);
+		snsDto.setSnsConnectDate(snsConnectDate);
+		userDto.setSnsDto(snsDto);
+		
+//		request.setAttribute("userInfo", userDto);
+		request.setAttribute("paramUserDto", userDto);
+		
+		return "member/register/register";
+	}
+	
 	// 로그인 페이지
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginpage() {
+	public String login() {
 		return "member/login/loginpage";
 	}
 	
@@ -190,6 +193,11 @@ public class MemberController {
 		return "member/emailauth/emailauth";
 	}
 	
+	@RequestMapping(value = "/emailpassfind", method = RequestMethod.GET)
+	public String emailpassfind(UserDto userDto, Model model) {
+		return "member/emailauth/emailpassfind";
+	}
+	
 	// 메일인증 
 	@ResponseBody
 	@RequestMapping(value = "/sendemail", method = RequestMethod.POST)
@@ -223,7 +231,6 @@ public class MemberController {
 		}
 		String json = mapper.writeValueAsString(map);
 		return json;
-		
 	}
 
 	// 인증키 확인
@@ -241,7 +248,8 @@ public class MemberController {
 		// 이메일 유효상태
 		memberService.updateAuthstatus(userDto);
 
-		model.addAttribute("userInfo", userDto);
+//		model.addAttribute("userInfo", userDto);
+		model.addAttribute("paramUserDto", userDto);
 		return "member/register/register";
 	}
 

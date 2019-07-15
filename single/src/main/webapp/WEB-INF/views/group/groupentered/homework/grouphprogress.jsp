@@ -24,11 +24,25 @@ $(function() {
 				var modal = $("#hprogressModal");
 				modal.find("input[name=userNickname]").val(result.resultData.userNickname);
 				modal.find("input[name=hprogressSubject]").val(result.resultData.hprogressSubject);
-				modal.find("input[name=hprogressSuccess]").val(result.resultData.hprogressSuccess).siblings("button").text();
-				modal.find("textarea[name=hprogressContent]").val(result.resultData.hprogressContent);
-				modal.find("input[name=hprogressFile]").val(result.resultData.hprogressFileOrigin);
 				
-				if("${sessionScope.userInfo.userId}" == $(this).attr("data-id")){
+				if(result.resultData.hprogressSuccess == 'S'){
+					modal.find("input[name=hprogressSuccess]").val(result.resultData.hprogressSuccess).siblings("button").text("완료");
+				}else{
+					modal.find("input[name=hprogressSuccess]").val(result.resultData.hprogressSuccess).siblings("button").text("진행중");
+				}
+				modal.find("textarea[name=hprogressContent]").val(result.resultData.hprogressContent);
+				modal.find("input[name=hprogressFileOrigin]").val(result.resultData.hprogressFileOrigin);
+				modal.find("input[name=fileurl]").val(result.resultData.hprogressFile);
+				if(result.resultData.hprogressFile == null || result.resultData.hprogressFile == ''){
+					modal.find("#fileurl").removeAttr("href").removeAttr("download");
+				}else{
+					modal.find("#fileurl").attr("href", result.resultData.hprogressFile).attr("download", result.resultData.hprogressFileOrigin);
+				}
+				
+				
+				//	console.log($(this).attr("data-id"));
+				//console.log("${sessionScope.userInfo.userId}");
+				if("${sessionScope.userInfo.userId}" == result.resultData.userId){
 					showModifyModal();
 				}else{
 					showViewModal();
@@ -66,13 +80,31 @@ $(function() {
 	
 });
 function showModifyModal(){
-	$("#hprogressModal .btn-danger, #hprogressModal .btn-primary").show();
+	if("${homework.status}" != "진행중"){
+		showViewModal();
+		return false;
+	}	
+
+	$("#hprogressModal .modal-footer .btn-danger, #hprogressModal .modal-footer .btn-primary").show();
+	$("#hprogressModal .file-cancel").show();
 	$("#hprogressModal").modal("show");
+	
+	//disabled 풀기
+	$("#hprogressModal input[name=hprogressSubject]").removeAttr("disabled");
+	$("#hprogressModal .dropdown button").removeAttr("disabled");
+	$("#hprogressModal textarea[name=hprogressContent]").removeAttr("disabled");
+	$("#hprogressModal #ex_file_input").removeAttr("disabled");
 }
 
 function showViewModal(){
-	$("#hprogressModal .btn-danger, #hprogressModal .btn-primary").hide();
+	$("#hprogressModal .modal-footer .btn-danger, #hprogressModal .modal-footer .btn-primary").hide();
+	$("#hprogressModal .file-cancel").hide();
 	$("#hprogressModal").modal("show");
+	//수정못하게 처리
+	$("#hprogressModal input[name=hprogressSubject]").attr("disabled", "disabled");
+	$("#hprogressModal .dropdown button").attr("disabled", "disabled");
+	$("#hprogressModal textarea[name=hprogressContent]").attr("disabled", "disabled");
+	$("#hprogressModal #ex_file_input").attr("disabled", "disabled");
 }
 
 </script>
@@ -102,9 +134,11 @@ function showViewModal(){
 
 	<section class="groupsection group-info">
 		<div>
-			<input class="col-sm-9 form-control search-input" type="text" id="myInput" onkeyup="" placeholder="이름을 검색해주세요" title="Type in a name">
+			<input class="col-sm-9 form-control search-input"  type="text" id="myInput" onkeyup="" placeholder="이름을 검색해주세요" title="Type in a name">
 			<c:if test="${homework.status == '진행중'}">
+			<c:if test="${empty alreadyHPCreate}">
 			<button type="button" class="btn btn-primary col-sm-2 right writeBtn">글작성</button></c:if>
+			</c:if>
 		</div>
 		<table class="table table-hover hprogress-table">
 			<thead>

@@ -14,4 +14,6 @@ public interface RecomendDao {
 
 	List<GroupDto> getGroupDtoList(List<String> resultList);
 
+	List<GroupDto> getSingleRecommendList();
+
 }

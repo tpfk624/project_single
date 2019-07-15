@@ -2,8 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/WEB-INF/views/commons/template/modern_business_top.jsp" %>
 
-<%-- 리퀘스트 스코프 : ${requestScope.userInfo } --%>
+<%-- 리퀘스트 스코프 : ${requestScope.userInfo }<br> --%>
 <%-- 세션스코프 : ${sessionScope.userInfo } --%>
+<%-- 리퀘스트 스코프 : ${requestScope.paramUserDto}<br> --%>
+<%-- 세션스코프 : ${sessionScope.paramUserDto} --%>
+
+
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
@@ -27,14 +31,13 @@ $(document).ready(function(){
 		value = $('#datepicker').val().replace('/','');
 		value = value.replace('/','');
 		$('#datepicker').val(value);
-		
 		$('#memberform').attr('action','${root}/member/register').submit();
 	});
 	
 	//이메일인증버튼
-	$('#emailAuthBtn').click(function() {
-	 	$('.emailAuthForm').attr("action", "${root}/member/joinpost").submit();
-	});
+// 	$('#emailAuthBtn').click(function() {
+// 	 	$('.emailAuthForm').attr("action", "${root}/member/joinpost").submit();
+// 	});
 });
 
 </script>
@@ -55,14 +58,14 @@ $(document).ready(function(){
  	<h1>회원가입</h1>
 	    <p>안의 내용들을 채워주세요 *: 필수입력</p>
 	    <hr>
-		<input type="hidden" name="snsId" value="${userInfo.snsDto.snsId }">
-		<input type="hidden" name="snsType" value="${userInfo.snsDto.snsType }">
-<%-- 	<input type="hidden" name="snsemail" value="${userInfo.snsDto.userId }"> 한페이지에서 두개의 값을 전달하면 배열로 전달된다.--%>
-		<input type="hidden" name="snsToken" value="${userInfo.snsDto.snsToken }">
-		<input type="hidden" name="snsConnectDate" value="${userInfo.snsDto.snsConnectDate }">
+		<input type="hidden" name="snsId" value="${paramUserDto.snsDto.snsId }">
+		<input type="hidden" name="snsType" value="${paramUserDto.snsDto.snsType }">
+<%-- 	<input type="hidden" name="snsemail" value="${paramUserDto.snsDto.userId }"> 한페이지에서 두개의 값을 전달하면 배열로 전달된다.--%>
+		<input type="hidden" name="snsToken" value="${paramUserDto.snsDto.snsToken }">
+		<input type="hidden" name="snsConnectDate" value="${paramUserDto.snsDto.snsConnectDate }">
 		<div class="form-group" align="left">
 		<label for="">아이디</label>* (이메일과 동일)
-			<input type="text" class="form-control" id="userId" name="userId" placeholder="4자이상 16자 이하" readonly="readonly" required="required" value= "${userInfo.userId}">
+			<input type="text" class="form-control" id="userId" name="userId" placeholder="4자이상 16자 이하" readonly="readonly" required="required" value= "${paramUserDto.userId}">
 		</div>
 		<div class="form-group" align="left">
 			<label for="">비밀번호입력</label>* 
@@ -76,7 +79,7 @@ $(document).ready(function(){
 		
 		<div class="form-group" align="left">
 		<label for="name">이름</label>*
-				<input type="text" class="form-control" id="name" name="userName" placeholder="이름입력" value= "${userInfo.userName}" required="required">
+				<input type="text" class="form-control" id="name" name="userName" placeholder="이름입력" value= "${paramUserDto.userName}" required="required">
 		</div>
 		
 		<div class="form-group" align="left">
@@ -86,7 +89,7 @@ $(document).ready(function(){
 		
 	<div class="form-group" align="left">
 		<label for="tel">전화번호</label>
-			<input type= "text" name ="userPhone" value= "${userInfo.userPhone }">
+			<input type= "text" name ="userPhone" value= "${paramUserDto.userPhone }">
 
 <!-- 			<select class="form-control" id="tel1" name="tel1"> -->
 <!-- 				<option value="010">010</option> -->
@@ -115,7 +118,7 @@ $(document).ready(function(){
     
     <div class="form-group" align="left">
     	<label for="">생일</label><br>
-		    <input id="datepicker" name ="userBirthday" width="276" value= "${userInfo.userBirthday }">
+		    <input id="datepicker" name ="userBirthday" width="276" value= "${paramUserDto.userBirthday }">
     </div>
     
     <div class="form-group" align="left">
@@ -126,10 +129,10 @@ $(document).ready(function(){
     
     <div class="form-group" align="center">
 <%-- 		<c:choose> --%>
-<%-- 			<c:when test="${userInfo.userId != null}"> --%>
+<%-- 			<c:when test="${paramUserDto.userId != null}"> --%>
 <!-- 				<button type="button" class="btn btn-primary" id="modifyBtn">정보변경</button> -->
 <%-- 			</c:when> --%>
-<%-- 			<c:when test="${userInfo.userId == null}"> --%>
+<%-- 			<c:when test="${paramUserDto.userId == null}"> --%>
 				<button type="button" class="btn btn-primary" id="registBtn">회원가입</button>
 				<button type="reset" class="btn btn-warning">초기화</button>
 <%-- 			</c:when> --%>

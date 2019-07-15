@@ -14,6 +14,7 @@
 				<form action="post" enctype="multipart/form-data" id="hpCreateForm">
 				<input type="hidden" value="${homework.groupNum}" name="groupNum">
 				<input type="hidden" value="${homework.homeworkNum}" name="homeworkNum">
+				<input type="hidden" value="create" name="type">
 				<section class="groupsection group-info">
 					<label class="group-info-label col-sm-2">이름</label>
 					<div class="group-info-content col-sm-10">
@@ -30,9 +31,9 @@
 					<label class="group-info-label col-sm-2">상태</label>
 					<div class="group-info-content col-sm-10">
 						<div class="dropdown col-lg-4 col-md-4 col-sm-4">
-							<input type="hidden" name="hprogressSuccess" value="" >
+							<input type="hidden" name="hprogressSuccess" value="P" >
 							<button type="button" class="btn btn-primary dropdown-toggle"
-								data-toggle="dropdown">진행상태</button>
+								data-toggle="dropdown">진행중</button>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" role="P">진행중</a> 
 								<a class="dropdown-item" role="S">완료</a>
@@ -87,14 +88,34 @@ $("#hprogressCreateModal").off("hidden.bs.modal").on("hidden.bs.modal", function
 	$(this).find("textarea[name=hprogressContent]").val("");
 });
 $("#hprogressCreateModal .okbtn").click(function() {
+	if($("#hprogressCreateModal input[name=hprogressSubject]").val() == ''){
+		showAlertModal("필수값이 누락", "제목을 입력해주세요");
+
+		$("#alert").on('hidden.bs.modal', function () {
+			$("#hprogressCreateModal input[name=hprogressSubject]").focus().get(0).scrollIntoView(true);
+		});
+		return false
+	}
+	
+	if($("#hprogressCreateModal textarea[name=hprogressContent]").val() == ''){
+		showAlertModal("필수값이 누락", "내용을 입력해주세요");
+
+		$("#alert").on('hidden.bs.modal', function () {
+			$("#hprogressCreateModal textarea[name=hprogressContent]").focus().get(0).scrollIntoView(true);
+		});
+		return false
+	}
+	
+	
 	var url = "${root}/homework/hprogress";
 	var data = new FormData($("#hpCreateForm")[0]);
 	var success = function(result) {
 		if(result.resultCode == 1){
 			showSuccessAlertModal("과제진행 등록 성공", result.resultData);
-			$("alertSuccess").off("hidden.bs.modal").on("hidden.bs.modal", function() {
-				$("#hprogressCreateModal").modal("hide");
-				homeworkdetail("${homework.groupNum}", "${homework.homeworkNum}");
+			$("#alertSuccess").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+				$("#hprogressCreateModal").modal("hide").off("hidden.bs.modal").on("hidden.bs.modal", function() {
+					homeworkdetail("${homework.groupNum}", "${homework.homeworkNum}");
+				});
 			});
 		}else{
 			showAlertModal("과제진행 등록 실패", result.resultData);

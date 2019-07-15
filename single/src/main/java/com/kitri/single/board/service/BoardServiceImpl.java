@@ -160,7 +160,41 @@ public class BoardServiceImpl implements BoardService {
 
 
 	
+	// 글 삭제
+	@Override
+	public int boardDelete(int boardNum) {
+		
+		int seq = sqlSession.getMapper(BoardDao.class).boardDelete(boardNum);
+		
+		return seq;
+	}
+	
+	
+	
+	// 카테고리 최신글
+	@Override
+	public BoardDto news() {
+		return sqlSession.getMapper(BoardDao.class).news();
+	}
 
+
+	// 카테고리 최신글
+	@Override
+	public int totalCnt(String userId) {
+		return sqlSession.getMapper(BoardDao.class).totalCnt(userId);
+	}
+	
+	
+	// 카테고리 유저 총 글 수
+	@Override
+	public int totalCntL(String userId) {
+		return sqlSession.getMapper(BoardDao.class).totalCntL(userId);
+	}
+
+	
+	
+	
+	
 }
 
 

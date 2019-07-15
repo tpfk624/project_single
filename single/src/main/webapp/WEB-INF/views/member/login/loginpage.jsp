@@ -8,8 +8,8 @@
 
 <!-- 네아로 설정값-->
 <!-- 로컬용 -->
-<c:set var = "serviceUrl" value = "https://localhost:8443/single"/>
-<c:set var = "callbackUrl" value = "https://localhost:8443/single/member/callback.jsp"/>
+<c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/>
+<c:set var = "callbackUrl" value = "https://192.168.14.40:8443/single/member/callback.jsp"/>
 
 <!-- ip설정용 -->
 <%-- <c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/> --%>
@@ -32,9 +32,24 @@
 </c:if>    
 
 <script type="text/javascript">
-  $(document).ready(function(){
+$(document).ready(function(){
     //로그인
-	  $('#btnLogin').click(function() {
+	$('#btnLogin').click(function() {
+		login();	
+	})
+	$('#userpass').keydown(function(key) {
+		if (key.keyCode == 13) {
+			login();
+		}
+	});
+    
+	//비밀번호 찾기
+	$('#passfindBtn').click(function(){
+		$(location).attr("href","${root}/member/emailpassfind");
+    });
+  
+  
+    function login(){
 //	 	$('#loginForm').attr("action", "${root}/member/login").attr("method", "post");
 
 //	 	var formdata = new FormData($('#loginForm')[0]); // ->	contentType: false,
@@ -73,8 +88,8 @@
 				console.log('error')
 			}
 		});
-	})
-	
+    }
+    
 	//회원가입 버튼
 	$('.registerBtn').click(function(){
 		$(location).attr("href","${root}/member/emailauth");
@@ -121,24 +136,31 @@ min-height: 95%;
 		</div>
 		<div class= "row mt-3">
 		  	<div class="col-2">
-			 	<label class="loginmodal-label" for="userPassword"  ><b>비밀번호</b></label>
+			 	<label class="loginmodal-label" for="userPassword"   ><b>비밀번호</b></label>
 			</div>
 			<div class="col-5">
-				<input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" required style="font-family:돋움;" size="35"> 
+				<input type="password" placeholder="비밀번호를 입력해주세요" name="userPassword" id ="userpass" required style="font-family:돋움;" size="35"> 
 			</div>
 		</div>
 		<div class= "row mt-3">
-			<div class="col-5">
-				<button  type="button" class = "btn btn-primary" id="btnLogin">Login</button>
-				<div id="naver_id_login" style= "display:inline-block;"></div>
+			<div class="col-2">
+			<button  type="button" class = "btn btn-primary" id="btnLogin">Login</button>	
+			</div>
+			<div class="col-2"  >
+				<div id="naver_id_login" style= "display:inline-block;"></div> 
+			</div>
+			<div class="col-3" style="padding-top:0.5rem" >
+			<a href="#" class = "registerBtn" >회원가입</a>   <%--<a href="#" id= "passfindBtn">비밀번호 찾기</a> --%>
+				
 			</div>
 		</div>
 		  
-		<div class ="mt-3"> <input type="checkbox"  name="remember" /> <label for="remember">아이디 기억하기</label> </div>	
+<!-- 		<div class ="mt-3"> <input type="checkbox"  name="remember" /> <label for="remember">아이디 기억하기</label> </div>	 -->
 				
-		<div class ="mt-3">
-			<a href="#" class = "registerBtn">회원가입</a>  <a href="#" >비밀번호변경</a> <a href="#">비밀번호 찾기</a>
-		</div>
+<!-- 		<div class ="mt-3"> -->
+			
+			
+<!-- 		</div> -->
 	</form>
 </div>
 <script>
