@@ -19,6 +19,8 @@
 
 
 $(function() {
+	//시계 hover 지우기
+	//$("#ad").find("canvas").off("movserover");
 	
 	//페이징 처리
 	selectPage(1, "", "", 0);
@@ -149,7 +151,7 @@ function selectPage(page, key, word, boardListNum ) {
 	
 	<div class="container">
 	    
-		<table class="table" align="center">     
+		<table class="table table-hover" align="center">     
 			<thead style="background-color: #dee4ea;" align="center">
 				<tr>
 					<th>카테고리</th>

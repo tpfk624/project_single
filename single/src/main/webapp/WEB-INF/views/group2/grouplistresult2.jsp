@@ -2,9 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<script>
+page = "1";
+key = "${parameter.key}";
+word = "${parameter.word}";
+totalPageCount = "1";
+totalListCount = "${fn:length(requestScope.groupList)}";
+</script>
 <c:forEach items="${requestScope.groupList}" var="group">
 <!-- 카드 사진 위버전 -->
-<div class="col-lg-4 col-sm-6 portfolio-item groupcard" data-num="${group.groupNum}">
+<div class="col-lg-4 col-sm-6 portfolio-item groupcard" data-num="${group.groupNum}" data-cate="${group.groupCategoryNum}">
 	<div class="card h-100">
 		<img class="card-img-top"
 			src="${group.groupImgSrc}"

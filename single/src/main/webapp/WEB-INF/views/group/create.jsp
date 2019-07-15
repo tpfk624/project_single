@@ -10,7 +10,7 @@ $(function() {
 	defaultSetting("");
 	$(".groupCategory .dropdown").on("hidden.bs.dropdown", function(){
 		var groupCategoryNum = $("#groupCreateForm input[name=groupCategoryNum]").val();
-		if($("#ex_file")[0].files.value == '' || $("#ex_file_input").val() == ''){
+		if($("#ex_file_input").val() == '' || $("#ex_file_input").val() == null){
 			defaultSetting(GROUP_RESOURCES_IMG + groupCategoryNum + "_default.jpg");
 		}
 	});

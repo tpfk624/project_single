@@ -62,6 +62,7 @@
 		select
 			g.group_num groupNum
 			, m.user_id as userId
+			, m.group_member_statecode as groupMemberStatecode
 			, g.group_name as groupName
 			, g.group_description as groupDescription
 			, g.group_img_src as groupImgSrc
@@ -83,6 +84,7 @@
 	select
 			g.group_num groupNum
 			, m.user_id as userId
+			, m.group_member_statecode as groupMemberStatecode
 			, g.group_name as groupName
 			, g.group_description as groupDescription
 			, g.group_img_src as groupImgSrc
@@ -104,7 +106,7 @@
 			</if>
 	</select>
 	
-	<!-- 나의 모임관리(모임 상세페이지) -->
+		
 	<select id="getGroup" parameterType="int" resultType="groupDto">
 	select 
         g.group_num groupNum
@@ -125,6 +127,23 @@
    	and g.group_num = #{groupNum}
 	</select>
 	
+	
+	<update id="updateGroupMember" parameterType="map">
+	update single_group_member
+	set group_member_statecode = 'D'
+	where group_num = #{groupNum}
+    	and user_id = #{userId}
+	</update>
+	
+	<update id="groupMemberCountDown" parameterType="int">
+	update single_group
+	set
+	    group_member_count = group_member_count - 1
+	where 
+		group_statecode = 1
+		and group_num = #{groupNum}
+		and group_member_count > 1
+	</update>
 	
 	
 	<!-- <<<<<<<<<<<<<<<<찜모임 >>>>>>>>>>>>>>>>>>>>>> -->
@@ -211,9 +230,10 @@
 	and r.user_id =  #{userId}	
 	</select>
 
+	<!--좋아요한 글 -->
 	<select id="getBoardHeart" parameterType="string" resultType="BoardDto">
 	select board_subject as boardSubject,
-		board_num as boardNum,
+		b.board_num as boardNum,
 	    board_content as boardContent,
 	    board_createdate as boardCreatedate,
 	    b.user_id as userId,

@@ -4,8 +4,8 @@
 function groupDetailModalSetting(json) {
 	var group = json.group;
 	//console.log(group);
-	$("#groupDetailModal .card-body .card-title").text(group.groupName);
-	$("#groupDetailModal .card-body .groupDescription").text(group.groupDescription);
+	$("#groupDetailModal .card-title").text(group.groupName);
+	$("#groupDetailModal .card-body .groupDescription").html(group.groupDescription.replace("\n", "<br>"));
 	$("#groupDetailModal .card-body .groupCategoryName").text("카테고리 : " + group.groupCategoryName);
 	$("#groupDetailModal .card-body .groupMember").text("인원 : " + group.groupMemberCount + " / " + group.groupMemberLimit);
 	$("#groupDetailModal .card-body .groupMainPlace").text("주요장소 : " + group.groupMainPlace);
@@ -38,9 +38,9 @@ $(function() {
 				<img class="card-img-top"
 					src="https://cdn.studysearch.co.kr/images/leader/357/4564-1560735145.png?v=1560735145"
 						alt="">
-				<h4 class="card-title">영어단어 스터디</h4>
+				<h4 class="card-title"></h4>
 				<div class="card-body">
-					<p class="card-text groupDescription">모임설명</p>
+					<div class="card-text groupDescription">모임설명</div>
 					<p class="card-text groupCategoryName">카테고리 : </p>
 					<p class="card-text taglist"></p>
 					<p class="card-text groupMember">인원 : </p>
@@ -50,8 +50,9 @@ $(function() {
 			
 			<!-- Modal footer -->
 	        <div class="modal-footer">
-	        	<button type="button" id="deleteBtn" class="btn btn-primary btn-delete" data-num="">모임 탈퇴</button>
-	        	
+	        	<c:if test="${group.groupMemberStatecode == null}">
+		        	<button type="button" id="deleteMoinBtn" class="btn btn-primary btn-delete" data-num="${group.groupNum}">모임 탈퇴</button>	            	
+				</c:if>
 	        	<button type="button" id="moimIn" class="btn btn-primary" data-num="${group.groupNum}">모임 들어가기</button>
 	          	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 	        </div>

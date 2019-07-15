@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.kitri.single.board.model.BoardDto;
+import com.kitri.single.group.dao.GroupDao;
 import com.kitri.single.group.model.GroupDto;
-
+import com.kitri.single.group.model.GroupMemberDto;
 import com.kitri.single.user.model.UserDto;
 
 public interface UserDao {
@@ -22,7 +23,9 @@ public interface UserDao {
 	public List<GroupDto> getGroupAll(Map<String, String> parameter);// 전체 조회
 	public GroupDto getGroup(int groupNum);							// 하나만 조회
 	public List<GroupDto> getMyGroup(Map<String, String> parameter);// 그룹개설 조회
-	//탈퇴(방장탈퇴와 모임원탈퇴로 나뉜다)
+	
+	public void updateGroupMember(Map<String, Object> parameter);//탈퇴 (모임원탈퇴)
+	public void groupMemberCountDown(int groupNum); //탈퇴 후 모임 카운트내리기	
 
 	//찜모임관리
 	public List<GroupDto> getStampGroup(Map<String, String> parameter);	//찜한 그룹 전체조회
@@ -33,6 +36,8 @@ public interface UserDao {
 	public List<BoardDto> getBoardAll(Map<String, String> parameter);//내가 쓴 글 가져오기
 	public List<BoardDto> getBoardOther(Map<String, String> parameter);
 	public List<BoardDto> getBoardHeart(Map<String, String> parameter);
+
+	
 
 	
 

@@ -130,7 +130,8 @@ $(function() {
 		<section class="groupsection group-info">
 			<label class="group-info-label col-sm-2">모임설명</label>
 			<div class="group-info-content col-sm-10">
-			${group.groupDescription}
+<%-- 			${group.groupDescription} --%>
+			${fn:replace(group.groupDescription,'\\n', '<br>')}
 			</div>
 		</section>
 		

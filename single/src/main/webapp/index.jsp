@@ -93,15 +93,15 @@ function getDailyDust(){
 			if(dt == "1"){
 				$("#dustimg").attr("src", "${root}/resources/img/seonimg/good.png");
 				//$("#here").html("<img src='${root}/resources/img/seonimg/good.png' height='100'>");
-				$("#dustInfo").html("<strong>미세먼지 수치 너무 좋아요!<br>야외활동하기 딱 좋은 날이에요!</strong>");
+				$("#dustInfo").html("<strong>미세먼지 수치 너무 좋아요! 야외활동하기 딱 좋은 날이에요!</strong>");
 			}else if(dt == "2"){
 				$("#dustimg").attr("src", "${root}/resources/img/seonimg/soso.png");
 				//$("#here").html("<img src='${root}/resources/img/seonimg/soso.png' height='100'>");	
-				$("#dustInfo").html("<strong>미세먼지 수치 보통이에요<br>오늘은 집 근처 산책은 어떠세요?</strong>");
+				$("#dustInfo").html("<strong>미세먼지 수치 보통이에요. 오늘은 집 근처 산책은 어떠세요?</strong>");
 			}else if(dt == "3"){
 				$("#dustimg").attr("src", "${root}/resources/img/seonimg/bad.png");
 				//$("#here").html("<img src='${root}/resources/img/seonimg/bad.png' height='100'>");	
-				$("#dustInfo").html("<strong>오늘은 미세먼지가 많네요<br>마스크 챙기세요!</strong>");
+				$("#dustInfo").html("<strong>오늘은 미세먼지가 많네요. 마스크 챙기세요!</strong>");
 			}else if(dt == "4"){
 				$("#dustimg").attr("src", "${root}/resources/img/seonimg/die.png");
 				//$("#here").html("<img src='${root}/resources/img/seonimg/die.png' height='100'>");	

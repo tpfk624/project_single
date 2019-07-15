@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kitri.single.board.model.BoardDto;
 import com.kitri.single.group.model.GroupDto;
-
+import com.kitri.single.group.model.GroupMemberDto;
 import com.kitri.single.user.model.UserDto;
 
 public interface UserService {
@@ -32,6 +32,7 @@ public interface UserService {
 	public List<GroupDto> getMyStamp(Map<String, String> parameter); //찜그룹(카테고리)
 	public void stampDelete(Map<String, String> parameter); //찜한 그룹 삭제하기 >> userid랑 groupnum이 들어가야함 세션과 화면클릭을 통해
 	public  String stampDelete(String userId, int groupNum);//카루뱅 찜한 그룹 삭제하기 >> userid랑 groupnum이 들어가야함 세션과 화면클릭을 통해
+	public String fireGroupMember(String userId, int groupNum);
 
 	
 	//<게시물 관리>

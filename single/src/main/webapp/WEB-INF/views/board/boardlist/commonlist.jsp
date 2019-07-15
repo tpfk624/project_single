@@ -65,7 +65,7 @@ $(function () {
 
 
 <div class="container">
-	<table class="table">
+	<table class="table table-hover">
 		<thead>
 			<tr>
 				 <th>제목</th>

@@ -32,29 +32,6 @@ public class UserDto {
 	// 소셜 연동
 	private SnsDto snsDto;
 
-	
-	
-	
-	public int getTotallike() {
-		return totallike;
-	}
-
-	public void setTotallike(int totallike) {
-		this.totallike = totallike;
-	}
-
-	public int getRownum() {
-		return rownum;
-	}
-
-	public void setRownum(int rownum) {
-		this.rownum = rownum;
-	}
-
-	public String getAuthState() {
-		return authState;
-	}
-
 	public String getUserId() {
 		return userId;
 	}
@@ -167,24 +144,20 @@ public class UserDto {
 		this.userStatecode = userStatecode;
 	}
 
-	public String getAuthKey() {
-		return authKey;
+	public int getTotallike() {
+		return totallike;
 	}
 
-	public void setAuthKey(String authKey) {
-		this.authKey = authKey;
+	public void setTotallike(int totallike) {
+		this.totallike = totallike;
 	}
 
-	public SnsDto getSnsDto() {
-		return snsDto;
+	public int getRownum() {
+		return rownum;
 	}
 
-	public void setSnsDto(SnsDto snsDto) {
-		this.snsDto = snsDto;
-	}
-
-	public void setAuthState(String authState) {
-		this.authState = authState;
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
 	}
 
 	public String getNewpass() {
@@ -195,6 +168,29 @@ public class UserDto {
 		this.newpass = newpass;
 	}
 
+	public String getAuthKey() {
+		return authKey;
+	}
+
+	public void setAuthKey(String authKey) {
+		this.authKey = authKey;
+	}
+
+	public String getAuthState() {
+		return authState;
+	}
+
+	public void setAuthState(String authState) {
+		this.authState = authState;
+	}
+
+	public SnsDto getSnsDto() {
+		return snsDto;
+	}
+
+	public void setSnsDto(SnsDto snsDto) {
+		this.snsDto = snsDto;
+	}
 
 	@Override
 	public String toString() {
@@ -202,10 +198,12 @@ public class UserDto {
 				+ ", userProfile=" + userProfile + ", userName=" + userName + ", userBirthday=" + userBirthday
 				+ ", userGender=" + userGender + ", userPhone=" + userPhone + ", userZipcode=" + userZipcode
 				+ ", userAddress=" + userAddress + ", userAddressDetail=" + userAddressDetail + ", userJoindate="
-				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + ", newpass="
-				+ newpass + ", authKey=" + authKey + ", authState=" + authState + ", snsDto=" + snsDto + "]";
+				+ userJoindate + ", userOutdate=" + userOutdate + ", userStatecode=" + userStatecode + ", totallike="
+				+ totallike + ", rownum=" + rownum + ", newpass=" + newpass + ", authKey=" + authKey + ", authState="
+				+ authState + ", snsDto=" + snsDto + "]";
 	}
 
+	
 	
 	
 }

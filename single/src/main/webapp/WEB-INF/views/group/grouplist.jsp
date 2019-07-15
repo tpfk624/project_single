@@ -17,11 +17,11 @@ var totalListCount = "";
 $(function() {
 	//$(".groupcard").on("click", groupcardClick);
 	
-	var page = "${parameter.page}";
-	var key = "${parameter.key}";
-	var word = "${parameter.word}";
-	var isMyGroup = "${parameter.isMyGroup}";
-	var groupCategoryNum = "${parameter.groupCategoryNum}";
+	page = "${parameter.page}";
+	key = "${parameter.key}";
+	word = "${parameter.word}";
+	isMyGroup = "${parameter.isMyGroup}";
+	groupCategoryNum = "${parameter.groupCategoryNum}";
 	getGroupList(page, key, word, isMyGroup, groupCategoryNum);
 	
 	//페이지 이동류 버튼
@@ -32,7 +32,6 @@ $(function() {
 	//내 모임보기 버튼
 	$("button.mygrouplist").on("click", function() {
 		$("button.mygrouplist").toggle();
-		$()
 		$("#categoryFilter").val("0").siblings("button").text("카테고리");
 		if($(this).hasClass("my")){
 			getGroupList("1", "", "", "yes", "");
@@ -91,6 +90,21 @@ $(function() {
 			key = $("#key").val();
 		}
 		getGroupList("1", key , word , "" , "");
+	});
+	
+	//2019-07-12 형태희 추천받기 버튼
+	$(".recomandBtn").on("click", function () {
+		$("#categoryFilter").val("0").siblings("button").text("카테고리");
+		$.ajax({
+			 url : "${root}/group2/grouplist2",
+			 method : "get",
+			 success : function(result) {
+				console.log(result);
+				//console.log(result);
+				$(".group-list").html(result);
+				$(".groupcard").click(groupcardClick);
+			}
+		});	
 	});
 });
 
@@ -208,19 +222,26 @@ function groupcardClick(){
 			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
 				<button type="button" class="btn btn-success mygrouplist all" style="visibility: hidden;">모두보기</button>
 			</div>
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
+				<button type="button" class="btn btn-primary pagebtn" data-page="create" style="visibility: hidden;">모임 만들기</button>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category" >
+				<button type="button" class="btn btn-info recomandBtn" style="visibility: hidden;">추천 받기</button>
+			</div>
 			</c:if>
 			<c:if test="${!empty sessionScope.userInfo}">
 			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
 				<button type="button" class="btn btn-success mygrouplist my">내 모임보기</button>
 				<button type="button" class="btn btn-success mygrouplist all" style="display: none;">모두보기</button>
 			</div>
-			</c:if>
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category" >
+				<button type="button" class="btn btn-info recomandBtn">추천 받기</button>
+			</div>
 			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
 				<button type="button" class="btn btn-primary pagebtn" data-page="create">모임 만들기</button>
 			</div>
-			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category" >
-				<button type="button" class="btn btn-info pagebtn" data-page="grouprecommend">추천 받기</button>
-			</div>
+			</c:if>
+			
 			<div class="dropdown col-lg-2 col-md-2 col-sm-3 my-4 category" id="cateDropdown">
 				<input type="hidden" value="0" id="categoryFilter">
 				<button type="button" class="btn btn-primary dropdown-toggle"

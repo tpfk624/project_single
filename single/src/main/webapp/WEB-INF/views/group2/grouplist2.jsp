@@ -18,27 +18,6 @@ $(function(){
 	var isMyGroup = "${parameter.isMyGroup}";
 	var groupCategoryNum = "${parameter.groupCategoryNum}";
 	
-	//2019-07-12 형태희 추천받기 버튼
-	$(".recomandBtn").on("click", function () {
-		$.ajax({
-			 url : "${root}/group2/grouplist2",
-			 method : "get",
-			 success : function(result) {
-				console.log(result);
-				if(isMyGroup == 'yes'){
-					//console.log(result);
-					$(".group-list").html(result);
-					$(".groupcard").click(groupenter);
-				}else{
-					//console.log(result);
-					$(".group-list").html(result);
-					$(".groupcard").click(groupcardClick);
-				}
-			}
-			
-		});	
-	
-	});
 });
 
 

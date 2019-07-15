@@ -91,7 +91,7 @@ public class GroupServiceImpl implements GroupService {
 			parameter.put("groupNum", groupNum);
 			List<String> tagList = sqlSession.getMapper(HashtagDao.class).getHashtagList(parameter);
 			groupDto.setHashtagList(tagList);
-			groupDto.setGroupDescription(groupDto.getGroupDescription().replace("\n", "<br>"));
+			//groupDto.setGroupDescription(groupDto.getGroupDescription().replace("\n", "<br>"));
 		}
 		
 		return groupDto;
@@ -103,7 +103,7 @@ public class GroupServiceImpl implements GroupService {
 		GroupDao groupDao = (GroupDao)sqlSession.getMapper(GroupDao.class);
 		int groupNum = groupDao.selectGroupNumSeq();
 		groupDto.setGroupNum(groupNum);
-		groupDto.setGroupDescription(groupDto.getGroupDescription().replace("\n", "<br>"));
+		//groupDto.setGroupDescription(groupDto.getGroupDescription().replace("\n", "<br>"));
 		groupNum = groupDao.insertGroup(groupDto);
 		
 		String[] hashtags = null;

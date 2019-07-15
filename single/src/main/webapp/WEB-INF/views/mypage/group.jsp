@@ -23,6 +23,27 @@ $(function() {
 		 location.href = '${root}/group/' + groupNum;
 		return false;
 	});
+	
+	 /* 모임 탈퇴 버튼 클릭 시  */
+	 $("#deleteMoinBtn").click(function() {
+		 var groupNum = $("#moimIn").attr("data-num");
+		 console.log("모임 탈퇴 버튼클릭됨 , 그룹넘버: " + groupNum);
+		$.ajax({
+			url: "${root}/mypage/moimdelete",
+			type: "GET",
+			dataType: "json", //응답
+			data : {
+				'groupNum' : groupNum
+			},
+			success : function(result) {
+				if(result.resultCode == 1) {
+					alert(result.resultData);
+					location.reload(); //자동으로 새로고침되는거
+				}
+			}
+		});	
+		return false;
+	});
 });
 
 function getMyGroup(sel) {
@@ -68,24 +89,6 @@ function groupcardClick() {
 	});
 }
 
-
-function groupcardClick() {
-	var groupNum = $(this).attr("data-num");
-
-	$.ajax({
-		url : "${root}/mypage/groupdetail",
-		method : "get",
-		dataType : "json",
-		data : {
-			"groupNum" : groupNum
-		},
-		success : function(result) {
-			//console.log(result);
-			groupDetailModalSetting(result);
-			$("#groupDetailModal").modal("show");
-		}
-	});
-}
 
 
 // 	$.ajax({
