@@ -52,6 +52,7 @@
 	    left outer join single_user su
 	        on sc.user_id = su.user_id
 	where sc.group_num = #{groupNum}
+	order by chatTime
 	</select>
 	
 </mapper>
