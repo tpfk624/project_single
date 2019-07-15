@@ -99,7 +99,7 @@ img {
 					<select class="listOption" data-userInfo="${userInfo.userId}">
 						<option class="allBtn" value="selected" selected="selected">내가 쓴 글</option>
 						<option class="replyBtn" value="reply">나의 댓글</option>
-						<option class="zzimBtn" value="zzim">찜한 글</option>
+						<option class="zzimBtn" value="zzim">좋아요한 글</option>
 					</select>
 					<hr>
 				</div>

@@ -50,8 +50,9 @@ $(function() {
 			
 			<!-- Modal footer -->
 	        <div class="modal-footer">
-	        	<button type="button" id="deleteBtn" class="btn btn-primary btn-delete" data-num="">모임 탈퇴</button>
-	        	
+	        	<c:if test="${group.groupMemberStatecode == null}">
+		        	<button type="button" id="deleteMoinBtn" class="btn btn-primary btn-delete" data-num="${group.groupNum}">모임 탈퇴</button>	            	
+				</c:if>
 	        	<button type="button" id="moimIn" class="btn btn-primary" data-num="${group.groupNum}">모임 들어가기</button>
 	          	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 	        </div>
