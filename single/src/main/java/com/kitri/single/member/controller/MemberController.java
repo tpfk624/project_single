@@ -51,29 +51,7 @@ public class MemberController {
 	public String register() {
 		return "member/register/register";
 	}
-	
-	// 소셜정보와함께 회원가입페이지로이동
-	@RequestMapping(value = "/registersns", method = RequestMethod.POST)
-	public String registersns(UserDto userDto, Model model 
-			, String snsId, String snsType, String snsToken, String snsConnectDate
-			, HttpServletRequest request){
-		logger.debug(">>>>>>registersns"+ userDto.toString());
-		
-		SnsDto snsDto = new SnsDto();
-		
-		snsDto.setSnsId(snsId);
-		snsDto.setSnsType(snsType);
-		snsDto.setSnsToken(snsToken);
-		snsDto.setSnsConnectDate(snsConnectDate);
-		userDto.setSnsDto(snsDto);
-		
-		request.setAttribute("userInfo", userDto);
-		
-		
-		return "member/register/register";
-	}
-	
-	
+
 	
 	// 회원가입
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -122,9 +100,29 @@ public class MemberController {
 		}
 		return "redirect:/index.jsp";
 	}
+	
+	// 소셜정보와함께 회원가입페이지로이동
+	@RequestMapping(value = "/registersns", method = RequestMethod.POST)
+	public String registersns(UserDto userDto, Model model 
+			, String snsId, String snsType, String snsToken, String snsConnectDate
+			, HttpServletRequest request){
+		logger.debug(">>>>>>registersns"+ userDto.toString());
+		
+		SnsDto snsDto = new SnsDto();
+		
+		snsDto.setSnsId(snsId);
+		snsDto.setSnsType(snsType);
+		snsDto.setSnsToken(snsToken);
+		snsDto.setSnsConnectDate(snsConnectDate);
+		userDto.setSnsDto(snsDto);
+		
+		request.setAttribute("userInfo", userDto);
+		return "member/register/register";
+	}
+	
 	// 로그인 페이지
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginpage() {
+	public String login() {
 		return "member/login/loginpage";
 	}
 	
