@@ -78,7 +78,9 @@ public class GroupServiceImpl2 implements GroupService2 {
 				}	
 			}
 		}
-		sb.deleteCharAt(0);
+		if(sb.length() != 0) {
+			sb.deleteCharAt(0);
+		}
 		String parseTagStr= sb.toString();
 		logger.debug(">>>>>태그 파싱 후 "+parseTagStr);
 	
@@ -99,13 +101,11 @@ public class GroupServiceImpl2 implements GroupService2 {
 		List<GroupDto> groupRecommendList = new ArrayList<GroupDto>();
 		if(resultList.size()!=0) {
 			groupRecommendList = (List<GroupDto>)sqlSession.getMapper(RecomendDao.class).getGroupDtoList(resultList);	
-		}
-		
-		
-		if( groupRecommendList.size()==0 ) {
+		}else if( groupRecommendList.size()==0 ) {
 			groupRecommendList = (List<GroupDto>)sqlSession.getMapper(RecomendDao.class).getSingleRecommendList();
 //			groupRecommendList =(List<GroupDto>)sqlSession.getMapper(RecomendDao.class).getGroupDtoList(resultList);
 		}
+		
 		if(groupRecommendList.size()>=20) {
 			groupRecommendList= groupRecommendList.subList(0, 19);
 		}

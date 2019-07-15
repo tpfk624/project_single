@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<table class="table">
+<table class="table table-hover">
 	<thead>
 		<tr>
 			 <th width="17%">카테고리</th>

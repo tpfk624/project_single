@@ -117,6 +117,10 @@ tag>input[type=button]:hover{
 	cursor: pointer;
 }
 
+.fixed-top{
+	z-index: 1045;
+}
+
 </style>
 
 <!-- 로그인 -->
@@ -205,11 +209,8 @@ $(document).ready(function(){
               	같이놀아요
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-              <a class="dropdown-item" href="${root}/group/calubang.jsp">calubang로그인</a>
-              <a class="dropdown-item" href="${root}/group/calubang2.jsp">calubang2로그인</a>
               <a class="dropdown-item" href="${root}/group">모임 목록보기</a>
               <a class="dropdown-item" href="${root}/group/create">모임 만들기</a>
-              <a class="dropdown-item" href="${root}/group2/">모임 목록 추천</a>
             </div>
           </li>
         </ul>

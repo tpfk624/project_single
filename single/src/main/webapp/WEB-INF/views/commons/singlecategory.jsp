@@ -90,12 +90,12 @@ id="floating" */
 	<br>
 	
 	<!-- 시계 -->
-	<div>
+	<!-- <div>
 	<iframe scrolling="no" frameborder="no" clocktype="html5" 
 	style="overflow:hidden;border:0;margin:0;padding:0;width:130px;height:70px;"
 	src="https://www.clocklink.com/html5embed.php?clock=042&timezone=KoreaRepublicof_Seoul&color=blue&size=356&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=blue">
 	</iframe>
-	</div>  
+	</div> -->
  
 	<!-- 새글 -->   
 	<br>

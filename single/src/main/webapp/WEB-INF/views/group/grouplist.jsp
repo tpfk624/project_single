@@ -234,11 +234,11 @@ function groupcardClick(){
 				<button type="button" class="btn btn-success mygrouplist my">내 모임보기</button>
 				<button type="button" class="btn btn-success mygrouplist all" style="display: none;">모두보기</button>
 			</div>
-			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
-				<button type="button" class="btn btn-primary pagebtn" data-page="create">모임 만들기</button>
-			</div>
 			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category" >
 				<button type="button" class="btn btn-info recomandBtn">추천 받기</button>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-3 my-4 category">
+				<button type="button" class="btn btn-primary pagebtn" data-page="create">모임 만들기</button>
 			</div>
 			</c:if>
 			
