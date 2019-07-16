@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
 			parameter.put("groupNum", groupNum);
 			List<String> tagList = sqlSession.getMapper(HashtagDao.class).getHashtagList(parameter);
 			groupDto.setHashtagList(tagList);
-			groupDto.getGroupDescription().replaceAll("\n", "<br>");
+			//groupDto.getGroupDescription().replaceAll("\n", "<br>");
 		}
 		
 		return groupDto;
