@@ -10,6 +10,7 @@ id: loginmodal의 display를 block으로 변경해주세요.
 -->
  
 <!-- 네아로 설정값-->
+<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
 <!-- 로컬용 -->
 <c:set var = "serviceUrl" value = "http://localhost/single"/>
 <c:set var = "callbackUrl" value = "http://localhost/single/member/callback.jsp"/>
@@ -25,7 +26,7 @@ id: loginmodal의 display를 block으로 변경해주세요.
 <%-- <c:set var = "callbackUrl" value = "https://192.168.14.22:8443/single/member/callback.jsp"/> --%>
 
 
-<c:set var = "clientId" value = "3FGMY2V_UXaBQxS0sx0g"/>
+
 
 
 <!-- 네아로 자바스크립트-->
