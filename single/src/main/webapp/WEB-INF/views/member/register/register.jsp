@@ -118,7 +118,7 @@ $(document).ready(function(){
     
     <div class="form-group" align="left">
     	<label for="">생일</label><br>
-		    <input id="datepicker" name ="userBirthday" width="276" value= "${paramUserDto.userBirthday }">
+		    <input id="datepicker" name ="userBirthday" width="276"">
     </div>
     
     <div class="form-group" align="left">
