@@ -12,7 +12,6 @@
 <c:set var = "serviceUrl" value = "http://localhost/single"/>
 <c:set var = "callbackUrl" value = "http://localhost/single/member/callback.jsp"/>
 
-
 <!-- 네아로 자바스크립트-->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 

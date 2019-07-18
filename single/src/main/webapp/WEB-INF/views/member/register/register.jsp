@@ -27,6 +27,11 @@ $(document).ready(function(){
 	console.log(">>>"+$('#userId').val());
 	//회원가입
 	$('#registBtn').click(function(){
+		if($("#nickname").val() == null || $("#nickname").val() == ''){
+			alert("닉네임을 입력해주세요");
+			return false
+		}
+		
 		var value =$('#datepicker').val();
 		value = $('#datepicker').val().replace('/','');
 		value = value.replace('/','');

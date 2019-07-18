@@ -8,8 +8,10 @@
 
 <!-- 네아로 설정값-->
 <!-- 로컬용 -->
+
 <c:set var = "serviceUrl" value = "http://localhost/single"/>
 <c:set var = "callbackUrl" value = "http://localhost/single/member/callback.jsp"/>
+
 
 <!-- ip설정용 -->
 <%-- <c:set var = "serviceUrl" value = "https://192.168.14.40:8443/single"/> --%>

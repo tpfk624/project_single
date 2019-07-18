@@ -1,6 +1,18 @@
 -- 그룹 테스트 코드
 -- 그룹 seq
 drop sequence group_num_seq;
+drop sequence group_category_num_seq;
+drop sequence calendar_num_seq;
+drop sequence homework_num_seq;
+drop sequence group_hprogress_num_seq;
+drop sequence hashtag_type_num_seq;
+drop sequence hashtag_num_seq;
+-- 시퀀스 삭제
+drop sequence category_num_seq;
+drop sequence board_type_num_seq;
+drop sequence board_list_num_seq;
+drop sequence board_num_seq;
+drop sequence reply_num_seq;
 
 create sequence group_num_seq
 start with 0
@@ -8,7 +20,7 @@ increment by 1
 minvalue 0
 ;
 -- 그룹 카테고리 seq
-drop sequence group_category_num_seq;
+
 create sequence group_category_num_seq
 start with 0
 increment by 1
@@ -16,7 +28,7 @@ minvalue 0
 ;
 
 -- 그룹 일정 seq
-drop sequence calendar_num_seq;
+
 create sequence calendar_num_seq
 start with 0
 increment by 1
@@ -24,7 +36,7 @@ minvalue 0
 ;
 
 -- 그룹 숙제 seq
-drop sequence homework_num_seq;
+
 create sequence homework_num_seq
 start with 0
 increment by 1
@@ -32,7 +44,7 @@ minvalue 0
 ;
 
 -- 그룹 숙제 진행상황 seq
-drop sequence group_hprogress_num_seq;
+
 create sequence group_hprogress_num_seq
 start with 0
 increment by 1
@@ -40,7 +52,7 @@ minvalue 0
 ;
 
 --해시태그 타입 seq
-drop sequence hashtag_type_num_seq;
+
 create sequence hashtag_type_num_seq
 start with 0
 increment by 1
@@ -48,19 +60,14 @@ minvalue 0
 ;
 
 --해시태그 seq
-drop sequence hashtag_num_seq;
+
 create sequence hashtag_num_seq
 start with 0
 increment by 1
 minvalue 0
 ;
 
--- 시퀀스 삭제
-drop sequence category_num_seq;
-drop sequence board_type_num_seq;
-drop sequence board_list_num_seq;
-drop sequence board_num_seq;
-drop sequence reply_num_seq;
+
 
 
 -- 게시판 카테고리
