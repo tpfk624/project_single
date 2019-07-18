@@ -37,6 +37,7 @@ id: loginmodal의 display를 block으로 변경해주세요.
 
 <script>
 $(document).ready(function(){
+	
 	var loginBtn =$('.loginModalBtn'); //로그인 버튼을 등록해주세요.  
 	
 	//로그인 모달 띄우기  loginmodal id를 통해서 사용됨

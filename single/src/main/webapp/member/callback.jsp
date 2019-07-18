@@ -80,6 +80,8 @@
 			dataType : "json", //서버에서 반환되는 형식
 			success :function(data){
 				console.log(data);
+				
+				
 				if(data.msg =='outmember'){
 // 					console.log('탈퇴한 회원');
 // 					window.location = document.referrer + '?msg=outmember';
@@ -119,6 +121,10 @@
 					//회원가입폼으로 값 전달.
 				}else if (data.msg =='refresh'){
 // 					console.log('자동 로그인');
+					var userInfo = data.userInfo;
+					console.log(data.userInfo);
+					console.log(document.referrer);
+					sessionStorage.setItem("userInfo",data.userInfo);
 					history.back();
 				}		
 			},beforeSend: function () {
