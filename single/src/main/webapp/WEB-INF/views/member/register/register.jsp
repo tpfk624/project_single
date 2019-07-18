@@ -24,9 +24,14 @@ $(document).ready(function(){
 	}).on("change", function() {
 		//달력 눌를때 이벤트 콜백 위치
 	});
-	console.log(">>>"+$('#userId').val());
+	//console.log(">>>"+$('#userId').val());
 	//회원가입
 	$('#registBtn').click(function(){
+		if($("#nickname").val() == null || $("#nickname").val() == '' ){
+			alert("닉네임을 입력해주세요");
+			return false
+		}
+		
 		var value =$('#datepicker').val();
 		value = $('#datepicker').val().replace('/','');
 		value = value.replace('/','');
@@ -118,7 +123,7 @@ $(document).ready(function(){
     
     <div class="form-group" align="left">
     	<label for="">생일</label><br>
-		    <input id="datepicker" name ="userBirthday" width="276" value= "${paramUserDto.userBirthday }">
+		    <input id="datepicker" name ="userBirthday" width="276" value= "">
     </div>
     
     <div class="form-group" align="left">
