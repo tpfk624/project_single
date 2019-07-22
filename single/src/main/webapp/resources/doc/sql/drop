@@ -1,0 +1,238 @@
+-- 모임
+ALTER TABLE single_group
+	DROP CONSTRAINT FK_group_category_TO_group; -- 모임카테고리 -> 모임
+
+-- 모임구성원
+ALTER TABLE single_group_member
+	DROP CONSTRAINT FK_group_TO_group_member; -- 모임 -> 모임구성원
+
+-- 모임구성원
+ALTER TABLE single_group_member
+	DROP CONSTRAINT FK_user_TO_group_member; -- 유저 -> 모임구성원
+
+-- 모임과제
+ALTER TABLE single_homework
+	DROP CONSTRAINT FK_group_TO_homework; -- 모임 -> 모임과제
+
+-- 모임채팅
+ALTER TABLE single_chat
+	DROP CONSTRAINT FK_group_member_TO_chat; -- 모임구성원 -> 모임채팅
+
+-- 모임과제진행
+ALTER TABLE single_hprogress
+	DROP CONSTRAINT FK_group_member_TO_hprogress; -- 모임구성원 -> 모임과제진행
+
+-- 모임과제진행
+ALTER TABLE single_hprogress
+	DROP CONSTRAINT FK_homework_TO_hprogress; -- 모임과제 -> 모임과제진행
+
+-- 게시판
+ALTER TABLE single_board
+	DROP CONSTRAINT FK_single_list_TO_board; -- 게시판리스트 -> 게시판
+
+-- 게시판
+ALTER TABLE single_board
+	DROP CONSTRAINT FK_user_TO_board; -- 유저 -> 게시판
+
+-- 좋아요
+ALTER TABLE single_like
+	DROP CONSTRAINT FK_single_board_TO_single_like; -- 게시판 -> 좋아요
+
+-- 좋아요
+ALTER TABLE single_like
+	DROP CONSTRAINT FK_user_TO_like; -- 유저 -> 좋아요
+
+-- 댓글
+ALTER TABLE single_reply
+	DROP CONSTRAINT FK_board_TO_reply; -- 게시판 -> 댓글
+
+-- 댓글
+ALTER TABLE single_reply
+	DROP CONSTRAINT FK_user_TO_reply; -- 유저 -> 댓글
+
+-- 모임일정
+ALTER TABLE single_calendar
+	DROP CONSTRAINT FK_group_TO_calendar; -- 모임 -> 모임일정
+
+-- 해시태그
+ALTER TABLE single_hashtag
+	DROP CONSTRAINT FK_hashtag_type_TO_hashtag; -- 해시태그타입 -> 해시태그
+
+-- 해시태그
+ALTER TABLE single_hashtag
+	DROP CONSTRAINT FK_board_TO_hashtag; -- 게시판 -> 해시태그
+
+-- 해시태그
+ALTER TABLE single_hashtag
+	DROP CONSTRAINT FK_group_TO_hashtag; -- 모임 -> 해시태그
+
+-- 게시판리스트
+ALTER TABLE single_board_list
+	DROP CONSTRAINT FK_board_type_TO_board_list; -- 게시판형식 -> 게시판리스트
+
+-- 게시판리스트
+ALTER TABLE single_board_list
+	DROP CONSTRAINT FK_bcate_TO_blist; -- 게시판카테고리 -> 게시판리스트
+
+-- 찜한모임
+ALTER TABLE single_stamp
+	DROP CONSTRAINT FK_group_TO_stamp; -- 모임 -> 찜한모임
+
+-- 찜한모임
+ALTER TABLE single_stamp
+	DROP CONSTRAINT FK_user_TO_stamp; -- 유저 -> 찜한모임
+
+-- 소셜로그인
+ALTER TABLE sns_login
+	DROP CONSTRAINT FK_single_user_TO_sns_login; -- 유저 -> 소셜로그인
+
+-- 모임
+ALTER TABLE single_group
+	DROP CONSTRAINT PK_single_group; -- 모임 기본키
+
+-- 모임카테고리
+ALTER TABLE single_group_category
+	DROP CONSTRAINT PK_single_group_category; -- 모임카테고리 기본키
+
+-- 모임구성원
+ALTER TABLE single_group_member
+	DROP CONSTRAINT PK_single_group_member; -- 모임구성원 기본키
+
+-- 모임과제
+ALTER TABLE single_homework
+	DROP CONSTRAINT PK_single_homework; -- 모임과제 기본키
+
+-- 모임채팅
+ALTER TABLE single_chat
+	DROP CONSTRAINT PK_single_chat; -- 모임채팅 기본키
+
+-- 모임과제진행
+ALTER TABLE single_hprogress
+	DROP CONSTRAINT PK_single_hprogress; -- 모임과제진행 기본키
+
+-- 유저
+ALTER TABLE single_user
+	DROP CONSTRAINT PK_single_user; -- 유저 기본키
+
+-- 게시판
+ALTER TABLE single_board
+	DROP CONSTRAINT PK_single_board; -- 게시판 기본키
+
+-- 게시판카테고리
+ALTER TABLE single_board_category
+	DROP CONSTRAINT PK_single_board_category; -- 게시판카테고리 기본키
+
+-- 좋아요
+ALTER TABLE single_like
+	DROP CONSTRAINT PK_single_like; -- 좋아요 기본키
+
+-- 댓글
+ALTER TABLE single_reply
+	DROP CONSTRAINT PK_single_reply; -- 댓글 기본키
+
+-- 모임일정
+ALTER TABLE single_calendar
+	DROP CONSTRAINT PK_single_calendar; -- 모임일정 기본키
+
+-- 해시태그
+ALTER TABLE single_hashtag
+	DROP CONSTRAINT PK_single_hashtag; -- 해시태그 기본키
+
+-- 해시태그타입
+ALTER TABLE single_hashtag_type
+	DROP CONSTRAINT PK_single_hashtag_type; -- 해시태그타입 기본키
+
+-- 게시판리스트
+ALTER TABLE single_board_list
+	DROP CONSTRAINT PK_single_board_list; -- 게시판리스트 기본키
+
+-- 게시판형식
+ALTER TABLE single_board_type
+	DROP CONSTRAINT PK_single_board_type; -- 게시판형식 기본키
+
+-- 검색로그
+ALTER TABLE single_search_log
+	DROP CONSTRAINT PK_single_search_log; -- 검색로그 기본키
+
+-- 찜한모임
+ALTER TABLE single_stamp
+	DROP CONSTRAINT PK_single_stamp; -- 찜한모임 기본키
+
+-- 소셜로그인
+ALTER TABLE sns_login
+	DROP CONSTRAINT PK_sns_login; -- 소셜로그인 기본키
+
+-- 모임
+DROP TABLE single_group;
+
+-- 모임카테고리
+DROP TABLE single_group_category;
+
+-- 모임구성원
+DROP TABLE single_group_member;
+
+-- 모임과제
+DROP TABLE single_homework;
+
+-- 모임채팅
+DROP TABLE single_chat;
+
+-- 모임과제진행
+DROP TABLE single_hprogress;
+
+-- 유저
+DROP TABLE single_user;
+
+-- 게시판
+DROP TABLE single_board;
+
+-- 게시판카테고리
+DROP TABLE single_board_category;
+
+-- 좋아요
+DROP TABLE single_like;
+
+-- 댓글
+DROP TABLE single_reply;
+
+-- 모임일정
+DROP TABLE single_calendar;
+
+-- 해시태그
+DROP TABLE single_hashtag;
+
+-- 해시태그타입
+DROP TABLE single_hashtag_type;
+
+-- 게시판리스트
+DROP TABLE single_board_list;
+
+-- 게시판형식
+DROP TABLE single_board_type;
+
+-- 검색로그
+DROP TABLE single_search_log;
+
+-- 찜한모임
+DROP TABLE single_stamp;
+
+-- 소셜로그인
+DROP TABLE sns_login;
+
+
+
+-- 그룹 테스트 코드
+-- 그룹 seq
+drop sequence group_num_seq;
+drop sequence group_category_num_seq;
+drop sequence calendar_num_seq;
+drop sequence homework_num_seq;
+drop sequence group_hprogress_num_seq;
+drop sequence hashtag_type_num_seq;
+drop sequence hashtag_num_seq;
+-- 시퀀스 삭제
+drop sequence category_num_seq;
+drop sequence board_type_num_seq;
+drop sequence board_list_num_seq;
+drop sequence board_num_seq;
+drop sequence reply_num_seq;
